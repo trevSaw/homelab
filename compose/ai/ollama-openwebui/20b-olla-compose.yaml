@@ -1,0 +1,93 @@
+# Recommended models for this setup:
+# - 20B Q4_K_M (e.g., Llama 3.1 20B, Mistral-Medium) - 10-12 tok/s on RTX 3080 10GB
+# - 13B Q4_K_M (e.g., Llama 2 13B, Qwen 2.5 13B) - 15-20 tok/s
+# - 7B-8B Q4_K_M (e.g., Mistral 7B, Llama 3.1 8B) - 20+ tok/s
+# Optimized for 10-15 tok/s on 20B model with 10GB VRAM and 64GB RAM
+# Uses Q4_K_M quantization, full GPU offloading, and Q8 KV cache
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    # Expose port directly (optional - can remove if only accessed via internal network)
+    # ports:
+    #   - "11434:11434"
+    volumes:
+      - /hive/ollama:/root/.ollama
+    environment:
+      - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_NUM_GPU=999
+      - OLLAMA_NUM_THREAD=16
+      - OLLAMA_KEEP_ALIVE=5m
+      # Proxy settings (uncomment if needed)
+      # - HTTP_PROXY=http://proxy.example.com:8080
+      # - HTTPS_PROXY=http://proxy.example.com:8080
+      # - NO_PROXY=localhost,127.0.0.1,ollama,open-webui
+    container_name: ollama
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+        limits:
+          memory: 48G
+          cpus: '8'
+    networks:
+      - ollama-net
+      - ai-assistant  # Network for personal AI assistant to reach Ollama API
+      # - traefik     # Uncomment if you want Ollama API exposed via Traefik
+    labels:
+      # Traefik labels for Ollama API (uncomment if exposing via Traefik)
+      # - "traefik.enable=true"
+      # - "traefik.http.routers.ollama.rule=Host(`ollama.yourdomain.com`)"
+      # - "traefik.http.routers.ollama.entrypoints=websecure"
+      # - "traefik.http.routers.ollama.tls.certresolver=letsencrypt"
+      # - "traefik.http.services.ollama.loadbalancer.server.port=11434"
+      # - "traefik.docker.network=traefik"
+      - "traefik.enable=false"
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+      - /hive/open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    # Direct port exposure (remove if using Traefik exclusively)
+    # ports:
+    #   - "3030:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY=24f9dae69aad42f53713e907b066b8ce3ec9c19c48fd65261748229e5b9e8bfd
+      # Proxy settings (uncomment if needed)
+      # - HTTP_PROXY=http://proxy.example.com:8080
+      # - HTTPS_PROXY=http://proxy.example.com:8080
+      # - NO_PROXY=localhost,127.0.0.1,ollama,open-webui
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+    networks:
+      - ollama-net
+      - traefik      # Traefik network for reverse proxy
+      - ai-assistant # AI assistant can also reach Open-WebUI if needed
+    labels:
+      # Traefik labels for Open-WebUI
+      - "traefik.enable=true"
+      - "traefik.http.routers.openwebui.rule=Host(`chat.yourdomain.com`)"  # Change to your domain
+      - "traefik.http.routers.openwebui.entrypoints=websecure"
+      - "traefik.http.routers.openwebui.tls.certresolver=letsencrypt"      # Match your Traefik cert resolver name
+      - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
+      - "traefik.docker.network=traefik"
+      # HTTP to HTTPS redirect (optional)
+      # - "traefik.http.routers.openwebui-http.rule=Host(`chat.yourdomain.com`)"
+      # - "traefik.http.routers.openwebui-http.entrypoints=web"
+      # - "traefik.http.routers.openwebui-http.middlewares=redirect-

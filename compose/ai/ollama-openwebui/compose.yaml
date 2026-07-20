@@ -1,0 +1,43 @@
+services:
+  ollama:
+    image: intelanalytics/ipex-llm-inference-cpp-xpu:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - /home/trevor.sawyer/homelab-data/ollama:/root/.ollama
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - OLLAMA_HOST=0.0.0.0:11434
+      - ONEAPI_DEVICE_SELECTOR=level_zero:0
+    container_name: ollama
+    tty: true
+    restart: unless-stopped
+    stdin_open: true
+    command: >
+      bash -c "
+        mkdir -p /llm/ollama &&
+        cd /llm/ollama &&
+        init-ollama &&
+        export OLLAMA_NUM_GPU=999 &&
+        export ZES_ENABLE_SYSMAN=1 &&
+        ./ollama serve
+      "
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+      - /home/trevor.sawyer/homelab-data/open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    ports:
+      - "3030:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY= 24f9dae69aad42f53713e907b066b8ce3ec9c19c48fd65261748229e5b9e8bfd
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped   

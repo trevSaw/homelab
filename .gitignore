@@ -1,0 +1,25 @@
+# Homelab repository gitignore
+# General OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary data
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Terraform files
+*.tfstate
+*.tfstate.backup
+
+# Ansible vault files
+*.vault
+
+# Build artefacts
+build/
+dist/

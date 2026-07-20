@@ -1,0 +1,312 @@
+# Anonaddy Setup with Optional Authentik Integration
+
+This document outlines the setup and configuration of Anonaddy for anonymous email forwarding, with a focus on Docker and Traefik. Authentik SSO integration is covered as a future phase once the base setup is working.
+
+## Overview
+
+Anonaddy is a self-hosted email forwarding service that allows you to create anonymous email aliases. This setup provides a secure and private way to manage your email.
+
+**Phased Approach:**
+1. **Phase 1**: Get Anonaddy running with local authentication + API for Bitwarden
+2. **Phase 2**: Integrate Authentik for SSO (future)
+
+## Prerequisites
+
+- Docker
+- Docker Compose
+- A domain name (with access to DNS management)
+- Traefik (optional, for reverse proxy and TLS)
+
+---
+
+## Phase 1: Basic Anonaddy Setup
+
+### Generate APP_KEY
+
+Before starting, generate a secure application key. Run this command:
+
+```bash
+openssl rand -base64 32
+```
+
+This outputs something like: `K7gNxM3pQr2sT5vW8xZ1bC4dF6hJ9kL0mN2pQ4rS6tU=`
+
+Use it in your config as: `APP_KEY=base64:K7gNxM3pQr2sT5vW8xZ1bC4dF6hJ9kL0mN2pQ4rS6tU=`
+
+### Docker Compose Configuration
+
+```yaml
+version: '3'
+
+services:
+  db:
+    image: mariadb:10
+    container_name: anonaddy-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: anonaddy
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_USER: anonaddy
+      MYSQL_PASSWORD: changeme
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - anonaddy-internal
+
+  redis:
+    image: redis:alpine
+    container_name: anonaddy-redis
+    restart: unless-stopped
+    networks:
+      - anonaddy-internal
+
+  anonaddy:
+    image: anonaddy/anonaddy:latest
+    container_name: anonaddy
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "25:25"      # SMTP
+    environment:
+      - APP_KEY=base64:YOUR_GENERATED_KEY_HERE
+      - APP_URL=https://mail.yourdomain.com
+      - ANONADDY_DOMAIN=yourdomain.com
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=anonaddy
+      - DB_USERNAME=anonaddy
+      - DB_PASSWORD=changeme
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MAIL_FROM_NAME=AnonAddy
+      - MAIL_FROM_ADDRESS=anonaddy@yourdomain.com
+    volumes:
+      - anonaddy_data:/data
+    networks:
+      - traefik
+      - anonaddy-internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.anonaddy.rule=Host(`mail.yourdomain.com`)"
+      - "traefik.http.routers.anonaddy.entrypoints=websecure"
+      - "traefik.http.routers.anonaddy.tls=true"
+      - "traefik.http.routers.anonaddy.tls.certresolver=letsencrypt"
+      - "traefik.http.services.anonaddy.loadbalancer.server.port=8080"
+
+networks:
+  traefik:
+    external: true
+  anonaddy-internal:
+    internal: true
+
+volumes:
+  db_data:
+  anonaddy_data:
+```
+
+### DNS Records
+
+#### Understanding DNS vs PiHole vs Traefik
+
+| Component | What it does | Scope |
+|-----------|--------------|-------|
+| **PiHole** | Resolves DNS queries for your local network (blocks ads) | Local network only |
+| **Traefik** | Routes incoming web traffic (HTTPS) to the correct container | Your server only |
+| **Cloudflare/Registrar DNS** | Tells the *entire internet* where your domain points | Global/public |
+
+**Why public DNS records are required**: When someone sends email to `alias@yourdomain.com`, their mail server asks global DNS "where do I deliver mail for this domain?" PiHole can't answer—it only serves your local network. You need records at your domain's authoritative DNS so the world knows where to send your mail.
+
+**Traffic flow:**
+
+```
+Email (port 25):    Internet → Your IP → Anonaddy container directly (bypasses Traefik)
+Web UI (port 443):  Internet → Your IP → Traefik → Anonaddy container
+```
+
+#### Required DNS Records
+
+Configure these at your **domain registrar** or **DNS provider** (e.g., Cloudflare, Namecheap, Route53):
+
+| Type  | Name/Host         | Value                                      | Notes                          |
+|-------|-------------------|--------------------------------------------|--------------------------------|
+| A     | mail              | `<your-server-ip>`                         | Points to your Anonaddy server (skip if you have a wildcard record) |
+| MX    | @                 | `mail.yourdomain.com` (priority 10)        | Routes email to your server    |
+| TXT   | @                 | `v=spf1 mx -all`                           | SPF record                     |
+| TXT   | _dmarc            | `v=DMARC1; p=quarantine; adkim=s; aspf=s`  | DMARC policy                   |
+| TXT   | default._domainkey| `<generated-by-anonaddy>`                  | DKIM - get from Anonaddy UI    |
+
+**Note on A record**: If you already have a wildcard A record (`*.yourdomain.com → your IP`) or your domain already points to your server for other Traefik services, you can skip adding the A record—`mail.yourdomain.com` will already resolve.
+
+**Note on DKIM**: The DKIM key is generated by Anonaddy. After the initial setup, retrieve it from the Anonaddy web interface and add it to your DNS.
+
+### Accessing the Web UI
+
+After running `docker-compose up -d`:
+
+1. **URL**: Navigate to `https://mail.yourdomain.com` (or your configured `APP_URL`)
+2. **First User**: The first user to register becomes the admin
+3. **Default Port**: If not using Traefik, the web UI is on port `8080` (e.g., `http://your-server-ip:8080`)
+
+### API Setup (Required for Bitwarden Integration)
+
+The API allows external tools like Bitwarden to create aliases on your behalf when signing up for new services.
+
+#### 1. Enable the API
+
+Add this environment variable to the anonaddy service in your docker-compose:
+
+```yaml
+environment:
+  # ... existing variables ...
+  - ANONADDY_API_ENABLED=true
+```
+
+Then restart the container: `docker-compose up -d`
+
+#### 2. Generate an API Key
+
+1. Log into the Anonaddy web UI
+2. Go to **Settings** → **API Keys** (or **Security**)
+3. Click **Generate New Token**
+4. Give it a descriptive name (e.g., "Bitwarden")
+5. Copy and save the token securely—it's only shown once
+
+#### 3. Configure Bitwarden
+
+In Bitwarden (desktop, browser extension, or web vault):
+
+1. Go to **Settings** → **Options** (or **Vault settings**)
+2. Find **Username Generator** or **Generator Options**
+3. Under **Email**, select **addy.io** (Anonaddy's new name)
+4. Configure:
+   - **API Access Token**: Paste your generated API key
+   - **Domain**: `yourdomain.com` (your Anonaddy domain)
+   - **Base URL**: `https://mail.yourdomain.com` (your self-hosted instance URL)
+
+Now when you use Bitwarden's generator for a new login, you can generate a unique Anonaddy alias directly.
+
+---
+
+## Phase 2: Authentik SSO Integration (Planned/Theoretical)
+
+> **Status**: Not yet tested. This section documents the planned approach for future implementation once Phase 1 is stable.
+
+### SSO Integration Options
+
+There are a few ways to integrate Authentik with Anonaddy:
+
+| Method | Description | Complexity |
+|--------|-------------|------------|
+| **Forward Auth Proxy** | Authentik sits in front of Anonaddy via Traefik. Users authenticate with Authentik first, then access Anonaddy. Anonaddy still has its own user accounts. | Low |
+| **OIDC/OAuth2** | Anonaddy authenticates users directly against Authentik. Requires Anonaddy to support OIDC (may need Laravel Socialite configuration). | Medium-High |
+| **LDAP** | If Anonaddy supports LDAP authentication, Authentik can act as an LDAP provider. | Medium |
+
+**Recommended starting point**: Forward Auth Proxy—it adds SSO protection without modifying Anonaddy's internals.
+
+### Forward Auth Proxy Setup (Traefik + Authentik)
+
+#### 1. Create Authentik Provider & Application
+
+In Authentik:
+1. Go to **Applications** → **Providers** → Create a **Proxy Provider**
+2. Set the external host to `https://mail.yourdomain.com`
+3. Create an **Application** linked to this provider
+
+#### 2. Update Docker Compose Labels
+
+Add forward auth middleware to your Anonaddy Traefik labels:
+
+```yaml
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.anonaddy.rule=Host(`mail.yourdomain.com`)"
+  - "traefik.http.routers.anonaddy.entrypoints=websecure"
+  - "traefik.http.routers.anonaddy.tls=true"
+  - "traefik.http.routers.anonaddy.tls.certresolver=letsencrypt"
+  - "traefik.http.routers.anonaddy.middlewares=authentik@docker"
+  - "traefik.http.services.anonaddy.loadbalancer.server.port=8080"
+```
+
+#### 3. Authentik Outpost Configuration
+
+Ensure your Authentik outpost is configured in Traefik. Example middleware (typically defined in Authentik's docker-compose or Traefik dynamic config):
+
+```yaml
+# This is usually auto-configured by Authentik's embedded outpost
+# Verify the middleware name matches what Authentik creates
+```
+
+### Limitations of Forward Auth
+
+- Users still need an Anonaddy account (the SSO protects access, not account creation)
+- To auto-provision Anonaddy accounts on SSO login, you'd need additional scripting or OIDC integration
+
+---
+
+## Security Considerations
+
+### Exposed Ports and Risks
+
+| Port | Service | Risk Level | Notes |
+|------|---------|------------|-------|
+| 443 | Web UI (via Traefik) | Low-Medium | Same as any other web app you're already running |
+| 25 | SMTP (direct) | Medium-High | Email servers are common targets for automated attacks |
+
+### Risks with Port 25 Exposure
+
+- **Spam/abuse attempts** — bots constantly scan for mail servers to exploit
+- **Open relay attacks** — if misconfigured, your server could send spam (Anonaddy prevents this by default)
+- **Brute force** — attempts to guess credentials
+- **Vulnerabilities** — any bug in the mail stack becomes exploitable
+
+### Built-in Mitigations
+
+- Anonaddy is not an open relay (only forwards to verified addresses)
+- Docker provides container isolation
+- Traefik handles TLS for the web UI
+
+### Recommended Hardening
+
+```bash
+# Firewall - only allow what's needed
+sudo ufw allow 25/tcp    # SMTP (required for email)
+sudo ufw allow 443/tcp   # HTTPS (required for web UI)
+sudo ufw enable
+
+# Fail2ban - block repeated failed attempts
+sudo apt install fail2ban
+```
+
+### ISP Port 25 Blocking
+
+Many residential ISPs block port 25 inbound (and sometimes outbound). Before investing time in setup, test if your ISP allows it:
+
+```bash
+# From an external server or have a friend run:
+nc -zv your-public-ip 25
+```
+
+If blocked, alternatives include:
+- Using a VPS as an SMTP relay
+- Choosing a different ISP or business plan
+- Using a cloud-hosted Anonaddy instance instead
+
+---
+
+## Future Considerations
+
+- **Testing**: Validate Phase 1 completely before adding Authentik
+- **DKIM Verification**: Use [mail-tester.com](https://www.mail-tester.com/) to verify your email deliverability
+- **Firewall**: Ensure port 25 (SMTP) is open and not blocked by your ISP
+- **Rate Limiting**: Be mindful of Anonaddy's rate limits for alias creation
+- **Backups**: Back up the `db_data` and `anonaddy_data` volumes regularly
+
+---
+
+## References
+
+- [Anonaddy Documentation](https://addy.io/docs/)
+- [Anonaddy Docker Image](https://github.com/anonaddy/docker)
+- [Authentik Proxy Provider Docs](https://goauthentik.io/docs/providers/proxy/)

@@ -1,0 +1,19 @@
+name: Documentation Validation
+
+on:
+  push:
+    paths:
+      - '**/*.md'
+  pull_request:
+    paths:
+      - '**/*.md'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install markdown lint
+        run: npm install -g markdownlint-cli
+      - name: Lint markdown files
+        run: markdownlint "**/*.md"

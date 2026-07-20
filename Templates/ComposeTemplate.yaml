@@ -1,0 +1,115 @@
+# Docker Compose Template
+# -------------------------------------------------
+# This file is a canonical template for creating Docker Compose service definitions.
+# It follows the ordering and field definitions required by Docker Compose Standard v1.0.
+# AI agents should copy this template verbatim and replace placeholder variables
+# (e.g., ${SERVICE_NAME}) with concrete values for the target service.
+# Humans can use this as a checklist to ensure compliance and completeness.
+# -------------------------------------------------
+
+services:
+  ${SERVICE_NAME}:
+    # -------------------------------------------------
+    # Service Naming
+    # - Service name must be lower‑case, hyphen‑separated.
+    # - Matches the folder name and container_name (if set).
+    # -------------------------------------------------
+
+    # Image definition – pin to an exact tag.
+    image: ${IMAGE_NAME}:${IMAGE_TAG}
+
+    # Optional explicit container name (defaults to service name if omitted).
+    # container_name: ${SERVICE_NAME}
+
+    # Hostname inside the container (should match service name for consistency).
+    hostname: ${SERVICE_NAME}
+
+    # Restart policy – default is unless‑stopped (recommended for most services).
+    restart: unless-stopped
+
+    # Run as non‑root whenever the image permits.
+    # Uncomment and set to a UID:GID pair or user name defined in the image.
+    # user: ${RUN_AS_USER}
+
+    # Service dependencies – uncomment and list other services that must start first.
+    # depends_on:
+    #   - other_service
+
+    # Environment files – .env.example should be committed; .env is git‑ignored.
+    env_file:
+      - .env.example
+
+    # Inline environment variables – optional, useful for secrets that are injected at runtime.
+    # environment:
+    #   VAR_NAME: ${VAR_VALUE}
+
+    # Volume mounts – bind mounts only. Adjust source path as needed.
+    # Use descriptive names; avoid anonymous volumes.
+    volumes:
+      - type: bind
+        source: ./data/${SERVICE_NAME}
+        target: /app/data
+        # read_only: false  # Set to true for read‑only data when applicable.
+
+    # Device passthrough (e.g., GPU) – comment out if not needed.
+    # devices:
+    #   - "/dev/dri:/dev/dri"
+
+    # Networks – at least one core network must be attached.
+    # Core networks defined in the Homelab Architecture Standard: internal, proxy, vpn, gpu.
+    networks:
+      - internal
+
+    # Labels – include reverse‑proxy labels where the service is publicly exposed.
+    # Follow the label naming conventions defined in Docker Compose Standard v1.0.
+    labels:
+      # Example reverse‑proxy label set (replace <proxy> with the actual proxy name):
+      # <proxy>.enable: "true"
+      # <proxy>.http.routers.${SERVICE_NAME}.rule: "Host(`${SERVICE_HOSTNAME}`)"
+      # <proxy>.http.routers.${SERVICE_NAME}.entrypoints: "websecure"
+      # <proxy>.http.routers.${SERVICE_NAME}.tls: "true"
+
+    # Healthcheck – placeholder using an HTTP endpoint.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${SERVICE_PORT}"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    # Logging – default driver with rotation settings.
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    # Resource limits – placeholders for CPU and memory.
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
+        reservations:
+          cpus: "0.25"
+          memory: "128M"
+
+# -------------------------------------------------
+# External networks – must be declared as external.
+# -------------------------------------------------
+networks:
+  internal:
+    external: true
+  # proxy:
+  #   external: true
+  # vpn:
+  #   external: true
+  # gpu:
+  #   external: true
+
+# -------------------------------------------------
+# External volumes – declare when a named volume is shared across services.
+# -------------------------------------------------
+volumes:
+  # ${SERVICE_NAME}_data:
+  #   external: true

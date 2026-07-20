@@ -1,0 +1,19 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run documentation validation
+        uses: ./.github/workflows/documentation-validation.yml
+      - name: Run metadata validation
+        uses: ./.github/workflows/metadata-validation.yml
+      - name: Generate indexes
+        uses: ./.github/workflows/index-generation.yml
