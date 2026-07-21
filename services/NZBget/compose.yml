@@ -1,0 +1,86 @@
+#name: nzbget
+#services:
+ # nzbget:
+  #  cpu_shares: 90
+   # command: []
+    #container_name: nzbget
+    #deploy:
+     # resources:
+      #  limits:
+       #   memory: 25434M
+#    environment:
+#      - PGID=1000
+#      - PUID=1000
+#      - TZ=Denver
+ #     - UMASK=002
+ #   image: cr.hotio.dev/hotio/nzbget
+ #   restart: unless-stopped
+ #   volumes:
+ #     - type: bind
+ #       source: /hive/NZBget/config
+ #       target: /config
+ #       bind:
+ #         create_host_path: true
+ #     - type: bind
+ #       source: /hive/downloads
+ #       target: /downloads
+ #       bind:
+ #         create_host_path: true
+ #   ports: []
+ #   devices: []
+ #   cap_add: []
+ #   network_mode: container:qbittorrent
+ #   privileged: false
+#x-casaos:
+#  author: self
+#  category: self
+#  hostname: ""
+#  icon: ""
+#  index: /
+#  port_map: "6789"
+#  scheme: http
+#  title:
+#    custom: NZBGet
+name: nzbget
+services:
+  nzbget:
+    cpu_shares: 90
+    command: []
+    container_name: nzbget
+    deploy:
+      resources:
+        limits:
+          memory: 25434M
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Denver
+      - UMASK=002
+    image: ghcr.io/hotio/nzbget
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /hive/NZBget/config
+        target: /config
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /hive/downloads
+        target: /downloads
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    network_mode: container:qbittorrent
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: ""
+  index: /
+  port_map: "6789"
+  scheme: http
+  title:
+    custom: NZBGet

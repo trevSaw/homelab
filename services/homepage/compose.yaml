@@ -1,0 +1,35 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: always
+
+    env_file: # have this comented out and put the .env file to the same directory as my compose file. 
+      - ../.env
+
+    volumes:
+      - ${PATH_CONFIG}/homepage:/app/config
+      - ${PATH_DATA}/homepage/images:/app/public/images
+
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+
+      - "traefik.http.routers.homepage.rule=Host(`home.${DEFAULT_DOMAIN}`)"
+      - "traefik.http.routers.homepage.entrypoints=websecure"
+      - "traefik.http.routers.homepage.tls=true"
+
+      - "traefik.http.services.homepage.loadbalancer.server.port=3000"
+
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+
