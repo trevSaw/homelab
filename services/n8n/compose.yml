@@ -1,0 +1,41 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+
+    ports:
+      - "5678:5678"
+
+    environment:
+      - TZ=Asia/Tokyo
+      - GENERIC_TIMEZONE=Asia/Tokyo
+      - N8N_HOST=mocha
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - N8N_SECURE_COOKIE=false
+      - NODES_EXCLUDE:"[]"
+
+      # Generate once:
+      # openssl rand -hex 32
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+
+      # Helpful for AI workflows
+      - N8N_RUNNERS_ENABLED=true
+
+    volumes:
+      - /mnt/monarch/appdata/n8n:/home/node/.n8n
+      - /mnt/monarch/appdata/n8n/workflows:/workflows
+      - /mnt/monarch/appdata/n8n/reports:/reports
+
+    networks:
+      - homelab
+      - ai-assistant
+
+networks:
+  homelab:
+    external: true
+
+  ai-assistant:
+    external: true

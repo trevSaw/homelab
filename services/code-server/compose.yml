@@ -1,0 +1,43 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Etc/UTC
+      PASSWORD: "8gR@x53j^hrl#Q"
+      DEFAULT_WORKSPACE: /config/workspace
+      CS_TRUSTED_ORIGINS: "https://code.fatherfankscloud.uk"
+
+    volumes:
+      - /hive/code-server/config:/config
+   # Read-only access for Phase 8.5 repository import
+      - /hive:/config/workspace/hive:ro
+      - /mnt/monarch/appdata:/config/workspcae/monarch:ro
+
+    networks:
+      - proxy
+      - ollama_ollama-net
+
+    labels:
+      - "traefik.enable=true"
+
+      # Router
+      - "traefik.http.routers.code.rule=Host(`code.fatherfankscloud.uk`)"
+      - "traefik.http.routers.code.entrypoints=websecure"
+      - "traefik.http.routers.code.tls=true"
+      - "traefik.http.routers.code.tls.certresolver=le"
+
+      # Service
+      - "traefik.http.services.code.loadbalancer.server.port=8443"
+      - "traefik.http.services.code.loadbalancer.server.scheme=http"
+
+networks:
+  proxy:
+    external: true
+
+  ollama_ollama-net:
+    external: true

@@ -1,0 +1,63 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    volumes:
+      - /hive/ollama:/root/.ollama
+    environment:
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - OLLAMA_CONTEXT_LENGTH=2048
+      - OLLAMA_MAX_LOADED_MODELS=1
+      - OLLAMA_NUM_PARALLEL=1
+      - OLLAMA_API_KEY=df4ed965cd5b4fbcba115a15046acfdd.9H6LIn0-vMFn3h9itacE3TC-
+      - CUDA_VISIBLE_DEVICES=-1
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]  
+ # gpus: all
+    mem_limit: 12g
+    shm_size: "4gb"
+    networks:
+      - ollama-net
+      - ai-assistant
+    labels:
+      - "traefik.enable=false"
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    volumes:
+      - /mnt/monarch/appdata/open-webui:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+    networks:
+      - ollama-net
+      - proxy
+      - ai-assistant
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openwebui.rule=Host(`chat.fatherfankscloud.uk`)"
+      - "traefik.http.routers.openwebui.entrypoints=websecure"
+      - "traefik.http.routers.openwebui.tls.certresolver=letsencrypt"
+      - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+
+networks:
+  ollama-net:
+    driver: bridge
+
+  proxy:
+    external: true
+
+  ai-assistant:
+    external: true
