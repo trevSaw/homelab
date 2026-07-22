@@ -6,5 +6,37 @@
   "dependencies": "",
   "risks": "R2: Missing healthchecks;R3: Absent resource limits",
   "documentation_status": "partial",
-  "adr_references": []
+  "adr_references": [],
+  "evidence": {
+    "classification": [
+      {
+        "source": "Service_Classification_Matrix.md",
+        "service": "beszel_agent"
+      }
+    ],
+    "runtime": [],
+    "dependencies": [],
+    "risks": [
+      {
+        "source": "Risk_Register.md",
+        "risk": "R2: Missing healthchecks"
+      },
+      {
+        "source": "Risk_Register.md",
+        "risk": "R3: Absent resource limits"
+      },
+      {
+        "source": "Risk_Register.md",
+        "risk": "R7: Documentation gaps"
+      }
+    ],
+    "migration": [
+      {
+        "source": "Migration_Priority_Matrix.md",
+        "service": "beszel_agent",
+        "priority": "P4-P5"
+      }
+    ],
+    "adrs": []
+  }
 }

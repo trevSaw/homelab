@@ -48,6 +48,34 @@ Documentation placeholder for EchoOS. Detailed documentation will be added durin
 - Migration priority: P0
 - Migration wave: Wave 1
 
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: EchoOS
+
+Runtime:
+- Source: Runtime_Configuration_Inventory.md
+- Service: EchoOS
+
+Dependencies:
+- Source: Dependency_Map.md
+- Relationship: Uses internal network echoos_net – isolated
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R1: Duplicate service names (case-insensitive)
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P0
+
+ADRs:
+- None identified.
+
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
 - Missing healthchecks

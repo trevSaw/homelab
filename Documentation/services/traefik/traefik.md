@@ -48,6 +48,32 @@ Service documentation placeholder for Traefik.
 - Migration priority: P2
 - Migration wave: Wave 2
 
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: traefik
+
+Runtime:
+- None identified.
+
+Dependencies:
+- Source: Dependency_Map.md
+- Relationship: Provides proxy external network used by many services (e.g., echoos)
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P2
+
+ADRs:
+- None identified.
+
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
 - Missing healthchecks
@@ -99,6 +125,32 @@ Service documentation placeholder for Traefik.
 - Phase 9.1 references: Master_Service_Inventory.md, Runtime_Configuration_Inventory.md
 - Migration priority: P2
 - Migration wave: Wave 2
+
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: traefik
+
+Runtime:
+- None identified.
+
+Dependencies:
+- Source: Dependency_Map.md
+- Relationship: Provides proxy external network used by many services (e.g., echoos)
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P2
+
+ADRs:
+- None identified.
 
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.

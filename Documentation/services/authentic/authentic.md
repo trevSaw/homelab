@@ -47,6 +47,31 @@ Documentation placeholder for authentic. Detailed documentation will be added du
 - Migration priority: P4‑P5
 - Migration wave: Wave 6
 
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: authentic
+
+Runtime:
+- None identified.
+
+Dependencies:
+- None identified.
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P4-P5
+
+ADRs:
+- None identified.
+
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
 - Missing healthchecks
