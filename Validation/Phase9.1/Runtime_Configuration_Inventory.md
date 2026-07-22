@@ -1,0 +1,10 @@
+## Runtime Configuration Inventory
+
+> Only fields **explicitly present** in the compose files are recorded. Absence ⇒ “Not Present”.
+
+| Service | Container(s) | Image (tag) | Ports | Volumes | Networks | Depends On | Restart | Healthcheck | Env File / Env Vars | Secrets | Resource Limits | Privileged | Host Network | Docker‑Socket | GPU |
+|---------|--------------|-------------|-------|---------|----------|-----------|---------|-------------|-------------------|---------|----------------|------------|--------------|--------------|-----|
+| **EchoOS** | `logseq-web` (container_name) | `ghcr.io/logseq/logseq-webapp:latest` | `3001:80` (host:container) | `/hive/echoos:/graph` (bind) | `echoos_net` (internal) | Not Present | `unless-stopped` | Not Present | `LOGSEQ_GRAPH=/graph` | Not Present | Not Present | Not Present | Not Present | Not Present |
+| **echoos** | `logseq-web` (container_name) | `ghcr.io/logseq/logseq-webapp:latest` | Not Present | `/hive/echoos:/graph` (bind) | `proxy`, `ai_net` (external) | Not Present | `unless-stopped` | Not Present | `LOGSEQ_GRAPH=/graph` | Not Present | Not Present | Not Present | Not Present | Not Present |
+| **odysseus** | `odysseus` (built from `.`) | Built locally (no image) | `${APP_BIND:-127.0.0.1}:${APP_PORT:-7000}:7000` (dynamic) | Multiple bind mounts: `./data:/app/data:z`, `./logs:/app/logs:z`, `./data/ssh:/app/.ssh:z`, `./data/huggingface:/app/.cache/huggingface:z`, `./data/local:/app/.local:z`, `/hive:/home/user/homelab/hive:z`, `/mnt/monarch:/home/user/homelab/monarch:z` | `ollama-net` (external) | `searxng` (service_healthy), `chromadb` (service_started) | `unless-stopped` | Not Present | 30+ environment vars (e.g., `OPENAI_API_KEY=${OPENAI_API_KEY:-}`) | Not Present | Not Present | Not Present | Not Present | Not Present |
+| **All other services** | Not Present (compose not parsed) | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present | Not Present |
