@@ -1,0 +1,10 @@
+{
+  "name": "traefik",
+  "category": "Reverse Proxy / Networking",
+  "priority": "P2",
+  "migration_wave": "Wave 2",
+  "dependencies": "provides reverse‑proxy network to many services",
+  "risks": "R2: Missing healthchecks;R3: Absent resource limits",
+  "documentation_status": "partial",
+  "adr_references": []
+}

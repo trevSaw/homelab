@@ -1,0 +1,13 @@
+{
+  "name": "echoos",
+  "category": "Utilities",
+  "priority": "P0",
+  "migration_wave": "Wave 1",
+  "dependencies": "proxy (Traefik), ai_net (shared with AI services)",
+  "risks": "R1: Duplicate service names (case‑insensitive);R2: Missing healthchecks;R3: Absent resource limits",
+  "documentation_status": "partial",
+  "adr_references": [],
+  "duplicate_detected": true,
+  "duplicate_group": ["EchoOS","echoos"],
+  "resolution_status": "deferred"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "calibre-web",
+  "category": "Productivity",
+  "priority": "P4‑P5",
+  "migration_wave": "Wave 4",
+  "dependencies": "",
+  "risks": "R2: Missing healthchecks;R3: Absent resource limits",
+  "documentation_status": "partial",
+  "adr_references": []
+}
