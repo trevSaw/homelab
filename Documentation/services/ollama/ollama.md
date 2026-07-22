@@ -48,6 +48,32 @@ Service documentation placeholder for Ollama.
 - Migration priority: P2
 - Migration wave: Wave 2
 
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: ollama
+
+Runtime:
+- None identified.
+
+Dependencies:
+- Source: Dependency_Map.md
+- Relationship: Provides ollama-net external network used by odysseus
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P2
+
+ADRs:
+- None identified.
+
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
 - Missing healthchecks

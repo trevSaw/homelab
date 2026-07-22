@@ -47,6 +47,35 @@ Documentation placeholder for odysseus. Detailed documentation will be added dur
 - Migration priority: P1
 - Migration wave: Wave 2
 
+### Evidence References
+
+Classification:
+- Source: Service_Classification_Matrix.md
+- Service: odysseus
+
+Runtime:
+- Source: Runtime_Configuration_Inventory.md
+- Service: odysseus
+
+Dependencies:
+- Source: Dependency_Map.md
+- Relationship: Explicit depends_on: searxng (service_healthy), chromadb (service_started)
+- Relationship: Uses external network ollama-net (shared with ollama service)
+
+Risks:
+- Source: Risk_Register.md
+- Risk: R2: Missing healthchecks
+- Risk: R3: Absent resource limits
+- Risk: R4: Plaintext secret placeholders
+- Risk: R7: Documentation gaps
+
+Migration:
+- Source: Migration_Priority_Matrix.md
+- Priority: P1
+
+ADRs:
+- None identified.
+
 ## Known Issues
 - Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
 - Missing healthchecks
