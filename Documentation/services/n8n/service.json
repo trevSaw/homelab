@@ -1,0 +1,10 @@
+{
+  "name": "n8n",
+  "category": "Automation",
+  "priority": "P4‑P5",
+  "migration_wave": "Wave 5",
+  "dependencies": "",
+  "risks": "R2: Missing healthchecks;R3: Absent resource limits",
+  "documentation_status": "partial",
+  "adr_references": []
+}

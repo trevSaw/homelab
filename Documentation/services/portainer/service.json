@@ -1,0 +1,10 @@
+{
+  "name": "portainer",
+  "category": "Infrastructure / Management",
+  "priority": "P3",
+  "migration_wave": "Wave 3",
+  "dependencies": "",
+  "risks": "R2: Missing healthchecks;R3: Absent resource limits",
+  "documentation_status": "partial",
+  "adr_references": []
+}

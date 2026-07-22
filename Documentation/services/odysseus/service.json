@@ -1,0 +1,10 @@
+{
+  "name": "odysseus",
+  "category": "AI",
+  "priority": "P1",
+  "migration_wave": "Wave 2",
+  "dependencies": "searxng, chromadb",
+  "risks": "R2: Missing healthchecks;R3: Absent resource limits;R4: Plaintext secret placeholders",
+  "documentation_status": "partial",
+  "adr_references": []
+}
