@@ -154,7 +154,7 @@ Phase 9 closes the governance / documentation / evidence initiative for the curr
 | Artifact | Path |
 |----------|------|
 | Standards Roadmap | `Architecture/standards/StandardsRoadmap.md` |
-| Version Control Governance Standard | `Documentation/standards/Version_Control_Standard.md` |
+| Version Control Governance Standard | `Documentation/governance/Version_Control_Standard.md` |
 | Phase 8 Completion Report | `Validation/Phase8-Completion-Report.md` |
 | Phase 9.4 QA Signoff | `Validation/Phase9.4/Phase9.4_QA_Signoff.md` |
 

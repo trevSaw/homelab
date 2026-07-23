@@ -5,12 +5,12 @@ status: Active
 version: 1.0.0
 owner: Homelab Governance
 applies_to: All repository contributors (human and AI)
-canonical_path: Documentation/standards/Version_Control_Standard.md
+canonical_path: Documentation/governance/Version_Control_Standard.md
 ---
 
 # Version Control Governance Standard
 
-**Canonical path:** `Documentation/standards/Version_Control_Standard.md`  
+**Canonical path:** `Documentation/governance/Version_Control_Standard.md`  
 **Status:** Active  
 **Version:** 1.0.0  
 
@@ -333,7 +333,7 @@ Validation
 ```text
 Docs: Add Version Control Governance Standard
 
-- Created Documentation/standards/Version_Control_Standard.md
+- Created Documentation/governance/Version_Control_Standard.md
 - Defined branching, commits, tags, merge, and AI contribution rules
 
 Validation
@@ -660,7 +660,7 @@ Adoption of any item above should be documented (preferably via ADR) and should 
 | Field | Value |
 |-------|-------|
 | Document name | Version Control Governance Standard |
-| Canonical path | `Documentation/standards/Version_Control_Standard.md` |
+| Canonical path | `Documentation/governance/Version_Control_Standard.md` |
 | Version | 1.0.0 |
 | Status | Active |
 | Review cadence | At least annually, or when branching/CI policy changes |
