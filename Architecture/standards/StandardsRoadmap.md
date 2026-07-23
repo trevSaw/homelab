@@ -286,65 +286,282 @@ Create standardized, AI-consumable service documentation and metadata for every 
 
 ---
 
-# Phase 10 — Production Validation
+# Phase 10 — Infrastructure Standardization & Service Modernization
 
-Validate the homelab as a complete production environment.
+**Status:** ⏳ Planned
 
-## Validation Areas
+Implement the governance standards established during Phase 9 across the live homelab environment.
 
-- Standards Compliance
-- Documentation Coverage
-- Service Lifecycle Compliance
-- Compose Compliance
-- Audit Compliance
-- Backup Validation
-- Disaster Recovery Testing
-- Monitoring Validation
-- Performance Review
-- Security Review
-- Service Catalog Verification
-- Index Verification
-- ADR Verification
+This phase transforms the repository from a governed design into a production-standard infrastructure platform.
 
-## Goal
+## Objectives
 
-Homelab v2 is fully compliant with every governance standard.
+- Standardize production infrastructure
+- Eliminate technical debt identified during Phase 9
+- Align every service with governance standards
+- Implement approved architectural decisions (ADRs)
+- Prepare the platform for production validation
 
 ---
 
-# Governance Freeze v1.0
+## Scope
 
-At this milestone:
+### Docker Standardization
 
-- Governance documents become Version 1.0.
-- Repository structure becomes stable.
-- Future changes follow the Service Lifecycle Standard.
-- Future changes require governance review.
-- Standards evolve through versioned releases (v1.1, v1.2, v2.0, etc.).
-- AI systems are onboarded against a stable governance baseline.
+Bring every deployment into compliance with the Docker Compose Standard.
 
-This marks the completion of **Homelab v2**.
+Implementation includes:
+
+- Standard compose structure
+- Standard naming conventions
+- Standard labels
+- Restart policies
+- Health checks
+- Resource limits
+- Network definitions
+- Volume conventions
+- Environment variable standardization
+
+---
+
+### Storage Modernization
+
+Implement the approved storage architecture.
+
+Examples include:
+
+- Standard application data layout
+- Consistent media storage
+- Standard backup locations
+- Standard download locations
+- Removal of legacy directory structures
+
+---
+
+### Networking Modernization
+
+Implement the approved networking architecture.
+
+Includes:
+
+- Standard proxy network
+- Internal service networks
+- Monitoring network
+- Removal of unnecessary host port bindings
+- Standard network naming
+- Improved service isolation
+
+---
+
+### Security Hardening
+
+Address findings from Phase 9.
+
+Implementation includes:
+
+- Remove plaintext secrets
+- Migrate secrets out of Git
+- Improve filesystem permissions
+- Reduce privileged containers
+- Review Docker socket exposure
+- Review exposed ports
+- Standardize container security settings
+
+---
+
+### Technical Debt Resolution
+
+Resolve governance findings identified during Phase 9.
+
+Examples include:
+
+- Deprecated containers
+- Outdated images
+- Inconsistent naming
+- Missing documentation
+- Missing metadata
+- Undocumented dependencies
+- Repository cleanup
+
+---
+
+## Deliverables
+
+- Updated Docker Compose deployments
+- Updated Service Catalog
+- Updated architecture documentation
+- Additional ADRs
+- Migration documentation
+- Standardized storage layout
+- Standardized networking
+- Security improvements
+- Technical debt remediation reports
+
+---
+
+## Validation Criteria
+
+- Compose files validate successfully
+- Services deploy successfully
+- ADR implementations match architecture
+- Service documentation reflects production
+- Technical debt items resolved or documented
+- Security improvements verified
+
+---
+
+## Exit Criteria
+
+Phase 10 is complete when:
+
+- Every production service complies with governance standards
+- Storage architecture matches approved ADRs
+- Compose deployments pass validation
+- Secrets are managed according to standards
+- Networks are standardized
+- Documentation accurately reflects production
+- Phase 9 technical debt has been addressed or formally deferred
+
+---
+
+# Phase 11 — Production Validation & Governance Freeze v1.0
+
+**Status:** ⏳ Planned
+
+Validate the homelab as a complete production environment following the implementation work completed during Phase 10.
+
+---
+
+## Validation Areas
+
+### Standards Compliance
+
+Verify:
+
+- Every service follows governance standards
+- Every directory follows repository standards
+- Every deployment follows lifecycle requirements
+
+---
+
+### Documentation Coverage
+
+Verify:
+
+- README coverage
+- Service Catalog accuracy
+- Documentation completeness
+- ADR references
+- Dependency mapping
+- Cross-reference integrity
+
+---
+
+### Runtime Validation
+
+Verify:
+
+- Service startup
+- Health checks
+- Monitoring
+- Logging
+- Backup operation
+- Disaster recovery procedures
+
+---
+
+### Compose Compliance
+
+Verify:
+
+- Compose Standard compliance
+- Environment configuration
+- Networking
+- Storage configuration
+- Resource definitions
+
+---
+
+### Security Review
+
+Verify:
+
+- Secret management
+- Container permissions
+- Network exposure
+- Least privilege
+- Docker security
+- Infrastructure hardening
+
+---
+
+### Repository Validation
+
+Verify:
+
+- Service Catalog
+- Repository indexes
+- ADR repository
+- Architecture documentation
+- Validation artifacts
+- Governance reports
+
+---
+
+## Deliverables
+
+- Production Validation Report
+- Standards Compliance Report
+- Security Review Report
+- Backup & Disaster Recovery Validation
+- Monitoring Validation Report
+- Performance Review
+- Final Governance Compliance Report
+- Homelab v2 Certification Report
+
+---
+
+## Governance Freeze v1.0
+
+At successful completion:
+
+- Governance documents become Version 1.0
+- Repository structure becomes stable
+- Architecture baseline becomes authoritative
+- Future changes require Service Lifecycle governance
+- Standards evolve through versioned releases (v1.1, v1.2, v2.0, etc.)
+- AI systems onboard against a stable governance baseline
+
+This milestone marks the completion of **Homelab v2**.
 
 ---
 
 # Homelab v2 Complete
 
-The homelab now has:
+The platform now provides:
 
 - Complete governance
 - Standardized repository
 - Standardized documentation
 - Standardized deployment
+- Standardized infrastructure
+- Modernized networking
+- Modernized storage
+- Hardened security
 - Audited services
 - Production validation
 - Stable architecture
 - Repeatable governance workflows
+- AI-ready metadata
+- Verified operational compliance
 
 The platform is now ready for AI orchestration.
 
 ---
 
-# Phase 11 — Deploy AI Orchestration
+# Phase 12 — Deploy AI Orchestration
+
+**Status:** ⏳ Planned
 
 Introduce AI orchestration using the completed governance framework.
 
@@ -370,37 +587,39 @@ Introduce AI orchestration using the completed governance framework.
 
 ## Goal
 
-AI learns an already-governed system rather than creating one.
+AI learns an already-governed production platform rather than creating one.
 
 ---
 
-# Phase 12 — AI Automation
+# Phase 13 — AI Automation
+
+**Status:** ⏳ Planned
 
 Gradually automate homelab operations while preserving human governance.
 
 ## Automation Targets
 
-- Automatic Audits
-- Documentation Generation
-- Service Creation
-- Change Proposals
-- Lifecycle Management
-- Scheduled Compliance Reviews
-- Template Generation
-- ADR Suggestions
-- Service Reviews
-- Architecture Validation
-- Compliance Reporting
-- Knowledge Reuse
-- Continuous Improvement
+- Automatic audits
+- Documentation generation
+- Service creation
+- Change proposals
+- Lifecycle management
+- Scheduled compliance reviews
+- Template generation
+- ADR suggestions
+- Service reviews
+- Architecture validation
+- Compliance reporting
+- Knowledge reuse
+- Continuous improvement
 
 ## Human Approval Required
 
-- Production Deployments
-- Architecture Changes
-- Security Decisions
-- Breaking Changes
-- Governance Changes
+- Production deployments
+- Architecture changes
+- Security decisions
+- Breaking changes
+- Governance changes
 
 ## Goal
 
@@ -417,9 +636,13 @@ Repository Governance
           ↓
 Service Governance
           ↓
+Infrastructure Standardization
+          ↓
 Production Validation
           ↓
-Stable Homelab
+Governance Freeze v1.0
+          ↓
+Stable Homelab Platform
           ↓
 AI Orchestration
           ↓
