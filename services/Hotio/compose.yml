@@ -62,14 +62,3 @@ services:
 networks:
     default:
         name: hotio_default
-x-casaos:
-    author: self
-    category: self
-    hostname: ""
-    icon: ""
-    index: /
-    is_uncontrolled: false
-    port_map: ""
-    scheme: http
-    title:
-        custom: qbittorrent

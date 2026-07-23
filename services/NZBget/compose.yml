@@ -31,16 +31,6 @@
  #   cap_add: []
  #   network_mode: container:qbittorrent
  #   privileged: false
-#x-casaos:
-#  author: self
-#  category: self
-#  hostname: ""
-#  icon: ""
-#  index: /
-#  port_map: "6789"
-#  scheme: http
-#  title:
-#    custom: NZBGet
 name: nzbget
 services:
   nzbget:
@@ -74,13 +64,3 @@ services:
     cap_add: []
     network_mode: container:qbittorrent
     privileged: false
-x-casaos:
-  author: self
-  category: self
-  hostname: ""
-  icon: ""
-  index: /
-  port_map: "6789"
-  scheme: http
-  title:
-    custom: NZBGet
