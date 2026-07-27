@@ -23,7 +23,7 @@ homelab/
 ├─ Architecture/                # standards, decisions, diagrams, AI, hardware
 ├─ Assets/                      # images, icons, diagrams
 ├─ Validation/                  # audit reports, compliance artefacts
-├─ Scripts/                     # utility scripts for CI / maintenance
+├─ scripts/                     # audit, maintenance, backup, migration, helpers
 ├─ Templates/                   # Docker‑Compose, CI, service templates
 ├─ Indexes/
 │   ├─ ServiceCatalog.md

@@ -10,6 +10,9 @@ DOCKER_SAMPLE_INTERVAL=${DOCKER_SAMPLE_INTERVAL:-3} # seconds between samples
 set -euo pipefail
 IFS=$'\n\t'
 
+# Ensure common binary locations are searchable (cron/sudo/CI often have a thin PATH)
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin${PATH:+:$PATH}"
+
 # ------------------------------------------------------------------
 # Utility helpers
 # ------------------------------------------------------------------
@@ -19,6 +22,10 @@ run_cmd() {
 
 check_dep() {
   command -v "$1" >/dev/null 2>&1 && echo "✅" || echo "❌ Missing"
+}
+
+is_int() {
+  [[ "$1" =~ ^[0-9]+$ ]]
 }
 
 # ------------------------------------------------------------------
@@ -158,7 +165,12 @@ available_governors=$(run_cmd cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_a
 current_freq=$(run_cmd cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq 2>/dev/null || echo "N/A")
 # Turbo Boost detection (Intel)
 if [[ -f /sys/devices/system/cpu/intel_pstate/no_turbo ]]; then
-  turbo_enabled=$( [[ $(cat /sys/devices/system/cpu/intel_pstate/no_turbo) -eq 0 ]] && echo "Enabled" || echo "Disabled")
+  no_turbo=$(cat /sys/devices/system/cpu/intel_pstate/no_turbo 2>/dev/null || true)
+  if is_int "$no_turbo"; then
+    turbo_enabled=$( [[ "$no_turbo" -eq 0 ]] && echo "Enabled" || echo "Disabled")
+  else
+    turbo_enabled="Undetectable"
+  fi
 else
   turbo_enabled="Undetectable"
 fi
@@ -202,19 +214,28 @@ add_line "- **Quick Sync Availability:** ${quick_sync}"
 add_section_header "Storage & Disk Analysis"
 disk_table="| Device | Type | Rotational | Mountpoint | Mount Options |\n|--------|------|------------|------------|---------------|"
 while IFS= read -r dev; do
+  [[ -z "$dev" ]] && continue
   dev_path="/dev/${dev}"
+  case "$dev_path" in
+    /dev/loop*|/dev/ram*|/dev/zram*)
+      continue
+      ;;
+  esac
   # Determine type
+  rot="N/A"
   if [[ -f "/sys/block/${dev}/queue/rotational" ]]; then
     rot=$(cat "/sys/block/${dev}/queue/rotational")
-    if [[ "$rot" -eq 0 ]]; then
+    if is_int "$rot" && [[ "$rot" -eq 0 ]]; then
       # try to differentiate SSD vs NVMe
       if run_cmd smartctl -i "${dev_path}" | grep -iq "NVMe"; then
         type="NVMe SSD"
       else
         type="SATA SSD"
       fi
-    else
+    elif is_int "$rot" && [[ "$rot" -eq 1 ]]; then
       type="HDD"
+    else
+      type="Unknown"
     fi
   else
     type="Unknown"
@@ -359,11 +380,11 @@ add_recommendation() {
 }
 
 # Example dynamic rules (simplified for brevity)
-if [[ "$governor" != "powersave" && "$cpu_util" -lt 20 ]]; then
+if [[ "$governor" != "powersave" ]] && is_int "$cpu_util" && [[ "$cpu_util" -lt 20 ]]; then
   add_recommendation "CPU Governor Evaluation" "Medium" "Possible responsiveness reduction" "Current governor is $governor while system is mostly idle." "★★★★" "★" "Low" "High"
 fi
 
-if [[ "$turbo_enabled" == "Enabled" ]] && [[ "$cpu_util" =~ ^[0-9]+$ ]] && [[ "$cpu_util" -lt 10 ]]; then
+if [[ "$turbo_enabled" == "Enabled" ]] && is_int "$cpu_util" && [[ "$cpu_util" -lt 10 ]]; then
   add_recommendation "Turbo Boost Consideration" "Medium" "Reduced burst performance" "Turbo Boost is enabled on an otherwise idle system." "★★★" "★" "Low" "Medium"
 fi
 
@@ -396,7 +417,7 @@ media_containers=("jellyfin" "emby" "plex" "plexmediaserver")
   for mc in "${media_containers[@]}"; do
     if docker ps --format '{{.Names}}' | grep -i "$mc" >/dev/null; then
       devs=$(docker inspect "$mc" 2>/dev/null | jq -r '.[0].HostConfig.Devices // [] | length')
-      if (( devs == 0 )); then
+      if is_int "$devs" && (( devs == 0 )); then
         add_recommendation "Expose /dev/dri to $mc" "Low" "High (hardware transcoding)" "$mc does not have access to the GPU while Quick Sync is available." "★★★★" "★★" "Low" "Medium"
       fi
     fi
@@ -407,7 +428,7 @@ fi
 if command -v docker >/dev/null 2>&1; then
   while IFS= read -r cid; do
     avg=$(docker stats --no-stream --format "{{.CPUPerc}}" "$cid" 2>/dev/null | tr -d '%')
-    if [[ -n "$avg" && $(awk "BEGIN{print ($avg>5)}") -eq 1 ]]; then
+    if [[ "$avg" =~ ^[0-9]+([.][0-9]+)?$ ]] && [[ $(awk "BEGIN{print ($avg>5)}") -eq 1 ]]; then
       cname=$(docker inspect --format '{{.Name}}' "$cid" | cut -c2-)
       add_recommendation "Investigate idle CPU in $cname" "Medium" "Potentially lower performance if throttled" "Container shows average CPU >5 % while likely idle." "★★★" "★★" "Low" "Medium"
     fi
