@@ -99,6 +99,7 @@ Leave **Documentation** and **Deployment** blank or use `—` for services that 
 | Open WebUI | AI UI | Production | Critical | — | — | [homelab/compose/ai/ollama-openwebui/](../../homelab/compose/ai/ollama-openwebui/) | LibreChat | https://github.com/open-webui/open-webui | Web interface for Ollama | Main AI frontend |
 | Hermes Agent | AI Agent | Planned | High | — | — | — | OpenHands | https://github.com/NousResearch/hermes-agent | Autonomous AI agent | Future AI assistant |
 | ChromaDB | Vector Database | Planned | Medium | — | — | — | Qdrant, Weaviate | https://github.com/chroma-core/chroma | Embeddings and semantic search | AI memory backend |
+| Graphify | Knowledge Graph | Researching | Medium | — | — | — | None | https://github.com/Graphify-Labs/graphify | Turns codebases, docs, schemas, and PDFs into a queryable knowledge graph for AI coding assistants | Needs research; Cursor/Claude skill, local AST parsing, no vector store |
 | Odysseus | Research | Planned | High | — | — | — | Open Deep Research | https://github.com/arthurcolle/odysseus | AI deep research | Web research workflows |
 | SearXNG | Search | Planned | High | — | — | — | Brave Search API | https://github.com/searxng/searxng | Private metasearch engine | Used by AI agents |
 | n8n | Automation | Planned | Medium | — | — | — | Activepieces | https://github.com/n8n-io/n8n | Workflow automation | AI workflows |
