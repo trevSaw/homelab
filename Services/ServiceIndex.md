@@ -100,6 +100,7 @@ Leave **Documentation** and **Deployment** blank or use `—` for services that 
 | Hermes Agent | AI Agent | Planned | High | — | — | — | OpenHands | https://github.com/NousResearch/hermes-agent | Autonomous AI agent | Future AI assistant |
 | ChromaDB | Vector Database | Planned | Medium | — | — | — | Qdrant, Weaviate | https://github.com/chroma-core/chroma | Embeddings and semantic search | AI memory backend |
 | Graphify | Knowledge Graph | Researching | Medium | — | — | — | None | https://github.com/Graphify-Labs/graphify | Turns codebases, docs, schemas, and PDFs into a queryable knowledge graph for AI coding assistants | Needs research; Cursor/Claude skill, local AST parsing, no vector store |
+| OmniRoute | AI Gateway | Researching | Medium | — | — | — | LiteLLM, OpenRouter | https://github.com/diegosouzapw/OmniRoute | Unified AI gateway across many providers and models for coding assistants | Needs research; quota-aware fallback and token compression |
 | Odysseus | Research | Planned | High | — | — | — | Open Deep Research | https://github.com/arthurcolle/odysseus | AI deep research | Web research workflows |
 | SearXNG | Search | Planned | High | — | — | — | Brave Search API | https://github.com/searxng/searxng | Private metasearch engine | Used by AI agents |
 | n8n | Automation | Planned | Medium | — | — | — | Activepieces | https://github.com/n8n-io/n8n | Workflow automation | AI workflows |
