@@ -1328,10 +1328,10 @@ fi
 if (( docker_available > 0 )); then
   if (( running_container_count > 30 )); then
     score=$((score - 6))
-    score_notes+=("very large always-on fleet (-6)")
+    score_notes+=("very large always-on container set (-6)")
   elif (( running_container_count > 20 )); then
     score=$((score - 3))
-    score_notes+=("large always-on fleet (-3)")
+    score_notes+=("large always-on container set (-3)")
   fi
   if (( no_limit_count > 3 )); then
     score=$((score - 5))

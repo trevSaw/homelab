@@ -62,8 +62,7 @@ homelab
 │   │       ├── compose.yaml
 │   │       ├── backup-volumes.sh
 │   │       ├── compose-nvidia.yaml
-│   │       ├── 20b-olla-compose.yaml
-│   │       └── compose-mujin-production.yaml
+│   │       └── 20b-olla-compose.yaml
 │   ├── automation
 │   │   └── README.md
 │   ├── development

@@ -176,7 +176,7 @@ Audit
         ↓
 Validation
         ↓
-Production Approval
+Deploy Readiness
 ```
 
 ## Phase 9 Outcomes
@@ -302,9 +302,9 @@ Scoped Phase 10 delivered backwards-compatible compose standardization, secret h
 - Full DockerStandard directory-layout migration (`compose/<domain>/...`)
 - Phase 9.4 future items F10-1 through F10-6 (governance metadata enrichment)
 
-Implement the governance standards established during Phase 9 across the live homelab environment **without redesigning production infrastructure**.
+Implement the governance standards established during Phase 9 across the live homelab environment **without redesigning running infrastructure**.
 
-This phase transforms the repository from a governed design into a production-standard infrastructure platform for the scoped deliverables above.
+This phase transforms the repository from a governed design into a production-standard personal infrastructure baseline for the scoped deliverables above.
 
 ## Objectives
 
@@ -387,11 +387,11 @@ Scoped Phase 10 is complete when:
 
 ---
 
-# Phase 11 — Production Validation & Governance Freeze v1.0
+# Phase 11 — Homelab Validation & Governance Freeze v1.0
 
 **Status:** ⏳ Planned
 
-Validate the homelab as a complete production environment following the implementation work completed during Phase 10.
+Validate the personal homelab as a complete, reliable self-hosted environment following the implementation work completed during Phase 10.
 
 ---
 
@@ -473,7 +473,7 @@ Verify:
 
 ## Deliverables
 
-- Production Validation Report
+- Homelab Validation Report
 - Standards Compliance Report
 - Security Review Report
 - Backup & Disaster Recovery Validation
@@ -501,7 +501,7 @@ This milestone marks the completion of **Homelab v2**.
 
 # Homelab v2 Complete
 
-The platform now provides:
+The personal homelab platform now provides:
 
 - Complete governance
 - Standardized repository
@@ -512,13 +512,13 @@ The platform now provides:
 - Modernized storage
 - Hardened security
 - Audited services
-- Production validation
+- Homelab validation
 - Stable architecture
 - Repeatable governance workflows
 - AI-ready metadata
 - Verified operational compliance
 
-The platform is now ready for AI orchestration.
+The platform is now ready for local AI orchestration.
 
 ---
 
@@ -550,7 +550,7 @@ Introduce AI orchestration using the completed governance framework.
 
 ## Goal
 
-AI learns an already-governed production platform rather than creating one.
+AI learns an already-governed personal homelab platform rather than creating one.
 
 ---
 
@@ -578,7 +578,7 @@ Gradually automate homelab operations while preserving human governance.
 
 ## Human Approval Required
 
-- Production deployments
+- Homelab service deployments
 - Architecture changes
 - Security decisions
 - Breaking changes
@@ -601,7 +601,7 @@ Service Governance
           ↓
 Infrastructure Standardization
           ↓
-Production Validation
+Homelab Validation
           ↓
 Governance Freeze v1.0
           ↓

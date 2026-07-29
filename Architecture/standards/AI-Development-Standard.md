@@ -47,7 +47,7 @@ The complete lifecycle for any AI‑assisted task is defined below. Each stage *
 | **Audit** | Perform a formal audit of the complete change set. | All artifacts from previous stages. | Audit report, mitigation actions. | Auditor AI | Audit Standard Implementation Plan → Section 3 | No (audit is advisory) | High‑severity audit findings. |
 | **Deployment** | Deploy to target environment following approved procedures. | Approved code, configuration, documentation. | Running service, deployment logs. | Orchestrator AI (Human oversight) | Service Lifecycle Standard v1.0 → Section 7 | **MUST** obtain Human deployment approval. | Deployment rollback required. |
 | **Maintenance** | Ongoing updates, bug fixes, and performance tuning. | Deployed service, monitoring data. | Maintenance tickets, patches. | Builder AI & Planner AI | Documentation Standard → Section 4 | No | Repeated failures. |
-| **Continuous Improvement** | Incorporate audit lessons, update templates, and refine prompts. | Audit findings, user feedback. | Revised standards, updated templates. | Memory AI & Orchestrator AI | — | No | None (internal). |
+| **Continuous Improvement** | Incorporate audit lessons, update templates, and refine prompts. | Audit findings, user feedback. | Revised standards, updated templates. | Memory AI & Orchestrator AI | — | No | None (homelab-local). |
 
 ---
 

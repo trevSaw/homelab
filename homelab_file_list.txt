@@ -28,7 +28,6 @@ homelab/compose/ai/ollama-openwebui/compose.yaml
 homelab/compose/ai/ollama-openwebui/backup-volumes.sh
 homelab/compose/ai/ollama-openwebui/compose-nvidia.yaml
 homelab/compose/ai/ollama-openwebui/20b-olla-compose.yaml
-homelab/compose/ai/ollama-openwebui/compose-mujin-production.yaml
 homelab/compose/networking/README.md
 homelab/compose/media/README.md
 homelab/LICENSE

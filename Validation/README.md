@@ -1,6 +1,6 @@
 # Validation
 
-Central store for verification artefacts across the Homelab Governance repository.
+Central store for verification artefacts across this personal Homelab repository.
 
 ## Layout
 

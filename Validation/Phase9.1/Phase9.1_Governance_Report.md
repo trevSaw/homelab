@@ -114,7 +114,7 @@ All findings are **evidence‑based**; no assumptions were made.
 | **portainer** | **P3** | Management UI; moderate impact. |
 | **jellyfin**, **Hotio**, **n8n**, **NZBget**, **code‑server**, **authentic**, **beszel**, **beszel_agent**, **calibre-web**, **CosmoOS**, **homepage**, **honcho**, **hermes** | **P4‑P5** (P4 for services that expose ports, P5 for low‑risk utilities) | No explicit healthchecks, no resource limits, documentation missing – low‑risk but should be migrated after higher‑priority services. |
 
-Priorities were derived **solely** from evidence (duplicate, healthcheck presence, network centrality). No speculative business importance was assumed.
+Priorities were derived **solely** from evidence (duplicate, healthcheck presence, network centrality). No speculative service-importance ranking beyond operational criticality was assumed.
 
 ---
 
@@ -216,7 +216,7 @@ No discrepancies detected.
 4. **Resolve duplicate services** – schedule manual review meeting.  
 5. **Address high‑risk items** – add healthchecks and resource limits in Phase 9.3.  
 6. **Create documentation** – allocate ownership per service in Phase 9.3.  
-7. **Finalize migration waves** – approve wave schedule with operations team.  
+7. **Finalize migration waves** – approve wave schedule as the homelab administrator.  
 8. **Execute migration** – follow wave plan, monitoring for regression.  
 
 All artifacts are stored under `homelab/Validation/Phase9.1/` as required. No files outside this directory were modified.

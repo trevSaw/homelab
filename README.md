@@ -1,8 +1,8 @@
 # homelab Repository
 
 ## Purpose
-The **homelab** repository is the production‑grade governance hub for the Homelab environment.  
-It houses the architecture definitions, standards, ADRs, templates, service documentation, indexes, assets, and supporting scripts that drive the long‑term operation, reliability, and scalability of the homelab.
+The **homelab** repository is the documentation and standards hub for this **personal self-hosted infrastructure** (host: **mocha**, Ubuntu Server, Docker Compose, Traefik, ZFS).  
+It houses architecture definitions, standards, ADRs, templates, service documentation, indexes, assets, and supporting scripts that keep a **single-administrator** homelab reliable and maintainable over time.
 
 ## Scope
 - **Architecture** – High‑level design decisions, networking, hardware, AI, and security diagrams.  
@@ -47,20 +47,21 @@ homelab/
 
 ## Repository Philosophy
 - **Longevity** – Repository names are immutable; versioning lives inside the artefacts.  
-- **Governance‑First** – Standards and ADRs drive every change; documentation is the single source of truth.  
-- **Automation‑Driven** – CI pipelines automatically generate indexes, validate front‑matter, and enforce the naming standard.  
-- **Modular Growth** – New domains (e.g., AI, monitoring) can be added as top‑level folders without refactoring existing structure.
+- **Standards‑First** – Homelab standards and ADRs drive every change; documentation is the single source of truth.  
+- **Automation‑Driven** – CI pipelines generate indexes, validate front‑matter, and enforce naming where enabled.  
+- **Modular Growth** – New domains (e.g., local AI, media, monitoring) can be added as top‑level folders without refactoring existing structure.  
+- **Single Administrator** – Designed for one homelab administrator; no corporate change boards or multi-team ownership model.
 
 ## Future Roadmap
 - **Automated Index Regeneration** – Full CI job that rebuilds all `Indexes/*.md` on each merge.  
 - **AI‑Assisted Navigation** – Semantic search powered by the MetadataStandard to surface relevant docs.  
 - **Hermes/Honcho Integration** – Impact analysis for architecture changes.  
-- **Versioned Release Packages** – Exportable bundles of standards/templates for downstream consumption.
+- **Reusable Templates** – Packaged standards/templates for personal reuse across homelab services.
 
 ## Links to Related Repositories
-- **knowledge‑base** – Research, guides, and reference material (no governance overhead).  
-- **automation** – IaC, scripts, and CI/CD pipelines that provision the homelab.
+- **knowledge‑base** – Research, guides, and reference material (lightweight docs).  
+- **automation** – Scripts and automation that help operate the homelab.
 
 ---
 
-*This README defines the foundational layout and governance model for the **homelab** repository.*
+*This README defines the foundational layout and standards model for this personal **homelab** repository.*

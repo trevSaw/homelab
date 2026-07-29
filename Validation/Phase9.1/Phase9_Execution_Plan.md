@@ -6,7 +6,7 @@
 4. **Resolve duplicate services** – schedule manual review meeting.  
 5. **Address high‑risk items** – add healthchecks and resource limits in Phase 9.3.  
 6. **Create documentation** – allocate ownership per service in Phase 9.3.  
-7. **Finalize migration waves** – approve wave schedule with operations team.  
+7. **Finalize migration waves** – approve wave schedule as the homelab administrator.  
 8. **Execute migration** – follow wave plan, monitoring for regression.  
 
 All artifacts are stored under `homelab/Validation/Phase9.1/` as required. No files outside this directory were modified.
