@@ -75,6 +75,10 @@ services:
       chromadb:
         condition: service_started
     restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   chromadb:
     image: docker.io/chromadb/chroma:latest
@@ -85,6 +89,10 @@ services:
     environment:
       - ANONYMIZED_TELEMETRY=FALSE
     restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   searxng:
     # Pinned, not :latest — odysseus waits on searxng's healthcheck
@@ -135,6 +143,10 @@ services:
       retries: 20
       start_period: 10s
     restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   ntfy:
     image: docker.io/binwiederhier/ntfy
@@ -146,6 +158,10 @@ services:
     environment:
       - NTFY_BASE_URL=${NTFY_BASE_URL:-http://localhost:8091}
     restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   searxng-data:

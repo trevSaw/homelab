@@ -9,31 +9,33 @@ Documentation placeholder for authentic. Detailed documentation will be added du
 
 ## Repository Location
 - Service directory: `homelab/Services/authentic.md`
-- Compose file: Not documented — requires future operational definition.
+- Compose file: `homelab/Services/authentic/compose.yaml`
+- Environment template: `homelab/Services/.env.example` → `Services/.env`
 - Documentation path: `homelab/Documentation/services/authentic/authentic.md`
 
 ## Runtime Information
-- Container names: Not documented — requires future operational definition.
-- Images: Not documented — requires future operational definition.
-- Ports: Not documented — requires future operational definition.
-- Networks: Not documented — requires future operational definition.
-- Volumes: Not documented — requires future operational definition.
-- Restart policy: Not documented — requires future operational definition.
-- Environment files: Not documented — requires future operational definition.
-- Dependencies: 
+- Container names: `authentik-db`, `authentik-redis`, `authentik-server`, `authentik-worker`
+- Images: `postgres:16-alpine`, `redis:alpine`, `ghcr.io/goauthentik/server:2024.12.3`
+- Ports: none on host (Traefik 9000)
+- Networks: `authentik` (bridge), `proxy`
+- Volumes: `${PATH_DATA}/authentik/...`
+- Restart policy: `unless-stopped`
+- Environment files: `Services/.env` (`PG_*`, `AUTHENTIK_SECRET_KEY`, paths/domain)
+- Dependencies: PostgreSQL + Redis (in-stack)
 
 ## Architecture Relationships
-- Upstream dependencies: Not documented — requires future operational definition.
-- Downstream consumers: Not documented — requires future operational definition.
-- Network relationships: Not documented — requires future operational definition.
-- Reverse proxy relationships: Not documented — requires future operational definition.
+- Upstream dependencies: PostgreSQL, Redis
+- Downstream consumers: SSO clients via Traefik
+- Network relationships: authentik + proxy
+- Reverse proxy relationships: `sso.${DEFAULT_DOMAIN}`
 
 ## Security Review
-- Secret handling approach: Not documented — requires future operational definition.
-- Privileged mode status: Not documented — requires future operational definition.
-- Docker socket exposure: Not documented — requires future operational definition.
-- External exposure: Not documented — requires future operational definition.
-- Known risks: R2: Missing healthchecks;R3: Absent resource limits
+- Secret handling approach: `AUTHENTIK_SECRET_KEY` and DB password via `Services/.env` (Phase 10 removed plaintext compose key). Rotate secret previously in Git history. Worker mounts Docker socket.
+- Privileged mode status: worker runs as `root` (existing)
+- Docker socket exposure: worker yes
+- External exposure: Traefik HTTPS SSO
+- Known risks: Docker socket on worker; rotate leaked `AUTHENTIK_SECRET_KEY`
+
 
 ## Operational Notes
 - Backup considerations: Not documented — requires future operational definition.

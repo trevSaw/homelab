@@ -1,53 +1,15 @@
-#name: nzbget
-#services:
- # nzbget:
-  #  cpu_shares: 90
-   # command: []
-    #container_name: nzbget
-    #deploy:
-     # resources:
-      #  limits:
-       #   memory: 25434M
-#    environment:
-#      - PGID=1000
-#      - PUID=1000
-#      - TZ=Denver
- #     - UMASK=002
- #   image: cr.hotio.dev/hotio/nzbget
- #   restart: unless-stopped
- #   volumes:
- #     - type: bind
- #       source: /hive/NZBget/config
- #       target: /config
- #       bind:
- #         create_host_path: true
- #     - type: bind
- #       source: /hive/downloads
- #       target: /downloads
- #       bind:
- #         create_host_path: true
- #   ports: []
- #   devices: []
- #   cap_add: []
- #   network_mode: container:qbittorrent
- #   privileged: false
 name: nzbget
 services:
   nzbget:
     cpu_shares: 90
-    command: []
     container_name: nzbget
-    deploy:
-      resources:
-        limits:
-          memory: 25434M
+    image: ghcr.io/hotio/nzbget
+    restart: unless-stopped
     environment:
       - PGID=1000
       - PUID=1000
       - TZ=Denver
       - UMASK=002
-    image: ghcr.io/hotio/nzbget
-    restart: unless-stopped
     volumes:
       - type: bind
         source: /hive/NZBget/config
@@ -59,8 +21,13 @@ services:
         target: /downloads
         bind:
           create_host_path: true
-    ports: []
-    devices: []
-    cap_add: []
     network_mode: container:qbittorrent
     privileged: false
+    deploy:
+      resources:
+        limits:
+          memory: 25434M
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"

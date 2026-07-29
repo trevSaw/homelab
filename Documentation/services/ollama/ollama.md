@@ -10,31 +10,32 @@ Service documentation placeholder for Ollama.
 
 ## Repository Location
 - Service directory: `homelab/Services/ollama.md`
-- Compose file: Not documented — requires future operational definition.
+- Compose file: `homelab/Services/ollama/compose.yml`
+- Environment template: `homelab/Services/ollama/.env.example` (copy to `.env` on host; never commit `.env`)
 - Documentation path: `homelab/Documentation/services/ollama/ollama.md`
 
 ## Runtime Information
-- Container names: Not documented — requires future operational definition.
-- Images: Not documented — requires future operational definition.
-- Ports: Not documented — requires future operational definition.
-- Networks: Not documented — requires future operational definition.
-- Volumes: Not documented — requires future operational definition.
-- Restart policy: Not documented — requires future operational definition.
-- Environment files: Not documented — requires future operational definition.
-- Dependencies: provides ollama‑net to odysseus
+- Container names: `ollama`, `open-webui`
+- Images: `ollama/ollama:latest`, `ghcr.io/open-webui/open-webui:main`
+- Ports: none published on host (Traefik for open-webui)
+- Networks: `ollama-net`, `proxy`, `ai-assistant`
+- Volumes: `/hive/ollama`, `/mnt/monarch/appdata/open-webui`
+- Restart policy: `unless-stopped`
+- Environment files: `Services/ollama/.env` (`OLLAMA_API_KEY`, `WEBUI_SECRET_KEY`)
+- Dependencies: provides `ollama-net` to hermes / honcho / odysseus consumers
 
 ## Architecture Relationships
-- Upstream dependencies: Not documented — requires future operational definition.
-- Downstream consumers: Not documented — requires future operational definition.
-- Network relationships: Not documented — requires future operational definition.
-- Reverse proxy relationships: Not documented — requires future operational definition.
+- Upstream dependencies: NVIDIA GPU reservation (optional; `CUDA_VISIBLE_DEVICES=-1` currently disables GPU)
+- Downstream consumers: open-webui, hermes, honcho, odysseus (via `ollama-net` / API)
+- Network relationships: `ollama-net` (bridge), `ai-assistant` (external), `proxy` (open-webui)
+- Reverse proxy relationships: open-webui via Traefik Host `chat.fatherfankscloud.uk`
 
 ## Security Review
-- Secret handling approach: Not documented — requires future operational definition.
-- Privileged mode status: Not documented — requires future operational definition.
-- Docker socket exposure: Not documented — requires future operational definition.
-- External exposure: Not documented — requires future operational definition.
-- Known risks: R2: Missing healthchecks;R3: Absent resource limits
+- Secret handling approach: Compose uses `${OLLAMA_API_KEY}` / `${WEBUI_SECRET_KEY}` via `env_file: .env` (Phase 10). Rotate keys that previously lived in Git history.
+- Privileged mode status: false
+- Docker socket exposure: none
+- External exposure: open-webui via Traefik (`chat.fatherfankscloud.uk`); ollama Traefik disabled
+- Known risks: R2 partially mitigated (healthchecks added); R3 memory limit present on ollama (`12g`); image tags still `latest`/`main` (deferred pin)
 
 ## Operational Notes
 - Backup considerations: Not documented — requires future operational definition.
@@ -75,7 +76,7 @@ ADRs:
 - None identified.
 
 ## Known Issues
-- Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
-- Missing healthchecks
-- Missing resource limits
-- Documentation gaps
+- Duplicate service name detected during Phase 9.1 inventory. Consolidation deferred to future migration phase.
+- Image tags remain floating (`latest` / `main`) — pinning deferred
+- Secrets previously committed in Git history should be rotated on mocha
+- Documentation gaps remain in Overview / Operational Notes placeholders

@@ -2,41 +2,40 @@ services:
   hermes:
     image: nousresearch/hermes-agent:latest
     container_name: hermes
-
     restart: unless-stopped
-
     command:
-      -  gateway
-      -  run
-
+      - gateway
+      - run
+    env_file:
+      - .env
     environment:
       TZ: Asia/Tokyo
       HERMES_DASHBOARD: "1"
-     # HERMES_DASHBOARD_INSECURE: "true"
-      HERMES_DASHBOARD_BASIC_AUTH_USERNAME: admin
-      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: pw4-5423-Qwaszx.
+      HERMES_DASHBOARD_BASIC_AUTH_USERNAME: ${HERMES_DASHBOARD_BASIC_AUTH_USERNAME:-admin}
+      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: ${HERMES_DASHBOARD_BASIC_AUTH_PASSWORD}
       OLLAMA_BASE_URL: http://ollama:11434
-
     volumes:
       - /mnt/monarch/appdata/hermes:/opt/data
-
     shm_size: 1g
-
     networks:
       - proxy
       - ollama-net
-
     labels:
       - traefik.enable=true
-
       - traefik.http.routers.hermes.rule=Host(`hermes.fatherfankscloud.uk`)
       - traefik.http.routers.hermes.entrypoints=websecure
       - traefik.http.routers.hermes.tls=true
       - traefik.http.routers.hermes.tls.certresolver=le
-
       - traefik.http.services.hermes.loadbalancer.server.port=9119
-
       - traefik.docker.network=proxy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
 
 networks:
   proxy:
