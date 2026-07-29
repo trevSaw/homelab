@@ -9,31 +9,33 @@ Documentation placeholder for code-server. Detailed documentation will be added 
 
 ## Repository Location
 - Service directory: `homelab/Services/code-server.md`
-- Compose file: Not documented — requires future operational definition.
+- Compose file: `homelab/Services/code-server/compose.yml`
+- Environment template: `homelab/Services/code-server/.env.example`
 - Documentation path: `homelab/Documentation/services/code-server/code-server.md`
 
 ## Runtime Information
-- Container names: Not documented — requires future operational definition.
-- Images: Not documented — requires future operational definition.
-- Ports: Not documented — requires future operational definition.
-- Networks: Not documented — requires future operational definition.
-- Volumes: Not documented — requires future operational definition.
-- Restart policy: Not documented — requires future operational definition.
-- Environment files: Not documented — requires future operational definition.
-- Dependencies: 
+- Container names: `code-server`
+- Images: `lscr.io/linuxserver/code-server:latest`
+- Ports: none on host (Traefik 8443)
+- Networks: `proxy`, `ollama_ollama-net`
+- Volumes: `/hive/code-server/config`, read-only hive/monarch workspace mounts
+- Restart policy: `unless-stopped`
+- Environment files: `Services/code-server/.env` (`PASSWORD`)
+- Dependencies: none required at runtime
 
 ## Architecture Relationships
-- Upstream dependencies: Not documented — requires future operational definition.
-- Downstream consumers: Not documented — requires future operational definition.
-- Network relationships: Not documented — requires future operational definition.
-- Reverse proxy relationships: Not documented — requires future operational definition.
+- Upstream dependencies: none
+- Downstream consumers: operators via Traefik
+- Network relationships: proxy + ollama network
+- Reverse proxy relationships: `code.fatherfankscloud.uk`
 
 ## Security Review
-- Secret handling approach: Not documented — requires future operational definition.
-- Privileged mode status: Not documented — requires future operational definition.
-- Docker socket exposure: Not documented — requires future operational definition.
-- External exposure: Not documented — requires future operational definition.
-- Known risks: R2: Missing healthchecks;R3: Absent resource limits
+- Secret handling approach: `PASSWORD` via `.env` (Phase 10). Quote values containing `#`. Rotate password previously in Git history.
+- Privileged mode status: false
+- Docker socket exposure: none
+- External exposure: Traefik HTTPS password auth
+- Known risks: floating `latest` tag; broad read-only host mounts
+
 
 ## Operational Notes
 - Backup considerations: Not documented — requires future operational definition.

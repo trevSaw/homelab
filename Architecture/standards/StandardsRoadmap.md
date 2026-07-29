@@ -288,139 +288,102 @@ Create standardized, AI-consumable service documentation and metadata for every 
 
 # Phase 10 — Infrastructure Standardization & Service Modernization
 
-**Status:** ⏳ Planned
+**Status:** ✅ Complete (scoped) — 2026-07-29  
+**Branch:** `phase10`  
+**Host:** mocha (Ubuntu 22.04 LTS)
 
-Implement the governance standards established during Phase 9 across the live homelab environment.
+Scoped Phase 10 delivered backwards-compatible compose standardization, secret hygiene, script modernization, energy-audit improvements, documentation sync, and validation tooling.
 
-This phase transforms the repository from a governed design into a production-standard infrastructure platform.
+**Explicitly deferred** (see `Validation/Phase10/Remaining_Risks.md`):
+
+- Storage layout migrations
+- Networking topology changes / host-port removal
+- Service renames / image pinning campaigns
+- Full DockerStandard directory-layout migration (`compose/<domain>/...`)
+- Phase 9.4 future items F10-1 through F10-6 (governance metadata enrichment)
+
+Implement the governance standards established during Phase 9 across the live homelab environment **without redesigning production infrastructure**.
+
+This phase transforms the repository from a governed design into a production-standard infrastructure platform for the scoped deliverables above.
 
 ## Objectives
 
-- Standardize production infrastructure
-- Eliminate technical debt identified during Phase 9
-- Align every service with governance standards
-- Implement approved architectural decisions (ADRs)
-- Prepare the platform for production validation
+- Standardize production compose files where safe (logging, restart, healthchecks, resources)
+- Eliminate plaintext secrets from tracked compose files
+- Modernize operational scripts
+- Improve energy audit reporting
+- Synchronize documentation with implementation
+- Provide local validation tooling and Phase 10 QA artefacts
 
 ---
 
 ## Scope
 
-### Docker Standardization
+### Docker Standardization (completed — incremental)
 
-Bring every deployment into compliance with the Docker Compose Standard.
+Bring every deployment into safer compliance with the Docker Compose Standard **without** changing application behavior, storage mounts, service names, or network topology.
 
 Implementation includes:
 
-- Standard compose structure
-- Standard naming conventions
-- Standard labels
-- Restart policies
-- Health checks
-- Resource limits
-- Network definitions
-- Volume conventions
-- Environment variable standardization
-
----
+- Logging rotation (`max-size: 10m`, `max-file: 3`)
+- Restart policy normalization (`unless-stopped`)
+- Health checks where obvious and safe
+- Conservative `deploy.resources` limits (generous; skipped where risk of breakage)
+- Removal of obsolete commented-out compose blocks
+- `.env` / `.env.example` for secrets
 
 ### Storage Modernization
 
-Implement the approved storage architecture.
-
-Examples include:
-
-- Standard application data layout
-- Consistent media storage
-- Standard backup locations
-- Standard download locations
-- Removal of legacy directory structures
-
----
+**Deferred.** No bind-mount or dataset migrations in Phase 10.
 
 ### Networking Modernization
 
-Implement the approved networking architecture.
+**Deferred.** Host ports and networks left unchanged.
 
-Includes:
+### Security Hardening (partial)
 
-- Standard proxy network
-- Internal service networks
-- Monitoring network
-- Removal of unnecessary host port bindings
-- Standard network naming
-- Improved service isolation
+- Remove plaintext secrets from compose (ollama, beszel_agent, hermes, code-server, authentic)
+- `.gitignore` enforces `.env` exclusion
+- Privileged containers / Docker socket exposure reviewed but not redesigned
 
----
+### Technical Debt Resolution (partial)
 
-### Security Hardening
-
-Address findings from Phase 9.
-
-Implementation includes:
-
-- Remove plaintext secrets
-- Migrate secrets out of Git
-- Improve filesystem permissions
-- Reduce privileged containers
-- Review Docker socket exposure
-- Review exposed ports
-- Standardize container security settings
-
----
-
-### Technical Debt Resolution
-
-Resolve governance findings identified during Phase 9.
-
-Examples include:
-
-- Deprecated containers
-- Outdated images
-- Inconsistent naming
-- Missing documentation
-- Missing metadata
-- Undocumented dependencies
-- Repository cleanup
+- Script strict-mode modernization
+- Energy audit bugfixes and reporting improvements
+- Documentation synchronization
+- Remaining items documented in Phase 10 remaining risks
 
 ---
 
 ## Deliverables
 
-- Updated Docker Compose deployments
-- Updated Service Catalog
-- Updated architecture documentation
-- Additional ADRs
-- Migration documentation
-- Standardized storage layout
-- Standardized networking
-- Security improvements
-- Technical debt remediation reports
+- Updated Docker Compose deployments under `Services/`
+- `.env.example` templates for secret-bearing services
+- `Scripts/validate.sh`
+- Energy audit v1.4 + docs
+- `Validation/Phase10/` QA pack
 
 ---
 
 ## Validation Criteria
 
-- Compose files validate successfully
-- Services deploy successfully
-- ADR implementations match architecture
-- Service documentation reflects production
-- Technical debt items resolved or documented
-- Security improvements verified
+- Compose files validate successfully (or warn on missing local `.env` off-host)
+- Secrets managed via env files / interpolation (not plaintext in Git)
+- Documentation reflects production-safe Phase 10 scope
+- Deferred work explicitly recorded
 
 ---
 
 ## Exit Criteria
 
-Phase 10 is complete when:
+Scoped Phase 10 is complete when:
 
-- Every production service complies with governance standards
-- Storage architecture matches approved ADRs
-- Compose deployments pass validation
-- Secrets are managed according to standards
-- Networks are standardized
-- Documentation accurately reflects production
-- Phase 9 technical debt has been addressed or formally deferred
+- Safe compose standardization applied across active `Services/` stacks
+- Known plaintext secrets removed from tracked compose files
+- Scripts under `Scripts/` use modern bash practices where touched
+- Energy audit v1.4 features verified and docs synced
+- Validation tooling and Phase 10 QA artefacts exist
+- Deferred roadmap items are documented (not silently marked done)
 
 ---
 

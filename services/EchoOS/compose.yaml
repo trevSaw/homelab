@@ -11,3 +11,15 @@ services:
       LOGSEQ_GRAPH: /graph
     networks:
       - echoos_net
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+networks:
+  echoos_net:
+    name: echoos_net

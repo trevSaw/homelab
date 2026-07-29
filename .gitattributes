@@ -1,0 +1,2 @@
+# Keep shell scripts LF so WSL/Linux bash -n and shebangs work from Windows checkouts
+*.sh text eol=lf

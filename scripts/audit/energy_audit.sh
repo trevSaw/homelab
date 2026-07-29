@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-# Energy Audit v1.3 – Read-only Bash script
+# Energy Audit v1.4 – Read-only Bash script
 # Generates a Markdown report with actionable, low-impact energy-saving recommendations.
 # ------------------------------------------------------------
 # 1. Configuration (adjustable without editing the script)
 DOCKER_SAMPLE_COUNT=${DOCKER_SAMPLE_COUNT:-3}      # number of docker stats samples
 DOCKER_SAMPLE_INTERVAL=${DOCKER_SAMPLE_INTERVAL:-3} # seconds between samples
+# Idle memory: Mem% threshold with low CPU% considered "excessive idle memory"
+IDLE_MEM_PCT=${IDLE_MEM_PCT:-5.0}
+IDLE_MEM_CPU_PCT=${IDLE_MEM_CPU_PCT:-1.0}
 # ------------------------------------------------------------
 
 set -euo pipefail
@@ -40,7 +43,7 @@ human_bytes() {
     return
   fi
   if (( bytes == 0 )); then
-    echo "unlimited/none"
+    echo "0 B"
     return
   fi
   awk -v b="$bytes" 'BEGIN {
@@ -660,10 +663,16 @@ if command -v zpool >/dev/null 2>&1 && command -v zfs >/dev/null 2>&1; then
       pool_alloc=$(run_cmd zpool list -H -o alloc "$pool" || echo "N/A")
       pool_free=$(run_cmd zpool list -H -o free "$pool" || echo "N/A")
       pool_cap=$(run_cmd zpool list -H -o capacity "$pool" || echo "N/A")
+      # zpool capacity often includes a trailing %; strip all % then add exactly one
+      pool_cap=$(printf '%s' "$pool_cap" | tr -d '% \r\t')
       pool_comp=$(run_cmd zfs get -H -o value compression "$pool" 2>/dev/null || echo "N/A")
       add_line "### Pool: ${pool}"
       add_line "- Health: ${pool_health:-N/A}"
-      add_line "- Size: ${pool_size} | Allocated: ${pool_alloc} | Free: ${pool_free} | Capacity: ${pool_cap}%"
+      if [[ "$pool_cap" == "N/A" || -z "$pool_cap" ]]; then
+        add_line "- Size: ${pool_size} | Allocated: ${pool_alloc} | Free: ${pool_free} | Capacity: N/A"
+      else
+        add_line "- Size: ${pool_size} | Allocated: ${pool_alloc} | Free: ${pool_free} | Capacity: ${pool_cap}%"
+      fi
       add_line "- Compression: ${pool_comp}"
       if [[ "$pool_health" == "ONLINE" ]]; then
         note_healthy "ZFS pool ${pool} is ONLINE"
@@ -723,12 +732,14 @@ healthy_count=0
 jellyfin_has_dri=0
 running_container_count=0
 container_cpu_sum=0
+idle_mem_count=0
 top_container_name="N/A"
 top_container_cpu="0"
 
 if command -v docker >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
   docker_available=1
-  mapfile -t all_containers < <(docker ps -a --format '{{.ID}}\t{{.Names}}\t{{.Status}}' 2>/dev/null || true)
+  # Sort by name for deterministic Markdown across runs
+  mapfile -t all_containers < <(docker ps -a --format '{{.ID}}\t{{.Names}}\t{{.Status}}' 2>/dev/null | sort -t$'\t' -k2,2 || true)
 
   if [[ ${#all_containers[@]} -eq 0 ]]; then
     add_line "_No Docker containers found._"
@@ -774,31 +785,19 @@ if command -v docker >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
       netmode=$(echo "$inspect" | jq -r '.[0].HostConfig.NetworkMode // "default"')
       devices=$(echo "$inspect" | jq -r '.[0].HostConfig.Devices // [] | map(.PathOnHost) | join(",")')
       volumes=$(echo "$inspect" | jq -r '.[0].Mounts // [] | map(.Source) | join(",")')
-      nano_cpus=$(echo "$inspect" | jq -r '.[0].HostConfig.NanoCpus // 0')
       mem_limit=$(echo "$inspect" | jq -r '.[0].HostConfig.Memory // 0')
       running=$(echo "$inspect" | jq -r '.[0].State.Running // false')
 
-      limit_parts=()
-      mem_limit_h="none"
-      if is_int "$nano_cpus" && (( nano_cpus > 0 )); then
-        cpu_cores=$(awk -v n="$nano_cpus" 'BEGIN{printf "%.2f", n/1000000000}')
-        limit_parts+=("CPU:${cpu_cores} cores")
-      else
-        limit_parts+=("CPU:none")
-      fi
+      mem_limit_h="Unlimited"
+      has_mem_limit=0
       if is_int "$mem_limit" && (( mem_limit > 0 )); then
         mem_limit_h=$(human_bytes "$mem_limit")
-        limit_parts+=("Mem:${mem_limit_h}")
+        has_mem_limit=1
       else
-        limit_parts+=("Mem:none")
         if [[ "$running" == "true" ]]; then
           no_limit_count=$((no_limit_count + 1))
         fi
       fi
-      local_ifs=$IFS
-      IFS=', '
-      limits="${limit_parts[*]}"
-      IFS=$local_ifs
 
       avg_cpu="N/A"
       avg_mem="N/A"
@@ -806,17 +805,12 @@ if command -v docker >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
       if [[ "$running" == "true" && ${sample_n[$cid]:-0} -gt 0 ]]; then
         avg_cpu=$(awk -v s="${cpu_sum[$cid]:-0}" -v n="${sample_n[$cid]}" 'BEGIN{printf "%.1f", s/n}')
         avg_mem=$(awk -v s="${mem_sum[$cid]:-0}" -v n="${sample_n[$cid]}" 'BEGIN{printf "%.1f", s/n}')
-        # MemUsage looks like "123.4MiB / 2GiB" — split for clean columns
+        # MemUsage looks like "123.4MiB / 2GiB" — usage only; do not treat host RAM as a limit
         raw_mu=${mem_usage_last[$cid]:-}
         if [[ -n "$raw_mu" ]]; then
           mem_usage_h=$(printf '%s' "$raw_mu" | awk -F'/' '{gsub(/^ +| +$/,"",$1); print $1}')
-          # Prefer configured limit in GiB when set; else docker-reported limit
-          if [[ "$mem_limit_h" == "none" ]]; then
-            docker_lim=$(printf '%s' "$raw_mu" | awk -F'/' '{gsub(/^ +| +$/,"",$2); print $2}')
-            mem_limit_h=${docker_lim:-none}
-          fi
         fi
-        printf '%s\t%s\t%s\t%s\t%s\n' "$cname" "$avg_cpu" "$avg_mem" "$mem_usage_h" "$mem_limit_h" >> "$DOCKER_STATS_FILE"
+        printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$cname" "$avg_cpu" "$avg_mem" "$mem_usage_h" "$mem_limit_h" "$has_mem_limit" >> "$DOCKER_STATS_FILE"
       fi
 
       volumes_esc=${volumes//|/\\|}
@@ -866,12 +860,12 @@ if command -v docker >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
 
     if [[ -s "$DOCKER_STATS_FILE" ]]; then
       container_cpu_sum=$(awk -F'\t' '{s+=$2} END{printf "%.1f", s+0}' "$DOCKER_STATS_FILE")
-      read_fields top_container_name top_container_cpu _ < <(sort -t$'\t' -k2,2nr "$DOCKER_STATS_FILE" | head -n 1)
+      read_fields top_container_name top_container_cpu _ < <(sort -t$'\t' -k2,2nr -k1,1 "$DOCKER_STATS_FILE" | head -n 1)
 
       add_section_header "Highest Idle CPU Consumers"
       add_line "| Container | CPU % |"
       add_line "|-----------|-------|"
-      sort -t$'\t' -k2,2nr "$DOCKER_STATS_FILE" | head -n 5 | while IFS=$'\t' read -r cn cp _; do
+      sort -t$'\t' -k2,2nr -k1,1 "$DOCKER_STATS_FILE" | head -n 5 | while IFS=$'\t' read -r cn cp _; do
         echo "| $cn | $cp |" >> "${BODY_FILE}"
       done
       add_line ""
@@ -879,9 +873,30 @@ if command -v docker >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
       add_section_header "Highest Memory Consumers"
       add_line "| Container | Mem % | Mem Usage | Mem Limit |"
       add_line "|-----------|-------|-----------|-----------|"
-      sort -t$'\t' -k3,3nr "$DOCKER_STATS_FILE" | head -n 5 | while IFS=$'\t' read -r cn _ mp mu ml; do
+      sort -t$'\t' -k3,3nr -k1,1 "$DOCKER_STATS_FILE" | head -n 5 | while IFS=$'\t' read -r cn _ mp mu ml _; do
         echo "| $cn | $mp | ${mu:-N/A} | ${ml:-N/A} |" >> "${BODY_FILE}"
       done
+      add_line ""
+
+      # Excessive idle memory: high Mem% with very low CPU on a likely-idle host
+      add_section_header "Excessive Idle Memory"
+      add_line "Containers averaging ≥${IDLE_MEM_PCT}% host memory with ≤${IDLE_MEM_CPU_PCT}% CPU during sampling."
+      add_line ""
+      add_line "| Container | Mem % | CPU % | Mem Usage | Mem Limit |"
+      add_line "|-----------|-------|-------|-----------|-----------|"
+      idle_mem_rows=0
+      while IFS=$'\t' read -r cn cp mp mu ml _; do
+        if is_num "$cp" && is_num "$mp" && \
+           awk -v m="$mp" -v t="$IDLE_MEM_PCT" -v c="$cp" -v ct="$IDLE_MEM_CPU_PCT" \
+             'BEGIN{exit !(m+0 >= t+0 && c+0 <= ct+0)}'; then
+          echo "| $cn | $mp | $cp | ${mu:-N/A} | ${ml:-N/A} |" >> "${BODY_FILE}"
+          idle_mem_rows=$((idle_mem_rows + 1))
+        fi
+      done < <(sort -t$'\t' -k3,3nr -k1,1 "$DOCKER_STATS_FILE")
+      idle_mem_count=$idle_mem_rows
+      if (( idle_mem_rows == 0 )); then
+        add_line "| _(none at current thresholds)_ | - | - | - | - |"
+      fi
       add_line ""
     fi
   fi
@@ -1088,7 +1103,23 @@ if (( docker_available > 0 )); then
           "Medium" "Potentially lower performance if throttled"
         note_improve "High idle CPU containers"
       fi
-    done < <(sort -t$'\t' -k2,2nr "$DOCKER_STATS_FILE" | head -n 5)
+    done < <(sort -t$'\t' -k2,2nr -k1,1 "$DOCKER_STATS_FILE" | head -n 5)
+
+    while IFS=$'\t' read -r cn cp mp mu ml _; do
+      if is_num "$cp" && is_num "$mp" && \
+         awk -v m="$mp" -v t="$IDLE_MEM_PCT" -v c="$cp" -v ct="$IDLE_MEM_CPU_PCT" \
+           'BEGIN{exit !(m+0 >= t+0 && c+0 <= ct+0)}'; then
+        add_recommendation "Review Idle Memory in ${cn}" \
+          "Container ${cn} held ${mp}% host memory (${mu:-unknown}) while averaging ${cp}% CPU during sampling." \
+          "~0-2 W (indirect via reclaim / cold-start tradeoff)" "Medium" "Low" "Medium" \
+          "Medium" "May increase restart latency if memory is reduced"
+        note_improve "Containers with excessive idle memory"
+      fi
+    done < <(sort -t$'\t' -k3,3nr -k1,1 "$DOCKER_STATS_FILE" | head -n 8)
+  fi
+
+  if (( idle_mem_count > 0 )); then
+    note_improve "${idle_mem_count} container(s) with high idle memory"
   fi
 
   media_containers=("jellyfin" "emby" "plex" "plexmediaserver")
@@ -1129,21 +1160,61 @@ if [[ ! -s "$REC_TITLES_FILE" ]]; then
 fi
 
 # ------------------------------------------------------------------
-# Quick Wins / Medium / Long Term
+# Quick Wins / Medium / Long Term (derived from findings; not static filler)
 # ------------------------------------------------------------------
 add_section_header "Quick Wins (<10 min)"
-add_line "- Remove stopped Docker containers"
-add_line "- Review monitoring scrape intervals"
-add_line "- Review and disable atime on rarely-written filesystems"
+qw_count=0
+if (( docker_available > 0 )); then
+  stopped_qw=$( { docker ps -a -f status=exited -q 2>/dev/null || true; } | wc -l | tr -d ' ')
+  if is_int "$stopped_qw" && (( stopped_qw > 0 )); then
+    add_line "- Remove ${stopped_qw} stopped Docker container(s)"
+    qw_count=$((qw_count + 1))
+  fi
+fi
+if has_atime_mounts; then
+  add_line "- Review and disable atime on rarely-written filesystems"
+  qw_count=$((qw_count + 1))
+fi
+if docker ps --format '{{.Names}}' 2>/dev/null | grep -Eqi '(prometheus|grafana|beszel)'; then
+  add_line "- Review monitoring scrape intervals"
+  qw_count=$((qw_count + 1))
+fi
+if [[ "$qs_level" == "likely" && "$vainfo_state" == "not installed" ]]; then
+  add_line "- Install vainfo to confirm Intel Quick Sync"
+  qw_count=$((qw_count + 1))
+fi
+if (( qw_count == 0 )); then
+  add_line "- No quick wins identified from current telemetry"
+fi
 
 add_section_header "Medium Effort (≈30-60 min)"
-add_line "- Enable ZFS lz4/zstd compression where appropriate"
-add_line "- Add /dev/dri device mapping to media containers that lack hardware acceleration"
-add_line "- Set memory limits on unbounded containers"
-add_line "- Switch CPU governor to powersave or schedutil after workload analysis"
+me_count=0
+if (( zfs_present > 0 && zfs_lz4_ok == 0 )); then
+  add_line "- Enable ZFS lz4/zstd compression where appropriate"
+  me_count=$((me_count + 1))
+fi
+if (( jellyfin_has_dri == 0 )) && docker ps --format '{{.Names}}' 2>/dev/null | grep -qi jellyfin; then
+  add_line "- Add /dev/dri device mapping to media containers that lack hardware acceleration"
+  me_count=$((me_count + 1))
+fi
+if (( no_limit_count > 0 )); then
+  add_line "- Set memory limits on ${no_limit_count} unbounded container(s)"
+  me_count=$((me_count + 1))
+fi
+if (( idle_mem_count > 0 )); then
+  add_line "- Review ${idle_mem_count} container(s) with high idle memory footprint"
+  me_count=$((me_count + 1))
+fi
+if [[ "$governor" != "powersave" && "$governor" != "schedutil" ]]; then
+  add_line "- Switch CPU governor to powersave or schedutil after workload analysis"
+  me_count=$((me_count + 1))
+fi
+if (( me_count == 0 )); then
+  add_line "- No medium-effort items identified from current telemetry"
+fi
 
 add_section_header "Long Term (hours+)"
-add_line "- Migrate frequently accessed datasets to SSD/NVMe"
+add_line "- Migrate frequently accessed datasets to SSD/NVMe (when ${hdd_count:-0} HDD(s) dominate idle storage power)"
 add_line "- Redesign services to reduce baseline background activity"
 add_line "- Replace legacy hardware with more energy-efficient models"
 
@@ -1266,6 +1337,12 @@ if (( docker_available > 0 )); then
     score=$((score - 5))
     score_notes+=("many containers without memory limits (-5)")
   fi
+  if (( idle_mem_count > 0 )); then
+    ded=$((idle_mem_count * 2))
+    (( ded > 10 )) && ded=10
+    score=$((score - ded))
+    score_notes+=("${idle_mem_count} high-idle-memory container(s) (-${ded})")
+  fi
   if (( priv_count > 0 )); then
     score=$((score - 5))
     score_notes+=("privileged containers (-5)")
@@ -1329,7 +1406,7 @@ fi
 # Assemble final report
 # ------------------------------------------------------------------
 {
-  echo "# Energy Audit Report – v1.3"
+  echo "# Energy Audit Report – v1.4"
   echo "**Timestamp:** $(date -u +"%Y-%m-%d %H:%M UTC")"
   echo "**Hostname:** $(hostname)"
   echo "**Ubuntu:** $(run_cmd lsb_release -ds || echo "N/A")"

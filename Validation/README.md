@@ -1,12 +1,36 @@
 # Validation
 
-Central store for verification artefacts across the homelab repository.
+Central store for verification artefacts across the Homelab Governance repository.
 
-## Sub‑folders
-- **reports/** – Human‑readable audit and compliance reports.
-- **baselines/** – Baseline configurations for drift detection.
-- **benchmarks/** – Performance benchmark results.
-- **compliance/** – Results of security and policy scans.
-- **performance/** – Ongoing performance metrics and trend data.
+## Layout
 
-All validation artefacts must reference the associated service or document they validate.
+| Path | Purpose |
+|------|---------|
+| `Energy/` | Energy audit reports (`Energy_Audit_*.md`, `Latest_Energy_Audit.md`) |
+| `Phase8-Completion-Report.md` | Phase 8 close-out |
+| `Phase9/` | Phase 9 completion report |
+| `Phase9.1/` | Service inventory & planning |
+| `Phase9.2/` | Documentation framework validation |
+| `Phase9.3/` | Governance / secret / drift audits |
+| `Phase9.4/` | Evidence linkage & AI readiness QA |
+| `Phase10/` | Infrastructure standardization QA (this phase) |
+
+## Running validation locally
+
+```bash
+./Scripts/validate.sh
+```
+
+Safe, read-only checks:
+
+- `bash -n` on active scripts under `Scripts/`
+- `docker compose config` when Docker is available (does not start containers)
+- Secret-hygiene heuristics on compose files
+- Logging / restart policy presence
+- `.env.example` coverage for secret-bearing services
+- Markdown presence + relative link spot-checks for Phase 10 docs
+
+## Rules
+
+All validation artefacts must reference the associated service, phase, or document they validate.
+Do not treat historical Energy reports as authoritative configuration — re-run `Scripts/audit/energy_audit.sh` on mocha for current data.

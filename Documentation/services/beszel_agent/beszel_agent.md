@@ -9,31 +9,32 @@ Documentation placeholder for beszel_agent. Detailed documentation will be added
 
 ## Repository Location
 - Service directory: `homelab/Services/beszel_agent.md`
-- Compose file: Not documented — requires future operational definition.
+- Compose file: `homelab/Services/beszel_agent/compose.yml`
+- Environment template: `homelab/Services/beszel_agent/.env.example`
 - Documentation path: `homelab/Documentation/services/beszel_agent/beszel_agent.md`
 
 ## Runtime Information
-- Container names: Not documented — requires future operational definition.
-- Images: Not documented — requires future operational definition.
-- Ports: Not documented — requires future operational definition.
-- Networks: Not documented — requires future operational definition.
-- Volumes: Not documented — requires future operational definition.
-- Restart policy: Not documented — requires future operational definition.
-- Environment files: Not documented — requires future operational definition.
-- Dependencies: 
+- Container names: `beszel-agent`
+- Images: `henrygd/beszel-agent`
+- Ports: host networking on listen port `45876`
+- Networks: `network_mode: host` (required by agent design; exception to core-network preference)
+- Volumes: Docker socket (ro), `./beszel_agent_data`
+- Restart policy: `unless-stopped`
+- Environment files: `Services/beszel_agent/.env` (`KEY`, `TOKEN`, `HUB_URL`)
+- Dependencies: Beszel hub on mocha:8090
 
 ## Architecture Relationships
-- Upstream dependencies: Not documented — requires future operational definition.
-- Downstream consumers: Not documented — requires future operational definition.
-- Network relationships: Not documented — requires future operational definition.
-- Reverse proxy relationships: Not documented — requires future operational definition.
+- Upstream dependencies: Beszel hub (`HUB_URL`)
+- Downstream consumers: none (agent pushes metrics to hub)
+- Network relationships: host networking
+- Reverse proxy relationships: none
 
 ## Security Review
-- Secret handling approach: Not documented — requires future operational definition.
-- Privileged mode status: Not documented — requires future operational definition.
-- Docker socket exposure: Not documented — requires future operational definition.
-- External exposure: Not documented — requires future operational definition.
-- Known risks: R2: Missing healthchecks;R3: Absent resource limits
+- Secret handling approach: Hub `KEY` / `TOKEN` moved to `.env` (Phase 10). Rotate credentials previously committed in Git history.
+- Privileged mode status: false
+- Docker socket exposure: read-only (`/var/run/docker.sock:ro`)
+- External exposure: host network listener (LAN)
+- Known risks: host networking; Docker socket access; healthcheck deferred (host network agent)
 
 ## Operational Notes
 - Backup considerations: Not documented — requires future operational definition.

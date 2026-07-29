@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
 ###############################################################################
 # HOST AUDIT
@@ -10,6 +10,8 @@ set -uo pipefail
 AUDIT_NAME="Host"
 AUDIT_VERSION="4.0"
 SCHEMA_VERSION="1.0"
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin${PATH:+:$PATH}"
 
 START_EPOCH=$(date +%s)
 START_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
@@ -130,10 +132,10 @@ FAILED_STATUS="PASS"
 for STATE in "$ROOT_STATUS" "$HIVE_STATUS" "$SWAP_STATUS" "$FAILED_STATUS"
 do
     case "$STATE" in
-        PASS) ((PASS++));;
-        WARNING) ((WARNING++));;
-        CRITICAL) ((CRITICAL++));;
-        *) ((UNKNOWN++));;
+        PASS) PASS=$((PASS + 1));;
+        WARNING) WARNING=$((WARNING + 1));;
+        CRITICAL) CRITICAL=$((CRITICAL + 1));;
+        *) UNKNOWN=$((UNKNOWN + 1));;
     esac
 done
 

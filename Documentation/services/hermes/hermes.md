@@ -9,31 +9,33 @@ Documentation placeholder for hermes. Detailed documentation will be added durin
 
 ## Repository Location
 - Service directory: `homelab/Services/hermes.md`
-- Compose file: Not documented — requires future operational definition.
+- Compose file: `homelab/Services/hermes/compose.yml`
+- Environment template: `homelab/Services/hermes/.env.example`
 - Documentation path: `homelab/Documentation/services/hermes/hermes.md`
 
 ## Runtime Information
-- Container names: Not documented — requires future operational definition.
-- Images: Not documented — requires future operational definition.
-- Ports: Not documented — requires future operational definition.
-- Networks: Not documented — requires future operational definition.
-- Volumes: Not documented — requires future operational definition.
-- Restart policy: Not documented — requires future operational definition.
-- Environment files: Not documented — requires future operational definition.
-- Dependencies: 
+- Container names: `hermes`
+- Images: `nousresearch/hermes-agent:latest`
+- Ports: none on host (Traefik port 9119)
+- Networks: `proxy`, `ollama_ollama-net`
+- Volumes: `/mnt/monarch/appdata/hermes`
+- Restart policy: `unless-stopped`
+- Environment files: `Services/hermes/.env` (dashboard basic auth)
+- Dependencies: Ollama at `http://ollama:11434`
 
 ## Architecture Relationships
-- Upstream dependencies: Not documented — requires future operational definition.
-- Downstream consumers: Not documented — requires future operational definition.
-- Network relationships: Not documented — requires future operational definition.
-- Reverse proxy relationships: Not documented — requires future operational definition.
+- Upstream dependencies: Ollama
+- Downstream consumers: operators via Traefik dashboard
+- Network relationships: proxy + ollama-net
+- Reverse proxy relationships: `hermes.fatherfankscloud.uk`
 
 ## Security Review
-- Secret handling approach: Not documented — requires future operational definition.
-- Privileged mode status: Not documented — requires future operational definition.
-- Docker socket exposure: Not documented — requires future operational definition.
-- External exposure: Not documented — requires future operational definition.
-- Known risks: R2: Missing healthchecks;R3: Absent resource limits
+- Secret handling approach: `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` via `.env` (Phase 10). Rotate password previously in Git history.
+- Privileged mode status: false
+- Docker socket exposure: none
+- External exposure: Traefik HTTPS + basic auth
+- Known risks: floating `latest` tag; rotate leaked dashboard password
+
 
 ## Operational Notes
 - Backup considerations: Not documented — requires future operational definition.

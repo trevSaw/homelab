@@ -3,34 +3,27 @@ services:
   traefik:
     image: traefik:latest
     container_name: traefik
-    restart: always
-
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
-
     command:
       # Core
       - "--global.checknewversion=true"
       - "--global.sendanonymoususage=false"
       - "--log.level=DEBUG"
-
       # API / Dashboard
       - "--api.dashboard=true"
       - "--api.insecure=false"
-
       # Providers
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=proxy"
-
       # EntryPoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-
       - "--entrypoints.websecure.address=:443"
-
       # ACME / Cloudflare DNS Challenge
       - "--certificatesresolvers.le.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.le.acme.storage=/etc/traefik/acme.json"
@@ -38,35 +31,37 @@ services:
       - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.le.acme.dnschallenge.delaybeforecheck=0"
       - "--certificatesresolvers.le.acme.keytype=EC256"
-
+      # Built-in ping for healthchecks
+      - "--ping=true"
     environment:
       - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}
       - TZ=${TZ}
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${PATH_CONFIG}/traefik/acme.json:/etc/traefik/acme.json
       - /etc/localtime:/etc/localtime:ro
-
     labels:
-      # Enable Traefik for itself
       - "traefik.enable=true"
-
-      # Dashboard Router
       - "traefik.http.routers.dashboard.rule=Host(`traefik.${DEFAULT_DOMAIN}`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
-
-      # TLS (EXPLICIT — THIS IS IMPORTANT)
       - "traefik.http.routers.dashboard.tls=true"
       - "traefik.http.routers.dashboard.tls.certresolver=le"
       - "traefik.http.routers.dashboard.tls.domains[0].main=${DEFAULT_DOMAIN}"
       - "traefik.http.routers.dashboard.tls.domains[0].sans=*.${DEFAULT_DOMAIN}"
-
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - proxy
 
 networks:
   proxy:
     external: true
-
