@@ -1,7 +1,7 @@
 # Energy Audit v1.4
 
 ## Purpose
-`energy_audit.sh` is a **read-only** Bash script that inspects the host running a Homelab Governance repository and produces a single Markdown report summarizing energy-related characteristics with prioritized recommendations.
+`energy_audit.sh` is a **read-only** Bash script that inspects the host running this personal Homelab repository and produces a single Markdown report summarizing energy-related characteristics with prioritized recommendations.
 
 ## Requirements
 - **Platform:** Ubuntu Server 22.04 / 24.04 LTS (or any recent Linux distro)

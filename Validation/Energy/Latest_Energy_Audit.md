@@ -10,7 +10,7 @@
 
 - **Overall Energy Efficiency Score:** 86 / 100
 - **Overall Efficiency Rating:** B
-- **Score factors:** efficient governor (+2); balanced profile (+1); low CPU utilization (+3); clocks scaled down while idle (+3); turbo enabled while idle (-5); ZFS compression enabled (+2); ZFS atime=off (+1); 3 HDD(s) (-9); 1 high-idle container(s) (-3); very large always-on fleet (-6); many containers without memory limits (-5); host networking (-3); Jellyfin has /dev/dri (+4); HW transcoding likely (+1)
+- **Score factors:** efficient governor (+2); balanced profile (+1); low CPU utilization (+3); clocks scaled down while idle (+3); turbo enabled while idle (-5); ZFS compression enabled (+2); ZFS atime=off (+1); 3 HDD(s) (-9); 1 high-idle container(s) (-3); very large always-on container set (-6); many containers without memory limits (-5); host networking (-3); Jellyfin has /dev/dri (+4); HW transcoding likely (+1)
 - **Measured Package Power:** unavailable (no RAPL/turbostat reading)
 - **Potential Power Reduction:** small (estimated 1-5 W, hardware dependent)
 - **Potential Improvement Areas:**

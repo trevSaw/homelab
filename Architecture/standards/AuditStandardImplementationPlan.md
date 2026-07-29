@@ -108,11 +108,11 @@ KPIs with trend tracking: Documentation Quality, Architecture Compliance, Docker
 |------|-------------|
 | **1 – Ad Hoc** | Audits are informal, ad‑hoc, and undocumented. |
 | **2 – Documented** | Audit processes are documented but not consistently followed. |
-| **3 – Standardized** | Audits follow a defined, repeatable methodology across the organisation. |
+| **3 – Standardized** | Audits follow a defined, repeatable methodology across the homelab. |
 | **4 – Measured** | Audit results are measured against KPIs and trends are recorded. |
 | **5 – Optimized** | Audit processes are continuously refined; AI agents automate evidence collection, trend analysis, and proactive remediation suggestions. |
 
-*Use*: Organisations may self‑assess their audit programme maturity; the model is intentionally implementation‑agnostic.
+*Use*: The homelab administrator may self‑assess audit programme maturity; the model is intentionally implementation‑agnostic.
 
 ---
 

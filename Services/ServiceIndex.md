@@ -160,7 +160,7 @@ Leave **Documentation** and **Deployment** blank or use `—` for services that 
 | Frigate | Security | Researching | High | — | — | — | Shinobi | https://github.com/blakeblackshear/frigate | AI NVR | Coral TPU eventually |
 | OpenHands | AI | Researching | Medium | — | — | — | Hermes Agent | https://github.com/All-Hands-AI/OpenHands | Coding agent | Compare with Hermes |
 | Langfuse | AI | Researching | Medium | — | — | — | Helicone | https://github.com/langfuse/langfuse | LLM observability | AI analytics |
-| Wiki.js | Documentation | Researching | Medium | — | — | — | BookStack | https://github.com/requarks/wiki | Team wiki | Documentation |
+| Wiki.js | Documentation | Researching | Medium | — | — | — | BookStack | https://github.com/requarks/wiki | Personal wiki | Documentation |
 | BookStack | Documentation | Researching | Medium | — | — | — | Wiki.js | https://github.com/BookStackApp/BookStack | Documentation wiki | Alternative |
 | Docmost | Documentation | Researching | Medium | — | — | — | Outline | https://github.com/docmost/docmost | Collaborative documentation | Modern docs |
 | Linkwarden | Bookmarks | Researching | Medium | — | — | — | Karakeep | https://github.com/linkwarden/linkwarden | Bookmark manager | Compared against Karakeep |
