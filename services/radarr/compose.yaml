@@ -1,0 +1,28 @@
+name: radarr
+services:
+  radarr:
+    image: ghcr.io/hotio/radarr:latest
+    container_name: radarr
+    hostname: radarr
+    restart: unless-stopped
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+    volumes:
+      - /DATA/AppData/radarr/config:/config
+      - /hive/jellyfin/movie:/movies
+      - /hive/downloads:/downloads
+    ports:
+      - "7878:7878"
+    networks:
+      - hotio_default
+    deploy:
+      resources:
+        limits:
+          memory: "536870912"
+
+networks:
+  hotio_default:
+    external: true
+    name: hotio_default

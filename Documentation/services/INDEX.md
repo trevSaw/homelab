@@ -21,3 +21,16 @@
 | ollama | AI | P2 | present | ./ollama/ollama.md |
 | portainer | Infrastructure / Management | P3 | present | ./portainer/portainer.md |
 | traefik | Reverse Proxy / Networking | P2 | present | ./traefik/traefik.md |
+| prowlarr | Media | P4‑P5 | present | ./prowlarr/prowlarr.md |
+| radarr | Media | P4‑P5 | present | ./radarr/radarr.md |
+| jellyseerr | Media | P4‑P5 | present | ./jellyseerr/jellyseerr.md |
+| bazarr | Media | P4‑P5 | present | ./bazarr/bazarr.md |
+| actual | Productivity | P4‑P5 | present | ./actual/actual.md |
+| lazylibrarian | Media | P4‑P5 | present | ./lazylibrarian/lazylibrarian.md |
+| crafty | Games | P4‑P5 | present | ./crafty/crafty.md |
+| mariadb | Databases | P4‑P5 | present | ./mariadb/mariadb.md |
+| uptime-kuma | Monitoring | P4‑P5 | present | ./uptime-kuma/uptime-kuma.md |
+| byparr | Utilities | P4‑P5 | present | ./byparr/byparr.md |
+| readarr | Media | P4‑P5 | present | ./readarr/readarr.md |
+| kavita | Media | P4‑P5 | present | ./kavita/kavita.md |
+| nextcloud | Productivity | P4‑P5 | present | ./nextcloud/nextcloud.md |

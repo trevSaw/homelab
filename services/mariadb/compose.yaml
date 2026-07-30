@@ -1,0 +1,27 @@
+name: linuxserver-mariadb
+services:
+  app:
+    image: linuxserver/mariadb:latest
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PGID: ${PGID:-1000}
+      PUID: ${PUID:-1000}
+      TZ: ${TZ:-Etc/UTC}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REMOTE_SQL: ${REMOTE_SQL:-}
+    volumes:
+      - /DATA/AppData/mariadb/config:/config
+    ports:
+      - "3308:3306"
+    networks:
+      - default
+
+networks:
+  default:
+    name: linuxserver-mariadb_default

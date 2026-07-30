@@ -1,0 +1,27 @@
+name: kavita
+services:
+  kavita:
+    image: jvmilazz0/kavita:latest
+    container_name: kavita
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    volumes:
+      - /ssd/appdata/kavita/config:/kavita/config
+      - /hive/library/Kavita/Books:/books
+      - /hive/library/Kavita/Comics:/comics
+      - /hive/library/Kavita/Manga:/manga
+      - /hive/library/Kavita/fanfic:/fanfic
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kavita.rule=Host(`kav.fatherfankscloud.uk`)"
+      - "traefik.http.routers.kavita.entrypoints=websecure"
+      - "traefik.http.routers.kavita.tls.certresolver=le"
+      - "traefik.http.services.kavita.loadbalancer.server.port=5000"
+
+networks:
+  proxy:
+    external: true

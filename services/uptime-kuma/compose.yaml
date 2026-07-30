@@ -1,0 +1,11 @@
+name: uptimekuma
+services:
+  uptimekuma:
+    image: louislam/uptime-kuma:1.23.10-alpine
+    container_name: uptimekuma
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - /DATA/AppData/uptimekuma/app/data:/app/data
+    ports:
+      - "3001:3001"

@@ -1,0 +1,14 @@
+{
+  "name": "actual",
+  "category": "Productivity",
+  "priority": "P4-P5",
+  "migration_wave": "Wave 6",
+  "dependencies": "",
+  "risks": "Imported from CasaOS/external compose; cutover pending",
+  "documentation_status": "present",
+  "adr_references": [],
+  "evidence": {
+    "phase": "10.75",
+    "import": true
+  }
+}
