@@ -13,7 +13,8 @@ Central store for verification artefacts across this personal Homelab repository
 | `Phase9.2/` | Documentation framework validation |
 | `Phase9.3/` | Governance / secret / drift audits |
 | `Phase9.4/` | Evidence linkage & AI readiness QA |
-| `Phase10/` | Infrastructure standardization QA (this phase) |
+| `Phase10/` | Infrastructure standardization QA |
+| `Phase10.5/` | Appdata migration **framework** (inventory, matrix, dry-run scripts — no live migration) |
 
 ## Running validation locally
 
