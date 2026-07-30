@@ -1,0 +1,12 @@
+name: byparr
+services:
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    restart: unless-stopped
+    networks:
+      - hotio_default
+
+networks:
+  hotio_default:
+    external: true
+    name: hotio_default

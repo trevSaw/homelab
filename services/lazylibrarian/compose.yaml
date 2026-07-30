@@ -1,0 +1,22 @@
+name: linuxserver-lazylibrarian
+services:
+  app:
+    image: linuxserver/lazylibrarian:version-3682faed
+    restart: unless-stopped
+    environment:
+      DOCKER_MODS: ""
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+    volumes:
+      - /DATA/AppData/lazylibrarian/config:/config
+      - /DATA/AppData/lazylibrarian/downloads:/downloads
+      - /DATA/AppData/lazylibrarian/books:/books
+    ports:
+      - "5299:5299"
+    networks:
+      - default
+
+networks:
+  default:
+    name: linuxserver-lazylibrarian_default

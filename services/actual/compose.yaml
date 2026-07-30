@@ -1,0 +1,16 @@
+name: actual
+services:
+  actual-server:
+    image: actualbudget/actual-server:25.10.0
+    container_name: actual-server
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/big-bear-actual-server:/data
+    ports:
+      - "5006:5006"
+    networks:
+      - default
+
+networks:
+  default:
+    name: big-bear-actual-server_default

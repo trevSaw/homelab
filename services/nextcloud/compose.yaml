@@ -1,0 +1,50 @@
+name: cloud
+services:
+  db:
+    image: mariadb:10.11
+    container_name: nextcloud-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-nextcloud}
+      MYSQL_USER: ${MYSQL_USER:-nextcloud}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - /mnt/monarch/databases/nextcloud-mariadb:/var/lib/mysql
+    networks:
+      - nextcloud_net
+
+  app:
+    image: nextcloud:31
+    container_name: nextcloud
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+      - /hive/cloud/nextcloud:/var/www/html
+      - /hive/cloud/config:/var/www/html/config
+      - /hive/cloud/apps:/var/www/html/custom_apps
+      - /hive/cloud/data:/var/www/html/data
+      - /hive/cloud/theme:/var/www/html/themes
+    networks:
+      - nextcloud_net
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`nx.fatherfankscloud.uk`)"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.nextcloud.tls.certresolver=le"
+
+networks:
+  proxy:
+    external: true
+  nextcloud_net:
+    name: cloud_nextcloud_net
+    internal: true

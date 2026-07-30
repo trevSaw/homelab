@@ -1,0 +1,30 @@
+name: crafty
+services:
+  big-bear-crafty:
+    image: registry.gitlab.com/crafty-controller/crafty-4:latest
+    container_name: big-bear-crafty
+    hostname: big-bear-crafty
+    restart: unless-stopped
+    environment:
+      TZ: UTC
+    volumes:
+      - /DATA/AppData/big-bear-crafty/data/config:/crafty/app/config
+      - /DATA/AppData/big-bear-crafty/data/backups:/crafty/backups
+      - /DATA/AppData/big-bear-crafty/data/import:/crafty/import
+      - /DATA/AppData/big-bear-crafty/data/logs:/crafty/logs
+      - /DATA/AppData/big-bear-crafty/data/servers:/crafty/servers
+    ports:
+      - "8443:8443"
+      - "8123:8123"
+      - "19132:19132/udp"
+      - "25500-25600:25500-25600"
+    networks:
+      - big-bear-crafty
+    deploy:
+      resources:
+        limits:
+          memory: "17179869184"
+
+networks:
+  big-bear-crafty:
+    name: big-bear-crafty

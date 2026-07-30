@@ -1,0 +1,23 @@
+name: readarr
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /hive/readarr:/config
+      - /hive/cloud/data/fatherfranku/files/Kavita/Books:/books
+      - /hive/downloads/completed/Readarr:/downloads
+    ports:
+      - "8787:8787"
+    networks:
+      - hotio_default
+
+networks:
+  hotio_default:
+    external: true
+    name: hotio_default
