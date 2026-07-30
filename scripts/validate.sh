@@ -220,6 +220,35 @@ fi
 echo
 
 ###############################################################################
+# 7. Phase 10.5 migration scripts (syntax + warn-only path check)
+###############################################################################
+echo "## Phase 10.5 migration framework"
+MIG="$ROOT/scripts/migration"
+if [[ -d "$MIG" ]]; then
+  while IFS= read -r -d '' script; do
+    if bash -n "$script" 2>/dev/null; then
+      pass "bash -n ${script#$ROOT/}"
+    else
+      fail "bash -n ${script#$ROOT/}"
+    fi
+  done < <(find "$MIG" -type f -name '*.sh' -print0 2>/dev/null)
+
+  if [[ -x "$MIG/compose-path-check.sh" ]] || [[ -f "$MIG/compose-path-check.sh" ]]; then
+    if bash "$MIG/compose-path-check.sh" >/dev/null 2>&1; then
+      pass "compose-path-check.sh"
+    else
+      # Warn-only: path check may FAIL on policy findings without blocking Phase 10 validate
+      warn "compose-path-check.sh reported findings (see Validation/Phase10.5/Compose_Path_Check_Runtime.md)"
+    fi
+  else
+    skip "compose-path-check.sh missing"
+  fi
+else
+  skip "scripts/migration missing"
+fi
+echo
+
+###############################################################################
 # Summary
 ###############################################################################
 echo "=========================================="

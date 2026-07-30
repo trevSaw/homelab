@@ -15,6 +15,17 @@ Thumbs.db
 *.bak
 *.swp
 
+# Phase 10.5 migration runtime artefacts (keep directory placeholders)
+Validation/Phase10.5/logs/*
+!Validation/Phase10.5/logs/.gitkeep
+Validation/Phase10.5/inspect/*
+!Validation/Phase10.5/inspect/.gitkeep
+Validation/Phase10.5/reports/*
+!Validation/Phase10.5/reports/.gitkeep
+Validation/Phase10.5/proposed/*
+!Validation/Phase10.5/proposed/.gitkeep
+Validation/Phase10.5/Compose_Path_Check_Runtime.md
+
 # Python caches
 __pycache__/
 *.pyc

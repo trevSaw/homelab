@@ -8,7 +8,7 @@ scripts/
 │   └── archive/    # superseded audit script versions
 ├── maintenance/    # sync, doublecheck, LLM resource helpers
 ├── backup/         # backup utilities (placeholder)
-├── migration/      # migration utilities (placeholder)
+├── migration/      # Phase 10.5 appdata migration framework (dry-run default)
 └── helpers/        # PDF tooling, risk assessment helpers
 ```
 
@@ -25,3 +25,14 @@ scripts/
 ```
 
 See `scripts/audit/README.md` for energy-audit details.
+
+## Migration framework (Phase 10.5)
+
+```bash
+./scripts/migration/inventory.sh --all
+./scripts/migration/compose-path-check.sh
+./scripts/migration/run-migration.sh --dry-run code-server
+```
+
+Default is `--dry-run`. Do not pass `--execute` or `--apply-compose` until you have reviewed `Validation/Phase10.5/` and are ready on mocha.  
+Docs: `Validation/Phase10.5/README.md`.
