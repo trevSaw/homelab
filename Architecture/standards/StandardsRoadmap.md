@@ -387,189 +387,176 @@ Scoped Phase 10 is complete when:
 
 ---
 
-# Phase 11 — Homelab Validation & Governance Freeze v1.0
+# Phase 10.9 — Production Stabilization & Baseline
 
-**Status:** ⏳ Planned
+**Status:** 🟡 Planned
 
-Validate the personal homelab as a complete, reliable self-hosted environment following the implementation work completed during Phase 10.
+Create the last known-good production baseline before making structural changes.
 
----
+## Purpose
 
-## Validation Areas
-
-### Standards Compliance
-
-Verify:
-
-- Every service follows governance standards
-- Every directory follows repository standards
-- Every deployment follows lifecycle requirements
-
----
-
-### Documentation Coverage
-
-Verify:
-
-- README coverage
-- Service Catalog accuracy
-- Documentation completeness
-- ADR references
-- Dependency mapping
-- Cross-reference integrity
-
----
-
-### Runtime Validation
-
-Verify:
-
-- Service startup
-- Health checks
-- Monitoring
-- Logging
-- Backup operation
-- Disaster recovery procedures
-
----
-
-### Compose Compliance
-
-Verify:
-
-- Compose Standard compliance
-- Environment configuration
-- Networking
-- Storage configuration
-- Resource definitions
-
----
-
-### Security Review
-
-Verify:
-
-- Secret management
-- Container permissions
-- Network exposure
-- Least privilege
-- Docker security
-- Infrastructure hardening
-
----
-
-### Repository Validation
-
-Verify:
-
-- Service Catalog
-- Repository indexes
-- ADR repository
-- Architecture documentation
-- Validation artifacts
-- Governance reports
-
----
+Establish a recoverable, documented production snapshot of the live homelab after scoped Phase 10, so subsequent storage, security, and AI work proceeds from a verified known-good state.
 
 ## Deliverables
 
-- Homelab Validation Report
-- Standards Compliance Report
-- Security Review Report
-- Backup & Disaster Recovery Validation
-- Monitoring Validation Report
-- Performance Review
-- Final Governance Compliance Report
-- Homelab v2 Certification Report
+- Git synchronization
+- Production inventory
+- Validation artifacts
+- Backup verification
+- Restore testing
+- Baseline documentation
 
 ---
 
-## Governance Freeze v1.0
+# Phase 11 — Storage Modernization
 
-At successful completion:
+**Status:** 🟡 Planned
 
-- Governance documents become Version 1.0
-- Repository structure becomes stable
-- Architecture baseline becomes authoritative
-- Future changes require Service Lifecycle governance
-- Standards evolve through versioned releases (v1.1, v1.2, v2.0, etc.)
-- AI systems onboard against a stable governance baseline
+Modernize production storage layout, including migration of workloads and data related to `/hive` → `/mnt/monarch`.
 
-This milestone marks the completion of **Homelab v2**.
+## Deliverables
 
----
-
-# Homelab v2 Complete
-
-The personal homelab platform now provides:
-
-- Complete governance
-- Standardized repository
-- Standardized documentation
-- Standardized deployment
-- Standardized infrastructure
-- Modernized networking
-- Modernized storage
-- Hardened security
-- Audited services
-- Homelab validation
-- Stable architecture
-- Repeatable governance workflows
-- AI-ready metadata
-- Verified operational compliance
-
-The platform is now ready for local AI orchestration.
+- AppData migration
+- Media separation
+- Backup redesign
+- Storage standards
+- Compose updates
+- Validation
 
 ---
 
-# Phase 12 — Deploy AI Orchestration
+# Phase 12 — Secrets & Security
 
-**Status:** ⏳ Planned
+**Status:** 🟡 Planned
 
-Introduce AI orchestration using the completed governance framework.
+Complete security modernization deferred or only partially addressed during Phase 10.
 
-## Components
+## Deliverables
 
-- Hermes
-- Honcho
-- MCP Gateway
-- Local LLMs
-- Memory Layer
+- Docker Secrets
+- Vault
+- Secret rotation
+- Network hardening
+- Container hardening
+- Security validation
 
-## Capabilities
+---
 
-- Planning
-- Long-Term Memory
-- Context Retrieval
-- Multi-Agent Coordination
-- Repository Awareness
-- Standards Awareness
-- Governance Awareness
-- Task Planning
-- Change Proposals
+# Phase 13 — AI Infrastructure (Brainiac)
 
-## Goal
+**Status:** 🟡 Planned
+
+Establish the local AI platform foundation. Phase 13 is the AI infrastructure layer—not automation.
 
 AI learns an already-governed personal homelab platform rather than creating one.
 
 ---
 
-# Phase 13 — AI Automation
+# Phase 13.1 — Core AI Platform
 
-**Status:** ⏳ Planned
+**Status:** 🟡 Planned
+
+Deploy and harden the core local AI runtime stack.
+
+## Deliverables
+
+- Ollama
+- Open WebUI
+- Models
+- Embeddings
+- ChromaDB
+- RAG foundation
+- GPU optimization
+
+---
+
+# Phase 13.2 — AI Knowledge Platform
+
+**Status:** 🟡 Planned
+
+**Project Status:** Planning
+
+Build the AI Knowledge Platform as a governed knowledge and retrieval layer on top of the Core AI Platform.
+
+## Deliverables
+
+- Obsidian integration
+- Knowledge Pipeline
+- Graphify
+- Homepage Dashboard
+- AI note organization
+- Semantic search
+- Knowledge graph
+- AI-generated summaries
+- AI-generated tagging
+- Relationship extraction
+
+### Separate Planning Project
+
+The AI Knowledge Platform is maintained as a separate planning project under the `projects/` directory until implementation begins.
+
+All design artifacts, architecture documents, ADRs, validation plans, and implementation guides SHALL be developed independently and later integrated into the Homelab repository during Phase 13.2.
+
+### Governance Requirement
+
+This project SHALL conform to the existing Homelab Governance Framework. No new governance standards shall be introduced unless approved through an ADR. All Docker Compose files, directory layouts, documentation, validation artifacts, architecture documents, service definitions, naming conventions, deployment patterns, and future implementations SHALL comply with the governance standards already established within the Homelab repository. In the event of a conflict, the Homelab Governance Framework SHALL take precedence unless explicitly superseded by an approved ADR.
+
+---
+
+# Phase 13.3 — Persistent AI Memory
+
+**Status:** 🟡 Planned
+
+Introduce durable AI memory so agents retain long-term context across sessions and workflows.
+
+## Deliverables
+
+- Honcho
+- Long-term memory
+- User profile
+- Conversation memory
+- Preference memory
+- AI memory governance
+
+---
+
+# Phase 13.4 — Agent Framework
+
+**Status:** 🟡 Planned
+
+Establish multi-agent orchestration on top of the Core AI Platform, Knowledge Platform, and Persistent AI Memory.
+
+## Deliverables
+
+- Multi-agent orchestration
+- Specialized agents
+- Planning agents
+- Research agents
+- Automation agents
+
+---
+
+# Phase 14 — AI Automation
+
+**Status:** 🟡 Planned
 
 Gradually automate homelab operations while preserving human governance.
 
 ## Automation Targets
 
-- Automatic audits
-- Documentation generation
+- Automatic documentation
+- ADR generation
+- Compliance reviews
 - Service creation
+- Health monitoring
+- Self-healing suggestions
+- Pull request generation
+- Change planning
+- Automatic audits
 - Change proposals
 - Lifecycle management
 - Scheduled compliance reviews
 - Template generation
-- ADR suggestions
 - Service reviews
 - Architecture validation
 - Compliance reporting
@@ -593,23 +580,27 @@ AI becomes a governance assistant—not a governance replacement.
 # Long-Term Vision
 
 ```text
-Governance Standards
-          ↓
-Repository Governance
-          ↓
-Service Governance
-          ↓
+Governance
+        ↓
+Repository Standardization
+        ↓
 Infrastructure Standardization
-          ↓
-Homelab Validation
-          ↓
-Governance Freeze v1.0
-          ↓
-Stable Homelab Platform
-          ↓
-AI Orchestration
-          ↓
+        ↓
+Production Stabilization
+        ↓
+Storage Modernization
+        ↓
+Security Modernization
+        ↓
+AI Infrastructure (Brainiac)
+        ↓
+Knowledge Platform
+        ↓
+Persistent AI Memory
+        ↓
+Agent Framework
+        ↓
 AI Automation
-          ↓
+        ↓
 Continuous Improvement
 ```
