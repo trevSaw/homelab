@@ -1,0 +1,35 @@
+version-3.0.10.1566: Pulling from linuxserver/sonarr
+736b83edfa49: Pulling fs layer
+75348e6f9b96: Pulling fs layer
+d954eeff28c6: Pulling fs layer
+1e8b9c7c7dfc: Pulling fs layer
+afc822f73ebf: Pulling fs layer
+30f3c60e4947: Pulling fs layer
+d5fbf637cbdc: Pulling fs layer
+1e8b9c7c7dfc: Waiting
+afc822f73ebf: Waiting
+30f3c60e4947: Waiting
+d5fbf637cbdc: Waiting
+75348e6f9b96: Verifying Checksum
+75348e6f9b96: Download complete
+d954eeff28c6: Download complete
+afc822f73ebf: Verifying Checksum
+afc822f73ebf: Download complete
+736b83edfa49: Verifying Checksum
+736b83edfa49: Download complete
+736b83edfa49: Pull complete
+75348e6f9b96: Pull complete
+d954eeff28c6: Pull complete
+d5fbf637cbdc: Verifying Checksum
+d5fbf637cbdc: Download complete
+1e8b9c7c7dfc: Verifying Checksum
+1e8b9c7c7dfc: Download complete
+1e8b9c7c7dfc: Pull complete
+afc822f73ebf: Pull complete
+30f3c60e4947: Verifying Checksum
+30f3c60e4947: Download complete
+30f3c60e4947: Pull complete
+d5fbf637cbdc: Pull complete
+Digest: sha256:0b3a72bcc508bcf1648304a1b969ef8e85b0418852f3fa39d7fc06d7a6629f43
+Status: Downloaded newer image for lscr.io/linuxserver/sonarr:version-3.0.10.1566
+lscr.io/linuxserver/sonarr:version-3.0.10.1566

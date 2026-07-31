@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T12:19:15Z
+
+```json
+{
+  "timestamp": "2026-07-30T12:19:15Z",
+  "service": "hotio",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/Hotio/config",
+  "destination": "/mnt/monarch/appdata/hotio",
+  "files": 851,
+  "directories": 15,
+  "bytes": "21MB",
+  "bytes_raw": 21976711,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": true,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted","[migration] [preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted"],
+  "errors": [],
+  "warning_count": 2,
+  "error_count": 0
+}
+```

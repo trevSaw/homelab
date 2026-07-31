@@ -1,0 +1,15 @@
+# Homepage post-cutover evidence
+timestamp: 2026-07-30T09:31:11Z
+status=running health=healthy
+/mnt/monarch/appdata/homepage/images -> /app/public/images
+/mnt/monarch/appdata/homepage -> /app/config
+
+traefik: 200
+PATH_*:
+PATH_CONFIG=/mnt/monarch/appdata
+PATH_DATA=/mnt/monarch/appdata
+drwxrwxr-x 3 fatherfrank fatherfrank  5 Jan 23  2026 /hive/config/homepage.old
+drwxr-xr-x 2 root        root         2 Jan 23  2026 /hive/data/homepage/images
+drwxrwxr-x 2 fatherfrank fatherfrank  4 Feb  8 04:06 /hive/homepage.old
+drwxrwxr-x 1 fatherfrank fatherfrank 76 Jan 23  2026 /mnt/monarch/appdata/homepage
+drwxr-xr-x 1 fatherfrank fatherfrank  0 Jan 23  2026 /mnt/monarch/appdata/homepage/images

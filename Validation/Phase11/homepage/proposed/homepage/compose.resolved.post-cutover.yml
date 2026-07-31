@@ -1,0 +1,51 @@
+name: homepage
+services:
+  homepage:
+    container_name: homepage
+    deploy:
+      resources:
+        limits:
+          memory: "268435456"
+    environment:
+      DEFAULT_DOMAIN: fatherfankscloud.uk
+      PATH_CONFIG: /mnt/monarch/appdata
+      PATH_DATA: /mnt/monarch/appdata
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Asia/Tokyo
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://localhost:3000/ >/dev/null || exit 1
+      timeout: 5s
+      interval: 30s
+      retries: 3
+      start_period: 20s
+    image: ghcr.io/gethomepage/homepage:latest
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.homepage.entrypoints: websecure
+      traefik.http.routers.homepage.rule: Host(`home.fatherfankscloud.uk`)
+      traefik.http.routers.homepage.tls: "true"
+      traefik.http.services.homepage.loadbalancer.server.port: "3000"
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      proxy: null
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/homepage
+        target: /app/config
+        bind: {}
+      - type: bind
+        source: /mnt/monarch/appdata/homepage/images
+        target: /app/public/images
+        bind: {}
+networks:
+  proxy:
+    name: proxy
+    external: true

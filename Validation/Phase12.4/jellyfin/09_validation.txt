@@ -1,0 +1,40 @@
+# Phase 12.4 validation 2026-07-31T14:47:23+00:00
+## Jellyfin
+Image=ghcr.io/hotio/jellyfin:release-10.11.6 Health=healthy Nets=proxy 
+local_health=200
+traefik=302
+drwxrwxr-x   1 hotio hotio 294 Jul 31 14:46 /config
+drwxr-xr-x 225 hotio hotio 225 Jun 10 11:40 /data/movies
+drwxrwxrwx   9 hotio hotio   9 Dec 12  2025 /data/tvshows
+drwxr-xr-x   2 root  root   80 Jul 31 14:46 /dev/dri
+server= 322b7afa870f ver= 10.11.6 id= 24751dc2
+## Jellyseerr
+Image=ghcr.io/hotio/jellyseerr@sha256:794d5496988b69b67fab65daa9963de0dfbf6ada9103b81f95dc766e9b5d86f8 Health=healthy Nets=proxy 
+{
+    "version": "2.7.3",
+    "commitTag": "2.7.3",
+    "updateAvailable": true,
+    "commitsBehind": 0,
+    "restartRequired": false
+}
+traefik=307
+DNS from jellyseerr:
+172.19.0.4        jellyfin  jellyfin
+172.19.0.16       radarr  radarr
+Healthy
+{
+  "status": "OK"
+}
+{
+  "status": "OK"
+}
+## Bazarr
+Image=lscr.io/linuxserver/bazarr:1.2.2 Health=healthy Nets=hotio_default proxy 
+ui=200
+traefik=200
+DNS from bazarr:
+172.27.0.7        radarr  radarr
+bazarr_status_http 200 b'{"data": {"bazarr_version": "1.2.2", "package_version": "v1.2.2-ls201 by linuxserver.io", "sonarr_version": "3.0.10.1566", "radarr_version": "5.22.4.9896", "operating_system": "Linux-6.8.0-124-generic'
+/api/system/health 200 b'{"data": []}\n'
+/api/system/tasks 200 b'{"data": [{"interval": "every 60 minutes", "job_id": "update_movies", "job_running": false, "name": "Update Movie list f'
+Lidarr: not deployed — out of scope

@@ -1,25 +1,17 @@
-# prowlarr
+# Prowlarr (Phase 12.2D)
 
-Phase 10.75 repository import of the live deployment.
+Indexer manager. Migrated from CasaOS `/DATA/AppData/config` to Phase 12 standard.
 
-## Purpose
-Indexer manager for *arr stack
+- Config: `/mnt/monarch/appdata/prowlarr`
+- Networks: `proxy` + `hotio` (`hotio_default`)
+- WebUI: host `:9696` (transitional) and Traefik `prowlarr.fatherfankscloud.uk`
 
-## Runtime
-- Container(s): `prowlarr`
-- Compose: `services/prowlarr/compose.yaml`
-- Former source of truth: CasaOS `glorious_thomas`
+App integrations:
+- Radarr via Docker DNS (`radarr` / `prowlarr`)
+- Sonarr via host LAN IP (Sonarr still `network_mode: host` — documented exception)
 
-## Important
-This import **does not** migrate storage. Bind mounts are unchanged from the live container.
-
-## Operations
 ```bash
 cd services/prowlarr
-cp -n .env.example .env   # if required
-docker compose -f compose.yaml config
-# Do not recreate unless cutting over from CasaOS/Portainer intentionally
+cp .env.example .env
+docker compose -f compose.yml up -d
 ```
-
-## Documentation
-See `Documentation/services/prowlarr/`.

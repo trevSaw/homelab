@@ -1,0 +1,21 @@
+# Hermes smoke 2026-07-30T11:14:27Z
+status=running mounts=/mnt/monarch/appdata/hermes->/opt/data  project=/mnt/monarch/appdata/hermes/compose.yml
+ERROR gateway.run: kanban dispatcher: tick failed on board default
+Traceback (most recent call last):
+  File "/opt/hermes/gateway/kanban_watchers.py", line 876, in _tick_once_for_board
+    conn = _kb.connect(board=slug)
+  File "/opt/hermes/hermes_cli/kanban_db.py", line 1453, in connect
+    with _cross_process_init_lock(path):
+         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/opt/hermes/hermes_cli/kanban_db.py", line 1207, in _cross_process_init_lock
+    handle = lock_path.open("a+b")
+  File "/usr/lib/python3.13/pathlib/_local.py", line 539, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/opt/data/kanban.db.init.lock'
+      - traefik.http.routers.hermes.rule=Host(`hermes.fatherfankscloud.uk`)
+      - traefik.http.routers.hermes.entrypoints=websecure
+      - traefik.http.routers.hermes.tls=true
+hermes host 302

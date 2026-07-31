@@ -1,0 +1,2 @@
+Image=ghcr.io/hotio/jellyfin:release-10.11.6 Health=healthy Nets=proxy 
+traefik=302

@@ -1,0 +1,1 @@
+Image=lscr.io/linuxserver/sonarr:version-3.0.10.1566 Status=running Health=healthy NetworkMode=host

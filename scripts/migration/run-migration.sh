@@ -113,7 +113,10 @@ if is_execute && command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&
     cd "$COMPOSE_DIR"
     docker compose -f "$COMPOSE_BASE" up -d
   )
-  run_step "Smoke" "$SCRIPT_DIR/verify-service.sh" "${FLAGS[@]}" "$SERVICE"
+  # --smoke-only: the copy gate already ran pre-start. Re-comparing source and
+  # destination now would flag the logs/caches the freshly started service is
+  # writing to its new config path as verification failures.
+  run_step "Smoke" "$SCRIPT_DIR/verify-service.sh" "${FLAGS[@]}" --smoke-only "$SERVICE"
 else
   info "[dry-run] would start compose project $SVC_COMPOSE"
 fi

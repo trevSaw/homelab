@@ -1,0 +1,1 @@
+Image=ghcr.io/hotio/prowlarr:release-2.3.5.5327 Health=healthy Networks=hotio_default proxy 

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-30T10:58:36Z",
+  "service": "traefik",
+  "phase": "preflight",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "",
+  "destination": "/mnt/monarch/appdata/traefik",
+  "files": 0,
+  "directories": 0,
+  "bytes": "0B",
+  "bytes_raw": 0,
+  "copy_required": "maybe",
+  "compose_update_needed": "maybe",
+  "compose_updated": false,
+  "verification_status": "preflight_ok",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [
+    "git working tree not clean \u2014 EXPECTED while Phase 10.5 framework changes are uncommitted"
+  ],
+  "errors": [],
+  "warning_count": 1,
+  "error_count": 0
+}

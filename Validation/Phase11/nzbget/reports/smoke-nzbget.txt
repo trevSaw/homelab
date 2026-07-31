@@ -1,0 +1,40 @@
+Image:         hotio/nzbget:release
+Revision:      cfd8f93 
+Version:       25.2
+OS:            Linux 6.8.0-124-generic x86_64
+
+----------------------------------------------------------------------
+ENVIRONMENT BASE
+----------------------------------------------------------------------
+PUID=1000
+PGID=1000
+UMASK=002
+TZ=Denver
+PRIVOXY_ENABLED=false
+UNBOUND_ENABLED=false
+UNBOUND_NAMESERVERS=
+VPN_ENABLED=false
+----------------------------------------------------------------------
+
+Executing usermod...
+usermod: no changes
+Applying permissions to /config
+s6-rc: info: service init-setup successfully started
+s6-rc: info: service init-setup-app: starting
+
+----------------------------------------------------------------------
+ENVIRONMENT APP
+----------------------------------------------------------------------
+WEBUI_PORTS=6789/tcp,6789/udp
+----------------------------------------------------------------------
+
+s6-rc: info: service init-setup-app successfully started
+s6-rc: info: service init-wireguard: starting
+s6-rc: info: service init-wireguard successfully started
+s6-rc: info: service service-nzbget: starting
+s6-rc: info: service service-nzbget successfully started
+s6-rc: info: service legacy-services: starting
+s6-rc: info: service legacy-services successfully started
+[INFO] nzbget 25.2 server-mode
+[INFO] using /config/nzbget.conf
+[INFO] nzbget runs on 0.0.0.0:6789

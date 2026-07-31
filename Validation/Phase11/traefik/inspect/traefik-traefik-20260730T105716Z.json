@@ -1,0 +1,335 @@
+[
+  {
+    "Id": "7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e",
+    "Created": "2026-06-08T12:50:57.37457483Z",
+    "Path": "/entrypoint.sh",
+    "Args": [
+      "--global.checknewversion=true",
+      "--global.sendanonymoususage=false",
+      "--log.level=DEBUG",
+      "--api.dashboard=true",
+      "--api.insecure=false",
+      "--providers.docker=true",
+      "--providers.docker.exposedbydefault=false",
+      "--providers.docker.network=proxy",
+      "--entrypoints.web.address=:80",
+      "--entrypoints.web.http.redirections.entrypoint.to=websecure",
+      "--entrypoints.web.http.redirections.entrypoint.scheme=https",
+      "--entrypoints.websecure.address=:443",
+      "--certificatesresolvers.le.acme.email=tsawyerm@gmail.com",
+      "--certificatesresolvers.le.acme.storage=/etc/traefik/acme.json",
+      "--certificatesresolvers.le.acme.dnschallenge=true",
+      "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare",
+      "--certificatesresolvers.le.acme.dnschallenge.delaybeforecheck=0",
+      "--certificatesresolvers.le.acme.keytype=EC256"
+    ],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 2782088,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-27T09:21:27.68479268Z",
+      "FinishedAt": "2026-07-27T09:21:27.469646096Z"
+    },
+    "Image": "sha256:91528df1690f7da08360dcbbcb92b3ea483eeceb9f136d309f17506a5bd3f58d",
+    "ResolvConfPath": "/var/lib/docker/containers/7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e/hostname",
+    "HostsPath": "/var/lib/docker/containers/7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e/hosts",
+    "LogPath": "/var/lib/docker/containers/7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e/7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e-json.log",
+    "Name": "/traefik",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/var/run/docker.sock:/var/run/docker.sock:ro",
+        "/mnt/monarch/appdata/traefik/acme.json:/etc/traefik/acme.json:rw",
+        "/etc/localtime:/etc/localtime:ro"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "proxy",
+      "PortBindings": {
+        "443/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "443"
+          }
+        ],
+        "80/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "80"
+          }
+        ]
+      },
+      "RestartPolicy": {
+        "Name": "always",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "7341b5c97a12a5a89a114284fef182129a9604126c75fcb23554da447fcdee6e",
+        "LowerDir": "/var/lib/docker/overlay2/8e53b564aa3f836fec63ed8ec7c019e30642666488cf3af3a2f126d80cabe0fb-init/diff:/var/lib/docker/overlay2/d04acad6cc492c8f85ca1f53d080a903e9694bc3efd9024129c24bb0e65eca81/diff:/var/lib/docker/overlay2/df3ae5f5f3d8fa0dec78648b89c16ced7e25e5de2f67beb28e54a5436874e780/diff:/var/lib/docker/overlay2/6ee33f3fd43f322512be46f519d5d520712feb83be55898c3c1438a491c085cd/diff:/var/lib/docker/overlay2/8a9300a25d61baf4d52a28bde5c4c56978848ed5201731f77876a28bbae2eddd/diff",
+        "MergedDir": "/var/lib/docker/overlay2/8e53b564aa3f836fec63ed8ec7c019e30642666488cf3af3a2f126d80cabe0fb/merged",
+        "UpperDir": "/var/lib/docker/overlay2/8e53b564aa3f836fec63ed8ec7c019e30642666488cf3af3a2f126d80cabe0fb/diff",
+        "WorkDir": "/var/lib/docker/overlay2/8e53b564aa3f836fec63ed8ec7c019e30642666488cf3af3a2f126d80cabe0fb/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/traefik/acme.json",
+        "Destination": "/etc/traefik/acme.json",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/var/run/docker.sock",
+        "Destination": "/var/run/docker.sock",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/etc/localtime",
+        "Destination": "/etc/localtime",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "7341b5c97a12",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "443/tcp": {},
+        "80/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "CLOUDFLARE_DNS_API_TOKEN=***REDACTED***",
+        "TZ=Asia/Tokyo",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "Cmd": [
+        "--global.checknewversion=true",
+        "--global.sendanonymoususage=false",
+        "--log.level=DEBUG",
+        "--api.dashboard=true",
+        "--api.insecure=false",
+        "--providers.docker=true",
+        "--providers.docker.exposedbydefault=false",
+        "--providers.docker.network=proxy",
+        "--entrypoints.web.address=:80",
+        "--entrypoints.web.http.redirections.entrypoint.to=websecure",
+        "--entrypoints.web.http.redirections.entrypoint.scheme=https",
+        "--entrypoints.websecure.address=:443",
+        "--certificatesresolvers.le.acme.email=tsawyerm@gmail.com",
+        "--certificatesresolvers.le.acme.storage=/etc/traefik/acme.json",
+        "--certificatesresolvers.le.acme.dnschallenge=true",
+        "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare",
+        "--certificatesresolvers.le.acme.dnschallenge.delaybeforecheck=0",
+        "--certificatesresolvers.le.acme.keytype=EC256"
+      ],
+      "Image": "traefik:latest",
+      "Volumes": null,
+      "WorkingDir": "/",
+      "Entrypoint": [
+        "/entrypoint.sh"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "0f84999be9af70b18c34b0831b9f6c4bd627cfd9ac1e7973a5d97a25a5eb8403",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:91528df1690f7da08360dcbbcb92b3ea483eeceb9f136d309f17506a5bd3f58d",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "traefik",
+        "com.docker.compose.project.config_files": "/hive/traefik/compose.yaml",
+        "com.docker.compose.project.working_dir": "/hive/traefik",
+        "com.docker.compose.service": "traefik",
+        "com.docker.compose.version": "5.0.2",
+        "org.opencontainers.image.description": "A modern reverse-proxy",
+        "org.opencontainers.image.documentation": "https://docs.traefik.io",
+        "org.opencontainers.image.source": "https://github.com/traefik/traefik",
+        "org.opencontainers.image.title": "Traefik",
+        "org.opencontainers.image.url": "https://traefik.io",
+        "org.opencontainers.image.vendor": "Traefik Labs",
+        "org.opencontainers.image.version": "v3.6.7",
+        "traefik.enable": "true",
+        "traefik.http.routers.dashboard.entrypoints": "websecure",
+        "traefik.http.routers.dashboard.rule": "Host(`traefik.fatherfankscloud.uk`)",
+        "traefik.http.routers.dashboard.service": "api@internal",
+        "traefik.http.routers.dashboard.tls": "true",
+        "traefik.http.routers.dashboard.tls.certresolver": "le",
+        "traefik.http.routers.dashboard.tls.domains[0].main": "fatherfankscloud.uk",
+        "traefik.http.routers.dashboard.tls.domains[0].sans": "*.fatherfankscloud.uk"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "6d776e153c826b6a61e1da23bb70102d546746bbe457c421dbd36b03aa639e92",
+      "SandboxKey": "/var/run/docker/netns/6d776e153c82",
+      "Ports": {
+        "443/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "443"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "443"
+          }
+        ],
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "80"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "80"
+          }
+        ]
+      },
+      "Networks": {
+        "proxy": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "traefik",
+            "traefik"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "46a8595d610b788383ee36281f58ae2637a445cc94bb0c9ef843f547023e546b",
+          "EndpointID": "f21b79433d10816cd4a27a3a686d27ee4fd074ade4c3f14601f14e825de79f59",
+          "Gateway": "172.19.0.1",
+          "IPAddress": "172.19.0.2",
+          "MacAddress": "1a:1e:4b:4e:6f:e1",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "traefik",
+            "7341b5c97a12"
+          ]
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,3 @@
+# No literal volume path rewrite.
+# Cutover is PATH_DATA=/mnt/monarch/appdata in services/.env (gitignored),
+# resolving ${PATH_DATA}/authentik/* → /mnt/monarch/appdata/authentik/*.

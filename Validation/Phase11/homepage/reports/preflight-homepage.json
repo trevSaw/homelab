@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-30T09:28:03Z",
+  "service": "homepage",
+  "phase": "preflight",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/config/homepage",
+  "destination": "/mnt/monarch/appdata/homepage",
+  "files": 3,
+  "directories": 2,
+  "bytes": "42KB",
+  "bytes_raw": 42005,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "preflight_ok",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [
+    "git working tree not clean \u2014 EXPECTED while Phase 10.5 framework changes are uncommitted"
+  ],
+  "errors": [],
+  "warning_count": 1,
+  "error_count": 0
+}

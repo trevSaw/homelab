@@ -1,0 +1,15 @@
+# Portainer post-cutover evidence
+timestamp: 2026-07-30T09:12:38Z
+
+status=running health=unhealthy
+/mnt/monarch/appdata/portainer -> /data
+/var/run/docker.sock -> /var/run/docker.sock
+
+api/status:
+{"Version":"2.33.6","InstanceID":"e4a97235-80d2-46a0-b2dc-fe4c1ebf61a7"}
+api/system/status http: 200
+compose volume line:
+      - /mnt/monarch/appdata/portainer:/data
+rollback path:
+drwxrwxrwx 9 fatherfrank fatherfrank  13 Jan 13  2026 /hive/portainer.old
+drwxrwxrwx 1 fatherfrank fatherfrank 188 Jan 13  2026 /mnt/monarch/appdata/portainer

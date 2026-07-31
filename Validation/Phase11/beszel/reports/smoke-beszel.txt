@@ -1,0 +1,22 @@
+# Beszel smoke 2026-07-30T10:58:55Z
+status=running mounts=/mnt/monarch/appdata/beszel/beszel_data->/beszel_data  project=/mnt/monarch/appdata/beszel/compose.yml
+2026/06/24 10:25:17 Server started at http://0.0.0.0:8090
+├─ REST API:  http://0.0.0.0:8090/api/
+└─ Dashboard: http://0.0.0.0:8090/_/
+2026/06/25 01:16:45 Server started at http://0.0.0.0:8090
+├─ REST API:  http://0.0.0.0:8090/api/
+└─ Dashboard: http://0.0.0.0:8090/_/
+2026/07/08 09:36:02 Server started at http://0.0.0.0:8090
+├─ REST API:  http://0.0.0.0:8090/api/
+└─ Dashboard: http://0.0.0.0:8090/_/
+2026/07/24 14:04:50 Server started at http://0.0.0.0:8090
+├─ REST API:  http://0.0.0.0:8090/api/
+└─ Dashboard: http://0.0.0.0:8090/_/
+2026/07/25 08:11:33 Server started at http://0.0.0.0:8090
+├─ REST API:  http://0.0.0.0:8090/api/
+└─ Dashboard: http://0.0.0.0:8090/_/
+8090/tcp -> 0.0.0.0:8090
+8090/tcp -> [::]:8090
+curl: (28) Failed to connect to beszel.fatherfankscloud.uk port 443 after 134404 ms: Connection timed out
+beszel.fatherfankscloud.uk 000
+localhost:8090 200

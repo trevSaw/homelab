@@ -1,0 +1,27 @@
+
+==== Verify: jellyfin ====
+INFO: Smoke-only mode — container state check; copy comparison already gated pre-start
+INFO: Container jellyfin status=running health=healthy
+
+-------------------------------------
+Service: jellyfin
+Dry Run: no | Status: SUCCESS
+Source:
+  /hive/jellyfin/config
+Destination:
+  /mnt/monarch/appdata/jellyfin
+Copy Required:
+  yes
+Rsync Excludes:
+  cache/**,data/transcodes/**,.temp/**,log/**
+Compose Update:
+  yes
+Verification:
+  smoke_complete
+Rollback:
+  Available
+Warnings:
+  0
+Errors:
+  0
+-------------------------------------

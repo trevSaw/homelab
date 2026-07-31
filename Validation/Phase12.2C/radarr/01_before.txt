@@ -1,0 +1,25 @@
+# Before — 2026-07-31T14:15:38+00:00
+install_type=Docker (CasaOS + repo import compose)
+compose_live_label=/var/lib/casaos/apps/radarr/docker-compose.yml
+compose_repo=/home/fatherfrank/projects/homelab/services/radarr/compose.yaml
+image=ghcr.io/hotio/radarr:latest
+version=5.22.4.9896
+data=/DATA/AppData/radarr/config
+networks=hotio_default
+network_mode=hotio_default
+port=7878
+uid_gid=fatherfrank:fatherfrank (1000:1000)
+movies=231
+indexers=6
+quality_profiles=8
+root_folders:
+2|/movies/
+download_clients_BEFORE_FIX:
+1|NZBGet|Nzbget|172.27.0.7:6789
+2|qbit|QBittorrent|172.27.0.7:8080
+remote_path_mappings:
+5|qbittorrent|/hive/downloads/completed/Radarr/|/downloads/completed/Radarr/
+db_size=18M
+data_size=491M
+db_md5=0394e14fb3459df86638e0136e3af245
+FAIL_issue=download clients host=172.27.0.7 (radarr self) not qbittorrent

@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/calibre-web/compose.yml	2026-07-30 00:02:24.692189345 +0000
++++ Validation/Phase11/calibre/proposed/calibre/compose.yml	2026-07-30 10:53:37.408567999 +0000
+@@ -8,7 +8,7 @@
+       - TZ=Asia/Tokyo
+       - DISABLE_SSL=true
+     volumes:
+-      - /hive/calibre/config:/config
++      - /mnt/monarch/appdata/calibre:/config
+       - /hive/library/Kavita/fanfic/novelas:/books
+       - /hive/library/Kavita/browser_cache:/config/browser_cache
+     restart: unless-stopped

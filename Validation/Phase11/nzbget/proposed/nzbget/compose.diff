@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/NZBget/compose.yml	2026-07-30 00:02:24.691189339 +0000
++++ /home/fatherfrank/projects/homelab/Validation/Phase11/nzbget/proposed/nzbget/compose.yml	2026-07-30 12:16:37.212852984 +0000
+@@ -12,7 +12,7 @@
+       - UMASK=002
+     volumes:
+       - type: bind
+-        source: /hive/NZBget/config
++        source: /mnt/monarch/appdata/nzbget
+         target: /config
+         bind:
+           create_host_path: true

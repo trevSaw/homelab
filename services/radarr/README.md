@@ -1,25 +1,17 @@
-# radarr
+# Radarr (Phase 12.2C)
 
-Phase 10.75 repository import of the live deployment.
+Movie manager. Migrated from CasaOS/`/DATA/AppData/radarr` to Phase 12 standard.
 
-## Purpose
-Movie collection manager
+- Config: `/mnt/monarch/appdata/radarr`
+- Movies: `/hive/jellyfin/movie` → `/movies`
+- Downloads: `/hive/downloads` → `/downloads`
+- Networks: `proxy` + `hotio` (`hotio_default`)
+- WebUI: host `:7878` (transitional) and Traefik `radarr.fatherfankscloud.uk`
 
-## Runtime
-- Container(s): `radarr`
-- Compose: `services/radarr/compose.yaml`
-- Former source of truth: CasaOS `radarr`
+Download clients use Docker DNS `qbittorrent` (NZBGet shares qBittorrent netns → `qbittorrent:6789`).
 
-## Important
-This import **does not** migrate storage. Bind mounts are unchanged from the live container.
-
-## Operations
 ```bash
 cd services/radarr
-cp -n .env.example .env   # if required
-docker compose -f compose.yaml config
-# Do not recreate unless cutting over from CasaOS/Portainer intentionally
+cp .env.example .env
+docker compose -f compose.yml up -d
 ```
-
-## Documentation
-See `Documentation/services/radarr/`.

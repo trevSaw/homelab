@@ -1,0 +1,13 @@
+# DNS / connectivity remainder — 2026-07-31T14:27:52+00:00
+172.27.0.4        qbittorrent  qbittorrent
+172.27.0.6        prowlarr  prowlarr
+172.27.0.7        radarr  radarr
+172.27.0.4        qbittorrent  qbittorrent
+sonarr_host_net=uses localhost for qbit/nzb (approved exception)
+## Traefik HTTPS (--resolve 127.0.0.1)
+radarr.fatherfankscloud.uk=200
+prowlarr.fatherfankscloud.uk=200
+jellyfin.fatherfankscloud.uk=302
+sonarr Traefik=none (host :8989 only)
+## Indexer sample notes
+Some remote indexer tests returned 400 (Badass Torrents / Internet Archive) — remote/indexer config, not Docker fabric failure

@@ -1,0 +1,237 @@
+[
+  {
+    "Id": "b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c",
+    "Created": "2026-06-20T05:05:27.536826055Z",
+    "Path": "docker-entrypoint.sh",
+    "Args": [
+      "redis-server"
+    ],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 4858,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-24T14:04:49.346921672Z",
+      "FinishedAt": "2026-07-24T12:15:33.05376935Z"
+    },
+    "Image": "sha256:dacc5170841bc9f12facf1b9604481bedd3f0f6cae1e1208fd16c25e0aff3e6e",
+    "ResolvConfPath": "/var/lib/docker/containers/b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c/hostname",
+    "HostsPath": "/var/lib/docker/containers/b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c/hosts",
+    "LogPath": "/var/lib/docker/containers/b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c/b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c-json.log",
+    "Name": "/honcho-redis",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/mnt/monarch/appdata/honcho/redis:/data:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "ollama_ollama-net",
+      "PortBindings": {},
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "b1ffe4ad6922a09db42ffecb88618ff2a2f5cc3f8832edfc319eb1d4204d391c",
+        "LowerDir": "/var/lib/docker/overlay2/52e07308a10bf2e640b4d09dee69ebcd231e682f6af52ff3b5873a346ed697e2-init/diff:/var/lib/docker/overlay2/b5502f739a5cf1b0cdfbea7b7eabb1702e3c5c1664666ae05550e30143700857/diff:/var/lib/docker/overlay2/4e7d69e25ed8a527f98f91ffc2da1fd64f4a415adc702f4cf75f664e42ba09b9/diff:/var/lib/docker/overlay2/3478d5795fabbd4747736845872021a7a393880ab4518f84e5a8710e2012fb04/diff:/var/lib/docker/overlay2/62e824b38d095f3f52e7e1595337f8f305d6911a25cba16bf679be50efaad404/diff:/var/lib/docker/overlay2/6ce8159b12f28df56bf0cf968e10576346e6b4d533698228a16e44e4f4444540/diff:/var/lib/docker/overlay2/90aa45e75ebdab5161d80bf10500180c63a389f766dea84c2e3f7bf24825a450/diff:/var/lib/docker/overlay2/6cd9a64752d30de5d61da871fdc9c64953c85e9eef7f43c41cc471e7cced6fbb/diff",
+        "MergedDir": "/var/lib/docker/overlay2/52e07308a10bf2e640b4d09dee69ebcd231e682f6af52ff3b5873a346ed697e2/merged",
+        "UpperDir": "/var/lib/docker/overlay2/52e07308a10bf2e640b4d09dee69ebcd231e682f6af52ff3b5873a346ed697e2/diff",
+        "WorkDir": "/var/lib/docker/overlay2/52e07308a10bf2e640b4d09dee69ebcd231e682f6af52ff3b5873a346ed697e2/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/honcho/redis",
+        "Destination": "/data",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "b1ffe4ad6922",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "6379/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "REDIS_VERSION=8.2.7"
+      ],
+      "Cmd": [
+        "redis-server"
+      ],
+      "Image": "redis:8.2",
+      "Volumes": {
+        "/data": {}
+      },
+      "WorkingDir": "/data",
+      "Entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "ed5ff88e60843d7e30a562048c0df3467e53e3bae0ebc7c0c7ac32802bd10696",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:dacc5170841bc9f12facf1b9604481bedd3f0f6cae1e1208fd16c25e0aff3e6e",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "honcho",
+        "com.docker.compose.project.config_files": "/mnt/monarch/appdata/honcho/compose.yml",
+        "com.docker.compose.project.working_dir": "/mnt/monarch/appdata/honcho",
+        "com.docker.compose.service": "redis",
+        "com.docker.compose.version": "5.1.4"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "8de751e1dd7fd9c6e8307e2ca535759be8428c2181085e10f3508a6eab335189",
+      "SandboxKey": "/var/run/docker/netns/8de751e1dd7f",
+      "Ports": {
+        "6379/tcp": null
+      },
+      "Networks": {
+        "ollama_ollama-net": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "honcho-redis",
+            "redis"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "4b20c20c601442c5664ef0085608755673ef348b3899e59eea04c6d56f1eab0e",
+          "EndpointID": "9282a89e0d094b7ebe71c9dc2d8bd336b009b2fab61cf2ab6eddb05a95789310",
+          "Gateway": "172.22.0.1",
+          "IPAddress": "172.22.0.4",
+          "MacAddress": "ea:61:22:59:e8:9b",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "honcho-redis",
+            "redis",
+            "b1ffe4ad6922"
+          ]
+        }
+      }
+    }
+  }
+]

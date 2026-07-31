@@ -1,0 +1,5 @@
+backup_path=/hive/backups/sonarr/native-20260731T135401
+backup_size=372M (apparent; hive compression may shrink du)
+backup_db_md5=fdf0431f98811c2484ef6f6d04eb2ce5
+backup_series=214
+source_db_md5=fdf0431f98811c2484ef6f6d04eb2ce5

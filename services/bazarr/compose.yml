@@ -1,0 +1,47 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:1.2.2
+    container_name: bazarr
+    hostname: bazarr
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - proxy
+      - hotio
+    ports:
+      # TRANSITIONAL beside Traefik
+      - "6767:6767"
+    volumes:
+      - /mnt/monarch/appdata/bazarr:/config
+      - /hive/jellyfin/movie:/movies
+      - /hive/jellyfin/tv:/tv
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.bazarr.rule=Host(`bazarr.fatherfankscloud.uk`)
+      - traefik.http.routers.bazarr.entrypoints=websecure
+      - traefik.http.routers.bazarr.tls=true
+      - traefik.http.routers.bazarr.tls.certresolver=le
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:6767/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  proxy:
+    external: true
+  hotio:
+    external: true
+    name: hotio_default

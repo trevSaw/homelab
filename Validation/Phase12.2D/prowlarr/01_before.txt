@@ -1,0 +1,28 @@
+# Before — 2026-07-31T14:21:33+00:00
+install_type=Docker (CasaOS project glorious_thomas)
+compose=/var/lib/casaos/apps/glorious_thomas/docker-compose.yml
+image=ghcr.io/hotio/prowlarr:latest
+version=2.3.5.5327
+data=/DATA/AppData/config
+networks=hotio_default
+port=9696
+uid_gid=fatherfrank:fatherfrank (1000:1000)
+indexers=10
+applications=2
+indexer_list:
+21|showRSS|TorrentRssIndexer
+22|SubsPlease|SubsPlease
+23|1337x|Cardigann
+24|Badass Torrents|Cardigann
+25|Bangumi Moe|Cardigann
+27|Internet Archive|Cardigann
+28|MagnetDownload|Cardigann
+29|The Pirate Bay|Cardigann
+35|NZBgeek|Newznab
+36|IPTorrents|IPTorrents
+application_endpoints (no secrets):
+1|Sonarr|Sonarr|http://192.168.50.44:8989|http://192.168.50.44:9696
+2|Radarr|Radarr|http://172.27.0.5:7878|http://172.27.0.3:9696
+data_size=76M
+db_md5=c15239a21ec3b2e5e62e5aec67ccf517
+NOTE=Radarr app URLs use stale container IPs; Sonarr uses host LAN IP

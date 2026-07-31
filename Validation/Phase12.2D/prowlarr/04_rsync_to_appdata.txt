@@ -1,0 +1,17 @@
+
+Number of files: 943 (reg: 934, dir: 9)
+Number of created files: 942 (reg: 934, dir: 8)
+Number of deleted files: 0
+Number of regular files transferred: 934
+Total file size: 77,220,030 bytes
+Total transferred file size: 77,220,030 bytes
+Literal data: 77,220,030 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 77,301,983
+Total bytes received: 17,820
+
+sent 77,301,983 bytes  received 17,820 bytes  51,546,535.33 bytes/sec
+total size is 77,220,030  speedup is 1.00

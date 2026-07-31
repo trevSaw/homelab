@@ -1,0 +1,39 @@
+# After validation
+## Container
+Image=ghcr.io/hotio/radarr:release-5.22.4.9896 Health=healthy Networks=hotio_default proxy
+## System
+version=5.22.4.9896
+branch=master
+appData=/config
+runtimeName=netcore
+startTime=2026-07-31T14:16:34Z
+## Movies count=231
+## Root folders
+2|/movies|accessible=True|freeSpace=8090829193216
+## Indexers / profiles
+indexers=6
+quality_profiles=8
+## Download clients
+  1|NZBGet|Nzbget|host=qbittorrent|port=6789|enable=True
+  2|qbit|QBittorrent|host=qbittorrent|port=8080|enable=True
+## Download client tests
+client_id=1 name=NZBGet http=200 body='{}' => PASS
+client_id=2 name=qbit http=200 body='{}' => PASS
+## DNS from radarr container
+172.27.0.4        qbittorrent  qbittorrent
+  HTTP/1.1 200 OK
+  cache-control: no-store
+  connection: keep-alive
+  content-length: 1651
+  content-security-policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; object-src 'none'; form-action 'self'; frame-ancestors 'self';
+## Traefik labels present
+traefik.enable= true
+traefik.docker.network= proxy
+router= Host(`radarr.fatherfankscloud.uk`)
+## FAIL remediation check
+client_hosts= ['qbittorrent', 'qbittorrent']
+no_hardcoded_ip= True
+no_self_ip= True
+-rwxrwxrwx   1 hotio hotio 18333696 Jul 31 14:17 /config/radarr.db
+drwxrwxr-x   3 hotio hotio        3 Jun 10 11:40 /downloads/completed/Radarr
+drwxr-xr-x 225 hotio hotio      225 Jun 10 11:40 /movies

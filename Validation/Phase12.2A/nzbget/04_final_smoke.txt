@@ -1,0 +1,6 @@
+# After — 2026-07-31T13:21:57+00:00
+qbit Image=ghcr.io/hotio/qbittorrent:release-4.5.5 Status=running Health=healthy
+nzb  Image=ghcr.io/hotio/nzbget@sha256:6815d7e4837b1b03771465ec67191a94e4eb67ebfdc7322d3394ebf8952eb879 Status=running Health=healthy NetworkMode=container:2c19c2533bde5128518c0de02fbd07b402853ad5fbccc3159756750eefdcd106
+qbit :8080 -> 200
+nzb  :6789 -> 401
+sabnzbd containers: (none)

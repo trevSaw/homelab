@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-31T08:57:56Z
+
+```json
+{
+  "timestamp": "2026-07-31T08:57:56Z",
+  "service": "jellyfin",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/jellyfin/config",
+  "destination": "/mnt/monarch/appdata/jellyfin",
+  "files": 48103,
+  "directories": 22722,
+  "bytes": "11GB",
+  "bytes_raw": 11081726475,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted","[compose] compose CURRENT: missing .env file — create from .env.example before --execute/--apply-compose","[compose] compose PROPOSED: missing .env file — create from .env.example before --execute/--apply-compose"],
+  "errors": [],
+  "warning_count": 3,
+  "error_count": 0
+}
+```

@@ -1,0 +1,2130 @@
+{
+  "timestamp": "2026-07-31T12:10:00Z",
+  "conclusion": "Phase 11 NOT COMPLETE",
+  "conclusion_code": "NOT_COMPLETE",
+  "totals": {
+    "containers_discovered": 41,
+    "compose_projects": 29,
+    "migrated": 13,
+    "partial": 2,
+    "not_migrated": 12,
+    "exempt": 2
+  },
+  "framework": {
+    "checksum_locale_patch": true,
+    "lc_all_c": true,
+    "set_comparison": true,
+    "regression_tests": {
+      "path": "scripts/migration/tests/test-checksum-verify.sh",
+      "passed": 24,
+      "failed": 0
+    },
+    "update_compose_env_staging": true,
+    "smoke_only_flag": true,
+    "jellyfin_excludes_verified": true,
+    "readiness": "READY"
+  },
+  "storage": {
+    "mnt_monarch_appdata": "12G",
+    "hive_total": "14T",
+    "DATA_AppData": "69G",
+    "ssd_appdata": "83M",
+    "large_hive_app_configs": [
+      {
+        "path": "/hive/ollama",
+        "size": "64G",
+        "status": "not_migrated"
+      },
+      {
+        "path": "/hive/jellyfin/config.old",
+        "size": "9.0G",
+        "status": "rollback"
+      },
+      {
+        "path": "/hive/NZBget/config.old",
+        "size": "120G",
+        "status": "rollback"
+      },
+      {
+        "path": "/hive/code-server.old",
+        "size": "1.6G",
+        "status": "rollback"
+      },
+      {
+        "path": "/hive/cloud/nextcloud",
+        "size": "517M",
+        "status": "not_migrated"
+      },
+      {
+        "path": "/hive/readarr",
+        "size": "10M",
+        "status": "not_migrated"
+      }
+    ],
+    "ignored_media": [
+      "/hive/jellyfin/tv",
+      "/hive/jellyfin/movie",
+      "/hive/downloads",
+      "/hive/library"
+    ]
+  },
+  "documentation": {
+    "complete_service_folders": [
+      "authentik",
+      "beszel",
+      "calibre",
+      "calibre-web",
+      "code-server",
+      "homepage",
+      "hotio",
+      "jellyfin",
+      "nzbget",
+      "portainer",
+      "traefik",
+      "hermes",
+      "honcho"
+    ],
+    "missing_migration_docs": [
+      "n8n",
+      "open-webui",
+      "ollama",
+      "prowlarr"
+    ],
+    "soak_failed": [
+      "hermes",
+      "honcho"
+    ],
+    "batches": {
+      "Batch01": "READY FOR SOAK",
+      "Batch02": "READY FOR SOAK",
+      "Batch03": "incomplete (Honcho SOAK FAILED)",
+      "Batch04": "STOPPED (Hermes SOAK FAILED; ollama/n8n/open-webui not started)",
+      "Batch05": "partial (NZBGet+Hotio OK; CasaOS STOP)",
+      "Batch06": "READY FOR SOAK (Jellyfin)"
+    }
+  },
+  "unresolved_issues": [
+    "Multiple live configs still outside /mnt/monarch/appdata",
+    "Ollama ~64G still on /hive",
+    "CasaOS /DATA/AppData stack not cut over",
+    "Traefik compose still /hive/traefik",
+    "Hermes and Honcho smoke/soak failures",
+    "Portainer container health=unhealthy",
+    "Large .old rollback trees pending soak cleanup"
+  ],
+  "recommended_next_phase": "Do not start Phase 12 as complete. Finish remaining config migrations / explicit deferrals first.",
+  "logical_services": {
+    "jellyfin": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/jellyfin"
+      ],
+      "notes": "media intentionally on hive"
+    },
+    "nzbget": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/nzbget"
+      ],
+      "notes": "downloads on hive"
+    },
+    "hotio": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/hotio"
+      ],
+      "notes": "qbittorrent; downloads on hive"
+    },
+    "calibre-web": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/calibre",
+        "/mnt/monarch/appdata/calibre-web"
+      ],
+      "notes": "library on hive"
+    },
+    "authentic": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/authentik"
+      ],
+      "notes": "authentik stack"
+    },
+    "code-server": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/code-server"
+      ],
+      "notes": "RO /hive workspace mount intentional"
+    },
+    "homepage": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/homepage"
+      ],
+      "notes": ""
+    },
+    "portainer": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/portainer"
+      ],
+      "notes": "health=unhealthy"
+    },
+    "n8n": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/n8n"
+      ],
+      "notes": "already on appdata; no Phase11 migration report"
+    },
+    "beszel": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/beszel"
+      ],
+      "notes": "already migrated"
+    },
+    "beszel_agent": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/beszel_agent"
+      ],
+      "notes": "live on appdata"
+    },
+    "hermes": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/hermes"
+      ],
+      "notes": "location OK; SOAK FAILED smoke/permissions"
+    },
+    "honcho": {
+      "status": "migrated",
+      "config": [
+        "/mnt/monarch/appdata/honcho"
+      ],
+      "notes": "location OK; SOAK FAILED postgres permissions"
+    },
+    "traefik": {
+      "status": "partial",
+      "config": [
+        "/mnt/monarch/appdata/traefik/acme.json"
+      ],
+      "notes": "compose still /hive/traefik"
+    },
+    "ollama": {
+      "status": "partial",
+      "config": [
+        "/hive/ollama",
+        "/mnt/monarch/appdata/open-webui"
+      ],
+      "notes": "ollama on hive; open-webui on appdata; compose /hive/ollama"
+    },
+    "cloud": {
+      "status": "not_migrated",
+      "config": [
+        "/hive/cloud/nextcloud",
+        "/hive/cloud/config"
+      ],
+      "notes": "nextcloud app on hive; db on /mnt/monarch/databases (exempt path)"
+    },
+    "kavita": {
+      "status": "not_migrated",
+      "config": [
+        "/ssd/appdata/kavita/config"
+      ],
+      "notes": "not on monarch appdata"
+    },
+    "readarr": {
+      "status": "not_migrated",
+      "config": [
+        "/hive/readarr"
+      ],
+      "notes": "Portainer compose/39"
+    },
+    "glorious_thomas": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/config"
+      ],
+      "notes": "prowlarr CasaOS"
+    },
+    "radarr": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/radarr/config"
+      ],
+      "notes": "CasaOS"
+    },
+    "breathtaking_ken": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/jellyseerr/config"
+      ],
+      "notes": "jellyseerr CasaOS"
+    },
+    "bazarr": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/bazarr/config"
+      ],
+      "notes": "CasaOS"
+    },
+    "big-bear-actual-server": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/big-bear-actual-server"
+      ],
+      "notes": "CasaOS"
+    },
+    "linuxserver-lazylibrarian": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/lazylibrarian/config"
+      ],
+      "notes": "CasaOS"
+    },
+    "big-bear-crafty": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/big-bear-crafty/data"
+      ],
+      "notes": "CasaOS ~68G"
+    },
+    "linuxserver-mariadb": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/mariadb/config"
+      ],
+      "notes": "CasaOS"
+    },
+    "uptimekuma": {
+      "status": "not_migrated",
+      "config": [
+        "/DATA/AppData/uptimekuma/app/data"
+      ],
+      "notes": "CasaOS"
+    },
+    "byparr": {
+      "status": "exempt",
+      "config": [],
+      "notes": "no bind mounts; deferred"
+    },
+    "odysseus": {
+      "status": "exempt",
+      "config": [
+        "/mnt/monarch/appdata/odysseus"
+      ],
+      "notes": "deferred; whole /hive tooling mounts"
+    }
+  },
+  "containers": [
+    {
+      "name": "jellyfin",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "jellyfin",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/jellyfin",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/jellyfin/compose.yml",
+      "image": "ghcr.io/hotio/jellyfin:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/jellyfin",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/jellyfin",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/jellyfin/tv",
+          "destination": "/data/tvshows",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/jellyfin/movie",
+          "destination": "/data/movies",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "nzbget",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "nzbget",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/NZBget",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/NZBget/compose.yml",
+      "image": "ghcr.io/hotio/nzbget",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/nzbget",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/downloads",
+          "destination": "/downloads",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/nzbget",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "qbittorrent",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "hotio",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/Hotio",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/Hotio/compose.yml",
+      "image": "cr.hotio.dev/hotio/qbittorrent:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/hotio",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/hotio",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/downloads/completed",
+          "destination": "/downloads",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "calibre-web",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "calibre-web",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/calibre-web",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/calibre-web/compose.yml",
+      "image": "lscr.io/linuxserver/calibre-web:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/calibre-web",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/calibre-web",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/fanfic/novelas",
+          "destination": "/books",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "calibre",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "calibre-web",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/calibre-web",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/calibre-web/compose.yml",
+      "image": "lscr.io/linuxserver/calibre:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/calibre",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/fanfic/novelas",
+          "destination": "/books",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/browser_cache",
+          "destination": "/config/browser_cache",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/calibre",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "authentik-server",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "authentic",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/authentic",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/authentic/compose.yaml",
+      "image": "ghcr.io/goauthentik/server:2024.12.3",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/media",
+          "destination": "/media",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/templates",
+          "destination": "/templates",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/media",
+          "destination": "/media",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/templates",
+          "destination": "/templates",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "authentik-worker",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "authentic",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/authentic",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/authentic/compose.yaml",
+      "image": "ghcr.io/goauthentik/server:2024.12.3",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/media",
+          "destination": "/media",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/templates",
+          "destination": "/templates",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/certs",
+          "destination": "/certs",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/media",
+          "destination": "/media",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/templates",
+          "destination": "/templates",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/certs",
+          "destination": "/certs",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "authentik-db",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "authentic",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/authentic",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/authentic/compose.yaml",
+      "image": "postgres:16-alpine",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/db",
+          "destination": "/var/lib/postgresql/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/db",
+          "destination": "/var/lib/postgresql/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "authentik-redis",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "authentic",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/authentic",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/authentic/compose.yaml",
+      "image": "redis:alpine",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/redis",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/authentik/redis",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "code-server",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "code-server",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/code-server",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/code-server/compose.yml",
+      "image": "lscr.io/linuxserver/code-server:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/code-server",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive",
+          "destination": "/config/workspace/hive",
+          "mode": "ro",
+          "rw": false
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata",
+          "destination": "/config/workspcae/monarch",
+          "mode": "ro",
+          "rw": false
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/code-server",
+          "destination": "/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive",
+          "destination": "/config/workspace/hive",
+          "mode": "ro",
+          "rw": false
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata",
+          "destination": "/config/workspcae/monarch",
+          "mode": "ro",
+          "rw": false
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "homepage",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "homepage",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/homepage",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/homepage/compose.yaml",
+      "image": "ghcr.io/gethomepage/homepage:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/homepage/images",
+          "destination": "/app/public/images",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/homepage",
+          "destination": "/app/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/homepage/images",
+          "destination": "/app/public/images",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/homepage",
+          "destination": "/app/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "portainer",
+      "status_live": "running",
+      "health": "unhealthy",
+      "restart": "unless-stopped",
+      "compose_project": "portainer",
+      "compose_workdir": "/home/fatherfrank/projects/homelab/services/portainer",
+      "compose_config_files": "/home/fatherfrank/projects/homelab/services/portainer/compose.yaml",
+      "image": "portainer/portainer-ce:lts",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/portainer",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/portainer",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "n8n",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "n8n",
+      "compose_workdir": "/mnt/monarch/appdata/n8n",
+      "compose_config_files": "/mnt/monarch/appdata/n8n/compose.yml",
+      "image": "docker.n8n.io/n8nio/n8n:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n",
+          "destination": "/home/node/.n8n",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n/reports",
+          "destination": "/reports",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n/workflows",
+          "destination": "/workflows",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n",
+          "destination": "/home/node/.n8n",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n/reports",
+          "destination": "/reports",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/n8n/workflows",
+          "destination": "/workflows",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "open-webui",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "ollama",
+      "compose_workdir": "/hive/ollama",
+      "compose_config_files": "/hive/ollama/compose.yml",
+      "image": "ghcr.io/open-webui/open-webui:main",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/open-webui",
+          "destination": "/app/backend/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/open-webui",
+          "destination": "/app/backend/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "ollama",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "ollama",
+      "compose_workdir": "/hive/ollama",
+      "compose_config_files": "/hive/ollama/compose.yml",
+      "image": "ollama/ollama:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/ollama",
+          "destination": "/root/.ollama",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/ollama",
+          "destination": "/root/.ollama",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "",
+      "has_appdata": false,
+      "has_hive_cfg": true,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "beszel-agent",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "beszel_agent",
+      "compose_workdir": "/mnt/monarch/appdata/beszel_agent",
+      "compose_config_files": "/mnt/monarch/appdata/beszel_agent/compose.yml",
+      "image": "henrygd/beszel-agent",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/beszel_agent/beszel_agent_data",
+          "destination": "/var/lib/beszel-agent",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/beszel_agent/beszel_agent_data",
+          "destination": "/var/lib/beszel-agent",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "mode": "ro",
+          "rw": false
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "beszel",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "beszel",
+      "compose_workdir": "/mnt/monarch/appdata/beszel",
+      "compose_config_files": "/mnt/monarch/appdata/beszel/compose.yml",
+      "image": "henrygd/beszel:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/beszel/beszel_data",
+          "destination": "/beszel_data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/beszel/beszel_data",
+          "destination": "/beszel_data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "odysseus-odysseus-1",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "odysseus",
+      "compose_workdir": "/mnt/monarch/appdata/odysseus",
+      "compose_config_files": "/mnt/monarch/appdata/odysseus/docker-compose.yml",
+      "image": "odysseus-odysseus",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/logs",
+          "destination": "/app/logs",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive",
+          "destination": "/home/user/homelab/hive",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch",
+          "destination": "/home/user/homelab/monarch",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/huggingface",
+          "destination": "/app/.cache/huggingface",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/local",
+          "destination": "/app/.local",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/ssh",
+          "destination": "/app/.ssh",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data",
+          "destination": "/app/data",
+          "mode": "rw,z",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/logs",
+          "destination": "/app/logs",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive",
+          "destination": "/home/user/homelab/hive",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch",
+          "destination": "/home/user/homelab/monarch",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/huggingface",
+          "destination": "/app/.cache/huggingface",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/local",
+          "destination": "/app/.local",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data/ssh",
+          "destination": "/app/.ssh",
+          "mode": "rw,z",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/data",
+          "destination": "/app/data",
+          "mode": "rw,z",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "odysseus-searxng-1",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "odysseus",
+      "compose_workdir": "/mnt/monarch/appdata/odysseus",
+      "compose_config_files": "/mnt/monarch/appdata/odysseus/docker-compose.yml",
+      "image": "docker.io/searxng/searxng:2026.5.31-7159b8aed",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/config/searxng/settings.yml",
+          "destination": "/tmp/searxng-settings.yml.template",
+          "mode": "ro,z",
+          "rw": false
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "volume",
+          "source": "/var/lib/docker/volumes/odysseus_searxng-data/_data",
+          "destination": "/etc/searxng",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/odysseus/config/searxng/settings.yml",
+          "destination": "/tmp/searxng-settings.yml.template",
+          "mode": "ro,z",
+          "rw": false
+        },
+        {
+          "type": "volume",
+          "source": "/var/lib/docker/volumes/916569f51cab5fb00431870b0e2ae844e22155db93f73255a65a215bfeb8d87e/_data",
+          "destination": "/var/cache/searxng",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "odysseus-ntfy-1",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "odysseus",
+      "compose_workdir": "/mnt/monarch/appdata/odysseus",
+      "compose_config_files": "/mnt/monarch/appdata/odysseus/docker-compose.yml",
+      "image": "docker.io/binwiederhier/ntfy",
+      "config_mounts": [],
+      "all_mounts": [
+        {
+          "type": "volume",
+          "source": "/var/lib/docker/volumes/odysseus_ntfy-cache/_data",
+          "destination": "/var/cache/ntfy",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "exempt",
+      "reason": "no persistent config bind (or network-only)",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "odysseus-chromadb-1",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "odysseus",
+      "compose_workdir": "/mnt/monarch/appdata/odysseus",
+      "compose_config_files": "/mnt/monarch/appdata/odysseus/docker-compose.yml",
+      "image": "docker.io/chromadb/chroma:latest",
+      "config_mounts": [],
+      "all_mounts": [
+        {
+          "type": "volume",
+          "source": "/var/lib/docker/volumes/odysseus_chromadb-data/_data",
+          "destination": "/chroma/chroma",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "exempt",
+      "reason": "no persistent config bind (or network-only)",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "honcho-deriver",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "honcho",
+      "compose_workdir": "/mnt/monarch/appdata/honcho",
+      "compose_config_files": "/mnt/monarch/appdata/honcho/compose.yml",
+      "image": "honcho-deriver",
+      "config_mounts": [],
+      "all_mounts": [],
+      "classification": "exempt",
+      "reason": "no persistent config bind (or network-only)",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "honcho-api",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "honcho",
+      "compose_workdir": "/mnt/monarch/appdata/honcho",
+      "compose_config_files": "/mnt/monarch/appdata/honcho/compose.yml",
+      "image": "honcho-api",
+      "config_mounts": [],
+      "all_mounts": [],
+      "classification": "exempt",
+      "reason": "no persistent config bind (or network-only)",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "honcho-postgres",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "honcho",
+      "compose_workdir": "/mnt/monarch/appdata/honcho",
+      "compose_config_files": "/mnt/monarch/appdata/honcho/compose.yml",
+      "image": "pgvector/pgvector:pg15",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/honcho/postgres",
+          "destination": "/var/lib/postgresql/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/honcho/postgres",
+          "destination": "/var/lib/postgresql/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "honcho-redis",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "honcho",
+      "compose_workdir": "/mnt/monarch/appdata/honcho",
+      "compose_config_files": "/mnt/monarch/appdata/honcho/compose.yml",
+      "image": "redis:8.2",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/honcho/redis",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/honcho/redis",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "hermes",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "hermes",
+      "compose_workdir": "/mnt/monarch/appdata/hermes",
+      "compose_config_files": "/mnt/monarch/appdata/hermes/compose.yml",
+      "image": "nousresearch/hermes-agent:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/hermes",
+          "destination": "/opt/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/hermes",
+          "destination": "/opt/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "traefik",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "always",
+      "compose_project": "traefik",
+      "compose_workdir": "/hive/traefik",
+      "compose_config_files": "/hive/traefik/compose.yaml",
+      "image": "traefik:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/traefik/acme.json",
+          "destination": "/etc/traefik/acme.json",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/etc/localtime",
+          "destination": "/etc/localtime",
+          "mode": "ro",
+          "rw": false
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/appdata/traefik/acme.json",
+          "destination": "/etc/traefik/acme.json",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "mode": "ro",
+          "rw": false
+        },
+        {
+          "type": "bind",
+          "source": "/etc/localtime",
+          "destination": "/etc/localtime",
+          "mode": "ro",
+          "rw": false
+        }
+      ],
+      "classification": "migrated",
+      "reason": "",
+      "has_appdata": true,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "prowlarr",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "glorious_thomas",
+      "compose_workdir": "/var/lib/casaos/apps/glorious_thomas",
+      "compose_config_files": "/var/lib/casaos/apps/glorious_thomas/docker-compose.yml",
+      "image": "ghcr.io/hotio/prowlarr:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "byparr-byparr-1",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "byparr",
+      "compose_workdir": "/data/compose/50",
+      "compose_config_files": "/data/compose/50/docker-compose.yml",
+      "image": "ghcr.io/thephaseless/byparr:latest",
+      "config_mounts": [],
+      "all_mounts": [],
+      "classification": "exempt",
+      "reason": "no persistent config bind (or network-only)",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "kavita",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "kavita",
+      "compose_workdir": "/hive/library/Kavita",
+      "compose_config_files": "/hive/library/Kavita/compose.yml",
+      "image": "jvmilazz0/kavita:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/ssd/appdata/kavita/config",
+          "destination": "/kavita/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/Books",
+          "destination": "/books",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/Comics",
+          "destination": "/comics",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/fanfic",
+          "destination": "/fanfic",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/ssd/appdata/kavita/config",
+          "destination": "/kavita/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/library/Kavita/Manga",
+          "destination": "/manga",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /ssd/appdata",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": true
+    },
+    {
+      "name": "nextcloud-db",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "cloud",
+      "compose_workdir": "/hive/cloud",
+      "compose_config_files": "/hive/cloud/compose.yaml",
+      "image": "mariadb:10.11",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/databases/nextcloud-mariadb",
+          "destination": "/var/lib/mysql",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/mnt/monarch/databases/nextcloud-mariadb",
+          "destination": "/var/lib/mysql",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "exempt",
+      "reason": "config outside hive/appdata/DATA",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "nextcloud",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "cloud",
+      "compose_workdir": "/hive/cloud",
+      "compose_config_files": "/hive/cloud/compose.yaml",
+      "image": "nextcloud:31",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/cloud/nextcloud",
+          "destination": "/var/www/html",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/cloud/config",
+          "destination": "/var/www/html/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/cloud/apps",
+          "destination": "/var/www/html/custom_apps",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/cloud/data",
+          "destination": "/var/www/html/data",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/cloud/theme",
+          "destination": "/var/www/html/themes",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/cloud/nextcloud",
+          "destination": "/var/www/html",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/cloud/config",
+          "destination": "/var/www/html/config",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "",
+      "has_appdata": false,
+      "has_hive_cfg": true,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "actual-server",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "big-bear-actual-server",
+      "compose_workdir": "/var/lib/casaos/apps/big-bear-actual-server",
+      "compose_config_files": "/var/lib/casaos/apps/big-bear-actual-server/docker-compose.yml",
+      "image": "actualbudget/actual-server:25.10.0",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-actual-server",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-actual-server",
+          "destination": "/data",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "jellyseerr",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "breathtaking_ken",
+      "compose_workdir": "/var/lib/casaos/apps/breathtaking_ken",
+      "compose_config_files": "/var/lib/casaos/apps/breathtaking_ken/docker-compose.yml",
+      "image": "ghcr.io/hotio/jellyseerr:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/jellyseerr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/jellyseerr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "radarr",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "radarr",
+      "compose_workdir": "/var/lib/casaos/apps/radarr",
+      "compose_config_files": "/var/lib/casaos/apps/radarr/docker-compose.yml",
+      "image": "ghcr.io/hotio/radarr:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/radarr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/radarr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/downloads",
+          "destination": "/downloads",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/jellyfin/movie",
+          "destination": "/movies",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "readarr",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "readarr",
+      "compose_workdir": "/data/compose/39",
+      "compose_config_files": "/data/compose/39/docker-compose.yml",
+      "image": "lscr.io/linuxserver/readarr:develop",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/readarr",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/hive/cloud/data/fatherfranku/files/Kavita/Books",
+          "destination": "/books",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/readarr",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/downloads/completed/Readarr",
+          "destination": "/downloads",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "",
+      "has_appdata": false,
+      "has_hive_cfg": true,
+      "has_data_appdata": false,
+      "has_ssd": false
+    },
+    {
+      "name": "linuxserver-lazylibrarian-app-1",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "linuxserver-lazylibrarian",
+      "compose_workdir": "/var/lib/casaos/apps/linuxserver-lazylibrarian",
+      "compose_config_files": "/var/lib/casaos/apps/linuxserver-lazylibrarian/docker-compose.yml",
+      "image": "linuxserver/lazylibrarian:version-3682faed",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/lazylibrarian/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/lazylibrarian/books",
+          "destination": "/books",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/lazylibrarian/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/lazylibrarian/downloads",
+          "destination": "/downloads",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "big-bear-crafty",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "big-bear-crafty",
+      "compose_workdir": "/var/lib/casaos/apps/big-bear-crafty",
+      "compose_config_files": "/var/lib/casaos/apps/big-bear-crafty/docker-compose.yml",
+      "image": "registry.gitlab.com/crafty-controller/crafty-4:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/logs",
+          "destination": "/crafty/logs",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/servers",
+          "destination": "/crafty/servers",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/config",
+          "destination": "/crafty/app/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/backups",
+          "destination": "/crafty/backups",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/import",
+          "destination": "/crafty/import",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/logs",
+          "destination": "/crafty/logs",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/servers",
+          "destination": "/crafty/servers",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/config",
+          "destination": "/crafty/app/config",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/backups",
+          "destination": "/crafty/backups",
+          "mode": "rw",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/big-bear-crafty/data/import",
+          "destination": "/crafty/import",
+          "mode": "rw",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "linuxserver-mariadb-app-1",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "linuxserver-mariadb",
+      "compose_workdir": "/var/lib/casaos/apps/linuxserver-mariadb",
+      "compose_config_files": "/var/lib/casaos/apps/linuxserver-mariadb/docker-compose.yml",
+      "image": "linuxserver/mariadb:latest",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/mariadb/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/mariadb/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "uptimekuma",
+      "status_live": "running",
+      "health": "healthy",
+      "restart": "unless-stopped",
+      "compose_project": "uptimekuma",
+      "compose_workdir": "/var/lib/casaos/apps/uptimekuma",
+      "compose_config_files": "/var/lib/casaos/apps/uptimekuma/docker-compose.yml",
+      "image": "louislam/uptime-kuma:1.23.10-alpine",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/uptimekuma/app/data",
+          "destination": "/app/data",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/uptimekuma/app/data",
+          "destination": "/app/data",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    },
+    {
+      "name": "bazarr",
+      "status_live": "running",
+      "health": "n/a",
+      "restart": "unless-stopped",
+      "compose_project": "bazarr",
+      "compose_workdir": "/var/lib/casaos/apps/bazarr",
+      "compose_config_files": "/var/lib/casaos/apps/bazarr/docker-compose.yml",
+      "image": "linuxserver/bazarr:1.2.2",
+      "config_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/bazarr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "all_mounts": [
+        {
+          "type": "bind",
+          "source": "/DATA/AppData/bazarr/config",
+          "destination": "/config",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/jellyfin/movie",
+          "destination": "/movies",
+          "mode": "",
+          "rw": true
+        },
+        {
+          "type": "bind",
+          "source": "/hive/jellyfin/tv",
+          "destination": "/tv",
+          "mode": "",
+          "rw": true
+        }
+      ],
+      "classification": "not_migrated",
+      "reason": "config under /DATA/AppData",
+      "has_appdata": false,
+      "has_hive_cfg": false,
+      "has_data_appdata": true,
+      "has_ssd": false
+    }
+  ]
+}

@@ -17,6 +17,10 @@ MIGRATE_APPLY_COMPOSE="${MIGRATE_APPLY_COMPOSE:-0}"
 MIGRATE_CHECKSUM="${MIGRATE_CHECKSUM:-0}"
 MIGRATE_FORCE_REVIEW="${MIGRATE_FORCE_REVIEW:-0}"
 MIGRATE_QUIET="${MIGRATE_QUIET:-0}"
+# Post-start invocation: report container state only. Once the service is
+# running on the destination it writes logs/caches there, so a source↔dest
+# content compare at that point measures live divergence, not copy fidelity.
+MIGRATE_SMOKE_ONLY="${MIGRATE_SMOKE_ONLY:-0}"
 
 LOG_FILE=""
 CURRENT_SERVICE=""
@@ -75,11 +79,12 @@ parse_migrate_flags() {
       --execute) MIGRATE_EXECUTE=1; shift ;;
       --apply-compose) MIGRATE_APPLY_COMPOSE=1; shift ;;
       --checksum) MIGRATE_CHECKSUM=1; shift ;;
+      --smoke-only) MIGRATE_SMOKE_ONLY=1; shift ;;
       --force-review) MIGRATE_FORCE_REVIEW=1; shift ;;
       --quiet) MIGRATE_QUIET=1; shift ;;
       --phase-dir) PHASE_DIR="$2"; shift 2 ;;
       --help|-h)
-        echo "Flags: --dry-run (default) | --execute | --apply-compose | --checksum | --force-review | --quiet | --phase-dir DIR"
+        echo "Flags: --dry-run (default) | --execute | --apply-compose | --checksum | --smoke-only | --force-review | --quiet | --phase-dir DIR"
         return 2
         ;;
       *) break ;;
@@ -232,6 +237,187 @@ rsync_exclude_args() {
     [[ -z "$pat" ]] && continue
     RSYNC_EXCLUDE_ARGS+=( --exclude="$pat" )
   done
+}
+
+# ---------------------------------------------------------------------------
+# Checksum inventories — locale-independent by construction.
+#
+# WHY THIS MUST NEVER USE THE AMBIENT LOCALE:
+# glibc collation in any *.UTF-8 locale is not a total order over file names.
+# Characters with no collation weight defined for the locale (Hangul syllables,
+# Kana, emoji, and some accented Latin) compare EQUAL to each other, e.g. under
+# en_US.UTF-8:
+#
+#   printf '%s\n' '이정훈' '김융희' | sort -u   # -> 1 line (treated as equal)
+#   printf '%s\n' '이정훈' '김융희' | LC_ALL=C sort -u   # -> 2 lines (correct)
+#
+# When names tie, `sort` keeps them in input order. Input order comes from
+# readdir(), which differs per filesystem — the ZFS source tree and the btrfs
+# destination tree enumerate the same names in different orders. Two
+# byte-identical trees therefore serialise to inventories whose lines are in
+# different order, and a positional `diff` reports a mismatch that does not
+# exist.
+#
+# Phase 11 / Jellyfin hit exactly this: 48,104 vs 48,104 files, every checksum
+# present on both sides, `rsync --checksum` wanting no transfers, yet `diff -q`
+# failed at ./data/metadata/People/이/이정훈/folder.jpg.
+#
+# FIX: build every inventory under LC_ALL=C (byte-value order — a total order,
+# identical on every filesystem, host, and user locale), key each record by
+# path, and compare as SETS. Ordering can no longer change the verdict, while
+# missing / extra / changed files are still detected — and now named in a report
+# instead of collapsing into one opaque "inventory differs" warning.
+# ---------------------------------------------------------------------------
+
+# build_checksum_inventory <root> <outfile> [excludes]
+# Writes sorted records: <relative-path>\t<cksum>\t<bytes>
+# Sets INVENTORY_RECORDS, INVENTORY_FILES, INVENTORY_SKIPPED.
+build_checksum_inventory() {
+  local root="$1"
+  local out="$2"
+  local excludes="${3:-}"
+  INVENTORY_RECORDS=0
+  INVENTORY_FILES=0
+  INVENTORY_SKIPPED=0
+  : >"$out"
+  [[ -d "$root" ]] || return 0
+
+  local raw
+  raw="$(mktemp)"
+
+  # -print0/-0 keeps names containing spaces or globbing characters intact.
+  # awk rewrites "cksum size path" to "path\tcksum\tsize" so the inventory keys,
+  # sorts, and diffs by path. LC_ALL=C on awk keeps its regex classes stable.
+  (
+    set +o pipefail
+    cd "$root" 2>/dev/null || exit 0
+    find . -type f -print0 2>/dev/null \
+      | LC_ALL=C xargs -0 -r cksum 2>/dev/null \
+      | LC_ALL=C awk '{
+          cs = $1; sz = $2
+          path = $0
+          sub(/^[0-9]+[ \t]+[0-9]+[ \t]+/, "", path)
+          sub(/^\.\//, "", path)
+          printf "%s\t%s\t%s\n", path, cs, sz
+        }'
+  ) >"$raw" 2>/dev/null || true
+
+  # Integrity guard: every regular file must yield exactly one record. A
+  # shortfall means unreadable files; a surplus means a name containing a
+  # newline split into two records. Either way the comparison would silently
+  # cover the wrong set of files, so fail closed rather than report a match.
+  INVENTORY_FILES="$(set +o pipefail; cd "$root" 2>/dev/null && find . -type f -printf 'x' 2>/dev/null | wc -c | tr -d '[:space:]')"
+  [[ "${INVENTORY_FILES:-}" =~ ^[0-9]+$ ]] || INVENTORY_FILES=0
+  local raw_records
+  raw_records="$(wc -l <"$raw" | tr -d '[:space:]')"
+  [[ "$raw_records" =~ ^[0-9]+$ ]] || raw_records=0
+  if (( raw_records != INVENTORY_FILES )); then
+    INVENTORY_SKIPPED=$(( raw_records > INVENTORY_FILES ? raw_records - INVENTORY_FILES : INVENTORY_FILES - raw_records ))
+  fi
+
+  # Tabs delimit the record fields, so a tab inside a name would corrupt the
+  # path key. Names holding tabs or newlines are counted as unverifiable.
+  # $'\t' / $'\n' (not "$(printf ...)", whose trailing newline gets stripped,
+  # which would silently turn these patterns into a match-everything glob).
+  local unsafe
+  unsafe="$(set +o pipefail; cd "$root" 2>/dev/null && find . -type f \( -name '*'$'\t''*' -o -name '*'$'\n''*' \) -printf 'x' 2>/dev/null | wc -c | tr -d '[:space:]')"
+  [[ "${unsafe:-}" =~ ^[0-9]+$ ]] || unsafe=0
+  (( unsafe > 0 )) && INVENTORY_SKIPPED=$(( INVENTORY_SKIPPED + unsafe ))
+
+  if [[ -n "$excludes" ]]; then
+    filter_inventory_excludes "$excludes" <"$raw" >"$out"
+  else
+    cp "$raw" "$out"
+  fi
+  rm -f "$raw"
+
+  # Canonical byte order. This single line is what makes the comparison immune
+  # to readdir order and to whatever locale the operator happens to be running.
+  LC_ALL=C sort -t$'\t' -k1,1 -o "$out" "$out"
+  INVENTORY_RECORDS="$(wc -l <"$out" | tr -d '[:space:]')"
+  [[ "$INVENTORY_RECORDS" =~ ^[0-9]+$ ]] || INVENTORY_RECORDS=0
+}
+
+# filter_inventory_excludes <excludes>  (inventory records on stdin)
+# Drops records matching services.conf rsync_excludes so the comparison covers
+# only the files the copy was actually asked to move. Without this, every
+# deliberately-excluded file (NZBGet's 110 GB downloads/, its 30 GB log) looks
+# like a MISSING file at the destination and the gate false-fails.
+filter_inventory_excludes() {
+  local excludes="$1"
+  local -a pats=()
+  local pat path base line skip
+  IFS=',' read -ra pats <<<"$excludes"
+  if ((${#pats[@]} == 0)); then cat; return 0; fi
+  while IFS= read -r line; do
+    path="${line%%$'\t'*}"
+    skip=0
+    for pat in "${pats[@]}"; do
+      [[ -z "$pat" ]] && continue
+      pat="${pat#/}"
+      if [[ "$pat" != */* ]]; then
+        # rsync: a pattern with no slash matches the basename at any depth
+        # shellcheck disable=SC2053
+        [[ "${path##*/}" == $pat ]] && { skip=1; break; }
+      else
+        base="${pat%/\*\*}"; base="${base%/\*}"; base="${base%/}"
+        # shellcheck disable=SC2053
+        if [[ "$path" == $pat ]] || { [[ -n "$base" ]] && [[ "$path" == "$base"/* ]]; }; then
+          skip=1; break
+        fi
+      fi
+    done
+    (( skip )) || printf '%s\n' "$line"
+  done
+}
+
+report_container_states() {
+  command -v docker >/dev/null 2>&1 || return 0
+  docker info >/dev/null 2>&1 || return 0
+  local -a cns
+  IFS=',' read -ra cns <<<"${SVC_CONTAINERS:-}"
+  local c st health
+  for c in "${cns[@]}"; do
+    [[ -z "$c" ]] && continue
+    if st="$(docker inspect -f '{{.State.Status}}' "$c" 2>/dev/null)"; then
+      health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}n/a{{end}}' "$c" 2>/dev/null || echo n/a)"
+      info "Container $c status=$st health=$health"
+    else
+      warn "Container not found for smoke: $c (stack may use different names or be stopped)"
+    fi
+  done
+}
+
+# compare_checksum_inventories <source-inv> <dest-inv> <report-path>
+# Set comparison keyed by path. Sets CHECKSUM_MISSING / CHECKSUM_CHANGED /
+# CHECKSUM_EXTRA / CHECKSUM_MATCHED and writes every difference, by name, to the
+# report. Detection is strictly stronger than the old positional diff: it still
+# fails on missing, extra, or content-changed files, but never on line order.
+compare_checksum_inventories() {
+  local src_inv="$1"
+  local dst_inv="$2"
+  local report="$3"
+  CHECKSUM_MISSING=0; CHECKSUM_CHANGED=0; CHECKSUM_EXTRA=0; CHECKSUM_MATCHED=0
+  local counts
+  counts="$(LC_ALL=C awk -F'\t' -v report="$report" '
+    NR==FNR { src[$1] = $2 " " $3; next }
+    {
+      dst[$1] = 1
+      if ($1 in src) {
+        if (src[$1] == $2 " " $3) { matched++ }
+        else { changed++; printf "CHANGED\t%s\tsource=%s\tdest=%s %s\n", $1, src[$1], $2, $3 > report }
+      } else {
+        extra++; printf "EXTRA\t%s\tdest=%s %s\n", $1, $2, $3 > report
+      }
+    }
+    END {
+      for (p in src) if (!(p in dst)) { missing++; printf "MISSING\t%s\tsource=%s\n", p, src[p] > report }
+      printf "%d %d %d %d\n", missing+0, changed+0, extra+0, matched+0
+    }' "$src_inv" "$dst_inv")"
+  read -r CHECKSUM_MISSING CHECKSUM_CHANGED CHECKSUM_EXTRA CHECKSUM_MATCHED <<<"$counts"
+  if [[ -f "$report" ]]; then
+    LC_ALL=C sort -o "$report" "$report"
+  fi
 }
 
 json_escape() {

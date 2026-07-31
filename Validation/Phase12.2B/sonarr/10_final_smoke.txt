@@ -1,0 +1,7 @@
+# Final smoke — 2026-07-31T13:56:20+00:00
+Image=lscr.io/linuxserver/sonarr:version-3.0.10.1566 Health=healthy NetworkMode=host
+ping=200
+series_db=214
+systemd_enabled=disabled
+download_clients=NZBGet PASS, qBittorrent PASS
+jdrama_root=missing_on_host_preexisting

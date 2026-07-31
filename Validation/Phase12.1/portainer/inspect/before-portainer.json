@@ -1,0 +1,41 @@
+{
+  "name": "portainer",
+  "image": "portainer/portainer-ce:lts",
+  "status": "running",
+  "health": "unhealthy",
+  "restart": "unless-stopped",
+  "privileged": false,
+  "user": "",
+  "compose_workdir": "/home/fatherfrank/projects/homelab/services/portainer",
+  "compose_file": "/home/fatherfrank/projects/homelab/services/portainer/compose.yaml",
+  "mounts": [
+    {
+      "source": "/mnt/monarch/appdata/portainer",
+      "dest": "/data",
+      "rw": true
+    },
+    {
+      "source": "/var/run/docker.sock",
+      "dest": "/var/run/docker.sock",
+      "rw": true
+    }
+  ],
+  "ports": {
+    "9000/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "9000"
+      }
+    ],
+    "9443/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "9445"
+      }
+    ]
+  },
+  "network_mode": "portainer_network",
+  "networks": [
+    "portainer_network"
+  ]
+}

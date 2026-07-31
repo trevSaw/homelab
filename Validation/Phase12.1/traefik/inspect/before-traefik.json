@@ -1,0 +1,46 @@
+{
+  "name": "traefik",
+  "image": "traefik:latest",
+  "status": "running",
+  "health": "n/a",
+  "restart": "always",
+  "privileged": false,
+  "user": "",
+  "compose_workdir": "/hive/traefik",
+  "compose_file": "/hive/traefik/compose.yaml",
+  "mounts": [
+    {
+      "source": "/etc/localtime",
+      "dest": "/etc/localtime",
+      "rw": false
+    },
+    {
+      "source": "/mnt/monarch/appdata/traefik/acme.json",
+      "dest": "/etc/traefik/acme.json",
+      "rw": true
+    },
+    {
+      "source": "/var/run/docker.sock",
+      "dest": "/var/run/docker.sock",
+      "rw": false
+    }
+  ],
+  "ports": {
+    "443/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "443"
+      }
+    ],
+    "80/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "80"
+      }
+    ]
+  },
+  "network_mode": "proxy",
+  "networks": [
+    "proxy"
+  ]
+}

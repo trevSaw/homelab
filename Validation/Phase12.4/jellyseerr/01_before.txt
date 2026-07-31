@@ -1,0 +1,3 @@
+# Jellyseerr before 2026-07-31T14:46:21+00:00
+Image=ghcr.io/hotio/jellyseerr:latest Nets=hotio_default jellyfin_default 
+data=/DATA/AppData/jellyseerr/config size=5.2M

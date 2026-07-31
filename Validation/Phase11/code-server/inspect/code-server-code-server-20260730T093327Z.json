@@ -1,0 +1,291 @@
+[
+  {
+    "Id": "f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e",
+    "Created": "2026-07-21T13:02:07.499591161Z",
+    "Path": "/init",
+    "Args": [],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 2782600,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-27T09:21:46.39331957Z",
+      "FinishedAt": "2026-07-27T09:21:46.228673176Z"
+    },
+    "Image": "sha256:f55d5183ae473b6cca88c1defcc71b5687384ac8ad98541eab1fcf7723d5255c",
+    "ResolvConfPath": "/var/lib/docker/containers/f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e/hostname",
+    "HostsPath": "/var/lib/docker/containers/f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e/hosts",
+    "LogPath": "/var/lib/docker/containers/f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e/f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e-json.log",
+    "Name": "/code-server",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": [
+      "c54edff3020efe3e81ebfe14714bdcd18d82cdde3ed1788ef6f3016da60a6b3f",
+      "3df9a9068a9abb83094bbfb2a90a20a7fa567cc1d2f89334ef398eb7ad42214d"
+    ],
+    "HostConfig": {
+      "Binds": [
+        "/hive/code-server/config:/config:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "ollama_ollama-net",
+      "PortBindings": {},
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "f503d5109e48bafa65616080c31b9ecd78b75b889a48627cad8383a9d231b12e",
+        "LowerDir": "/var/lib/docker/overlay2/5b1e990e4fee10bf0e4a28479b0b4f9124a1bad0146a080550f17e58ae605615-init/diff:/var/lib/docker/overlay2/6a8371e4357aef03f1e24d1e8192929780cbdd079ecabaa741b8992c2899a916/diff:/var/lib/docker/overlay2/fd39732011cdd72e75c0e2416be8555269d80abd52537bf9886b08775ff5452b/diff:/var/lib/docker/overlay2/1e65cfbcf94bc0810d9e276ef390635bf65c3194ff4379cb6181f18c9f780505/diff:/var/lib/docker/overlay2/fee15e563dd380544fc6586f2746cfd9c9edb9c75172a99ebedcb6dc37f67906/diff:/var/lib/docker/overlay2/46acbb25b8320b47c970d8c5d61e9923063320f22e0f7d565dd2ed806cbffdbc/diff:/var/lib/docker/overlay2/06fa72b152de9b5e9b636422214d957774b9d84dc226afc1dcb4c28500fe83f2/diff:/var/lib/docker/overlay2/27ccc037e7a8b00d70d5cbe890a8b6a6c3eb99a47492c565a5b29a667b573bdb/diff:/var/lib/docker/overlay2/4d27b2e18c2c8ec680d70e0df60d0f56722a7f824238317590facd3e0182dd99/diff:/var/lib/docker/overlay2/cb17c8ffb5b6f281ecdac4142c8407f118b58b064f77d449c8e935e996671a37/diff:/var/lib/docker/overlay2/82b2fb7bd5788de6fc51a2a88fabb8436f68e1282ca1239cdbf40c8de4369819/diff",
+        "MergedDir": "/var/lib/docker/overlay2/5b1e990e4fee10bf0e4a28479b0b4f9124a1bad0146a080550f17e58ae605615/merged",
+        "UpperDir": "/var/lib/docker/overlay2/5b1e990e4fee10bf0e4a28479b0b4f9124a1bad0146a080550f17e58ae605615/diff",
+        "WorkDir": "/var/lib/docker/overlay2/5b1e990e4fee10bf0e4a28479b0b4f9124a1bad0146a080550f17e58ae605615/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/hive/code-server/config",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "f503d5109e48",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "8443/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "PGID=1000",
+        "TZ=Etc/UTC",
+        "PASSWORD=***REDACTED***",
+        "DEFAULT_WORKSPACE=/config/workspace",
+        "CS_TRUSTED_ORIGINS=https://code.fatherfankscloud.uk",
+        "PUID=1000",
+        "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "HOME=/config",
+        "LANGUAGE=en_US.UTF-8",
+        "LANG=en_US.UTF-8",
+        "TERM=xterm",
+        "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0",
+        "S6_VERBOSITY=1",
+        "S6_STAGE2_HOOK=/docker-mods",
+        "VIRTUAL_ENV=/lsiopy",
+        "LSIO_FIRST_PARTY=true"
+      ],
+      "Cmd": null,
+      "Image": "lscr.io/linuxserver/code-server:latest",
+      "Volumes": null,
+      "WorkingDir": "/",
+      "Entrypoint": [
+        "/init"
+      ],
+      "Labels": {
+        "build_version": "Linuxserver.io version:- 4.128.0-ls351 Build-date:- 2026-07-11T19:47:43+00:00",
+        "com.docker.compose.config-hash": "47410959b4cd25bdc3afb94868c6fe4156abd0847b68c2023d01ceadd3e8f57c",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:f55d5183ae473b6cca88c1defcc71b5687384ac8ad98541eab1fcf7723d5255c",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "code-server",
+        "com.docker.compose.project.config_files": "/hive/code-server/compose.yml",
+        "com.docker.compose.project.working_dir": "/hive/code-server",
+        "com.docker.compose.service": "code-server",
+        "com.docker.compose.version": "5.1.4",
+        "maintainer": "aptalca",
+        "org.opencontainers.image.authors": "linuxserver.io",
+        "org.opencontainers.image.created": "2026-07-11T19:47:43+00:00",
+        "org.opencontainers.image.description": "[Code-server](https://coder.com) is VS Code running on a remote server, accessible through the browser.  - Code on your Chromebook, tablet, and laptop with a consistent dev environment.  - If you have a Windows or Mac workstation, more easily develop for Linux.  - Take advantage of large cloud servers to speed up tests, compilations, downloads, and more.  - Preserve battery life when you're on the go.  - All intensive computation runs on your server.  - You're no longer running excess instances of Chrome.  ",
+        "org.opencontainers.image.documentation": "https://docs.linuxserver.io/images/docker-code-server",
+        "org.opencontainers.image.licenses": "GPL-3.0-only",
+        "org.opencontainers.image.ref.name": "89f556c5efb83233cc8b25a81f0ce4566f20bb6a",
+        "org.opencontainers.image.revision": "89f556c5efb83233cc8b25a81f0ce4566f20bb6a",
+        "org.opencontainers.image.source": "https://github.com/linuxserver/docker-code-server",
+        "org.opencontainers.image.title": "Code-server",
+        "org.opencontainers.image.url": "https://github.com/linuxserver/docker-code-server/packages",
+        "org.opencontainers.image.vendor": "linuxserver.io",
+        "org.opencontainers.image.version": "4.128.0-ls351",
+        "traefik.enable": "true",
+        "traefik.http.routers.code.entrypoints": "websecure",
+        "traefik.http.routers.code.rule": "Host(`code.fatherfankscloud.uk`)",
+        "traefik.http.routers.code.tls": "true",
+        "traefik.http.routers.code.tls.certresolver": "le",
+        "traefik.http.services.code.loadbalancer.server.port": "8443",
+        "traefik.http.services.code.loadbalancer.server.scheme": "http"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "d1cefd6772f8c7d5d25b6cdf65f64d6fe19b5c7b0df6f7a9e7251e0f57cb3bf3",
+      "SandboxKey": "/var/run/docker/netns/d1cefd6772f8",
+      "Ports": {
+        "8443/tcp": null
+      },
+      "Networks": {
+        "ollama_ollama-net": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "code-server",
+            "code-server"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "4b20c20c601442c5664ef0085608755673ef348b3899e59eea04c6d56f1eab0e",
+          "EndpointID": "27a01629cd49592491d9c2549078361ade1932212fa3d84fde6cfa85ef856f40",
+          "Gateway": "172.22.0.1",
+          "IPAddress": "172.22.0.2",
+          "MacAddress": "c2:b8:c2:77:27:83",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "code-server",
+            "f503d5109e48"
+          ]
+        },
+        "proxy": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "code-server",
+            "code-server"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "46a8595d610b788383ee36281f58ae2637a445cc94bb0c9ef843f547023e546b",
+          "EndpointID": "cd1e6624aee9fd920487766e46f7ed0d9d722b23a3501febb1b101f87dec944a",
+          "Gateway": "172.19.0.1",
+          "IPAddress": "172.19.0.8",
+          "MacAddress": "da:0d:a0:73:c1:98",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "code-server",
+            "f503d5109e48"
+          ]
+        }
+      }
+    }
+  }
+]

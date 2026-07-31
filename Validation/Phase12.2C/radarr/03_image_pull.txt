@@ -1,0 +1,41 @@
+release-5.22.4.9896: Pulling from hotio/radarr
+f18232174bc9: Already exists
+6cfc09c3cd48: Pulling fs layer
+4a520280a3e2: Pulling fs layer
+2249bd7f31a9: Pulling fs layer
+12d063c9ee71: Pulling fs layer
+645f4692c428: Pulling fs layer
+d7963da29172: Pulling fs layer
+08c9c879c0a7: Pulling fs layer
+2a4a0b1fb846: Pulling fs layer
+12d063c9ee71: Waiting
+645f4692c428: Waiting
+08c9c879c0a7: Waiting
+d7963da29172: Waiting
+2a4a0b1fb846: Waiting
+4a520280a3e2: Verifying Checksum
+4a520280a3e2: Download complete
+12d063c9ee71: Verifying Checksum
+12d063c9ee71: Download complete
+645f4692c428: Download complete
+2249bd7f31a9: Verifying Checksum
+2249bd7f31a9: Download complete
+d7963da29172: Verifying Checksum
+d7963da29172: Download complete
+2a4a0b1fb846: Verifying Checksum
+2a4a0b1fb846: Download complete
+6cfc09c3cd48: Verifying Checksum
+6cfc09c3cd48: Download complete
+6cfc09c3cd48: Pull complete
+4a520280a3e2: Pull complete
+2249bd7f31a9: Pull complete
+12d063c9ee71: Pull complete
+645f4692c428: Pull complete
+d7963da29172: Pull complete
+08c9c879c0a7: Verifying Checksum
+08c9c879c0a7: Download complete
+08c9c879c0a7: Pull complete
+2a4a0b1fb846: Pull complete
+Digest: sha256:174ad1142db91eb52a7d83eae450cd83278b16d89b374be6e7be0b6a567680fb
+Status: Downloaded newer image for ghcr.io/hotio/radarr:release-5.22.4.9896
+ghcr.io/hotio/radarr:release-5.22.4.9896

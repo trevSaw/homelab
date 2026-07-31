@@ -1,0 +1,4 @@
+ Container prowlarr Creating 
+ Container prowlarr Created 
+ Container prowlarr Starting 
+ Container prowlarr Started 

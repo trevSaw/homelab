@@ -1,0 +1,33 @@
+name: nzbget
+services:
+  nzbget:
+    cpu_shares: 90
+    container_name: nzbget
+    image: ghcr.io/hotio/nzbget
+    restart: unless-stopped
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Denver
+      - UMASK=002
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/nzbget
+        target: /config
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /hive/downloads
+        target: /downloads
+        bind:
+          create_host_path: true
+    network_mode: container:qbittorrent
+    privileged: false
+    deploy:
+      resources:
+        limits:
+          memory: 25434M
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"

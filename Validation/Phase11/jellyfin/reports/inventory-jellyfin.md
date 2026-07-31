@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-31T10:58:15Z
+
+```json
+{
+  "timestamp": "2026-07-31T10:58:15Z",
+  "service": "jellyfin",
+  "phase": "inventory",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/jellyfin/config",
+  "destination": "/mnt/monarch/appdata/jellyfin",
+  "files": 48141,
+  "directories": 22723,
+  "bytes": "11GB",
+  "bytes_raw": 11083995242,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": true,
+  "verification_status": "inventory_complete",
+  "rollback_available": true,
+  "rsync_excludes": "cache/**,data/transcodes/**,.temp/**,log/**",
+  "warnings": [],
+  "errors": [],
+  "warning_count": 0,
+  "error_count": 0
+}
+```

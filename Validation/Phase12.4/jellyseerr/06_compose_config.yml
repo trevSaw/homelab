@@ -1,0 +1,52 @@
+name: jellyseerr
+services:
+  jellyseerr:
+    container_name: jellyseerr
+    deploy:
+      resources:
+        limits:
+          memory: "1073741824"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+      UMASK: "002"
+    hostname: jellyseerr
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -q -O /dev/null http://127.0.0.1:5055/api/v1/status || curl -fsS -o /dev/null http://127.0.0.1:5055/api/v1/status || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: ghcr.io/hotio/jellyseerr@sha256:794d5496988b69b67fab65daa9963de0dfbf6ada9103b81f95dc766e9b5d86f8
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.jellyseerr.entrypoints: websecure
+      traefik.http.routers.jellyseerr.rule: Host(`jellyseerr.fatherfankscloud.uk`)
+      traefik.http.routers.jellyseerr.tls: "true"
+      traefik.http.routers.jellyseerr.tls.certresolver: le
+      traefik.http.services.jellyseerr.loadbalancer.server.port: "5055"
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      proxy: null
+    ports:
+      - mode: ingress
+        target: 5055
+        published: "5055"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/jellyseerr
+        target: /config
+        bind: {}
+networks:
+  proxy:
+    name: proxy
+    external: true

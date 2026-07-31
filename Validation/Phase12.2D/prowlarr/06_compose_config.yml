@@ -1,0 +1,56 @@
+name: prowlarr
+services:
+  prowlarr:
+    container_name: prowlarr
+    deploy:
+      resources:
+        limits:
+          memory: "536870912"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+      UMASK: "002"
+    hostname: prowlarr
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS -o /dev/null http://127.0.0.1:9696/ping || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: ghcr.io/hotio/prowlarr:release-2.3.5.5327
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.prowlarr.entrypoints: websecure
+      traefik.http.routers.prowlarr.rule: Host(`prowlarr.fatherfankscloud.uk`)
+      traefik.http.routers.prowlarr.tls: "true"
+      traefik.http.routers.prowlarr.tls.certresolver: le
+      traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      hotio: null
+      proxy: null
+    ports:
+      - mode: ingress
+        target: 9696
+        published: "9696"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/prowlarr
+        target: /config
+        bind: {}
+networks:
+  hotio:
+    name: hotio_default
+    external: true
+  proxy:
+    name: proxy
+    external: true

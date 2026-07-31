@@ -1,0 +1,4 @@
+backup_path=/hive/backups/radarr/pre-12.2C-20260731T141538
+backup_movies=231
+backup_db_md5=5a4a392ac11c7fbd8fe81ccb573c47e4
+backup_apparent=483M

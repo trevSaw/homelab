@@ -1,0 +1,14 @@
+# Bazarr before 2026-07-31T14:46:50+00:00
+Image=linuxserver/bazarr:1.2.2 Nets=hotio_default=172.27.0.2 
+data=/DATA/AppData/bazarr/config size=78M
+2:ip = 0.0.0.0
+3:port = 6767
+79:ip = 192.168.50.44
+80:port = 8989
+98:ip = 172.27.0.2
+99:port = 7878
+116:port = 
+250:port = 5432
+sonarr/radarr sections:
+[sonarr]
+[radarr]

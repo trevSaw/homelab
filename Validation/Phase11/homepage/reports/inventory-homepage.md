@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T09:28:03Z
+
+```json
+{
+  "timestamp": "2026-07-30T09:28:03Z",
+  "service": "homepage",
+  "phase": "inventory",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/config/homepage",
+  "destination": "/mnt/monarch/appdata/homepage",
+  "files": 3,
+  "directories": 2,
+  "bytes": "42KB",
+  "bytes_raw": 42005,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "inventory_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [],
+  "errors": [],
+  "warning_count": 0,
+  "error_count": 0
+}
+```

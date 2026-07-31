@@ -1,0 +1,14 @@
+# Communication config — 2026-07-31T14:25:33+00:00
+## Sonarr download clients
+NZBGet|localhost:6789
+qbittorrent|localhost:8080
+## Radarr download clients
+NZBGet|qbittorrent:6789
+qbit|qbittorrent:8080
+## Prowlarr applications
+Sonarr|http://192.168.50.44:8989|http://192.168.50.44:9696
+Radarr|http://radarr:7878|http://prowlarr:9696
+## nzbget network_mode
+container:2c19c2533bde5128518c0de02fbd07b402853ad5fbccc3159756750eefdcd106
+## qbittorrent networks
+hotio_default 

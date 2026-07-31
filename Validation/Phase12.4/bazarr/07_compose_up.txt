@@ -1,0 +1,4 @@
+ Container bazarr Creating 
+ Container bazarr Created 
+ Container bazarr Starting 
+ Container bazarr Started 

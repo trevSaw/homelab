@@ -71,10 +71,13 @@ homelab/compose/<domain>/<project>/
     └── *.sh
 ```
 
+**Production interim (Phase 12.1 pilot, 2026-07-31):** live stacks are standardized under `services/<service>/` with persistent data bind-mounted to `/mnt/monarch/appdata/<service>`. That layout is the **canonical production SoT until** a dedicated directory-layout migration to `compose/<domain>/` is executed. New pilot-compliant stacks MUST include at minimum: `compose.y*ml`, `.env.example`, `README.md`, `Versions.md`, pinned images, restart policy, resource limits, and documented exceptions.
+
 **Rationale:**  
 - Mirrors the **Directory Standards** of the Architecture Standard (SSD vs. HDD).  
 - Uniform scaffolding (`README.md`, `Versions.md`) guarantees discoverability and auditability.
 - Keeps compose projects grouped by functional purpose rather than alphabetically or by deployment date.
+- Phase 12.1 proved `services/` + `/mnt/monarch/appdata` as the operational pattern without blocking on a full tree reorg.
 
 ---
 
@@ -112,7 +115,7 @@ All `compose.yaml` files must follow the exact ordering of top‑level keys belo
 | **Container name**     | identical to service name                         | `media-qbittorrent`                |
 | **Hostname**           | same as container name                            | `media-qbittorrent`                |
 | **Compose project**    | folder name (Docker `-p` flag)                    | `media-qbittorrent`                |
-| **Network name**       | one of `proxy`, `internal`, `vpn`, `gpu` (lower‑case) | `internal`                        |
+| **Network name**       | one of `proxy`, `internal`, `hotio`, `vpn`, `gpu` (lower‑case) | `internal`                 |
 | **Volume name**        | `<service>_<purpose>` (snake_case)                | `media_qbittorrent_data`           |
 | **Environment var**    | UPPERCASE, underscore, optionally prefixed with service | `QBITTORRENT_PORT`            |
 | **Label key**          | `com.<org>.<service>.<key>`                        | `com.homelab.media.qbittorrent.role` |
@@ -129,8 +132,11 @@ Reference **Architecture Standard – Networking Standards**.
 
 - `proxy` – public‑facing traffic via the reverse‑proxy.  
 - `internal` – private service‑to‑service communication.  
+- `hotio` – media automation fabric (live Docker network name: `hotio_default`; see Media Stack Networking).  
 - `vpn` – optional, for services that need outbound VPN routing.  
 - `gpu` – optional, for GPU‑enabled workloads.
+
+**Media domain:** *arr dual-homing, downloader DNS, and Traefik ingress rules are defined in `Architecture/media-stack-networking.md` and override generic examples for media services.
 
 **Rules**  
 
@@ -251,7 +257,7 @@ Prior to any deployment, the following automated checks must pass (can be script
 
 - `docker compose config` succeeds (valid YAML, schema ≥ 3.9).  
 - All required files exist (`compose.yaml`, `.env.example`, `README.md`, `Versions.md`).  
-- All referenced **external networks** (`proxy`, `internal`, optional `vpn`/`gpu`) exist on the host.  
+- All referenced **external networks** (`proxy`, `internal`, `hotio`→`hotio_default`, optional `vpn`/`gpu`) exist on the host.  
 - All referenced **external volumes** exist (or are declared with `external: true`).  
 - No plaintext secrets in any version‑controlled file.  
 - Each service defines a **healthcheck** (unless explicitly exempted).  

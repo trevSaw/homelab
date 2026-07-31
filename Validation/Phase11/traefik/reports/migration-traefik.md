@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T10:57:16Z
+
+```json
+{
+  "timestamp": "2026-07-30T10:57:16Z",
+  "service": "traefik",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "",
+  "destination": "/mnt/monarch/appdata/traefik",
+  "files": 0,
+  "directories": 0,
+  "bytes": "0B",
+  "bytes_raw": 0,
+  "copy_required": "maybe",
+  "compose_update_needed": "maybe",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted"],
+  "errors": [],
+  "warning_count": 1,
+  "error_count": 0
+}
+```

@@ -1,0 +1,31 @@
+# Automation tests — 2026-07-31 (read-only)
+
+## Health / ports
+- sonarr :8989/ping = 200
+- radarr :7878/ping = 200
+- prowlarr :9696/ping = 200
+- qbittorrent :8080 = 200
+- nzbget :6789 = 401 (auth — expected)
+
+## Sonarr
+- version 3.0.10.1566; series=214
+- download client NZBGet (localhost:6789) = PASS
+- download client qbittorrent (localhost:8080) = PASS
+- indexers=8; sample 1337x/Bangumi PASS; Badass Torrents 400 (remote indexer)
+
+## Radarr
+- version 5.22.4.9896; movies=231
+- NZBGet qbittorrent:6789 = PASS
+- qbit qbittorrent:8080 = PASS
+- indexers=7; sample 1337x/Bangumi PASS; Internet Archive 400 (remote indexer)
+
+## Prowlarr
+- version 2.3.5.5327; indexers=10
+- app Radarr (http://radarr:7878) = PASS
+- app Sonarr (http://192.168.50.44:8989) = PASS
+- ApplicationIndexerSync = 201 PASS
+- sample indexers: 1337x/Bangumi PASS; Badass Torrents 400 (remote)
+
+## Docker DNS
+- radarr → qbittorrent, prowlarr: OK (validated separately)
+- prowlarr → radarr, qbittorrent: OK

@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T10:54:31Z
+
+```json
+{
+  "timestamp": "2026-07-30T10:54:31Z",
+  "service": "calibre-web",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/calibre-web/config",
+  "destination": "/mnt/monarch/appdata/calibre-web",
+  "files": 6,
+  "directories": 1,
+  "bytes": "333KB",
+  "bytes_raw": 340447,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted","[migration] [preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted"],
+  "errors": [],
+  "warning_count": 2,
+  "error_count": 0
+}
+```

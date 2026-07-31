@@ -1,0 +1,1 @@
+Image=ghcr.io/hotio/radarr:release-5.22.4.9896 Status=running Health=healthy Networks=hotio_default proxy 

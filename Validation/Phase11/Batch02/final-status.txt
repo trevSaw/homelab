@@ -1,0 +1,15 @@
+=== Batch 02 final status 2026-07-30T10:55:22Z ===
+/authentik-server running healthy
+/authentik-db running healthy
+/authentik-redis running healthy
+/authentik-worker running healthy
+/calibre running n/a
+/calibre-web running n/a
+--- key mounts ---
+ak-db /mnt/monarch/appdata/authentik/db->/var/lib/postgresql/data 
+calibre /mnt/monarch/appdata/calibre
+calibre-web /mnt/monarch/appdata/calibre-web
+--- HTTP ---
+sso health 200
+calibre 200
+calib 302

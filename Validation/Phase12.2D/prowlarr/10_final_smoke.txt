@@ -1,0 +1,6 @@
+# Final smoke — 2026-07-31T14:23:10+00:00
+Image=ghcr.io/hotio/prowlarr:release-2.3.5.5327 Health=healthy Nets=hotio_default proxy 
+ping=200
+indexers=10
+Sonarr|http://192.168.50.44:8989
+Radarr|http://radarr:7878

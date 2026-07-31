@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/jellyfin/compose.yml	2026-07-30 00:02:24.692189345 +0000
++++ /home/fatherfrank/projects/homelab/Validation/Phase11/jellyfin/proposed/jellyfin/compose.yml	2026-07-31 11:01:11.931616852 +0000
+@@ -17,7 +17,7 @@
+       NVIDIA_DRIVER_CAPABILITIES: all
+       NVIDIA_VISIBLE_DEVICES: all
+     volumes:
+-      - /hive/jellyfin/config:/config
++      - /mnt/monarch/appdata/jellyfin:/config
+       - /hive/jellyfin/tv:/data/tvshows
+       - /hive/jellyfin/movie:/data/movies
+     networks:

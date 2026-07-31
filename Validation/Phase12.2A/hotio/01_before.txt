@@ -1,0 +1,44 @@
+# Before — 2026-07-31T13:19:33+00:00
+## qbittorrent
+Image=cr.hotio.dev/hotio/qbittorrent:latest Status=running Health=none
+[
+    {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/hotio",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+    },
+    {
+        "Type": "bind",
+        "Source": "/hive/downloads/completed",
+        "Destination": "/downloads",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+    }
+]
+## nzbget
+Image=ghcr.io/hotio/nzbget Status=running NetworkMode=container:e7720ed5f10880e6f7ed77932c6ecf8082b9b1433303302ff5b9d12b2c4adfff Health=none
+[
+    {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/nzbget",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+    },
+    {
+        "Type": "bind",
+        "Source": "/hive/downloads",
+        "Destination": "/downloads",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+    }
+]
+## HTTP
+qbit :8080 -> 200
+nzb  :6789 -> 401

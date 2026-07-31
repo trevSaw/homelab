@@ -1,0 +1,31 @@
+{
+  "name": "beszel",
+  "image": "henrygd/beszel:0.18.7",
+  "status": "running",
+  "health": "n/a",
+  "restart": "unless-stopped",
+  "privileged": false,
+  "user": "",
+  "compose_workdir": "/home/fatherfrank/projects/homelab/services/beszel",
+  "compose_file": "/home/fatherfrank/projects/homelab/services/beszel/compose.yml",
+  "mounts": [
+    {
+      "source": "/mnt/monarch/appdata/beszel/beszel_data",
+      "dest": "/beszel_data",
+      "rw": true,
+      "mode": "rw"
+    }
+  ],
+  "ports": {
+    "8090/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "8090"
+      }
+    ]
+  },
+  "network_mode": "homelab",
+  "networks": [
+    "homelab"
+  ]
+}

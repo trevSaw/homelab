@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T12:09:36Z
+
+```json
+{
+  "timestamp": "2026-07-30T12:09:36Z",
+  "service": "nzbget",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/NZBget/config",
+  "destination": "/mnt/monarch/appdata/nzbget",
+  "files": 281,
+  "directories": 54,
+  "bytes": "140GB",
+  "bytes_raw": 149443981643,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "downloads/**,*.log,nzbget.log",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted"],
+  "errors": [],
+  "warning_count": 1,
+  "error_count": 0
+}
+```

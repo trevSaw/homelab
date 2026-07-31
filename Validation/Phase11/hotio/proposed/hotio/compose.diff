@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/Hotio/compose.yml	2026-07-30 00:02:24.691189339 +0000
++++ /home/fatherfrank/projects/homelab/Validation/Phase11/hotio/proposed/hotio/compose.yml	2026-07-30 12:19:14.791802803 +0000
+@@ -49,7 +49,7 @@
+       net.ipv6.conf.all.disable_ipv6: "1"
+     volumes:
+       - type: bind
+-        source: /hive/Hotio/config
++        source: /mnt/monarch/appdata/hotio
+         target: /config
+         bind:
+           create_host_path: true

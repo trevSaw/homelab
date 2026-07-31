@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-07-30T10:03:11Z",
+  "service": "authentik",
+  "phase": "update-compose",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/data/authentik",
+  "destination": "/mnt/monarch/appdata/authentik",
+  "files": 0,
+  "directories": 0,
+  "bytes": "0B",
+  "bytes_raw": 0,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "compose_proposed",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [
+    "Source path string not found verbatim in compose \u2014 proposed file is a copy for manual edit (live drift possible)",
+    "compose PROPOSED: missing .env file \u2014 create from .env.example before --execute/--apply-compose"
+  ],
+  "errors": [],
+  "warning_count": 2,
+  "error_count": 0
+}

@@ -1,0 +1,30 @@
+{
+  "name": "beszel-agent",
+  "image": "henrygd/beszel-agent:0.18.7",
+  "status": "running",
+  "health": "n/a",
+  "restart": "unless-stopped",
+  "privileged": false,
+  "user": "",
+  "compose_workdir": "/home/fatherfrank/projects/homelab/services/beszel_agent",
+  "compose_file": "/home/fatherfrank/projects/homelab/services/beszel_agent/compose.yml",
+  "mounts": [
+    {
+      "source": "/var/run/docker.sock",
+      "dest": "/var/run/docker.sock",
+      "rw": false,
+      "mode": "ro"
+    },
+    {
+      "source": "/mnt/monarch/appdata/beszel_agent/beszel_agent_data",
+      "dest": "/var/lib/beszel-agent",
+      "rw": true,
+      "mode": "rw"
+    }
+  ],
+  "ports": {},
+  "network_mode": "host",
+  "networks": [
+    "host"
+  ]
+}

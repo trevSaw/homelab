@@ -1,0 +1,279 @@
+[
+  {
+    "Id": "f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd",
+    "Created": "2026-06-20T05:04:12.043551796Z",
+    "Path": "/init",
+    "Args": [
+      "/opt/hermes/docker/main-wrapper.sh",
+      "gateway",
+      "run"
+    ],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": true,
+      "Dead": false,
+      "Pid": 5356,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-24T14:04:49.41489347Z",
+      "FinishedAt": "2026-07-24T12:15:36.289998348Z"
+    },
+    "Image": "sha256:a1898e6e9bc2e03683bc07d99340513fe1ff2124c64047946d1b7f085cb2900c",
+    "ResolvConfPath": "/var/lib/docker/containers/f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd/hostname",
+    "HostsPath": "/var/lib/docker/containers/f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd/hosts",
+    "LogPath": "/var/lib/docker/containers/f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd/f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd-json.log",
+    "Name": "/hermes",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/mnt/monarch/appdata/hermes:/opt/data:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "ollama_ollama-net",
+      "PortBindings": {},
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 1073741824,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "f929436b4a9c2798bed50cc3610c8901704e8062dfd65a4ff5dcbdd91a549bbd",
+        "LowerDir": "/var/lib/docker/overlay2/1305797860a0c1bc9c7ebf5b021417220b4de5834208cc8bfabf06ec3ef9b4d3-init/diff:/var/lib/docker/overlay2/27a3d621f4bef4c23676e733b4051799562998e5bd7fca14d0b5f1158862a956/diff:/var/lib/docker/overlay2/fb697f8f1b67b63d32a351c8878352953bd919f83b4759e20d1b2043e58d2a91/diff:/var/lib/docker/overlay2/84b9e6f13e310d38ec3a7e7dc426923f74c03c97fef92b67ec4a6b671f340cfb/diff:/var/lib/docker/overlay2/c9446693f462ac3d3bff2aa08b9817f41d27bd1f79d128f7087b630e36a0157d/diff:/var/lib/docker/overlay2/b7c95d3af677814eca0b58af7c139778537ef312b852b1d349a4af819ce5efb4/diff:/var/lib/docker/overlay2/c1d58d49410a61dbdadfa671c118ebefd9194fe3a7643e7cf5a454ec4b64e517/diff:/var/lib/docker/overlay2/6dff8911983a997b0f15d238f652cb3e705b87026c865c245ae2fb627e0a4646/diff:/var/lib/docker/overlay2/fbf779d3f27de18d47044d74b8539a92524c83849ca58ac0bc89d6a151467723/diff:/var/lib/docker/overlay2/c3653d45e31d0ccd05c07df89d3651aab3f118ce9325853df065734654a2b1aa/diff:/var/lib/docker/overlay2/26fc5be120b821dd54c79be97d187f8af077283f2e6a2d5bc2931d7e4cd105bc/diff:/var/lib/docker/overlay2/b4661e56e247f666f60776abf2a923305cea0a5ff750a255967523b8b3235b27/diff:/var/lib/docker/overlay2/af7d4c0e917eb2616d5fa89a358506425a01311335b7e8e82fe57334e698a56c/diff:/var/lib/docker/overlay2/8409b26c2f37f0b67ba50192ab175895cdf09a4e66f329cab3d6cfeec522da6c/diff:/var/lib/docker/overlay2/9ca95bd0ec283bd3184c10ef6a3032b608a8e46bfd7e2e551be2a3a5461e8a21/diff:/var/lib/docker/overlay2/5fc0ca61579f007af05e5940d894c146f514252df7e8d51e119023188c19eb24/diff:/var/lib/docker/overlay2/4f03dbc333aabaa5d53ec405a63f2945efd9252fdcacbd2a47d766f0b25cb0ee/diff:/var/lib/docker/overlay2/9ac99fdb49c37b0336e164f09a9d9feee92a2edabe69a447acb65a4d33fc6c21/diff:/var/lib/docker/overlay2/9319133ef42e255ab2b465320247399b2fa5068d6677d56a48fba3fe7b6c4cd7/diff:/var/lib/docker/overlay2/73da011edec54aa1ed308017d4ee142abbd31f60f41e928e0ab0fe6d65b68c1f/diff:/var/lib/docker/overlay2/9a37a719b57697f89017d13326e5d7c3ef48a94c8befc52f2e3e718efb37c3ac/diff:/var/lib/docker/overlay2/e8cc9f58c47bfcbefa209c7905b5d423e7129121fa04df2b6bfba646b9b54005/diff:/var/lib/docker/overlay2/221f639d7b801b8e4dea1d838671082b9d0b23b0ec9d94f8785053c9b20ddb13/diff:/var/lib/docker/overlay2/427f98b4be11e0c5870101e33d2fd5fb5cf518553c369bf1db79120cd57651c0/diff:/var/lib/docker/overlay2/76e6220895982350ab13244e47decfa797f6630c334c656f239479ae51f8a0a4/diff:/var/lib/docker/overlay2/875c0719b899741dc9462fe0818c0005e524c824ed1210fbcc6d0a0dd1ceb6fe/diff:/var/lib/docker/overlay2/9956d6a6f8d22da935b581851e5464fd561c2d8b48ccea031c6e77efa9674fce/diff:/var/lib/docker/overlay2/57458c5293a7970abba96342518bc82ef21a8d6bd0c811a4cea6d464cbb3bbfe/diff:/var/lib/docker/overlay2/141f407039c8015833dc0c05363e69db28e65878917e3517793de6322e5e70eb/diff:/var/lib/docker/overlay2/a0ec41042b2a4968ee7c474592ec50d59d10434bf1dfdbc1f1a47fafbc1d3c2c/diff:/var/lib/docker/overlay2/cb36db4e76f2f4084ef3ee6481b0a48b380f96a84173547fb790f7332afa11f4/diff:/var/lib/docker/overlay2/a368aa337c2e4bb703a2557b29d665461213cde87b1e277d833544f57d0d2bbe/diff:/var/lib/docker/overlay2/d70bedc695fc84269873e00d4fb3a2e8ddc58cc26c57cbfd61309358d896e2bc/diff",
+        "MergedDir": "/var/lib/docker/overlay2/1305797860a0c1bc9c7ebf5b021417220b4de5834208cc8bfabf06ec3ef9b4d3/merged",
+        "UpperDir": "/var/lib/docker/overlay2/1305797860a0c1bc9c7ebf5b021417220b4de5834208cc8bfabf06ec3ef9b4d3/diff",
+        "WorkDir": "/var/lib/docker/overlay2/1305797860a0c1bc9c7ebf5b021417220b4de5834208cc8bfabf06ec3ef9b4d3/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/hermes",
+        "Destination": "/opt/data",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "f929436b4a9c",
+      "Domainname": "",
+      "User": "root",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "HERMES_DASHBOARD=1",
+        "HERMES_DASHBOARD_BASIC_AUTH_USERNAME=admin",
+        "HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=***REDACTED***",
+        "OLLAMA_BASE_URL=http://ollama:11434",
+        "TZ=Asia/Tokyo",
+        "PATH=/opt/hermes/bin:/opt/hermes/.venv/bin:/opt/data/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PYTHONUNBUFFERED=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PLAYWRIGHT_BROWSERS_PATH=/opt/hermes/.playwright",
+        "npm_config_install_links=false",
+        "HERMES_WEB_DIST=/opt/hermes/hermes_cli/web_dist",
+        "HERMES_TUI_DIR=/opt/hermes/ui-tui",
+        "HERMES_HOME=/opt/data",
+        "HERMES_WRITE_SAFE_ROOT=/opt/data",
+        "HERMES_DISABLE_LAZY_INSTALLS=1"
+      ],
+      "Cmd": [
+        "gateway",
+        "run"
+      ],
+      "Image": "nousresearch/hermes-agent:latest",
+      "Volumes": {
+        "/opt/data": {}
+      },
+      "WorkingDir": "/opt/hermes",
+      "Entrypoint": [
+        "/init",
+        "/opt/hermes/docker/main-wrapper.sh"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "c7291a11f8812d643b99b8106872570938b7b5507a4cd7ef0a3b9c95944ec55f",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:a1898e6e9bc2e03683bc07d99340513fe1ff2124c64047946d1b7f085cb2900c",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "hermes",
+        "com.docker.compose.project.config_files": "/mnt/monarch/appdata/hermes/compose.yml",
+        "com.docker.compose.project.working_dir": "/mnt/monarch/appdata/hermes",
+        "com.docker.compose.service": "hermes",
+        "com.docker.compose.version": "5.1.4",
+        "org.opencontainers.image.revision": "cf58f1a520b177b88dbf84391eca6bc21e35b6e8",
+        "traefik.docker.network": "proxy",
+        "traefik.enable": "true",
+        "traefik.http.routers.hermes.entrypoints": "websecure",
+        "traefik.http.routers.hermes.rule": "Host(`hermes.fatherfankscloud.uk`)",
+        "traefik.http.routers.hermes.tls": "true",
+        "traefik.http.routers.hermes.tls.certresolver": "le",
+        "traefik.http.services.hermes.loadbalancer.server.port": "9119"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "bcae291a9496037900de43ebf75de670749a4cf5b470ae3791dd6157a70e4a42",
+      "SandboxKey": "/var/run/docker/netns/bcae291a9496",
+      "Ports": {},
+      "Networks": {
+        "ollama_ollama-net": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "hermes",
+            "hermes"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "4b20c20c601442c5664ef0085608755673ef348b3899e59eea04c6d56f1eab0e",
+          "EndpointID": "952dfe09af7ccf561ac07e8d60993b76813e3463133e12e8e368264dd5fde122",
+          "Gateway": "172.22.0.1",
+          "IPAddress": "172.22.0.8",
+          "MacAddress": "be:9d:05:b5:f2:9a",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "hermes",
+            "f929436b4a9c"
+          ]
+        },
+        "proxy": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "hermes",
+            "hermes"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "46a8595d610b788383ee36281f58ae2637a445cc94bb0c9ef843f547023e546b",
+          "EndpointID": "ff7a8f5f3fda3b373e772d4faea0777dbd35106f41fd912fba470e798412dd97",
+          "Gateway": "172.19.0.1",
+          "IPAddress": "172.19.0.11",
+          "MacAddress": "d2:cb:01:0c:65:5c",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "hermes",
+            "f929436b4a9c"
+          ]
+        }
+      }
+    }
+  }
+]

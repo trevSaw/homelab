@@ -1,33 +1,28 @@
 name: nzbget
 services:
   nzbget:
-    cpu_shares: 90
+    image: ghcr.io/hotio/nzbget@sha256:6815d7e4837b1b03771465ec67191a94e4eb67ebfdc7322d3394ebf8952eb879
     container_name: nzbget
-    image: ghcr.io/hotio/nzbget
     restart: unless-stopped
-    environment:
-      - PGID=1000
-      - PUID=1000
-      - TZ=Denver
-      - UMASK=002
+    env_file:
+      - .env
     volumes:
-      - type: bind
-        source: /hive/NZBget/config
-        target: /config
-        bind:
-          create_host_path: true
-      - type: bind
-        source: /hive/downloads
-        target: /downloads
-        bind:
-          create_host_path: true
+      - /mnt/monarch/appdata/nzbget:/config
+      - /hive/downloads:/downloads
+    # EXCEPTION: share Hotio VPN + published ports (see Known_Exceptions.md)
     network_mode: container:qbittorrent
-    privileged: false
-    deploy:
-      resources:
-        limits:
-          memory: 25434M
+    # Probe via shared netns (Hotio publishes :6789)
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:6789/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     logging:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 4G

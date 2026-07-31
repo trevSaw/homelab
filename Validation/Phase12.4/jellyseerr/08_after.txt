@@ -1,0 +1,1 @@
+Image=ghcr.io/hotio/jellyseerr@sha256:794d5496988b69b67fab65daa9963de0dfbf6ada9103b81f95dc766e9b5d86f8 Health=healthy Nets=proxy 
