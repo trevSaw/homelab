@@ -1,25 +1,16 @@
-# uptime-kuma
+# Uptime Kuma (Phase 12.1 pilot)
 
-Phase 10.75 repository import of the live deployment.
+## Storage migration
 
-## Purpose
-Uptime Kuma monitoring
+| Before | After |
+|---|---|
+| `/DATA/AppData/uptimekuma/app/data` | `/mnt/monarch/appdata/uptime-kuma` |
 
-## Runtime
-- Container(s): `uptimekuma`
-- Compose: `services/uptime-kuma/compose.yaml`
-- Former source of truth: CasaOS `uptimekuma`
+## Deploy
 
-## Important
-This import **does not** migrate storage. Bind mounts are unchanged from the live container.
-
-## Operations
 ```bash
 cd services/uptime-kuma
-cp -n .env.example .env   # if required
-docker compose -f compose.yaml config
-# Do not recreate unless cutting over from CasaOS/Portainer intentionally
+docker compose up -d
 ```
 
-## Documentation
-See `Documentation/services/uptime-kuma/`.
+Previously CasaOS-managed (`/var/lib/casaos/apps/uptimekuma`).

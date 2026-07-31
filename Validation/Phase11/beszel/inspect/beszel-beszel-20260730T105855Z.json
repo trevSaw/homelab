@@ -1,0 +1,262 @@
+[
+  {
+    "Id": "474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae",
+    "Created": "2026-06-24T10:25:17.598874528Z",
+    "Path": "/beszel",
+    "Args": [
+      "serve",
+      "--http=0.0.0.0:8090"
+    ],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 757270,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-25T08:11:25.19294324Z",
+      "FinishedAt": "2026-07-25T08:11:21.215575576Z"
+    },
+    "Image": "sha256:8d117552a380811274c7b654033ea99d954b49ca63384ebc90a9602c0ac5bbba",
+    "ResolvConfPath": "/var/lib/docker/containers/474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae/hostname",
+    "HostsPath": "/var/lib/docker/containers/474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae/hosts",
+    "LogPath": "/var/lib/docker/containers/474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae/474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae-json.log",
+    "Name": "/beszel",
+    "RestartCount": 1,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/mnt/monarch/appdata/beszel/beszel_data:/beszel_data:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "homelab",
+      "PortBindings": {
+        "8090/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "8090"
+          }
+        ]
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "474127a167b958c37f6b4bd7df1941467f6490dacf10263077e00f9ece539aae",
+        "LowerDir": "/var/lib/docker/overlay2/8665685908d84eb1cb4604867fe3b291c34d9b08999a8b6571135efa1969242b-init/diff:/var/lib/docker/overlay2/ff66b4c1383e56fb33f47b898d3f6416d8a9202003dabf97d8e42da2d038e078/diff:/var/lib/docker/overlay2/72b22a2dc4d40630d8be80348d834fd27bf9a041c28ad8df571b2bad10b77233/diff",
+        "MergedDir": "/var/lib/docker/overlay2/8665685908d84eb1cb4604867fe3b291c34d9b08999a8b6571135efa1969242b/merged",
+        "UpperDir": "/var/lib/docker/overlay2/8665685908d84eb1cb4604867fe3b291c34d9b08999a8b6571135efa1969242b/diff",
+        "WorkDir": "/var/lib/docker/overlay2/8665685908d84eb1cb4604867fe3b291c34d9b08999a8b6571135efa1969242b/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/monarch/appdata/beszel/beszel_data",
+        "Destination": "/beszel_data",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "474127a167b9",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "8090/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "APP_URL=http://mocha:8090",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "Cmd": [
+        "serve",
+        "--http=0.0.0.0:8090"
+      ],
+      "Image": "henrygd/beszel:latest",
+      "Volumes": {
+        "/beszel_data": {}
+      },
+      "WorkingDir": "/",
+      "Entrypoint": [
+        "/beszel"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "1fe34cd17d384be1947676a20e17a95dac41d0cff2f49c66c2d380344cffc085",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:8d117552a380811274c7b654033ea99d954b49ca63384ebc90a9602c0ac5bbba",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "beszel",
+        "com.docker.compose.project.config_files": "/mnt/monarch/appdata/beszel/compose.yml",
+        "com.docker.compose.project.working_dir": "/mnt/monarch/appdata/beszel",
+        "com.docker.compose.service": "beszel",
+        "com.docker.compose.version": "5.1.4",
+        "org.opencontainers.image.created": "2026-04-05T20:17:01.500Z",
+        "org.opencontainers.image.description": "Lightweight server monitoring with historical data, docker stats, and alerts.",
+        "org.opencontainers.image.licenses": "MIT",
+        "org.opencontainers.image.revision": "6e3fd90834309213aca32f2ff5fb0b027661c39a",
+        "org.opencontainers.image.source": "https://github.com/henrygd/beszel",
+        "org.opencontainers.image.title": "beszel",
+        "org.opencontainers.image.url": "https://github.com/henrygd/beszel",
+        "org.opencontainers.image.version": "0.18.7"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "28b7f133f01982af9e316f6a13faca638504419af8564d84b30e4944acfac7aa",
+      "SandboxKey": "/var/run/docker/netns/28b7f133f019",
+      "Ports": {
+        "8090/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8090"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "8090"
+          }
+        ]
+      },
+      "Networks": {
+        "homelab": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "beszel",
+            "beszel"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "b7bd12990e286eee836aff739ebbf6bd1eb1be21e2e357e81f1727e43d8ff9d7",
+          "EndpointID": "3ec26ddef9599806c470bba7073b5ae57116528a82de7ce03a33e49a1955f823",
+          "Gateway": "172.29.0.1",
+          "IPAddress": "172.29.0.2",
+          "MacAddress": "3e:c2:a7:00:17:af",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "beszel",
+            "474127a167b9"
+          ]
+        }
+      }
+    }
+  }
+]

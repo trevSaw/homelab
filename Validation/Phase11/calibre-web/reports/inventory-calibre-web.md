@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T10:54:27Z
+
+```json
+{
+  "timestamp": "2026-07-30T10:54:27Z",
+  "service": "calibre-web",
+  "phase": "inventory",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/calibre-web/config",
+  "destination": "/mnt/monarch/appdata/calibre-web",
+  "files": 6,
+  "directories": 1,
+  "bytes": "333KB",
+  "bytes_raw": 340210,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "inventory_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [],
+  "errors": [],
+  "warning_count": 0,
+  "error_count": 0
+}
+```

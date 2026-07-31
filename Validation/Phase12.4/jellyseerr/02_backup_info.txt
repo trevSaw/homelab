@@ -1,0 +1,1 @@
+backup_path=/hive/backups/jellyseerr/pre-12.4-20260731T144621

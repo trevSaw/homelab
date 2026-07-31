@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T10:03:12Z
+
+```json
+{
+  "timestamp": "2026-07-30T10:03:12Z",
+  "service": "authentik",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/data/authentik",
+  "destination": "/mnt/monarch/appdata/authentik",
+  "files": 1,
+  "directories": 7,
+  "bytes": "236KB",
+  "bytes_raw": 241334,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)","[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted","[inventory] Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)","[inventory] Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)","[copy] rsync dry-run returned non-zero (permission gaps possible)","[copy] Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)","[compose] Source path string not found verbatim in compose — proposed file is a copy for manual edit (live drift possible)","[compose] compose PROPOSED: missing .env file — create from .env.example before --execute/--apply-compose","[migration] [preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted"],
+  "errors": [],
+  "warning_count": 9,
+  "error_count": 0
+}
+```

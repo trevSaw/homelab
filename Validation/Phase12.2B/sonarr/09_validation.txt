@@ -1,0 +1,52 @@
+# After validation
+## Container
+Image=lscr.io/linuxserver/sonarr:version-3.0.10.1566 Status=running Health=healthy NetworkMode=host
+## System status
+version=3.0.10.1566
+branch=main
+appData=/config
+runtimeName=mono
+startTime=2026-07-31T13:55:05.497264Z
+## Series count
+series_count=214
+## Root folders
+8|/hive/jellyfin/tv/Drama_Series|accessible=True|freeSpace=8091280080896
+9|/hive/jellyfin/tv/Fantasy_Series|accessible=True|freeSpace=8091280080896
+10|/hive/jellyfin/tv/Kdrama_Series|accessible=True|freeSpace=8091280080896
+14|/hive/jellyfin/tv/Anime_Series|accessible=True|freeSpace=8091280080896
+17|/hive/jellyfin/tv/Cartoons|accessible=True|freeSpace=8091280080896
+18|/hive/jellyfin/tv/JDrama|accessible=False|freeSpace=None
+19|/hive/jellyfin/tv/Reality|accessible=True|freeSpace=8091280080896
+21|/hive/jellyfin/tv|accessible=True|freeSpace=8091280080896
+## Quality profiles
+quality_profiles=10
+## Indexers
+indexers=8
+  23|1337x (Prowlarr)|enable=None
+  24|Badass Torrents (Prowlarr)|enable=None
+  25|Bangumi Moe (Prowlarr)|enable=None
+  27|Internet Archive (Prowlarr)|enable=None
+  30|IPTorrents (Prowlarr)|enable=None
+  29|NZBgeek (Prowlarr)|enable=None
+  22|SubsPlease (Prowlarr)|enable=None
+  28|The Pirate Bay (Prowlarr)|enable=None
+## Download clients
+download_clients=2
+  1|NZBGet|Nzbget|host=localhost|port=6789|enable=True
+  2|qbittorrent|QBittorrent|host=localhost|port=8080|enable=True
+## Download client tests
+client_id=1 name=NZBGet result=FAIL http=200 body={}
+client_id=2 name=qbittorrent result=FAIL http=200 body={}
+## Disk mounts inside container
+-rw-r--r--  1 abc abc 68763648 Jul 31 13:55 /config/sonarr.db
+drwxrwxr-x 61 abc abc       61 Jul 31 08:57 /hive/downloads/completed/Sonarr
+drwxrwxrwx  9 abc abc        9 Dec 12  2025 /hive/jellyfin/tv
+## DB series on appdata
+214
+## systemd
+## systemd (expected disabled)
+disabled
+inactive
+## download client retest + jdrama
+ls: cannot access '/hive/jellyfin/tv/JDrama': No such file or directory
+JDrama path missing on host (pre-existing)

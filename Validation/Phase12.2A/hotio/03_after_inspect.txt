@@ -1,0 +1,2 @@
+Image=ghcr.io/hotio/qbittorrent:release-4.5.5 Status=running Health=healthy
+qbit http=200

@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-07-30T10:58:36Z",
+  "service": "traefik",
+  "phase": "verify",
+  "status": "SUCCESS",
+  "verification_status": "verify_only_live_appdata",
+  "source": "",
+  "destination": "/mnt/monarch/appdata/traefik",
+  "live_mount": "/mnt/monarch/appdata/traefik/acme.json",
+  "compose_updated": false,
+  "restarted": false,
+  "warnings": [
+    "Skipped framework compose up to avoid edge-proxy recreate; live already on appdata"
+  ],
+  "errors": []
+}

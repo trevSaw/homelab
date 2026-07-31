@@ -1,0 +1,64 @@
+name: radarr
+services:
+  radarr:
+    container_name: radarr
+    deploy:
+      resources:
+        limits:
+          memory: "1073741824"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+      UMASK: "002"
+    hostname: radarr
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS -o /dev/null http://127.0.0.1:7878/ping || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: ghcr.io/hotio/radarr:release-5.22.4.9896
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.radarr.entrypoints: websecure
+      traefik.http.routers.radarr.rule: Host(`radarr.fatherfankscloud.uk`)
+      traefik.http.routers.radarr.tls: "true"
+      traefik.http.routers.radarr.tls.certresolver: le
+      traefik.http.services.radarr.loadbalancer.server.port: "7878"
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      hotio: null
+      proxy: null
+    ports:
+      - mode: ingress
+        target: 7878
+        published: "7878"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/radarr
+        target: /config
+        bind: {}
+      - type: bind
+        source: /hive/jellyfin/movie
+        target: /movies
+        bind: {}
+      - type: bind
+        source: /hive/downloads
+        target: /downloads
+        bind: {}
+networks:
+  hotio:
+    name: hotio_default
+    external: true
+  proxy:
+    name: proxy
+    external: true

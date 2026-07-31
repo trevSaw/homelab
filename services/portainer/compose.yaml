@@ -1,20 +1,20 @@
 services:
   portainer:
+    image: portainer/portainer-ce:2.33.6
     container_name: portainer
-    image: portainer/portainer-ce:lts
+    hostname: portainer
     restart: unless-stopped
     volumes:
+      # EXCEPTION: Portainer requires RW docker.sock to manage the engine
       - /var/run/docker.sock:/var/run/docker.sock
-      - /hive/portainer:/data
+      - /mnt/monarch/appdata/portainer:/data
     ports:
-      - 9000:9000
-      - 9445:9443
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/api/status >/dev/null || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 20s
+      - "9000:9000"
+      - "9445:9443"
+    networks:
+      - portainer_network
+    # EXCEPTION: distroless image — no shell/wget for in-container probes.
+    # Validate externally: curl -fsS http://127.0.0.1:9000/api/status
     logging:
       options:
         max-size: "10m"
@@ -25,5 +25,6 @@ services:
           memory: 512M
 
 networks:
-  default:
+  portainer_network:
     name: portainer_network
+    external: true

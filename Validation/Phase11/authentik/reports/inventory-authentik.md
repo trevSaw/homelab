@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T10:03:11Z
+
+```json
+{
+  "timestamp": "2026-07-30T10:03:11Z",
+  "service": "authentik",
+  "phase": "inventory",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/data/authentik",
+  "destination": "/mnt/monarch/appdata/authentik",
+  "files": 1,
+  "directories": 7,
+  "bytes": "236KB",
+  "bytes_raw": 241334,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "inventory_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)","Partial tree stats: 2 permission-denied path(s) under /hive/data/authentik (size/count may be incomplete)"],
+  "errors": [],
+  "warning_count": 2,
+  "error_count": 0
+}
+```

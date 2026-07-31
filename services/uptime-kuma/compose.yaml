@@ -1,11 +1,30 @@
-name: uptimekuma
 services:
   uptimekuma:
     image: louislam/uptime-kuma:1.23.10-alpine
     container_name: uptimekuma
+    hostname: uptimekuma
     restart: unless-stopped
-    network_mode: bridge
     volumes:
-      - /DATA/AppData/uptimekuma/app/data:/app/data
+      - /mnt/monarch/appdata/uptime-kuma:/app/data
     ports:
       - "3001:3001"
+    networks:
+      - proxy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3001',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,6 @@
+appdata_indexers=10
+appdata_apps=2
+apps_after:
+1|Sonarr|http://192.168.50.44:8989|http://192.168.50.44:9696
+2|Radarr|http://radarr:7878|http://prowlarr:9696
+owner=fatherfrank:fatherfrank

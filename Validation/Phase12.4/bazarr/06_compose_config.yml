@@ -1,0 +1,64 @@
+name: bazarr
+services:
+  bazarr:
+    container_name: bazarr
+    deploy:
+      resources:
+        limits:
+          memory: "1073741824"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+      UMASK: "002"
+    hostname: bazarr
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS -o /dev/null http://127.0.0.1:6767/ || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: lscr.io/linuxserver/bazarr:1.2.2
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.bazarr.entrypoints: websecure
+      traefik.http.routers.bazarr.rule: Host(`bazarr.fatherfankscloud.uk`)
+      traefik.http.routers.bazarr.tls: "true"
+      traefik.http.routers.bazarr.tls.certresolver: le
+      traefik.http.services.bazarr.loadbalancer.server.port: "6767"
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      hotio: null
+      proxy: null
+    ports:
+      - mode: ingress
+        target: 6767
+        published: "6767"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/bazarr
+        target: /config
+        bind: {}
+      - type: bind
+        source: /hive/jellyfin/movie
+        target: /movies
+        bind: {}
+      - type: bind
+        source: /hive/jellyfin/tv
+        target: /tv
+        bind: {}
+networks:
+  hotio:
+    name: hotio_default
+    external: true
+  proxy:
+    name: proxy
+    external: true

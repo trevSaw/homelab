@@ -1,0 +1,37 @@
+name: nzbget
+services:
+  nzbget:
+    container_name: nzbget
+    deploy:
+      resources:
+        limits:
+          memory: "4294967296"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: America/Denver
+      UMASK: "002"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS -o /dev/null http://127.0.0.1:6789/ || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: ghcr.io/hotio/nzbget@sha256:6815d7e4837b1b03771465ec67191a94e4eb67ebfdc7322d3394ebf8952eb879
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    network_mode: container:qbittorrent
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/nzbget
+        target: /config
+        bind: {}
+      - type: bind
+        source: /hive/downloads
+        target: /downloads
+        bind: {}

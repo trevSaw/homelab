@@ -13,7 +13,7 @@ services:
       DEFAULT_WORKSPACE: /config/workspace
       CS_TRUSTED_ORIGINS: "https://code.fatherfankscloud.uk"
     volumes:
-      - /hive/code-server/config:/config
+      - /mnt/monarch/appdata/code-server:/config
       # Read-only access for Phase 8.5 repository import
       - /hive:/config/workspace/hive:ro
       - /mnt/monarch/appdata:/config/workspcae/monarch:ro

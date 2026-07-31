@@ -1,0 +1,46 @@
+# Container Health — Phase 12.5
+
+| Name | Status | Health | Restart |
+|---|---|---|---|
+| actual-server | running | none | unless-stopped |
+| authentik-db | running | healthy | unless-stopped |
+| authentik-redis | running | healthy | unless-stopped |
+| authentik-server | running | healthy | unless-stopped |
+| authentik-worker | running | healthy | unless-stopped |
+| bazarr | running | healthy | unless-stopped |
+| beszel | running | none | unless-stopped |
+| beszel-agent | running | none | unless-stopped |
+| big-bear-crafty | running | none | unless-stopped |
+| byparr-byparr-1 | running | healthy | unless-stopped |
+| calibre | running | none | unless-stopped |
+| calibre-web | running | none | unless-stopped |
+| code-server | running | none | unless-stopped |
+| hermes | running | none | unless-stopped |
+| homepage | running | healthy | unless-stopped |
+| honcho-api | running | none | unless-stopped |
+| honcho-deriver | running | none | unless-stopped |
+| honcho-postgres | running | none | unless-stopped |
+| honcho-redis | running | none | unless-stopped |
+| jellyfin | running | healthy | unless-stopped |
+| jellyseerr | running | healthy | unless-stopped |
+| kavita | running | healthy | unless-stopped |
+| linuxserver-lazylibrarian-app-1 | running | none | unless-stopped |
+| linuxserver-mariadb-app-1 | running | none | unless-stopped |
+| n8n | running | none | unless-stopped |
+| nextcloud | running | none | unless-stopped |
+| nextcloud-db | running | none | unless-stopped |
+| nzbget | running | healthy | unless-stopped |
+| odysseus-chromadb-1 | running | none | unless-stopped |
+| odysseus-ntfy-1 | running | none | unless-stopped |
+| odysseus-odysseus-1 | running | none | unless-stopped |
+| odysseus-searxng-1 | running | healthy | unless-stopped |
+| ollama | running | none | unless-stopped |
+| open-webui | running | healthy | unless-stopped |
+| portainer | running | none | unless-stopped |
+| prowlarr | running | healthy | unless-stopped |
+| qbittorrent | running | healthy | unless-stopped |
+| radarr | running | healthy | unless-stopped |
+| readarr | running | none | unless-stopped |
+| sonarr | running | healthy | unless-stopped |
+| traefik | running | healthy | unless-stopped |
+| uptimekuma | running | healthy | unless-stopped |

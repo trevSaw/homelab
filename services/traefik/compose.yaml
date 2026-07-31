@@ -1,45 +1,45 @@
----
 services:
   traefik:
-    image: traefik:latest
+    image: traefik:v3.6.7
     container_name: traefik
+    hostname: traefik
     restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      CLOUDFLARE_DNS_API_TOKEN: ${CLOUDFLARE_DNS_API_TOKEN}
+      TZ: ${TZ}
     ports:
+      # EXCEPTION: edge proxy must publish host ports (see Known_Exceptions.md)
       - "80:80"
       - "443:443"
     command:
-      # Core
-      - "--global.checknewversion=true"
+      - "--global.checknewversion=false"
       - "--global.sendanonymoususage=false"
-      - "--log.level=DEBUG"
-      # API / Dashboard
+      - "--log.level=INFO"
       - "--api.dashboard=true"
       - "--api.insecure=false"
-      # Providers
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=proxy"
-      # EntryPoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      # ACME / Cloudflare DNS Challenge
       - "--certificatesresolvers.le.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.le.acme.storage=/etc/traefik/acme.json"
       - "--certificatesresolvers.le.acme.dnschallenge=true"
       - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.le.acme.dnschallenge.delaybeforecheck=0"
       - "--certificatesresolvers.le.acme.keytype=EC256"
-      # Built-in ping for healthchecks
       - "--ping=true"
-    environment:
-      - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}
-      - TZ=${TZ}
     volumes:
+      # EXCEPTION: Docker provider requires socket; keep read-only
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${PATH_CONFIG}/traefik/acme.json:/etc/traefik/acme.json
       - /etc/localtime:/etc/localtime:ro
+    networks:
+      - proxy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.${DEFAULT_DOMAIN}`)"
@@ -54,13 +54,15 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 15s
     logging:
       options:
         max-size: "10m"
         max-file: "3"
-    networks:
-      - proxy
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
 networks:
   proxy:

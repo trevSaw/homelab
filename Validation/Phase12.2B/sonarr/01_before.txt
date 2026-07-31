@@ -1,0 +1,37 @@
+# Before — 2026-07-31T13:54:01+00:00
+systemd_enabled=disabled
+systemd_active=inactive
+package=sonarr 3.0.10
+# Do Not Edit
+PackageVersion=3.0.10
+PackageAuthor=[Team Sonarr](https://sonarr.tv)
+ReleaseVersion=3.0.10.1566
+UpdateMethod=BuiltIn
+Branch=main
+data_dir=/var/lib/sonarr
+data_size=377M
+db_size=66M
+db_md5=fdf0431f98811c2484ef6f6d04eb2ce5
+series_count=214
+indexers=8
+quality_profiles=10
+download_clients=2
+root_folders:
+8|/hive/jellyfin/tv/Drama_Series/
+9|/hive/jellyfin/tv/Fantasy_Series/
+10|/hive/jellyfin/tv/Kdrama_Series/
+14|/hive/jellyfin/tv/Anime_Series/
+17|/hive/jellyfin/tv/Cartoons/
+18|/hive/jellyfin/tv/JDrama/
+19|/hive/jellyfin/tv/Reality/
+21|/hive/jellyfin/tv/
+remote_path_mappings (paths only):
+1|localhost|/downloads/completed/Sonarr/|/hive/downloads/completed/Sonarr/
+2|localhost|/downloads/completed/Sonarr|/hive/downloads/completed/Sonarr/
+download_client_endpoints (host:port only):
+1|NZBGet|Nzbget|localhost:6789
+2|qbittorrent|QBittorrent|localhost:8080
+uid_gid=fatherfrank:fatherfrank (1000:1000)
+port=8989 branch=main
+abandoned_hive_series=15
+NOTE: /hive/Hotio/sonarr is NOT migration source

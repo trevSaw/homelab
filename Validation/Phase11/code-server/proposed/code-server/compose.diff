@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/code-server/compose.yml	2026-07-30 00:02:24.692189345 +0000
++++ Validation/Phase11/code-server/proposed/code-server/compose.yml	2026-07-30 09:37:14.984445093 +0000
+@@ -13,7 +13,7 @@
+       DEFAULT_WORKSPACE: /config/workspace
+       CS_TRUSTED_ORIGINS: "https://code.fatherfankscloud.uk"
+     volumes:
+-      - /hive/code-server/config:/config
++      - /mnt/monarch/appdata/code-server:/config
+       # Read-only access for Phase 8.5 repository import
+       - /hive:/config/workspace/hive:ro
+       - /mnt/monarch/appdata:/config/workspcae/monarch:ro

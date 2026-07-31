@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/common.sh
 source "$SCRIPT_DIR/lib/common.sh"
 
-usage() { echo "Usage: verify-service.sh [--dry-run|--execute] [--checksum] <service-key>"; }
+usage() { echo "Usage: verify-service.sh [--dry-run|--execute] [--checksum] [--smoke-only] <service-key>"; }
 parse_migrate_flags "$@" || { usage; exit 2; }
 set -- "${REMAINING_ARGS[@]:-}"
 [[ $# -ge 1 ]] || { usage; exit 2; }
@@ -16,6 +16,19 @@ init_service_log "$SERVICE"
 RUN_PHASE="verify"
 
 section "Verify: $SERVICE"
+
+# Post-start smoke: the service is already writing to the destination, so any
+# source↔dest compare here measures live divergence rather than copy fidelity.
+# The copy gate has already run (pre-start) and cannot be skipped by this path.
+if [[ "${MIGRATE_SMOKE_ONLY:-0}" == "1" ]]; then
+  info "Smoke-only mode — container state check; copy comparison already gated pre-start"
+  report_container_states
+  RUN_STATUS="SUCCESS"
+  VERIFICATION_STATUS="smoke_complete"
+  write_migration_json "$PHASE_DIR/reports/smoke-${SERVICE}.json"
+  print_operator_summary
+  exit 0
+fi
 
 if [[ -z "$SVC_SOURCE" || -z "$SVC_TARGET" ]]; then
   info "No source/target pair — skip copy verification"
@@ -80,30 +93,45 @@ else
 fi
 
 if [[ "$MIGRATE_CHECKSUM" == "1" ]]; then
-  info "Optional checksum compare enabled"
-  TMPA="$(mktemp)"; TMPB="$(mktemp)"
-  (cd "$SVC_SOURCE" && find . -type f -print0 2>/dev/null | sort -z | xargs -0 cksum) >"$TMPA" || true
-  (cd "$SVC_TARGET" && find . -type f -print0 2>/dev/null | sort -z | xargs -0 cksum) >"$TMPB" || true
-  if ! diff -q "$TMPA" "$TMPB" >/dev/null 2>&1; then
-    warn "Checksum inventory differs"
+  # Inventories are built and compared under LC_ALL=C and keyed by path, so the
+  # verdict depends only on which files exist and what they contain — never on
+  # the order the filesystem happened to enumerate them in. See the block
+  # comment above build_checksum_inventory in lib/common.sh.
+  info "Checksum compare enabled (LC_ALL=C byte order, set comparison keyed by path)"
+  CK_REPORT="$PHASE_DIR/reports/checksum-diff-${SERVICE}.txt"
+  rm -f "$CK_REPORT"
+  SRC_INV="$(mktemp)"; DST_INV="$(mktemp)"
+
+  # Source honours rsync_excludes (excluded files were never meant to be copied);
+  # destination is inventoried in full so anything unexpected shows up as EXTRA.
+  build_checksum_inventory "$SVC_SOURCE" "$SRC_INV" "${SVC_EXCLUDES:-}"
+  S_INV=$INVENTORY_RECORDS
+  if (( INVENTORY_SKIPPED > 0 )); then
+    warn "Source inventory incomplete: $INVENTORY_SKIPPED file(s) unreadable or contain newlines — cannot verify"
+    FAIL=1
+  fi
+  build_checksum_inventory "$SVC_TARGET" "$DST_INV" ""
+  D_INV=$INVENTORY_RECORDS
+  if (( INVENTORY_SKIPPED > 0 )); then
+    warn "Destination inventory incomplete: $INVENTORY_SKIPPED file(s) unreadable or contain newlines — cannot verify"
+    FAIL=1
+  fi
+  info "Inventory records: source=$S_INV dest=$D_INV"
+
+  compare_checksum_inventories "$SRC_INV" "$DST_INV" "$CK_REPORT"
+  rm -f "$SRC_INV" "$DST_INV"
+
+  if (( CHECKSUM_MISSING > 0 || CHECKSUM_CHANGED > 0 || CHECKSUM_EXTRA > 0 )); then
+    warn "Checksum mismatch: missing=$CHECKSUM_MISSING changed=$CHECKSUM_CHANGED extra=$CHECKSUM_EXTRA matched=$CHECKSUM_MATCHED"
+    warn "Differing files listed in: $CK_REPORT"
     FAIL=1
   else
-    info "Checksum inventory matches"
+    info "Checksum inventory matches: $CHECKSUM_MATCHED file(s) identical (missing=0 changed=0 extra=0)"
   fi
-  rm -f "$TMPA" "$TMPB"
 fi
 
-if is_execute && command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
-  IFS=',' read -ra CNS <<<"$SVC_CONTAINERS"
-  for c in "${CNS[@]}"; do
-    [[ -z "$c" ]] && continue
-    if docker inspect -f '{{.State.Status}}' "$c" >/dev/null 2>&1; then
-      ST="$(docker inspect -f '{{.State.Status}}' "$c")"
-      info "Container $c status=$ST"
-    else
-      warn "Container not found for smoke: $c (stack may use different names or be stopped)"
-    fi
-  done
+if is_execute; then
+  report_container_states
 fi
 
 STAT_BYTES=$D_BYTES; STAT_FILES=$D_FILES; STAT_DIRS=$D_DIRS

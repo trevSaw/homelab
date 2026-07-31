@@ -1,0 +1,26 @@
+# Honcho smoke 2026-07-30T11:01:11Z
+/honcho-api status=running health=n/a
+/honcho-deriver status=running health=n/a
+/honcho-postgres status=running health=n/a
+/honcho-redis status=running health=n/a
+/mnt/monarch/appdata/honcho/postgres->/var/lib/postgresql/data
+
+/mnt/monarch/appdata/honcho/redis->/data
+
+honcho.fatherfankscloud.uk 000
+honcho host fail
+ 
+      INFO   Started server process [1]
+2026-07-25 17:11:42,129 - uvicorn.error - INFO - Started server process [1]
+      INFO   Waiting for application startup.
+2026-07-25 17:11:42,129 - uvicorn.error - INFO - Waiting for application startup.
+2026-07-25 17:11:42,147 - src.cache.client - INFO - Connected to cache at redis://redis:6379/0?suppress=true
+      INFO   Application startup complete.
+2026-07-25 17:11:42,148 - uvicorn.error - INFO - Application startup complete.
+      INFO   Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-07-25 17:11:42,148 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-07-30 20:00:06.163 JST [10387] FATAL:  could not open file "global/pg_filenode.map": Permission denied
+2026-07-30 20:00:36.688 JST [1] LOG:  could not open file "postmaster.pid": Permission denied; continuing anyway
+2026-07-30 20:00:36.690 JST [10388] FATAL:  could not open file "global/pg_filenode.map": Permission denied
+2026-07-30 20:00:51.190 JST [10389] FATAL:  could not open file "global/pg_filenode.map": Permission denied
+2026-07-30 20:01:18.276 JST [10390] FATAL:  could not open file "global/pg_filenode.map": Permission denied

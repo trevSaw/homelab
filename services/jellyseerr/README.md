@@ -1,25 +1,14 @@
-# jellyseerr
+# Jellyseerr (Phase 12.4)
 
-Phase 10.75 repository import of the live deployment.
+Request UI (Overseerr-compatible). Config: `/mnt/monarch/appdata/jellyseerr`.
 
-## Purpose
-Media request management for Jellyfin
+- Network: `proxy` only (canonical Overseerr role)
+- Traefik: `jellyseerr.fatherfankscloud.uk`
+- Host `:5055` transitional
+- Integrations: Jellyfin/`jellyfin`, Radarr/`radarr` (Docker DNS on `proxy`); Sonarr via host LAN (Sonarr still host-networked)
 
-## Runtime
-- Container(s): `jellyseerr`
-- Compose: `services/jellyseerr/compose.yaml`
-- Former source of truth: CasaOS `breathtaking_ken`
-
-## Important
-This import **does not** migrate storage. Bind mounts are unchanged from the live container.
-
-## Operations
 ```bash
 cd services/jellyseerr
-cp -n .env.example .env   # if required
-docker compose -f compose.yaml config
-# Do not recreate unless cutting over from CasaOS/Portainer intentionally
+cp .env.example .env
+docker compose -f compose.yml up -d
 ```
-
-## Documentation
-See `Documentation/services/jellyseerr/`.

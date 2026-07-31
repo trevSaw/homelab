@@ -1,0 +1,272 @@
+[
+  {
+    "Id": "a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96",
+    "Created": "2026-03-29T11:53:42.041773749Z",
+    "Path": "/init",
+    "Args": [],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": true,
+      "Dead": false,
+      "Pid": 5327,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-24T14:04:49.394114239Z",
+      "FinishedAt": "2026-07-24T12:15:40.67754042Z"
+    },
+    "Image": "sha256:3f30432ce1cb1a99947012194bdc785aa3e620847283ba074b5b63b912423234",
+    "ResolvConfPath": "/var/lib/docker/containers/a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96/hostname",
+    "HostsPath": "/var/lib/docker/containers/a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96/hosts",
+    "LogPath": "/var/lib/docker/containers/a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96/a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96-json.log",
+    "Name": "/calibre-web",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/hive/calibre-web/config:/config:rw",
+        "/hive/library/Kavita/fanfic/novelas:/books:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "proxy",
+      "PortBindings": {},
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "a54bf5093d7bdf183e4a35e0b592e518856b76a5b2def65bb8a775a24400ff96",
+        "LowerDir": "/var/lib/docker/overlay2/08072ace8d558e7dcec797bb539d5d30e4bb785182f42b187b566b2572540c91-init/diff:/var/lib/docker/overlay2/a415c3f0b6d3b8734d108e8c566acfa07ce5ed260735675b6c115bb0e4dcf541/diff:/var/lib/docker/overlay2/bc20828a00a39033a15476d7193de1e32dccc219cb457b0080306fb7b9ead8e2/diff:/var/lib/docker/overlay2/64b45ce60da8f3006e5f7710ff2054b3a74818a213caf9a59d0eb512d883d7db/diff:/var/lib/docker/overlay2/8b4138739be030b08e26ba8aad7df73f17277a3620d3f940fa6e5914e0ccb25d/diff:/var/lib/docker/overlay2/1085e66ffd5ed85405b0a28b6cd79918bdeed8baa5f49aebf27ba20b73ad3caf/diff:/var/lib/docker/overlay2/9094c95b159412d412d69ae47b1ad5591256800f1ea61d57e668dc006124f476/diff:/var/lib/docker/overlay2/9258a6f63d4c7750cbbe1e97c2dcf1261908ec3f8a055fbab4ce74654b46e59a/diff:/var/lib/docker/overlay2/f0e1360f0d907b6a1d2850436245a1f981ed6ca95d8bc453df21009242f9e431/diff:/var/lib/docker/overlay2/4fef3d2a4e59b811bdf68e9f814b7d4c33de6c260a2544aa3aa946c9b3e3052f/diff:/var/lib/docker/overlay2/e0c6e83abad37b1b2bea81dcb1738a43d381a364a03d67f5841f1af779cb17c9/diff:/var/lib/docker/overlay2/1d105f40e2c99d2250ce4171495c5006ef53d05a30a816c0f5a64d85cf038185/diff",
+        "MergedDir": "/var/lib/docker/overlay2/08072ace8d558e7dcec797bb539d5d30e4bb785182f42b187b566b2572540c91/merged",
+        "UpperDir": "/var/lib/docker/overlay2/08072ace8d558e7dcec797bb539d5d30e4bb785182f42b187b566b2572540c91/diff",
+        "WorkDir": "/var/lib/docker/overlay2/08072ace8d558e7dcec797bb539d5d30e4bb785182f42b187b566b2572540c91/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/hive/library/Kavita/fanfic/novelas",
+        "Destination": "/books",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/hive/calibre-web/config",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "a54bf5093d7b",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "8083/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "PGID=1000",
+        "TZ=Asia/Tokyo",
+        "PUID=1000",
+        "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "HOME=/root",
+        "LANGUAGE=en_US.UTF-8",
+        "LANG=en_US.UTF-8",
+        "TERM=xterm",
+        "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0",
+        "S6_VERBOSITY=1",
+        "S6_STAGE2_HOOK=/docker-mods",
+        "VIRTUAL_ENV=/lsiopy",
+        "LSIO_FIRST_PARTY=true",
+        "QTWEBENGINE_CHROMIUM_FLAGS=--no-sandbox"
+      ],
+      "Cmd": null,
+      "Image": "lscr.io/linuxserver/calibre-web:latest",
+      "Volumes": {
+        "/config": {}
+      },
+      "WorkingDir": "/",
+      "Entrypoint": [
+        "/init"
+      ],
+      "Labels": {
+        "build_version": "Linuxserver.io version:- 0.6.26-ls375 Build-date:- 2026-03-22T03:24:05+00:00",
+        "com.docker.compose.config-hash": "51e917fc225aef0a1ec43abd16577c290568f848a68b75718de7eb322f87769a",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:3f30432ce1cb1a99947012194bdc785aa3e620847283ba074b5b63b912423234",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "calibre-web",
+        "com.docker.compose.project.config_files": "/hive/calibre-web/compose.yml",
+        "com.docker.compose.project.working_dir": "/hive/calibre-web",
+        "com.docker.compose.service": "calibre-web",
+        "com.docker.compose.version": "5.0.2",
+        "maintainer": "notdriz",
+        "org.opencontainers.image.authors": "linuxserver.io",
+        "org.opencontainers.image.created": "2026-03-22T03:24:05+00:00",
+        "org.opencontainers.image.description": "[Calibre-web](https://github.com/janeczku/calibre-web) is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database.   It is also possible to integrate google drive and edit metadata and your calibre library through the app itself.    This software is a fork of library and licensed under the GPL v3 License.  ",
+        "org.opencontainers.image.documentation": "https://docs.linuxserver.io/images/docker-calibre-web",
+        "org.opencontainers.image.licenses": "GPL-3.0-only",
+        "org.opencontainers.image.ref.name": "e08e76bef945fb834438ae2f471488054750eb59",
+        "org.opencontainers.image.revision": "e08e76bef945fb834438ae2f471488054750eb59",
+        "org.opencontainers.image.source": "https://github.com/linuxserver/docker-calibre-web",
+        "org.opencontainers.image.title": "Calibre-web",
+        "org.opencontainers.image.url": "https://github.com/linuxserver/docker-calibre-web/packages",
+        "org.opencontainers.image.vendor": "linuxserver.io",
+        "org.opencontainers.image.version": "0.6.26-ls375",
+        "traefik.enable": "true",
+        "traefik.http.routers.calibre.entrypoints": "websecure",
+        "traefik.http.routers.calibre.rule": "Host(`calib.fatherfankscloud.uk`)",
+        "traefik.http.routers.calibre.tls.certresolver": "letsencrypt",
+        "traefik.http.services.calibre.loadbalancer.server.port": "8083"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "2e474ace6d92a5245fa944a6a84aa0c2fb2010a58d1ddc14a8cdbf1320054af7",
+      "SandboxKey": "/var/run/docker/netns/2e474ace6d92",
+      "Ports": {
+        "8083/tcp": null
+      },
+      "Networks": {
+        "proxy": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "calibre-web",
+            "calibre-web"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "46a8595d610b788383ee36281f58ae2637a445cc94bb0c9ef843f547023e546b",
+          "EndpointID": "93b99a00bb0404c95866d769b6b8629a8d526a9c0655b07f200e24a78c1da81c",
+          "Gateway": "172.19.0.1",
+          "IPAddress": "172.19.0.5",
+          "MacAddress": "8e:78:ca:c3:38:78",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "calibre-web",
+            "a54bf5093d7b"
+          ]
+        }
+      }
+    }
+  }
+]

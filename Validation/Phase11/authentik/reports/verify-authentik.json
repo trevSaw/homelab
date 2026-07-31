@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-30T10:06:40Z",
+  "service": "authentik",
+  "phase": "verify",
+  "status": "SUCCESS",
+  "dry_run": false,
+  "execute": true,
+  "source": "/hive/data/authentik",
+  "destination": "/mnt/monarch/appdata/authentik",
+  "files": 3092,
+  "directories": 33,
+  "bytes": "88.7MB",
+  "bytes_raw": 88708810,
+  "copy_required": "yes",
+  "compose_update_needed": "no_sed_PATH_DATA",
+  "compose_updated": false,
+  "verification_status": "copy_verified_root_rsync",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": [
+    "Copied via docker-root rsync to preserve uid 70 Postgres ownership"
+  ],
+  "errors": [],
+  "warning_count": 1,
+  "error_count": 0
+}

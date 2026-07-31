@@ -1,0 +1,130 @@
+---
+pid: 3419108
+cwd: "/home/fatherfrank/projects/homelab/services/prowlarr"
+command: "set -euo pipefail\nVAL=/home/fatherfrank/projects/homelab/Validation/Phase12.3\nmkdir -p \"$VAL\"\n\n# Repo standard checklist\n{\n  echo \"# Architecture checklist — $(date -Is)\"\n  for svc in Hotio NZBget sonarr radarr prowlarr; do\n    d=/home/fatherfrank/projects/homelab/services/$svc\n    echo \"## $svc\"\n    echo \"compose=$(ls \"$d\"/compose.y*ml 2>/dev/null | head -1)\"\n    echo \"env_example=$([ -f \"$d/.env.example\" ] && echo yes || echo no)\"\n    echo \"env_live=$([ -f \"$d/.env\" ] && echo yes || echo no)\"\n    echo \"env_symlink=$([ -L \"$d/.env\" ] && echo YES_BAD || echo no)\"\n    echo \"versions=$([ -f \"$d/Versions.md\" ] && echo yes || echo no)\"\n    echo \"readme=$([ -f \"$d/README.md\" ] && echo yes || echo no)\"\n    # image pin from compose\n    rg -N '^\\s*image:' \"$d\"/compose.y*ml 2>/dev/null | head -1\n  done\n  echo \"## appdata\"\n  for p in hotio nzbget sonarr radarr prowlarr; do\n    if [ -d \"/mnt/monarch/appdata/$p\" ]; then echo \"appdata_$p=yes size=$(du -sh /mnt/monarch/appdata/$p | awk '{print $1}')\"; else echo \"appdata_$p=NO\"; fi\n  done\n} | tee \"$VAL/01_architecture_checklist.txt\"\n\n# Communication graph from DBs (no secrets in output)\n{\n  echo \"# Communication config — $(date -Is)\"\n  echo \"## Sonarr download clients\"\n  sqlite3 /mnt/monarch/appdata/sonarr/sonarr.db \"SELECT Name, json_extract(Settings,'\\$.host')||':'||json_extract(Settings,'\\$.port') FROM DownloadClients;\"\n  echo \"## Radarr download clients\"\n  sqlite3 /mnt/monarch/appdata/radarr/radarr.db \"SELECT Name, json_extract(Settings,'\\$.host')||':'||json_extract(Settings,'\\$.port') FROM DownloadClients;\"\n  echo \"## Prowlarr applications\"\n  sqlite3 /mnt/monarch/appdata/prowlarr/prowlarr.db \"SELECT Name, json_extract(Settings,'\\$.baseUrl'), json_extract(Settings,'\\$.prowlarrUrl') FROM Applications;\"\n  echo \"## nzbget network_mode\"\n  docker inspect nzbget --format '{{.HostConfig.NetworkMode}}'\n  echo \"## qbittorrent networks\"\n  docker inspect qbittorrent --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}'\n} | tee \"$VAL/02_communication_config.txt\"\n\n# Live API tests\npython3 <<'PY' | tee \"$VAL/03_automation_tests.txt\"\nimport json, subprocess, urllib.request, urllib.error, xml.etree.ElementTree as ET\n\ndef key(path):\n    return ET.parse(path).findtext(\"ApiKey\")\n\ndef get(base, path, api):\n    req = urllib.request.Request(base+path, headers={\"X-Api-Key\": api})\n    with urllib.request.urlopen(req, timeout=30) as r:\n        return json.load(r)\n\ndef post(base, path, api, body):\n    data = json.dumps(body).encode()\n    req = urllib.request.Request(base+path, data=data, method=\"POST\",\n        headers={\"X-Api-Key\": api, \"Content-Type\": \"application/json\"})\n    try:\n        with urllib.request.urlopen(req, timeout=90) as r:\n            return r.status, r.read().decode()\n    except urllib.error.HTTPError as e:\n        return e.code, e.read().decode()\n\ndef ok_body(code, raw):\n    raw = (raw or \"\").strip()\n    if code in (200, 204) and raw in (\"\", \"{}\", \"[]\", \"null\"):\n        return True\n    if code == 200 and raw == \"{}\":\n        return True\n    if raw.startswith(\"[\"):\n        try:\n            return len(json.loads(raw)) == 0\n        except Exception:\n            return False\n    return False\n\nprint(\"# Automation tests\")\n\n# Health pings\nfor name, url in [\n    (\"sonarr\", \"http://127.0.0.1:8989/ping\"),\n    (\"radarr\", \"http://127.0.0.1:7878/ping\"),\n    (\"prowlarr\", \"http://127.0.0.1:9696/ping\"),\n    (\"qbittorrent\", \"http://127.0.0.1:8080/\"),\n    (\"nzbget\", \"http://127.0.0.1:6789/\"),\n]:\n    try:\n        code = urllib.request.urlopen(url, timeout=5).getcode()\n    except urllib.error.HTTPError as e:\n        code = e.code\n    except Exception as e:\n        code = f\"ERR:{e}\"\n    print(f\"ping {name}={code}\")\n\nskey = key(\"/mnt/monarch/appdata/sonarr/config.xml\")\nrkey = key(\"/mnt/monarch/appdata/radarr/config.xml\")\npkey = key(\"/mnt/monarch/appdata/prowlarr/config.xml\")\n\nprint(\"## Sonarr\")\nsst = get(\"http://127.0.0.1:8989\", \"/api/v3/system/status\", skey)\nprint(f\"version={sst.get('version')} series={len(get('http://127.0.0.1:8989','/api/v3/series',skey))}\")\nfor c in get(\"http://127.0.0.1:8989\", \"/api/v3/downloadclient\", skey):\n    code, raw = post(\"http://127.0.0.1:8989\", \"/api/v3/downloadclient/test\", skey, c)\n    print(f\"downloadclient {c.get('name')} => {'PASS' if ok_body(code, raw) else 'FAIL'} http={code}\")\n# indexer test sample (first enabled)\nidx = get(\"http://127.0.0.1:8989\", \"/api/v3/indexer\", skey)\nprint(f\"indexers={len(idx)}\")\nfor i in idx[:3]:\n    code, raw = post(\"http://127.0.0.1:8989\", \"/api/v3/indexer/test\", skey, i)\n    # indexer tests may return longer bodies on failure\n    passed = ok_body(code, raw) or (code == 200 and not raw.strip().startswith('[{\"errorMessage\"'))\n    # Sonarr indexer test success often empty\n    if code == 200 and (not raw.strip() or raw.strip() in (\"{}\",\"[]\")):\n        passed = True\n    if not passed and code == 200:\n        # sometimes returns null\n        passed = raw.strip() in (\"null\",)\n    print(f\"indexer_sample {i.get('name')} http={code} => {'PASS' if passed else 'FAIL/WARN'} body={raw[:80]!r}\")\n\nprint(\"## Radarr\")\nrst = get(\"http://127.0.0.1:7878\", \"/api/v3/system/status\", rkey)\nprint(f\"version={rst.get('version')} movies={len(get('http://127.0.0.1:7878','/api/v3/movie',rkey))}\")\nfor c in get(\"http://127.0.0.1:7878\", \"/api/v3/downloadclient\", rkey):\n    fields = {f['name']:f.get('value') for f in c.get('fields',[])}\n    code, raw = post(\"http://127.0.0.1:7878\", \"/api/v3/downloadclient/test\", rkey, c)\n    print(f\"downloadclient {c.get('name')} host={fields.get('host')}:{fields.get('port')} => {'PASS' if ok_body(code, raw) else 'FAIL'}\")\nidx = get(\"http://127.0.0.1:7878\", \"/api/v3/indexer\", rkey)\nprint(f\"indexers={len(idx)}\")\nfor i in idx[:3]:\n    code, raw = post(\"http://127.0.0.1:7878\", \"/api/v3/indexer/test\", rkey, i)\n    passed = code == 200 and (not raw.strip() or raw.strip() in (\"{}\",\"[]\",\"null\"))\n    print(f\"indexer_sample {i.get('name')} http={code} => {'PASS' if passed else 'FAIL/WARN'}\")\n\nprint(\"## Prowlarr\")\npst = get(\"http://127.0.0.1:9696\", \"/api/v1/system/status\", pkey)\nprint(f\"version={pst.get('version')} indexers={len(get('http://127.0.0.1:9696','/api/v1/indexer',pkey))}\")\nfor a in get(\"http://127.0.0.1:9696\", \"/api/v1/applications\", pkey):\n    fields = {f['name']:f.get('value') for f in a.get('fields',[])}\n    code, raw = post(\"http://127.0.0.1:9696\", \"/api/v1/applications/test\", pkey, a)\n    print(f\"app {a.get('name')} base={fields.get('baseUrl')} => {'PASS' if ok_body(code, raw) else 'FAIL'}\")\ncode, raw = post(\"http://127.0.0.1:9696\", \"/api/v1/command\", pkey, {\"name\":\"ApplicationIndexerSync\"})\nprint(f\"ApplicationIndexerSync http={code} => {'PASS' if code in (200,201) else 'FAIL'}\")\n\n# sample indexer tests from prowlarr\nidx = get(\"http://127.0.0.1:9696\", \"/api/v1/indexer\", pkey)\nfor i in idx[:4]:\n    code, raw = post(\"http://127.0.0.1:9696\", \"/api/v1/indexer/test\", pkey, i)\n    passed = code == 200 and (not raw.strip() or raw.strip() in (\"{}\",\"[]\",\"null\"))\n    print(f\"indexer_sample {i.get('name')} http={code} => {'PASS' if passed else 'FAIL/WARN'} body={raw[:60]!r}\")\n\n# DNS from radarr/prowlarr\nprint(\"## Docker DNS checks\")\nfor cmd in [\n    [\"docker\",\"exec\",\"radarr\",\"getent\",\"hosts\",\"qbittorrent\"],\n    [\"docker\",\"exec\",\"radarr\",\"getent\",\"hosts\",\"prowlarr\"],\n    [\"docker\",\"exec\",\"prowlarr\",\"getent\",\"hosts\",\"radarr\"],\n]:\n    try:\n        print(subprocess.check_output(cmd, text=True).strip())\n    except Exception as e:\n        print(\"FAIL\", cmd, e)\n\n# sonarr cannot use docker dns for qbit - uses localhost (host net)\nprint(\"sonarr_mode=host uses localhost for downloaders (exception)\")\nPY\n"
+title: "Architecture checklist and live automation API tests"
+status: failed   
+started_at: 2026-07-31T14:25:32.747Z
+running_for_ms: 122229   
+---
+# Architecture checklist — 2026-07-31T14:25:33+00:00
+## Hotio
+compose=/home/fatherfrank/projects/homelab/services/Hotio/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/qbittorrent:release-4.5.5
+## NZBget
+compose=/home/fatherfrank/projects/homelab/services/NZBget/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/nzbget@sha256:6815d7e4837b1b03771465ec67191a94e4eb67ebfdc7322d3394ebf8952eb879
+## sonarr
+compose=/home/fatherfrank/projects/homelab/services/sonarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: lscr.io/linuxserver/sonarr:version-3.0.10.1566
+## radarr
+compose=/home/fatherfrank/projects/homelab/services/radarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/radarr:release-5.22.4.9896
+## prowlarr
+compose=/home/fatherfrank/projects/homelab/services/prowlarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/prowlarr:release-2.3.5.5327
+## appdata
+appdata_hotio=yes size=23M
+appdata_nzbget=yes size=6.1M
+appdata_sonarr=yes size=376M
+appdata_radarr=yes size=487M
+appdata_prowlarr=yes size=75M
+# Communication config — 2026-07-31T14:25:33+00:00
+## Sonarr download clients
+NZBGet|localhost:6789
+qbittorrent|localhost:8080
+## Radarr download clients
+NZBGet|qbittorrent:6789
+qbit|qbittorrent:8080
+## Prowlarr applications
+Sonarr|http://192.168.50.44:8989|http://192.168.50.44:9696
+Radarr|http://radarr:7878|http://prowlarr:9696
+## nzbget network_mode
+container:2c19c2533bde5128518c0de02fbd07b402853ad5fbccc3159756750eefdcd106
+## qbittorrent networks
+hotio_default 
+# Automation tests
+ping sonarr=200
+ping radarr=200
+ping prowlarr=200
+ping qbittorrent=200
+ping nzbget=401
+## Sonarr
+version=3.0.10.1566 series=214
+downloadclient NZBGet => PASS http=200
+downloadclient qbittorrent => PASS http=200
+indexers=8
+indexer_sample 1337x (Prowlarr) http=200 => PASS body='{}'
+indexer_sample Badass Torrents (Prowlarr) http=400 => FAIL/WARN body='[\n  {\n    "isWarning": false,\n    "propertyName": "",\n    "errorMessage": "Query'
+indexer_sample Bangumi Moe (Prowlarr) http=200 => PASS body='{}'
+## Radarr
+version=5.22.4.9896 movies=231
+downloadclient NZBGet host=qbittorrent:6789 => PASS
+downloadclient qbit host=qbittorrent:8080 => PASS
+indexers=7
+indexer_sample 1337x (Prowlarr) http=200 => PASS
+indexer_sample Bangumi Moe (Prowlarr) http=200 => PASS
+indexer_sample Internet Archive (Prowlarr) http=400 => FAIL/WARN
+## Prowlarr
+version=2.3.5.5327 indexers=10
+app Radarr base=http://radarr:7878 => PASS
+app Sonarr base=http://192.168.50.44:8989 => PASS
+ApplicationIndexerSync http=201 => PASS
+indexer_sample 1337x http=200 => PASS body='{}'
+indexer_sample Badass Torrents http=400 => FAIL/WARN body='[\n  {\n    "isWarning": false,\n    "propertyName": "",\n    "e'
+indexer_sample Bangumi Moe http=200 => PASS body='{}'
+Traceback (most recent call last):
+  File "<stdin>", line 104, in <module>
+  File "<stdin>", line 16, in post
+  File "/usr/lib/python3.10/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.10/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.10/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "/usr/lib/python3.10/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.10/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.10/urllib/request.py", line 1352, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1404, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 323, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 284, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+TimeoutError: timed out
+
+---
+exit_code: 1
+elapsed_ms: 122229
+ended_at: 2026-07-31T14:27:34.976Z
+---

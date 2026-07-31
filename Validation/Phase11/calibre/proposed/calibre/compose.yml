@@ -1,0 +1,62 @@
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - DISABLE_SSL=true
+    volumes:
+      - /mnt/monarch/appdata/calibre:/config
+      - /hive/library/Kavita/fanfic/novelas:/books
+      - /hive/library/Kavita/browser_cache:/config/browser_cache
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calibre-gui.rule=Host(`calibre.fatherfankscloud.uk`)"
+      - "traefik.http.routers.calibre-gui.entrypoints=websecure"
+      - "traefik.http.routers.calibre-gui.tls.certresolver=letsencrypt"
+      - "traefik.http.services.calibre-gui.loadbalancer.server.port=8080"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+    volumes:
+      - /hive/calibre-web/config:/config
+      - /hive/library/Kavita/fanfic/novelas:/books
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calibre.rule=Host(`calib.fatherfankscloud.uk`)"
+      - "traefik.http.routers.calibre.entrypoints=websecure"
+      - "traefik.http.routers.calibre.tls.certresolver=letsencrypt"
+      - "traefik.http.services.calibre.loadbalancer.server.port=8083"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,334 @@
+[
+  {
+    "Id": "05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a",
+    "Created": "2026-04-02T02:19:29.738368709Z",
+    "Path": "/init",
+    "Args": [],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": true,
+      "Dead": false,
+      "Pid": 4805,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-24T14:04:49.302715778Z",
+      "FinishedAt": "2026-07-24T12:15:36.723207055Z"
+    },
+    "Image": "sha256:96c9f0951b384edca3a5d72b3cd2d480e587feaafef6fc3da34c8cc88c66d0fe",
+    "ResolvConfPath": "/var/lib/docker/containers/05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a/hostname",
+    "HostsPath": "/var/lib/docker/containers/05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a/hosts",
+    "LogPath": "/var/lib/docker/containers/05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a/05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a-json.log",
+    "Name": "/jellyfin",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/hive/jellyfin/config:/config:rw",
+        "/hive/jellyfin/tv:/data/tvshows:rw",
+        "/hive/jellyfin/movie:/data/movies:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "proxy",
+      "PortBindings": {
+        "8096/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "8096"
+          }
+        ]
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 0,
+      "Memory": 0,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": [
+        {
+          "PathOnHost": "/dev/dri",
+          "PathInContainer": "/dev/dri",
+          "CgroupPermissions": "rwm"
+        }
+      ],
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware",
+        "/sys/devices/system/cpu/cpu0/thermal_throttle",
+        "/sys/devices/system/cpu/cpu1/thermal_throttle",
+        "/sys/devices/system/cpu/cpu2/thermal_throttle",
+        "/sys/devices/system/cpu/cpu3/thermal_throttle",
+        "/sys/devices/system/cpu/cpu4/thermal_throttle",
+        "/sys/devices/system/cpu/cpu5/thermal_throttle",
+        "/sys/devices/system/cpu/cpu6/thermal_throttle",
+        "/sys/devices/system/cpu/cpu7/thermal_throttle",
+        "/sys/devices/system/cpu/cpu8/thermal_throttle",
+        "/sys/devices/system/cpu/cpu9/thermal_throttle",
+        "/sys/devices/system/cpu/cpu10/thermal_throttle",
+        "/sys/devices/system/cpu/cpu11/thermal_throttle"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "05c202b59278709a6fd78e3bc6eb5b5e89ea370ef17db560cb57eb600de6401a",
+        "LowerDir": "/var/lib/docker/overlay2/a8197e0072e1e45d6ac0a6c17d040c9030192c941e1062bcef96edf5d4318a97-init/diff:/var/lib/docker/overlay2/15cbf202d9e76e38485516e361b3f2aff01a73a5b6d51b3eed08500ba1a46a57/diff:/var/lib/docker/overlay2/0ea87ae6d26b7975a8f9dbf010714dccbdb6218f0fa527c986329b646b6093de/diff:/var/lib/docker/overlay2/e0032337f73412b28ebb74d8f0c27cd0796ea6b01b6df87388afc23c75becc23/diff:/var/lib/docker/overlay2/9852443b7b9b9bc7abdd6106d637d33a65b34ee532fa8c9e3e142a7771b519af/diff:/var/lib/docker/overlay2/bdab2066eae6e37dc893408eb79326607018a8b6e0cb96dbde90e116caee2789/diff:/var/lib/docker/overlay2/449ed3b1afcea2dd28fe8a409e895b6c7833fd461f58513e18cfe8fa4fec54e8/diff:/var/lib/docker/overlay2/276309e5351a9d0a5a24aee261154c5603cb4eb7c403c9d9988e76e637c1582b/diff:/var/lib/docker/overlay2/41e8f807b7bba8b8316ac79cdbf7ee9e913e78ff17916272ea4b943832ca7e09/diff:/var/lib/docker/overlay2/0bf5e0de0ed42d65a14bec6dda4dc369989ea4bef59c0172d740e3ddda4b1a77/diff:/var/lib/docker/overlay2/25169f43729be2496f1894d6d8abafaf46d728834a1bb1969c0eee8bf523f435/diff:/var/lib/docker/overlay2/f78fe1996ea451f42d8890f39fdf1336cfc871dbee7d375aadf83be55aab0352/diff",
+        "MergedDir": "/var/lib/docker/overlay2/a8197e0072e1e45d6ac0a6c17d040c9030192c941e1062bcef96edf5d4318a97/merged",
+        "UpperDir": "/var/lib/docker/overlay2/a8197e0072e1e45d6ac0a6c17d040c9030192c941e1062bcef96edf5d4318a97/diff",
+        "WorkDir": "/var/lib/docker/overlay2/a8197e0072e1e45d6ac0a6c17d040c9030192c941e1062bcef96edf5d4318a97/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/hive/jellyfin/config",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/hive/jellyfin/movie",
+        "Destination": "/data/movies",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/hive/jellyfin/tv",
+        "Destination": "/data/tvshows",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "05c202b59278",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "8096/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "TZ=Etc/UTC",
+        "PUID=1000",
+        "PATH_DATA=/hive/data",
+        "NVIDIA_VISIBLE_DEVICES=all",
+        "PGID=1000",
+        "ACME_EMAIL=tsawyerm@gmail.com",
+        "UMASK=002",
+        "CLOUDFLARE_DNS_API_TOKEN=***REDACTED***",
+        "TRAEFIK_DASHBOARD_PASS=***REDACTED***",
+        "PATH_CONFIG=/hive/config",
+        "TRAEFIK_PASS=***REDACTED***",
+        "NVIDIA_DRIVER_CAPABILITIES=all",
+        "DEFAULT_DOMAIN=fatherfankscloud.uk",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "IMAGE_STATS=ewogICJhcHAiOiAiamVsbHlmaW4iLAogICJpbWFnZSI6ICJob3Rpby9qZWxseWZpbjpyZWxlYXNlIiwKICAicmV2aXNpb24iOiAiZjE2YmFlZCIsCiAgInZlcnNpb24iOiAiMTAuMTEuNiIKfQo=",
+        "APP_DIR=/app",
+        "CONFIG_DIR=/config",
+        "XDG_CONFIG_HOME=/config/.config",
+        "XDG_CACHE_HOME=/config/.cache",
+        "XDG_DATA_HOME=/config/.local/share",
+        "LANG=en_US.UTF-8",
+        "LANGUAGE=en_US:en",
+        "LC_ALL=en_US.UTF-8",
+        "S6_BEHAVIOUR_IF_STAGE2_FAILS=2",
+        "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0",
+        "S6_SERVICES_GRACETIME=180000",
+        "S6_STAGE2_HOOK=/etc/s6-overlay/init-hook",
+        "PRIVOXY_ENABLED=false",
+        "UNBOUND_ENABLED=false",
+        "UNBOUND_NAMESERVERS=",
+        "VPN_ENABLED=false",
+        "VPN_CONF=wg0",
+        "VPN_PROVIDER=generic",
+        "VPN_LAN_NETWORK=",
+        "VPN_LAN_LEAK_ENABLED=false",
+        "VPN_EXPOSE_PORTS_ON_LAN=",
+        "VPN_AUTO_PORT_FORWARD=false",
+        "VPN_PORT_REDIRECTS=",
+        "VPN_HEALTHCHECK_ENABLED=false",
+        "VPN_NAMESERVERS=",
+        "VPN_INTERFACE_PREFIXES=",
+        "VPN_PIA_USER=",
+        "VPN_PIA_PASS=",
+        "VPN_PIA_PREFERRED_REGION=",
+        "VPN_PIA_DIP_TOKEN=",
+        "VPN_PIA_PORT_FORWARD_PERSIST=false",
+        "WEBUI_PORTS=8096/tcp",
+        "MALLOC_TRIM_THRESHOLD_=131072",
+        "LD_PRELOAD=/usr/lib/jellyfin/libjemalloc.so.2"
+      ],
+      "Cmd": null,
+      "Image": "ghcr.io/hotio/jellyfin:latest",
+      "Volumes": {
+        "/config": {}
+      },
+      "WorkingDir": "",
+      "Entrypoint": [
+        "/init"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "02ec341f2813567068fe2fef493b59f8112ec1ea352d1c0d81829ab44a78dd2d",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:96c9f0951b384edca3a5d72b3cd2d480e587feaafef6fc3da34c8cc88c66d0fe",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "jellyfin",
+        "com.docker.compose.project.config_files": "/hive/jellyfin/compose.yml",
+        "com.docker.compose.project.working_dir": "/hive/jellyfin",
+        "com.docker.compose.replace": "jellyfin",
+        "com.docker.compose.service": "jellyfin",
+        "com.docker.compose.version": "5.0.2",
+        "org.opencontainers.image.created": "2026-02-11T12:33:26.000Z",
+        "org.opencontainers.image.documentation": "https://hotio.dev/containers/jellyfin",
+        "org.opencontainers.image.ref.name": "ubuntu",
+        "org.opencontainers.image.revision": "f16baed8a481dc67b0907d1eb9f247ce1750befa",
+        "org.opencontainers.image.source": "https://github.com/hotio/jellyfin/tree/release",
+        "org.opencontainers.image.title": "hotio/jellyfin:release",
+        "org.opencontainers.image.vendor": "hotio",
+        "org.opencontainers.image.version": "10.11.6",
+        "traefik.enable": "true",
+        "traefik.http.routers.jellyfin.entrypoints": "websecure",
+        "traefik.http.routers.jellyfin.rule": "Host(`jellyfin.fatherfankscloud.uk`)",
+        "traefik.http.routers.jellyfin.tls": "true",
+        "traefik.http.routers.jellyfin.tls.certresolver": "le",
+        "traefik.http.services.jellyfin.loadbalancer.server.port": "8096"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "e356a609c4981760993b0e93da79c599f39bdeb9c5ffd876f6afa40cd832a982",
+      "SandboxKey": "/var/run/docker/netns/e356a609c498",
+      "Ports": {
+        "8096/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8096"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "8096"
+          }
+        ]
+      },
+      "Networks": {
+        "proxy": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "jellyfin",
+            "jellyfin"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "46a8595d610b788383ee36281f58ae2637a445cc94bb0c9ef843f547023e546b",
+          "EndpointID": "4bd7131e93d3f46766eefa7c7578e8a71f79874318dd4a97443da9a94d790537",
+          "Gateway": "172.19.0.1",
+          "IPAddress": "172.19.0.4",
+          "MacAddress": "0e:20:06:b2:9b:a5",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "jellyfin",
+            "05c202b59278"
+          ]
+        }
+      }
+    }
+  }
+]

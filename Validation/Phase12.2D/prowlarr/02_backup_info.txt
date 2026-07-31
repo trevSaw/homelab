@@ -1,0 +1,5 @@
+backup_path=/hive/backups/prowlarr/pre-12.2D-20260731T142133
+backup_indexers=10
+backup_apps=2
+backup_db_md5=2f3bd373fe93ac48b1767c0de474ef65
+backup_apparent=74M

@@ -1,0 +1,41 @@
+name: sonarr
+services:
+  sonarr:
+    container_name: sonarr
+    deploy:
+      resources:
+        limits:
+          memory: "2147483648"
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Etc/UTC
+      UMASK: "002"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS -o /dev/null http://127.0.0.1:8989/ping || exit 1
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: lscr.io/linuxserver/sonarr:version-3.0.10.1566
+    logging:
+      options:
+        max-file: "3"
+        max-size: 10m
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /mnt/monarch/appdata/sonarr
+        target: /config
+        bind: {}
+      - type: bind
+        source: /hive/jellyfin/tv
+        target: /hive/jellyfin/tv
+        bind: {}
+      - type: bind
+        source: /hive/downloads
+        target: /hive/downloads
+        bind: {}

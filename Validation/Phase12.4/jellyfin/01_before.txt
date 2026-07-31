@@ -1,0 +1,4 @@
+# Jellyfin before 2026-07-31T14:45:38+00:00
+Image=ghcr.io/hotio/jellyfin:latest Health=healthy Nets=proxy 
+appdata=7.0G
+devices=/dev/dri NVIDIA_env=present host_port=8096 traefik=yes

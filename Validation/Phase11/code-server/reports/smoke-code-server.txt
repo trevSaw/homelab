@@ -1,0 +1,14 @@
+# code-server post-cutover evidence
+timestamp: 2026-07-30T09:38:14Z
+status=running
+/mnt/monarch/appdata -> /config/workspcae/monarch
+/mnt/monarch/appdata/code-server -> /config
+/hive -> /config/workspace/hive
+
+traefik: 302
+      DEFAULT_WORKSPACE: /config/workspace
+      - /mnt/monarch/appdata/code-server:/config
+      - /hive:/config/workspace/hive:ro
+      - /mnt/monarch/appdata:/config/workspcae/monarch:ro
+drwxr-xr-x 3 root        root          4 Jul 21 13:01 /hive/code-server.old
+drwxr-xr-x 1 fatherfrank fatherfrank 516 Jul 22 13:24 /mnt/monarch/appdata/code-server

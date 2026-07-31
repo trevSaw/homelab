@@ -17,27 +17,92 @@
     "errors"
   ],
   "properties": {
-    "timestamp": { "type": "string" },
-    "service": { "type": "string" },
-    "phase": { "type": "string" },
-    "status": { "type": "string" },
-    "dry_run": { "type": "boolean" },
-    "execute": { "type": "boolean" },
-    "source": { "type": "string" },
-    "destination": { "type": "string" },
-    "files": { "type": ["integer", "string"] },
-    "directories": { "type": ["integer", "string"] },
-    "bytes": { "type": "string" },
-    "bytes_raw": { "type": ["integer", "string"] },
-    "copy_required": { "type": "string" },
-    "compose_update_needed": { "type": "string" },
-    "compose_updated": { "type": ["boolean", "string"] },
-    "verification_status": { "type": "string" },
-    "rollback_available": { "type": ["boolean", "string"] },
-    "rsync_excludes": { "type": "string" },
-    "warnings": { "type": "array", "items": { "type": "string" } },
-    "errors": { "type": "array", "items": { "type": "string" } },
-    "warning_count": { "type": "integer" },
-    "error_count": { "type": "integer" }
+    "timestamp": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "execute": {
+      "type": "boolean"
+    },
+    "source": {
+      "type": "string"
+    },
+    "destination": {
+      "type": "string"
+    },
+    "files": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "directories": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "bytes": {
+      "type": "string"
+    },
+    "bytes_raw": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "copy_required": {
+      "type": "string"
+    },
+    "compose_update_needed": {
+      "type": "string"
+    },
+    "compose_updated": {
+      "type": [
+        "boolean",
+        "string"
+      ]
+    },
+    "verification_status": {
+      "type": "string"
+    },
+    "rollback_available": {
+      "type": [
+        "boolean",
+        "string"
+      ]
+    },
+    "rsync_excludes": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warning_count": {
+      "type": "integer"
+    },
+    "error_count": {
+      "type": "integer"
+    }
   }
 }

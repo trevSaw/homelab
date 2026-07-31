@@ -1,0 +1,47 @@
+# Architecture checklist — 2026-07-31T14:25:33+00:00
+## Hotio
+compose=/home/fatherfrank/projects/homelab/services/Hotio/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/qbittorrent:release-4.5.5
+## NZBget
+compose=/home/fatherfrank/projects/homelab/services/NZBget/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/nzbget@sha256:6815d7e4837b1b03771465ec67191a94e4eb67ebfdc7322d3394ebf8952eb879
+## sonarr
+compose=/home/fatherfrank/projects/homelab/services/sonarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: lscr.io/linuxserver/sonarr:version-3.0.10.1566
+## radarr
+compose=/home/fatherfrank/projects/homelab/services/radarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/radarr:release-5.22.4.9896
+## prowlarr
+compose=/home/fatherfrank/projects/homelab/services/prowlarr/compose.yml
+env_example=yes
+env_live=yes
+env_symlink=no
+versions=yes
+readme=yes
+    image: ghcr.io/hotio/prowlarr:release-2.3.5.5327
+## appdata
+appdata_hotio=yes size=23M
+appdata_nzbget=yes size=6.1M
+appdata_sonarr=yes size=376M
+appdata_radarr=yes size=487M
+appdata_prowlarr=yes size=75M

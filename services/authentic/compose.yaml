@@ -83,8 +83,10 @@ services:
       - "traefik.http.routers.authentik.entrypoints=websecure"
       - "traefik.http.routers.authentik.tls=true"
       - "traefik.http.services.authentik.loadbalancer.server.port=9000"
+    # Image has no wget/curl; broken CMD-SHELL healthcheck made Traefik filter this
+    # container (docker provider skips unhealthy). Use Python stdlib probe instead.
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/-/health/live/ >/dev/null || exit 1"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9000/-/health/live/')"]
       interval: 30s
       timeout: 5s
       retries: 3

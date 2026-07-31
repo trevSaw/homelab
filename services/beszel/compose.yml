@@ -1,22 +1,21 @@
 services:
   beszel:
-    image: henrygd/beszel:latest
+    image: henrygd/beszel:0.18.7
     container_name: beszel
+    hostname: beszel
     restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_URL: ${APP_URL:-http://mocha:8090}
     ports:
       - "8090:8090"
-    environment:
-      - APP_URL=http://mocha:8090
     volumes:
       - /mnt/monarch/appdata/beszel/beszel_data:/beszel_data
     networks:
       - homelab
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8090/ >/dev/null || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 20s
+    # Hub image is distroless-like; probe from host instead of CMD-SHELL wget.
+    # Smoke: curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1:8090/
     logging:
       options:
         max-size: "10m"
@@ -27,5 +26,6 @@ services:
           memory: 256M
 
 networks:
+  # EXCEPTION: pre-existing monitoring network (see Known_Exceptions.md)
   homelab:
     external: true

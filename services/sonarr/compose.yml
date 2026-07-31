@@ -1,0 +1,28 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:version-3.0.10.1566
+    container_name: sonarr
+    # EXCEPTION: host network preserves localhost download clients (NZBGet/qBittorrent)
+    network_mode: host
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /mnt/monarch/appdata/sonarr:/config
+      # Identity mounts — keep root folders + remote-path locals unchanged
+      - /hive/jellyfin/tv:/hive/jellyfin/tv
+      - /hive/downloads:/hive/downloads
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:8989/ping || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2G

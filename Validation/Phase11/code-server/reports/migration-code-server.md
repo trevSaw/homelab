@@ -1,0 +1,30 @@
+# Migration report
+
+Generated: 2026-07-30T09:32:52Z
+
+```json
+{
+  "timestamp": "2026-07-30T09:32:52Z",
+  "service": "code-server",
+  "phase": "orchestrator",
+  "status": "SUCCESS",
+  "dry_run": true,
+  "execute": false,
+  "source": "/hive/code-server/config",
+  "destination": "/mnt/monarch/appdata/code-server",
+  "files": 41259,
+  "directories": 6885,
+  "bytes": "3.0GB",
+  "bytes_raw": 3200369128,
+  "copy_required": "yes",
+  "compose_update_needed": "yes",
+  "compose_updated": false,
+  "verification_status": "orchestrator_complete",
+  "rollback_available": true,
+  "rsync_excludes": "",
+  "warnings": ["[preflight] git working tree not clean — EXPECTED while Phase 10.5 framework changes are uncommitted","[compose] compose PROPOSED: missing .env file — create from .env.example before --execute/--apply-compose"],
+  "errors": [],
+  "warning_count": 2,
+  "error_count": 0
+}
+```

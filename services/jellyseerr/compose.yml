@@ -1,0 +1,41 @@
+services:
+  jellyseerr:
+    image: ghcr.io/hotio/jellyseerr@sha256:794d5496988b69b67fab65daa9963de0dfbf6ada9103b81f95dc766e9b5d86f8
+    container_name: jellyseerr
+    hostname: jellyseerr
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - proxy
+    ports:
+      # TRANSITIONAL beside Traefik
+      - "5055:5055"
+    volumes:
+      - /mnt/monarch/appdata/jellyseerr:/config
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.fatherfankscloud.uk`)
+      - traefik.http.routers.jellyseerr.entrypoints=websecure
+      - traefik.http.routers.jellyseerr.tls=true
+      - traefik.http.routers.jellyseerr.tls.certresolver=le
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:5055/api/v1/status || curl -fsS -o /dev/null http://127.0.0.1:5055/api/v1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  proxy:
+    external: true

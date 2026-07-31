@@ -1,0 +1,10 @@
+# Traefik verify smoke 2026-07-30T10:58:36Z
+status=running project=/hive/traefik/compose.yaml
+/etc/localtime -> /etc/localtime
+/mnt/monarch/appdata/traefik/acme.json -> /etc/traefik/acme.json
+/var/run/docker.sock -> /var/run/docker.sock
+
+home 200
+sso 200
+calibre 200
+portainer api 200

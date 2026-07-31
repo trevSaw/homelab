@@ -1,0 +1,322 @@
+[
+  {
+    "Id": "7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65",
+    "Created": "2025-03-04T04:47:00.139642133Z",
+    "Path": "/init",
+    "Args": [],
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": true,
+      "Dead": false,
+      "Pid": 5202,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-07-24T14:04:49.400185131Z",
+      "FinishedAt": "2026-07-24T12:15:38.719843757Z"
+    },
+    "Image": "sha256:8a03e26f67253b48a996d0e244697c9064b5c860a5fa69827e54ac83715afd5f",
+    "ResolvConfPath": "/var/lib/docker/containers/7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65/resolv.conf",
+    "HostnamePath": "/var/lib/docker/containers/7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65/hostname",
+    "HostsPath": "/var/lib/docker/containers/7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65/hosts",
+    "LogPath": "/var/lib/docker/containers/7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65/7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65-json.log",
+    "Name": "/qbittorrent",
+    "RestartCount": 0,
+    "Driver": "overlay2",
+    "Platform": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "ExecIDs": null,
+    "HostConfig": {
+      "Binds": [
+        "/hive/Hotio/config:/config:rw",
+        "/hive/downloads/completed:/downloads:rw"
+      ],
+      "ContainerIDFile": "",
+      "LogConfig": {
+        "Type": "json-file",
+        "Config": {}
+      },
+      "NetworkMode": "hotio_default",
+      "PortBindings": {
+        "6789/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "6789"
+          }
+        ],
+        "8080/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "8080"
+          }
+        ],
+        "8118/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "8118"
+          }
+        ]
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      },
+      "AutoRemove": false,
+      "VolumeDriver": "",
+      "VolumesFrom": null,
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "CapAdd": [
+        "NET_ADMIN"
+      ],
+      "CapDrop": null,
+      "CgroupnsMode": "private",
+      "Dns": [
+        "10.64.0.1",
+        "1.1.1.1",
+        "1.0.0.1"
+      ],
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": [],
+      "GroupAdd": null,
+      "IpcMode": "private",
+      "Cgroup": "",
+      "Links": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "SecurityOpt": null,
+      "UTSMode": "",
+      "UsernsMode": "",
+      "ShmSize": 67108864,
+      "Sysctls": {
+        "net.ipv4.conf.all.src_valid_mark": "1",
+        "net.ipv6.conf.all.disable_ipv6": "1"
+      },
+      "Runtime": "runc",
+      "Isolation": "",
+      "CpuShares": 50,
+      "Memory": 18480103424,
+      "NanoCpus": 0,
+      "CgroupParent": "",
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": null,
+      "BlkioDeviceReadBps": null,
+      "BlkioDeviceWriteBps": null,
+      "BlkioDeviceReadIOps": null,
+      "BlkioDeviceWriteIOps": null,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "Devices": null,
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "MemoryReservation": 0,
+      "MemorySwap": 36960206848,
+      "MemorySwappiness": null,
+      "OomKillDisable": null,
+      "PidsLimit": null,
+      "Ulimits": null,
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "IOMaximumIOps": 0,
+      "IOMaximumBandwidth": 0,
+      "MaskedPaths": [
+        "/proc/asound",
+        "/proc/acpi",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/sys/firmware",
+        "/sys/devices/virtual/powercap"
+      ],
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ]
+    },
+    "GraphDriver": {
+      "Data": {
+        "ID": "7a88dfbcbf07df9c107d1105ac67f1cbbc7ba00c4db54bb9e5d40c5189b8ee65",
+        "LowerDir": "/var/lib/docker/overlay2/614219ca59d9e1227da77383e986980b5f0c4c8f6ffd9b1793a75b2aebd57e2f-init/diff:/var/lib/docker/overlay2/823c3130a0afb6dd320739f1871b3357b08622fc7b9e7214b055819b70beedfa/diff:/var/lib/docker/overlay2/1ee557a9158d4fd5ef936213b38263d94b4deba6b355a6ee12828d255723152f/diff:/var/lib/docker/overlay2/db0fb661d76a80d3b2c287a1d0ccaefda78297967fc67697ebf0e5c0ed5d98b5/diff:/var/lib/docker/overlay2/4ca5d3ed387f178ddbc65d423fa1fb43c24e89a5bc69e259ba4c1e2bf33453d6/diff:/var/lib/docker/overlay2/96d6dee35bdaa1be26733a7cca89feaed84516ea615acf8fdc1932e5d1c74a01/diff:/var/lib/docker/overlay2/ebd00dfdfa8504797afde0b1667f24eb301f19ba3a4d34f7783f86983ee78064/diff:/var/lib/docker/overlay2/49f294569321e61ce5dc1c90b7d5bbc863b84d0cc8356f5efe50fe16d6d4c49c/diff:/var/lib/docker/overlay2/10e778bbf64746dade0c386d7d4be08cb2427a1eb2cd87bc1775d36d19309b52/diff:/var/lib/docker/overlay2/5b05890073d562d175bba0bea615955e9bb751a6682c07a5ce7a0e97504aca98/diff:/var/lib/docker/overlay2/c8f8ae92dfb2e6663cd441e72bad519b0acd4d08c3632ddfe178c610384d32ba/diff:/var/lib/docker/overlay2/219f05ae8efbaecda17db18da466c1750825ce53080748d3f9a12bbfdff8d235/diff",
+        "MergedDir": "/var/lib/docker/overlay2/614219ca59d9e1227da77383e986980b5f0c4c8f6ffd9b1793a75b2aebd57e2f/merged",
+        "UpperDir": "/var/lib/docker/overlay2/614219ca59d9e1227da77383e986980b5f0c4c8f6ffd9b1793a75b2aebd57e2f/diff",
+        "WorkDir": "/var/lib/docker/overlay2/614219ca59d9e1227da77383e986980b5f0c4c8f6ffd9b1793a75b2aebd57e2f/work"
+      },
+      "Name": "overlay2"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/hive/Hotio/config",
+        "Destination": "/config",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/hive/downloads/completed",
+        "Destination": "/downloads",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": "rprivate"
+      }
+    ],
+    "Config": {
+      "Hostname": "qbittorrent",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "ExposedPorts": {
+        "6789/tcp": {},
+        "8080/tcp": {},
+        "8118/tcp": {}
+      },
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "WEBUI_PORTS=8080/tcp,8080/udp",
+        "PGID=1000",
+        "UMASK=002",
+        "OPENAI_API_KEY=***REDACTED***",
+        "TZ=Etc/UTC",
+        "PRIVOXY_ENABLED=true",
+        "PUID=1000",
+        "VPN_IP_CHECK_EXIT=true",
+        "VPN_LAN_NETWOK=192.168.0.0/24",
+        "VPN_CONF=wg0",
+        "VPN_IP_CHECK_DELAY=10",
+        "VPN_ENABLED=true",
+        "VPN_ADDITIONAL_PORTS=6789/tcp,6789/udp",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "APP_DIR=/app",
+        "CONFIG_DIR=/config",
+        "ARGS=",
+        "XDG_CONFIG_HOME=/config/.config",
+        "XDG_CACHE_HOME=/config/.cache",
+        "XDG_DATA_HOME=/config/.local/share",
+        "LANG=C.UTF-8",
+        "LC_ALL=C.UTF-8",
+        "S6_BEHAVIOUR_IF_STAGE2_FAILS=2",
+        "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0",
+        "BUILD_ARCHITECTURE=linux-amd64",
+        "VPN_LAN_NETWORK=",
+        "S6_SERVICES_GRACETIME=180000",
+        "S6_STAGE2_HOOK=/init-hook"
+      ],
+      "Cmd": null,
+      "Image": "cr.hotio.dev/hotio/qbittorrent:latest",
+      "Volumes": {
+        "/config": {}
+      },
+      "WorkingDir": "",
+      "Entrypoint": [
+        "/init"
+      ],
+      "Labels": {
+        "com.docker.compose.config-hash": "12130ad06f27b864f10da630a8851b36b36230cde5b8257377fd680e79259df1",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:8a03e26f67253b48a996d0e244697c9064b5c860a5fa69827e54ac83715afd5f",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "hotio",
+        "com.docker.compose.project.config_files": "/hive/Hotio/compose.yml",
+        "com.docker.compose.project.working_dir": "/hive/Hotio",
+        "com.docker.compose.replace": "d738f94fec49e5dc8714178fc0144704602fc0d603198015a3b640ea5a4716d4",
+        "com.docker.compose.service": "qbittorrent",
+        "com.docker.compose.version": "",
+        "org.opencontainers.image.created": "2023-10-08T07:30:48Z",
+        "org.opencontainers.image.revision": "ff687b679149e84d04a872f91811feb90e41c557",
+        "org.opencontainers.image.source": "https://github.com/hotio/qbittorrent/tree/release",
+        "org.opencontainers.image.title": "hotio/qbittorrent:release",
+        "org.opencontainers.image.url": "https://github.com/hotio/qbittorrent/blob/master/README.md",
+        "org.opencontainers.image.vendor": "hotio",
+        "org.opencontainers.image.version": "4.5.5"
+      }
+    },
+    "NetworkSettings": {
+      "SandboxID": "da195aa44bf692245a361791e71f517239ec29942250659b0b5f5a2a6d665df1",
+      "SandboxKey": "/var/run/docker/netns/da195aa44bf6",
+      "Ports": {
+        "6789/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "6789"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "6789"
+          }
+        ],
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8080"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "8080"
+          }
+        ],
+        "8118/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8118"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "8118"
+          }
+        ]
+      },
+      "Networks": {
+        "hotio_default": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": [
+            "qbittorrent",
+            "qbittorrent"
+          ],
+          "DriverOpts": null,
+          "GwPriority": 0,
+          "NetworkID": "0df2bcf00e678598e905109c276fc60fb4a1bf14bae00cd9d4aa54d6f93b5078",
+          "EndpointID": "de7d03f5985b3f513de73309274abb785bbb1c6c0f7fd9cc1ec6f78cfdc01fee",
+          "Gateway": "172.27.0.1",
+          "IPAddress": "172.27.0.4",
+          "MacAddress": "7a:3c:10:68:a7:ef",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "DNSNames": [
+            "qbittorrent",
+            "7a88dfbcbf07"
+          ]
+        }
+      }
+    }
+  }
+]

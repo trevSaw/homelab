@@ -1,0 +1,5 @@
+appdata_db_md5=fdf0431f98811c2484ef6f6d04eb2ce5
+source_db_md5=fdf0431f98811c2484ef6f6d04eb2ce5
+appdata_series=214
+appdata_mediacover=214
+owner=fatherfrank:fatherfrank

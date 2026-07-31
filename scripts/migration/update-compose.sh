@@ -64,6 +64,14 @@ else
 fi
 
 compose_config_check "CURRENT" "$COMPOSE_DIR" "$COMPOSE_BASE"
+
+# Proposed lives under Validation/.../proposed/<service>/, which does not inherit
+# the project's gitignored .env. Copy it in for validation only — the applied
+# compose still resolves env_file relative to the real services/<svc>/ directory.
+if [[ -f "$COMPOSE_DIR/.env" && ! -f "$PROPOSED_DIR/.env" ]]; then
+  cp -a "$COMPOSE_DIR/.env" "$PROPOSED_DIR/.env"
+  info "Staged .env into proposed dir for compose validation"
+fi
 compose_config_check "PROPOSED" "$PROPOSED_DIR" "$COMPOSE_BASE"
 
 diff -u "$SVC_COMPOSE_ABS" "$PROPOSED" >"$PROPOSED_DIR/compose.diff" || true

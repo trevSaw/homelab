@@ -42,9 +42,10 @@ Each domain resides in a top‑level folder under the repository root (`/home/us
 ## Networking Standards
 - **proxy network** – Public‑facing services expose only HTTP(S) via the reverse‑proxy.  
 - **internal network** – Private communication between services (databases, AI models, monitoring agents).  
-- **vpn network** (optional) – Media services that require outbound VPN routing attach to this network in addition to `proxy`.  
+- **hotio network** – Media automation fabric (*arr ↔ download clients via Docker DNS). Live name: `hotio_default`. Canonical media rules: `Architecture/media-stack-networking.md`.  
+- **vpn network** (optional) – Services that require outbound VPN routing (often combined with `hotio` for downloaders).  
 - **gpu network** (optional) – Services requiring GPU devices attach here.  
-- Every container must attach to at least one core network; host ports are never exposed directly.
+- Every container must attach to at least one core network; host ports are never exposed directly (media UIs via Traefik on `proxy`).
 
 ## Storage Standards
 - **SSD policy** – Store configuration, metadata, and frequently accessed data.  
@@ -64,7 +65,7 @@ Each domain resides in a top‑level folder under the repository root (`/home/us
 - Use a recent Compose schema version (≥ 3.9).  
 - Do **not** include host‑port mappings; expose services through the `proxy` network and reverse‑proxy labels.  
 - All services must include `restart: unless-stopped`.  
-- External networks (`proxy`, `internal`, `vpn`, `gpu`) are referenced rather than defined inline.  
+- External networks (`proxy`, `internal`, `hotio`/`hotio_default`, `vpn`, `gpu`) are referenced rather than defined inline.  
 - Compose files reside inside the service’s domain folder.
 
 ## Container Standards

@@ -1,0 +1,48 @@
+# After validation
+## Container
+Image=ghcr.io/hotio/prowlarr:release-2.3.5.5327 Health=healthy Networks=hotio_default proxy
+## System
+version=2.3.5.5327
+branch=master
+appData=/config
+runtimeName=netcore
+startTime=2026-07-31T14:22:15Z
+## Indexers count=10
+  23|1337x|Cardigann|enable=True
+  24|Badass Torrents|Cardigann|enable=True
+  25|Bangumi Moe|Cardigann|enable=True
+  27|Internet Archive|Cardigann|enable=True
+  36|IPTorrents|IPTorrents|enable=True
+  28|MagnetDownload|Cardigann|enable=True
+  35|NZBgeek|Newznab|enable=True
+  21|showRSS|TorrentRssIndexer|enable=True
+  22|SubsPlease|SubsPlease|enable=True
+  29|The Pirate Bay|Cardigann|enable=True
+## Applications count=2
+  2|Radarr|Radarr|baseUrl=http://radarr:7878|prowlarrUrl=http://prowlarr:9696|enable=True
+  1|Sonarr|Sonarr|baseUrl=http://192.168.50.44:8989|prowlarrUrl=http://192.168.50.44:9696|enable=True
+## Application connection tests
+app_id=2 name=Radarr http=200 body='{}' => PASS
+app_id=1 name=Sonarr http=200 body='{}' => PASS
+## Application sync triggers
+sync Radarr via /api/v1/applications/2/sync: http=405 body=''
+sync Sonarr via /api/v1/applications/1/sync: http=405 body=''
+## DNS from prowlarr
+172.27.0.7        radarr  radarr
+172.27.0.4        qbittorrent  qbittorrent
+  HTTP/1.1 200 OK
+  Content-Type: application/json; charset=utf-8
+  Date: Fri, 31 Jul 2026 14:22:44 GMT
+  Server: Kestrel
+## Traefik
+enable= true
+network= proxy
+rule= Host(`prowlarr.fatherfankscloud.uk`)
+## Sonarr indexer count (host)
+sonarr_indexers=8
+## Radarr indexer count
+radarr_indexers=6
+## Sync commands
+ApplicationIndexerSync=201 OK
+Radarr forceSave PUT=202 OK
+Sonarr forceSave PUT=202 OK

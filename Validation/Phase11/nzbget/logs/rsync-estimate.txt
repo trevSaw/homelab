@@ -1,0 +1,2 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.9T  4.8G  1.9T   1% /mnt/monarch

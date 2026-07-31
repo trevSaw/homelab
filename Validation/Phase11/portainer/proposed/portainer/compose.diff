@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/portainer/compose.yaml	2026-07-30 00:02:24.692189345 +0000
++++ Validation/Phase11/portainer/proposed/portainer/compose.yaml	2026-07-30 09:10:10.749490710 +0000
+@@ -5,7 +5,7 @@
+     restart: unless-stopped
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+-      - /hive/portainer:/data
++      - /mnt/monarch/appdata/portainer:/data
+     ports:
+       - 9000:9000
+       - 9445:9443

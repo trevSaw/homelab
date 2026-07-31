@@ -1,0 +1,11 @@
+--- /home/fatherfrank/projects/homelab/services/calibre-web/compose.yml	2026-07-30 10:53:37.408567999 +0000
++++ Validation/Phase11/calibre-web/proposed/calibre-web/compose.yml	2026-07-30 10:54:51.695028126 +0000
+@@ -37,7 +37,7 @@
+       - PGID=1000
+       - TZ=Asia/Tokyo
+     volumes:
+-      - /hive/calibre-web/config:/config
++      - /mnt/monarch/appdata/calibre-web:/config
+       - /hive/library/Kavita/fanfic/novelas:/books
+     restart: unless-stopped
+     networks:

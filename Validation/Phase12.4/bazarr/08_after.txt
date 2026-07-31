@@ -1,0 +1,1 @@
+Image=lscr.io/linuxserver/bazarr:1.2.2 Health=healthy Nets=hotio_default proxy 

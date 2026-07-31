@@ -8,7 +8,7 @@ services:
       - TZ=Asia/Tokyo
       - DISABLE_SSL=true
     volumes:
-      - /hive/calibre/config:/config
+      - /mnt/monarch/appdata/calibre:/config
       - /hive/library/Kavita/fanfic/novelas:/books
       - /hive/library/Kavita/browser_cache:/config/browser_cache
     restart: unless-stopped
@@ -37,7 +37,7 @@ services:
       - PGID=1000
       - TZ=Asia/Tokyo
     volumes:
-      - /hive/calibre-web/config:/config
+      - /mnt/monarch/appdata/calibre-web:/config
       - /hive/library/Kavita/fanfic/novelas:/books
     restart: unless-stopped
     networks:

@@ -1,0 +1,6 @@
+appdata_movies=231
+appdata_db_md5=88d889e48937636020138b66b6a6bdb7
+download_clients_AFTER_FIX:
+1|NZBGet|qbittorrent:6789
+2|qbit|qbittorrent:8080
+owner=fatherfrank:fatherfrank

@@ -1,21 +1,20 @@
 services:
   beszel-agent:
-    image: henrygd/beszel-agent
+    image: henrygd/beszel-agent:0.18.7
     container_name: beszel-agent
     restart: unless-stopped
+    # EXCEPTION: host network required for host metrics (Known_Exceptions.md)
     network_mode: host
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./beszel_agent_data:/var/lib/beszel-agent
-      # monitor other disks / partitions by mounting a folder in /extra-filesystems
-      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
     env_file:
       - .env
     environment:
-      LISTEN: 45876
+      LISTEN: ${LISTEN:-45876}
       KEY: ${KEY}
       TOKEN: ${TOKEN}
       HUB_URL: ${HUB_URL:-http://mocha:8090}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /mnt/monarch/appdata/beszel_agent/beszel_agent_data:/var/lib/beszel-agent
     logging:
       options:
         max-size: "10m"

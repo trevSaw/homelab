@@ -1,0 +1,31 @@
+{
+  "name": "uptimekuma",
+  "image": "louislam/uptime-kuma:1.23.10-alpine",
+  "status": "running",
+  "health": "healthy",
+  "restart": "unless-stopped",
+  "privileged": false,
+  "user": "",
+  "compose_workdir": "/home/fatherfrank/projects/homelab/services/uptime-kuma",
+  "compose_file": "/home/fatherfrank/projects/homelab/services/uptime-kuma/compose.yaml",
+  "mounts": [
+    {
+      "source": "/mnt/monarch/appdata/uptime-kuma",
+      "dest": "/app/data",
+      "rw": true,
+      "mode": "rw"
+    }
+  ],
+  "ports": {
+    "3001/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "3001"
+      }
+    ]
+  },
+  "network_mode": "proxy",
+  "networks": [
+    "proxy"
+  ]
+}

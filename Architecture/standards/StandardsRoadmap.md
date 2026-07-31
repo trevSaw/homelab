@@ -387,189 +387,320 @@ Scoped Phase 10 is complete when:
 
 ---
 
-# Phase 11 — Homelab Validation & Governance Freeze v1.0
+# Phase 10.9 — Production Stabilization & Baseline
 
-**Status:** ⏳ Planned
+**Status:** 🟡 Planned
 
-Validate the personal homelab as a complete, reliable self-hosted environment following the implementation work completed during Phase 10.
+Create the last known-good production baseline before making structural changes.
 
----
+## Purpose
 
-## Validation Areas
-
-### Standards Compliance
-
-Verify:
-
-- Every service follows governance standards
-- Every directory follows repository standards
-- Every deployment follows lifecycle requirements
-
----
-
-### Documentation Coverage
-
-Verify:
-
-- README coverage
-- Service Catalog accuracy
-- Documentation completeness
-- ADR references
-- Dependency mapping
-- Cross-reference integrity
-
----
-
-### Runtime Validation
-
-Verify:
-
-- Service startup
-- Health checks
-- Monitoring
-- Logging
-- Backup operation
-- Disaster recovery procedures
-
----
-
-### Compose Compliance
-
-Verify:
-
-- Compose Standard compliance
-- Environment configuration
-- Networking
-- Storage configuration
-- Resource definitions
-
----
-
-### Security Review
-
-Verify:
-
-- Secret management
-- Container permissions
-- Network exposure
-- Least privilege
-- Docker security
-- Infrastructure hardening
-
----
-
-### Repository Validation
-
-Verify:
-
-- Service Catalog
-- Repository indexes
-- ADR repository
-- Architecture documentation
-- Validation artifacts
-- Governance reports
-
----
+Establish a recoverable, documented production snapshot of the live homelab after scoped Phase 10, so subsequent storage, security, and AI work proceeds from a verified known-good state.
 
 ## Deliverables
 
-- Homelab Validation Report
-- Standards Compliance Report
-- Security Review Report
-- Backup & Disaster Recovery Validation
-- Monitoring Validation Report
-- Performance Review
-- Final Governance Compliance Report
-- Homelab v2 Certification Report
+- Git synchronization
+- Production inventory
+- Validation artifacts
+- Backup verification
+- Restore testing
+- Baseline documentation
 
 ---
 
-## Governance Freeze v1.0
+# Phase 11 — Storage Modernization
 
-At successful completion:
+**Status:** ✅ Complete with Deferred Items (2026-07-31)
 
-- Governance documents become Version 1.0
-- Repository structure becomes stable
-- Architecture baseline becomes authoritative
-- Future changes require Service Lifecycle governance
-- Standards evolve through versioned releases (v1.1, v1.2, v2.0, etc.)
-- AI systems onboard against a stable governance baseline
+Modernize production storage layout, including migration of workloads and data related to `/hive` → `/mnt/monarch`.
 
-This milestone marks the completion of **Homelab v2**.
+## Deliverables
 
----
+- AppData migration — **core Phase 10.5 hive wave complete**
+- Media separation — **complete**
+- Backup redesign — **deferred**
+- Storage standards — **complete** (`services.conf` + framework)
+- Compose updates — **complete for cut-over services**
+- Validation — **complete**
 
-# Homelab v2 Complete
-
-The personal homelab platform now provides:
-
-- Complete governance
-- Standardized repository
-- Standardized documentation
-- Standardized deployment
-- Standardized infrastructure
-- Modernized networking
-- Modernized storage
-- Hardened security
-- Audited services
-- Homelab validation
-- Stable architecture
-- Repeatable governance workflows
-- AI-ready metadata
-- Verified operational compliance
-
-The platform is now ready for local AI orchestration.
+See `Validation/Phase11/Phase11_Final_Status.md` and `Phase11_Remaining_Work.md`.
 
 ---
 
-# Phase 12 — Deploy AI Orchestration
+# Phase 12.1 — Production Compose Standardization Pilot
 
-**Status:** ⏳ Planned
+**Status:** ✅ Complete (2026-07-31)
 
-Introduce AI orchestration using the completed governance framework.
+Implement the finalized Docker deployment standard on a small production pilot group (Traefik, Portainer, Beszel, Uptime Kuma). Establishes the canonical pattern for later cutovers — **not** a full-fleet migration.
 
-## Components
+## Deliverables
 
-- Hermes
-- Honcho
-- MCP Gateway
-- Local LLMs
-- Memory Layer
+- Compose standardization (repo SoT, pinned images, health/restart/resources) — **done**
+- Appdata storage for pilot configs — **done** (Uptime Kuma migrated; others already on appdata)
+- `.env.example` + secrets out of compose — **done**
+- Documented security exceptions — **done**
+- Per-service validation under `Validation/Phase12.1/` — **done**
+- Pilot completion report under `Documentation/Phase12.1/` — **done**
 
-## Capabilities
+See `Documentation/Phase12.1/Phase12.1_Completion_Report.md`.
 
-- Planning
-- Long-Term Memory
-- Context Retrieval
-- Multi-Agent Coordination
-- Repository Awareness
-- Standards Awareness
-- Governance Awareness
-- Task Planning
-- Change Proposals
+---
 
-## Goal
+# Phase 12.2A — Media Download Infrastructure
+
+**Status:** ✅ Complete (2026-07-31)
+
+Apply Phase 12.1 compose pattern to download clients: **qBittorrent (Hotio)** and **NZBGet**. SABnzbd is not used on this host and was excluded.
+
+## Deliverables
+
+- Pinned images + repo SoT under `services/Hotio` and `services/NZBget` — **done**
+- App config remains `/mnt/monarch/appdata/{hotio,nzbget}`; downloads stay on `/hive` — **done**
+- `.env.example` + healthchecks + resource limits — **done**
+- VPN / shared-netns exceptions documented — **done**
+- Validation under `Validation/Phase12.2A/` — **done**
+
+See `Documentation/Phase12.2A/Phase12.2A_Completion_Report.md`.
+
+**Explicitly not in this phase:** Sonarr, Radarr, Jellyfin, media libraries, SABnzbd, qBittorrent 5.x.
+
+---
+
+# Phase 12.2B — Sonarr Migration
+
+**Status:** ✅ Complete (2026-07-31)
+
+Migrate native systemd/mono Sonarr (`/var/lib/sonarr`) into Phase 12 Docker SoT at `services/sonarr/` with appdata on `/mnt/monarch/appdata/sonarr`. Abandoned `/hive/Hotio/sonarr` was not used.
+
+## Deliverables
+
+- Pinned image `lscr.io/linuxserver/sonarr:version-3.0.10.1566` — **done**
+- State copy preserving 214 series + config/DB — **done**
+- Host-network exception for localhost download clients — **documented**
+- Validation under `Validation/Phase12.2B/sonarr/` — **done**
+- Rollback procedure — **done**
+
+See `Documentation/Phase12.2B/Phase12.2B_Completion_Report.md`.
+
+**Explicitly not in this phase:** Radarr, Bazarr, Lidarr, Jellyfin, media moves, Sonarr v4 upgrade.
+
+---
+
+# Phase 12.2C — Radarr Migration & Network Remediation
+
+**Status:** ✅ Complete (2026-07-31)
+
+Migrate Radarr to Phase 12 SoT (`services/radarr/`, `/mnt/monarch/appdata/radarr`), dual-home `proxy`+`hotio`, and fix download-client FAIL (self-IP → Docker DNS `qbittorrent`).
+
+See `Documentation/Phase12.2C/Phase12.2C_Completion_Report.md`.
+
+**Explicitly not in this phase:** Sonarr re-home, Prowlarr, Jellyfin, Bazarr, Lidarr, downloaders, media moves.
+
+---
+
+# Phase 12.2D — Prowlarr Migration & Platform Standardization
+
+**Status:** ✅ Complete (2026-07-31)
+
+Migrate Prowlarr to Phase 12 SoT (`services/prowlarr/`, `/mnt/monarch/appdata/prowlarr`), dual-home `proxy`+`hotio`, Traefik labels, remediate Radarr app URLs to Docker DNS.
+
+See `Documentation/Phase12.2D/Phase12.2D_Completion_Report.md`.
+
+**Explicitly not in this phase:** Sonarr re-home, Jellyfin, Jellyseerr, Bazarr, Lidarr, downloaders, media moves.
+
+---
+
+# Phase 12 — Media Stack Networking Standard
+
+**Status:** ✅ Documented (2026-07-31)
+
+Canonical dual-network model for the full media platform: `proxy` (Traefik/Authentik ingress) + `hotio` / live `hotio_default` (automation DNS). Dual-homed: Sonarr, Radarr, Prowlarr (+ Bazarr/Lidarr when deployed). Proxy-only: Traefik, Jellyfin, Overseerr. Hotio-only: qBittorrent, NZBGet.
+
+See `Architecture/media-stack-networking.md` (amended membership is authoritative). **No live cutovers in this deliverable** — future Phase 12 media migrations must comply.
+
+---
+
+# Phase 12.3 — Media Platform Validation
+
+**Status:** ✅ Complete (2026-07-31)
+
+Read-only validation of the media **automation** platform (qBittorrent, NZBGet, Sonarr, Radarr, Prowlarr) as a single system after 12.2A–12.2D.
+
+**Verdict:** PASS WITH DOCUMENTED EXCEPTIONS (primary debt: Sonarr host networking).
+
+See `Documentation/Phase12.3/Platform_Validation_Report.md`.
+
+---
+
+# Phase 12.4 — Media Consumption Platform Standardization
+
+**Status:** ✅ Complete (2026-07-31)
+
+Standardize Jellyfin, Jellyseerr, and Bazarr to Phase 12 SoT (proxy / dual-home as required, Traefik, Monarch appdata, pinned images). Lidarr not deployed (OOS). Automation stack not modified.
+
+See `Documentation/Phase12.4/Phase12.4_Completion_Report.md`.
+
+---
+
+# Phase 12.5 — Production Baseline & Phase Closeout
+
+**Status:** ✅ Complete (2026-07-31)
+
+Read-only final audit. Publishes the authoritative production baseline, technical debt, deferred work, and acceptance signoff. **No production changes.**
+
+See `Documentation/Phase12.5/Phase12_Final_Report.md` and `Production_Baseline.md`.
+
+---
+
+# Phase 12 — COMPLETE
+
+**Status:** ✅ COMPLETE (2026-07-31)
+
+Phase 12 delivered production Docker standards across core infrastructure, media automation, and media consumption, plus the media networking architecture and closeout baseline.
+
+**Approved remaining debt:** `Documentation/Phase12.5/Technical_Debt.md`  
+**Deferred beyond Phase 12:** `Documentation/Phase12.5/Deferred_Work.md`  
+**Phase 13 starts from:** `Documentation/Phase12.5/Production_Baseline.md`
+
+> Note: The following “Phase 12 — Secrets & Security” section is a **separately planned security track** (historical roadmap naming). It is **not** part of the completed Phase 12 media/infrastructure program above.
+
+---
+
+# Phase 12 — Secrets & Security
+
+**Status:** 🟡 Planned
+
+Complete security modernization deferred or only partially addressed during Phase 10.
+
+## Deliverables
+
+- Docker Secrets
+- Vault
+- Secret rotation
+- Network hardening
+- Container hardening
+- Security validation
+
+---
+
+# Phase 13 — AI Infrastructure (Brainiac)
+
+**Status:** 🟡 Planned — **starting point is the Phase 12 production baseline**
+
+Establish the local AI platform foundation. Phase 13 is the AI infrastructure layer—not automation.
+
+**Baseline reference:** `Documentation/Phase12.5/Production_Baseline.md`  
+**Do not regress:** Phase 12 media `proxy`/`hotio` fabric or Monarch appdata conventions without an explicit change.
 
 AI learns an already-governed personal homelab platform rather than creating one.
 
 ---
 
-# Phase 13 — AI Automation
+# Phase 13.1 — Core AI Platform
 
-**Status:** ⏳ Planned
+**Status:** 🟡 Planned
+
+Deploy and harden the core local AI runtime stack.
+
+## Deliverables
+
+- Ollama
+- Open WebUI
+- Models
+- Embeddings
+- ChromaDB
+- RAG foundation
+- GPU optimization
+
+---
+
+# Phase 13.2 — AI Knowledge Platform
+
+**Status:** 🟡 Planned
+
+**Project Status:** Planning
+
+Build the AI Knowledge Platform as a governed knowledge and retrieval layer on top of the Core AI Platform.
+
+## Deliverables
+
+- Obsidian integration
+- Knowledge Pipeline
+- Graphify
+- Homepage Dashboard
+- AI note organization
+- Semantic search
+- Knowledge graph
+- AI-generated summaries
+- AI-generated tagging
+- Relationship extraction
+
+### Separate Planning Project
+
+The AI Knowledge Platform is maintained as a separate planning project under the `projects/` directory until implementation begins.
+
+All design artifacts, architecture documents, ADRs, validation plans, and implementation guides SHALL be developed independently and later integrated into the Homelab repository during Phase 13.2.
+
+### Governance Requirement
+
+This project SHALL conform to the existing Homelab Governance Framework. No new governance standards shall be introduced unless approved through an ADR. All Docker Compose files, directory layouts, documentation, validation artifacts, architecture documents, service definitions, naming conventions, deployment patterns, and future implementations SHALL comply with the governance standards already established within the Homelab repository. In the event of a conflict, the Homelab Governance Framework SHALL take precedence unless explicitly superseded by an approved ADR.
+
+---
+
+# Phase 13.3 — Persistent AI Memory
+
+**Status:** 🟡 Planned
+
+Introduce durable AI memory so agents retain long-term context across sessions and workflows.
+
+## Deliverables
+
+- Honcho
+- Long-term memory
+- User profile
+- Conversation memory
+- Preference memory
+- AI memory governance
+
+---
+
+# Phase 13.4 — Agent Framework
+
+**Status:** 🟡 Planned
+
+Establish multi-agent orchestration on top of the Core AI Platform, Knowledge Platform, and Persistent AI Memory.
+
+## Deliverables
+
+- Multi-agent orchestration
+- Specialized agents
+- Planning agents
+- Research agents
+- Automation agents
+
+---
+
+# Phase 14 — AI Automation
+
+**Status:** 🟡 Planned
 
 Gradually automate homelab operations while preserving human governance.
 
 ## Automation Targets
 
-- Automatic audits
-- Documentation generation
+- Automatic documentation
+- ADR generation
+- Compliance reviews
 - Service creation
+- Health monitoring
+- Self-healing suggestions
+- Pull request generation
+- Change planning
+- Automatic audits
 - Change proposals
 - Lifecycle management
 - Scheduled compliance reviews
 - Template generation
-- ADR suggestions
 - Service reviews
 - Architecture validation
 - Compliance reporting
@@ -593,23 +724,27 @@ AI becomes a governance assistant—not a governance replacement.
 # Long-Term Vision
 
 ```text
-Governance Standards
-          ↓
-Repository Governance
-          ↓
-Service Governance
-          ↓
+Governance
+        ↓
+Repository Standardization
+        ↓
 Infrastructure Standardization
-          ↓
-Homelab Validation
-          ↓
-Governance Freeze v1.0
-          ↓
-Stable Homelab Platform
-          ↓
-AI Orchestration
-          ↓
+        ↓
+Production Stabilization
+        ↓
+Storage Modernization
+        ↓
+Security Modernization
+        ↓
+AI Infrastructure (Brainiac)
+        ↓
+Knowledge Platform
+        ↓
+Persistent AI Memory
+        ↓
+Agent Framework
+        ↓
 AI Automation
-          ↓
+        ↓
 Continuous Improvement
 ```
