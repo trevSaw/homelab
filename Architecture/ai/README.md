@@ -18,6 +18,9 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Vertical_Slice.md](Vertical_Slice.md) | Thin vertical slice E2E workflow |
 | [Prototype_Boundaries.md](Prototype_Boundaries.md) | Prototype allowed / forbidden scope |
 | [Integration_Flow.md](Integration_Flow.md) | Conceptual integration & provenance flow |
+| [Spike_Architecture.md](Spike_Architecture.md) | Prototype spike planning architecture |
+| [Spike_Acceptance_Criteria.md](Spike_Acceptance_Criteria.md) | Spike measurable acceptance criteria |
+| [Spike_Test_Plan.md](Spike_Test_Plan.md) | Spike test scenarios |
 | [Technology_Evaluation_ADR_Template.md](Technology_Evaluation_ADR_Template.md) | Reusable tech-evaluation ADR template |
 | [User_Experience.md](User_Experience.md) | UX philosophy and interaction contract |
 | [Interaction_Model.md](Interaction_Model.md) | User-facing interaction patterns |
@@ -48,6 +51,7 @@ Implementation framework: `Documentation/Phase13/Implementation_Architecture_Mod
 Technology evaluation ADRs: `Architecture/decisions/ADR-0004`–`ADR-0008` (see `ADRIndex.md`)  
 Evaluation report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`  
 Vertical slice report: `Documentation/Phase13/Vertical_Slice_Model.md`  
+Prototype spike report: `Documentation/Phase13/Prototype_Spike_Model.md`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---

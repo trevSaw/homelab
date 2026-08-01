@@ -12,6 +12,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Implementation_Architecture_Model.md](Implementation_Architecture_Model.md) | Phase 13.7 Implementation architecture framework report |
 | [Technology_Evaluation_ADR_Model.md](Technology_Evaluation_ADR_Model.md) | Phase 13.8 Technology evaluation ADR report |
 | [Vertical_Slice_Model.md](Vertical_Slice_Model.md) | Phase 13.9 Thin vertical slice architecture report |
+| [Prototype_Spike_Model.md](Prototype_Spike_Model.md) | Phase 13.10 Prototype spike planning report |
 
 ## Related architecture
 
@@ -22,6 +23,9 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | `Architecture/ai/Vertical_Slice.md` | Thin vertical slice workflow (Phase 13.9) |
 | `Architecture/ai/Prototype_Boundaries.md` | Prototype scope (Phase 13.9) |
 | `Architecture/ai/Integration_Flow.md` | Integration & provenance flow (Phase 13.9) |
+| `Architecture/ai/Spike_Architecture.md` | Spike planning architecture (Phase 13.10) |
+| `Architecture/ai/Spike_Acceptance_Criteria.md` | Spike acceptance criteria (Phase 13.10) |
+| `Architecture/ai/Spike_Test_Plan.md` | Spike test plan (Phase 13.10) |
 | `Architecture/ai/Technology_Evaluation_ADR_Template.md` | Tech evaluation ADR template |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Architecture/decisions/ADRIndex.md` | ADR index |
@@ -42,7 +46,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 
 ## Status
 
-**Phase 13:** Architecture through 13.9 (vertical slice validation)  
-**Phase 13.0–13.8:** ✅ Complete  
-**Phase 13.9:** ✅ Complete — Thin Vertical Slice Architecture  
-**Next focus:** Constrained spike planning against vertical-slice interfaces (no unbounded install)
+**Phase 13:** Architecture through 13.10 (spike planning)  
+**Phase 13.0–13.9:** ✅ Complete  
+**Phase 13.10:** ✅ Complete — Prototype Spike Architecture (planning only)  
+**Next focus:** Explicit authorization for non-production runtime spike (or further planning)

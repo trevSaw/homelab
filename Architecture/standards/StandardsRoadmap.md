@@ -752,6 +752,21 @@ Define the minimum end-to-end KORA workflow, prototype boundaries, and conceptua
 
 ---
 
+# Phase 13.10 — KORA Prototype Spike Architecture
+
+**Status:** ✅ Complete (2026-08-01)
+
+Define the first controlled non-production spike as planning only: architecture, acceptance criteria, and test plan. Does not authorize runtime, compose, installs, or infrastructure changes.
+
+## Deliverables
+
+- `Architecture/ai/Spike_Architecture.md`
+- `Architecture/ai/Spike_Acceptance_Criteria.md`
+- `Architecture/ai/Spike_Test_Plan.md`
+- `Documentation/Phase13/Prototype_Spike_Model.md`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned
