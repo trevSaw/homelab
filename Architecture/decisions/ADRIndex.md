@@ -5,4 +5,4 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 ## ADRs
 - [ADR‑001 – Initial Architecture Decision](../Architecture/decisions/ADR-001-Initial-Architecture-Decision.md)
 - [ADR‑002 – Service Catalog Structure](../Architecture/decisions/ADR-002-Service-Catalog-Structure.md)
-- *(Add additional ADR entries here as they are created)*
+- [ADR‑0003 – Home Assistant Networking](./ADR-0003-Home-Assistant-Networking.md)

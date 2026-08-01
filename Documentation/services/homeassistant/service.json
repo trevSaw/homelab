@@ -1,0 +1,63 @@
+{
+  "name": "homeassistant",
+  "display_name": "Home Assistant",
+  "category": "Smart Home",
+  "domain": "automation",
+  "priority": "High",
+  "migration_wave": "Phase12-HomeAssistant",
+  "lifecycle_state": "deployed",
+  "documentation_status": "present",
+  "repository_sot": "services/homeassistant/",
+  "compose_file": "services/homeassistant/compose.yaml",
+  "appdata_path": "/mnt/monarch/appdata/homeassistant",
+  "image": "ghcr.io/home-assistant/home-assistant:2026.7.4",
+  "networks": ["proxy"],
+  "published_ports": [],
+  "traefik": {
+    "enabled": true,
+    "host": "homeassistant.fatherfankscloud.uk",
+    "entrypoint": "websecure",
+    "certresolver": "le",
+    "service_port": 8123
+  },
+  "dependencies": [
+    "docker-network:proxy",
+    "traefik",
+    "dns:homeassistant.fatherfankscloud.uk"
+  ],
+  "risks": "Bridge networking limits mDNS/SSDP discovery; USB radios not mounted by default; official image runs as root",
+  "adr_references": [
+    "ADR-0003-Home-Assistant-Networking"
+  ],
+  "standards": [
+    "HomelabArchitectureStandard",
+    "DockerStandard",
+    "DocumentationStandard",
+    "NamingConventionStandard",
+    "SecurityStandard",
+    "BackupStandard",
+    "ADRStandard"
+  ],
+  "validation_path": "Validation/Phase12/HomeAssistant/",
+  "operations": {
+    "backup": "rsync appdata to /hive/backups/homeassistant/",
+    "restore": "rsync backup into appdata; compose up",
+    "upgrade": "bump pinned tag in compose.yaml + Versions.md; pull; up -d",
+    "health": "docker healthcheck + https://homeassistant.fatherfankscloud.uk/"
+  },
+  "exceptions": [
+    "non-root user not set (upstream image)",
+    "read_only rootfs not enabled (upstream image)",
+    "cap_drop ALL not applied",
+    "Phase 12 services/ SoT instead of compose/<domain>/",
+    "host networking deferred per ADR-0003"
+  ],
+  "evidence": {
+    "phase": "12",
+    "packaged": "2026-07-31",
+    "import": false,
+    "deployed": true,
+    "deployed_date": "2026-07-31",
+    "deployment_evidence": "Validation/Phase12/HomeAssistant/Deployment_Evidence.md"
+  }
+}

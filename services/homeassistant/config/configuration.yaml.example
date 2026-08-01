@@ -1,0 +1,24 @@
+# Example /config/configuration.yaml fragment for Traefik reverse-proxy trust.
+# Copy relevant keys into /mnt/monarch/appdata/homeassistant/configuration.yaml
+# after first boot (merge with HA-generated defaults; do not blindly overwrite).
+#
+# proxy network subnet on mocha (inspect to confirm): 172.19.0.0/16
+
+# Loads default config created by Home Assistant on first start.
+default_config:
+
+homeassistant:
+  name: Homelab
+  # unit_system / currency / etc. set via UI or here as needed
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.19.0.0/16
+    - 127.0.0.1
+    - ::1
+  # ip_ban_enabled: true
+  # login_attempts_threshold: 5
+
+# Recorder / history DB lives under /config by default (SSD appdata).
+# Do not relocate recorder DB outside /mnt/monarch/appdata/homeassistant.

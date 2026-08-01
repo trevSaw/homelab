@@ -1,0 +1,55 @@
+# Home Assistant — Phase 12 production SoT (services/ + /mnt/monarch/appdata)
+# Networking decision: ADR-0003 (proxy/bridge; no host networking by default)
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:2026.7.4
+    container_name: homeassistant
+    hostname: homeassistant
+    restart: unless-stopped
+    # EXCEPTION (Security §9 / README): official image runs as root; non-root not supported upstream
+    # EXCEPTION: read_only rootfs not feasible for this image (writes outside /config at runtime)
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - /mnt/monarch/appdata/homeassistant:/config
+    tmpfs:
+      - /tmp:mode=1777,size=256m
+      # s6-overlay init executes from /run, so exec must override the tmpfs noexec default
+      - /run:mode=0755,size=64m,exec
+    networks:
+      - proxy
+    # No host ports — Traefik on proxy is the sole ingress (DockerStandard §6 / §13)
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.homeassistant.rule=Host(`homeassistant.fatherfankscloud.uk`)
+      - traefik.http.routers.homeassistant.entrypoints=websecure
+      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.routers.homeassistant.tls.certresolver=le
+      - traefik.http.services.homeassistant.loadbalancer.server.port=8123
+      - com.homelab.service=homeassistant
+      - com.homelab.domain=automation
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:8123/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+
+networks:
+  proxy:
+    external: true
