@@ -18,7 +18,7 @@
 
 | Sub-phase | Title | Status |
 | --- | --- | --- |
-| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | 🟡 Planned |
+| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
 | 14.2 | Memory Runtime | 🟡 Planned |
 | 14.3 | Knowledge Runtime (RAG) | 🟡 Planned |
 | 14.4 | Context Assembly Engine | 🟡 Planned |
@@ -46,21 +46,27 @@
 
 **Objective:** Stand up the minimum production path: inference + orchestration substrate + UI + KORA conductor façade.
 
-**Includes (planned):**
+**Status:** ✅ Complete (2026-08-01)
 
-- Ollama (or equivalent local inference endpoint)
-- Hermes (orchestration substrate; not identity)
-- Open WebUI (UI only; ADR-0008)
-- KORA Runtime (Solo profile: classify → strategy → assemble → synthesize → explain)
+**Includes:**
+
+- Ollama (local inference; models preserved at `/hive/ollama`)
+- Hermes (thin execution layer; not identity; not on primary Solo chat path)
+- Open WebUI (UI only; ADR-0008; wired to KORA)
+- KORA Runtime (Solo: classify → strategy → assemble → synthesize → explain)
 
 **Maps to:** Rollout Stage 1 (Solo Runtime)
 
-**Acceptance (planned):**
+**Implemented path:** `User → Open WebUI → KORA → Ollama → Response`
+
+**Acceptance:**
 
 - User talks to **KORA**, not Hermes/Open WebUI/Ollama as product identity
-- End-to-end chat path works under Runtime Contracts
+- End-to-end chat path works under Stage 1 Runtime Contracts
 - Execute/Administrative refused by default
-- Phase 12 fabric untouched except governed attachments approved for this stage
+- Phase 12 fabric untouched except governed AI attachments
+
+**Artifacts:** `AI/`, `services/{kora,ollama,open-webui,hermes}/`, `Validation/Phase14.1/`, `Documentation/Phase14/Phase14.1/`
 
 ---
 

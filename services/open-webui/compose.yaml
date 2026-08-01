@@ -1,0 +1,62 @@
+# Open WebUI — Phase 14.1 UI surface for KORA (ADR-0008)
+# Chat path: Open WebUI → KORA → Ollama
+services:
+  open-webui:
+    # Digest pin of previously running :main at Phase 14.1 (preserve working UI).
+    image: ghcr.io/open-webui/open-webui@sha256:f1c28d8f57ce1c759dd61351d5b90e30627cdebe6725ba45f4d02c432b7fd21b
+    container_name: open-webui
+    hostname: open-webui
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      # Stage 1: route through KORA OpenAI-compatible façade (not direct Ollama).
+      ENABLE_OLLAMA_API: ${ENABLE_OLLAMA_API:-false}
+      OPENAI_API_BASE_URL: ${OPENAI_API_BASE_URL:-http://kora:8080/v1}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-kora-local}
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
+      WEBUI_NAME: ${WEBUI_NAME:-KORA}
+      DEFAULT_MODELS: ${DEFAULT_MODELS:-qwen3:8b}
+    volumes:
+      - /mnt/monarch/appdata/open-webui:/app/backend/data
+    networks:
+      - ollama-net
+      - proxy
+      - ai-assistant
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.openwebui.rule=Host(`chat.fatherfankscloud.uk`)
+      - traefik.http.routers.openwebui.entrypoints=websecure
+      - traefik.http.routers.openwebui.tls=true
+      - traefik.http.routers.openwebui.tls.certresolver=le
+      - traefik.http.services.openwebui.loadbalancer.server.port=8080
+      - com.homelab.service=open-webui
+      - com.homelab.domain=ai
+      - com.homelab.phase=14.1
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+
+networks:
+  ollama-net:
+    external: true
+    name: ollama_ollama-net
+  proxy:
+    external: true
+  ai-assistant:
+    external: true

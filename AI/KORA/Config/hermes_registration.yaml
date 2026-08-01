@@ -1,0 +1,31 @@
+# Hermes registration — Phase 14.1
+# ADR-0004: Hermes is orchestration substrate only — not KORA identity.
+
+substrate: hermes
+status: thin_optional_solo
+adr: ADR-0004
+
+role: thin_execution_layer
+is_kora: false
+replaces_council: false
+owns_product_identity: false
+
+solo_stage_1:
+  primary_chat_path_includes_hermes: false
+  reason: >
+    Stage 1 Solo production path is User → Open WebUI → KORA → Ollama.
+    Hermes remains deployed and registered for later Distributed/agent stages
+    and must not capture orchestration or identity responsibilities.
+
+interfaces:
+  required_later:
+    - invoke_kora_conductor
+  forbidden_now:
+    - claim_kora_identity
+    - durable_memory_authority
+    - knowledge_sot
+    - ungated_execute
+
+health:
+  expect_reachable: true
+  expect_on_primary_chat_path: false

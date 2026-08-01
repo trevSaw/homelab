@@ -1,0 +1,35 @@
+# Council registration — Phase 14.1 Solo (conceptual only)
+# Full multi-member Council is Phase 14.6 / Rollout Stage 2+.
+# Do not interpret this file as enabling deliberation runtime.
+
+profile: solo
+enabled: true
+mode: conceptual
+
+chair: KORA
+
+members:
+  - id: KORA
+    role: chair_and_solo_reasoner
+    status: active
+    notes: "Solo profile — KORA synthesizes alone; other members registered for future stages"
+
+  - id: NOVA
+    status: registered_inactive
+  - id: IRIS
+    status: registered_inactive
+  - id: TALIA
+    status: registered_inactive
+  - id: SOLA
+    status: registered_inactive
+  - id: LUMA
+    status: registered_inactive
+  - id: ALUMA
+    status: registered_inactive
+  - id: NOMA
+    status: registered_inactive
+
+rules:
+  - members_are_not_agents: true
+  - no_execute_via_council: true
+  - disagreement_preservable: true  # honored when Simulated/Distributed enabled

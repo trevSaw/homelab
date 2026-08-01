@@ -25,8 +25,8 @@ Either way, responsibilities and contracts remain.
 | **Architectural responsibility** | Capture requests; render recommendations/explanations; present **KORA** identity |
 | **Runtime Profile support** | Solo / Simulated / Distributed / Hybrid |
 | **Persistent data ownership** | UI session/chat buffers only—not Memory SoT, not Knowledge SoT |
-| **Dependencies** | Hermes / KORA orchestration façade |
-| **Required interfaces** | Chat request/response; auth (Phase 14); explainability display hooks |
+| **Dependencies** | KORA Runtime (Phase 14.1 Solo path) |
+| **Required interfaces** | Chat request/response via KORA OpenAI-compatible API; auth (later); explainability display hooks |
 | **Optional interfaces** | Voice/mobile later |
 | **Startup order** | After orchestration reachable (or degraded “unavailable”) |
 | **Shutdown order** | Early (drain users first) |
@@ -47,7 +47,7 @@ Either way, responsibilities and contracts remain.
 | **Dependencies** | KORA Runtime; models as configured in Phase 14 |
 | **Required interfaces** | Invoke KORA conductor path |
 | **Optional interfaces** | Multi-agent, channels |
-| **Startup order** | Before UI traffic; after or with KORA |
+| **Startup order** | Before UI traffic when used; after or with KORA. **Stage 1 Solo:** optional / not on primary chat path |
 | **Shutdown order** | After UI drain; before tearing KORA mid-flight if possible |
 | **Health expectations** | Accepts routed requests; does not claim to be KORA |
 | **Scaling expectations** | Scale with care; session continuity |

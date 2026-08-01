@@ -22,11 +22,13 @@ Companion: `Production_Architecture.md`, `Production_Service_Topology.md`, `Runt
 
 **Enable:** Open WebUI + KORA Runtime (co-located Classification / Context Intelligence / Assembly / Solo Council / Explainability); thin Hermes optional.
 
+**Phase 14.1 implementation status:** ✅ Complete — primary path is `Open WebUI → KORA → Ollama` (Hermes not on primary path).
+
 | Field | Content |
 | --- | --- |
 | **Prerequisites** | Phase 13 architecture complete; Phase 12 baseline stable; ADR-0008/0004 constraints understood |
 | **Risks** | UI/orchestration identity capture; skipping Context Intelligence |
-| **Rollback** | Disable UI/stack; architecture docs remain; no durable SoT loss |
+| **Rollback** | Disable UI/stack; architecture docs remain; no durable SoT loss — see `Validation/Phase14.1/Rollback_Procedure.md` |
 | **Acceptance** | Vertical-slice path works; classify-before-retrieve; KORA identity; refuse Execute; explainability present |
 
 ---

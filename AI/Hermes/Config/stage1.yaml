@@ -1,0 +1,6 @@
+# Hermes thin-layer notes (Phase 14.1)
+
+primary_chat_path: false
+invokes_kora: false  # Stage 1 Solo uses Open WebUI → KORA directly
+identity: not_kora
+role: thin_execution_layer

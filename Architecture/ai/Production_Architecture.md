@@ -2,7 +2,7 @@
 
 **Status:** Canonical production-implementation architecture (Phase 13.15)  
 **Platform:** KORA / Brainiac (`KORA.md`)  
-**Rule:** This is a deployment **blueprint**, not a deployment. Phase 14 implements it (e.g. as Docker Compose). Phase 13.15 does not create compose, networks, volumes, ports, or secrets.
+**Rule:** This is a deployment **blueprint**, not a deployment. Phase 14 implements it (e.g. as Docker Compose). Phase 13.15 does not create compose, networks, volumes, ports, or secrets. **Phase 14.1** delivered Solo Stage 1: `Open WebUI → KORA → Ollama` (`AI/`, `services/kora`).
 
 Companions: `Deployment_Topology.md`, `Production_Service_Topology.md`, `Rollout_Strategy.md`, `Operational_Readiness.md`, `Runtime_Profiles.md`, `Runtime_Contracts.md`
 

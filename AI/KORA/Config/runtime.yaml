@@ -1,0 +1,48 @@
+# KORA Solo Runtime configuration — Phase 14.1 Stage 1
+# Architecture: Architecture/ai/Runtime_Profiles.md (Solo)
+
+profile: solo
+phase: "14.1"
+product:
+  name: KORA
+  aka: Brainiac
+  identity_rule: "KORA is the sole user-facing product identity"
+
+startup_order:
+  - ollama
+  - kora
+  - hermes   # thin / optional for Solo chat path
+  - open-webui
+
+inference:
+  provider: ollama
+  base_url_env: OLLAMA_BASE_URL
+  default_model_env: KORA_DEFAULT_MODEL
+  timeout_seconds: 300
+
+pipeline:
+  # Solo Stage 1: classify → strategy → assemble → synthesize → explain
+  # Memory / Knowledge / Tools backends are registered as disabled stubs.
+  classify: true
+  context_intelligence: true
+  context_assembly: true
+  council: solo_conceptual
+  explainability: true
+  memory_runtime: disabled
+  knowledge_runtime: disabled
+  tool_runtime: disabled
+
+governance:
+  refuse_execute: true
+  refuse_administrative: true
+  durable_memory_writes: false
+  knowledge_promotion: false
+
+observability:
+  log_classification: true
+  log_strategy: true
+  log_stores_queried_skipped: true
+
+ui:
+  presented_as: KORA
+  open_webui_must_not_bypass: true
