@@ -666,18 +666,16 @@ Define how KORA delegates temporary execution work through agents without confla
 
 # Phase 13.4 — External Integrations
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-Connect KORA to the homelab ecosystem.
+Define how KORA safely interacts with external systems through a governed tool layer and conceptual MCP protocol architecture. No MCP servers or integrations are deployed in this phase.
 
-## Planned deliverables
+## Deliverables
 
-- Filesystem MCP
-- Git MCP
-- Docker MCP
-- Home Assistant MCP
-- Technitium DNS MCP
-- Future MCP integrations
+- `Architecture/ai/Tools.md`
+- Expanded `Architecture/ai/MCP.md`
+- Tool lifecycle, permissions, safety, truth model, governance
+- `Documentation/Phase13/Tool_Architecture_Model.md`
 
 ---
 

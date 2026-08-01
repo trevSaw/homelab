@@ -188,6 +188,20 @@ No agent should outlive its task by default.
 | **Agents → Tools** | Sole environmental interface for execution/observation within permission level |
 | **Agents → Models** | May use inference engines as compute; models are not agent identity |
 
+## Relationship to Tools
+
+Agents invoke tools; agents are not tools.
+
+| Rule | Meaning |
+| --- | --- |
+| Tools provide capability | Live read/analyze/propose/execute against the environment |
+| Agents provide labor | Temporary workers that may call tools within charter |
+| Permission ceiling | Agent permission level cannot exceed allowed tool capability without approval path |
+| Evidence return | Tool results return through the agent to KORA as evidence |
+
+Canonical tool architecture: `Tools.md`  
+Conceptual protocol layer: `MCP.md`
+
 ---
 
 ## Agent Memory Rules
@@ -300,7 +314,8 @@ Technology choices require future ADRs. This document only defines governance-sa
 | `Council/*` | Reasoning framework (not execution workers) |
 | `Knowledge.md` | Reference corpus rules agents must respect |
 | `Memory.md` | Continuity store agents do not own |
-| `MCP.md` | Tools surface (Phase 13.4 depth) |
+| `Tools.md` | Tool layer agents may invoke |
+| `MCP.md` | Conceptual protocol for exposing tools |
 | `Documentation/Phase13/Agent_Architecture_Model.md` | Phase 13.3 report |
 
 ---
