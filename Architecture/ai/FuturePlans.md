@@ -27,7 +27,8 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.10 | ✅ Prototype spike architecture (planning only) |
 | 13.11 | ✅ Runtime spike execution (non-production lab) |
 | 13.12 | ✅ Context intelligence architecture |
-| Next | Phase 13.13 — implement/test classification-aware retrieval in non-prod spike (or related planning) |
+| 13.13 | ✅ Context intelligence runtime validation (non-production lab) |
+| Next | Phase 13.14 — runtime contracts and observability (recommended) |
 
 Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
 Canonical architecture: `KORA.md`.

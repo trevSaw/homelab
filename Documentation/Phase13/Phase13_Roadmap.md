@@ -34,6 +34,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.10 | KORA Prototype Spike Architecture | ✅ Complete (2026-08-01) |
 | 13.11 | KORA Runtime Spike Execution | ✅ Complete (2026-08-01) |
 | 13.12 | Context Intelligence Architecture | ✅ Complete (2026-08-01) |
+| 13.13 | Context Intelligence Runtime Validation | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -290,6 +291,29 @@ No production deployment, no Phase 12 changes, no Graphify, no durable Memory wr
 ### Explicit non-deliverables
 
 No Docker, runtime implementation, embeddings/RAG builds, vendor/DB selection changes, or production deployment.
+
+---
+
+## Phase 13.13 — Context Intelligence Runtime Validation
+
+**Objective:** Implement Phase 13.12 retrieval gates, ranking, budgets, and explainability in the isolated non-production KORA spike and validate ten scenarios.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/Context_Intelligence_Validation.md`
+- `Documentation/Phase13/Context_Intelligence_Runtime_Report.md`
+- `Validation/Phase13.13/`
+- Disposable runtime changes under `/mnt/monarch/prototypes/kora-spike/` (outside Git)
+
+### Result
+
+10/10 scenarios passed. The Phase 13.11 preference over-fetch was eliminated: Knowledge was skipped and budgeted to zero for User Preference.
+
+### Explicit non-deliverables
+
+No production deployment, Phase 12 changes, permanent Memory writes, Knowledge promotion, Graphify, or production secrets.
 
 ---
 
