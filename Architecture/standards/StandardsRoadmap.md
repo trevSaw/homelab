@@ -781,6 +781,21 @@ Execute disposable non-production runtime spike under `/mnt/monarch/prototypes/k
 
 ---
 
+# Phase 13.12 — Context Intelligence Architecture
+
+**Status:** ✅ Complete (2026-08-01)
+
+Define classification-aware retrieval intelligence, strategies, and ranking between Classification and Context Assembly. Architecture only—no runtime or Docker.
+
+## Deliverables
+
+- `Architecture/ai/Context_Intelligence.md`
+- `Architecture/ai/Retrieval_Strategies.md`
+- `Architecture/ai/Context_Ranking.md`
+- `Documentation/Phase13/Context_Intelligence_Model.md`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned

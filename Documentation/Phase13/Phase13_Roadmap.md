@@ -33,6 +33,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.9 | KORA Thin Vertical Slice Architecture | ✅ Complete (2026-08-01) |
 | 13.10 | KORA Prototype Spike Architecture | ✅ Complete (2026-08-01) |
 | 13.11 | KORA Runtime Spike Execution | ✅ Complete (2026-08-01) |
+| 13.12 | Context Intelligence Architecture | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -269,6 +270,26 @@ No runtime execution, Docker compose, production deployment, permanent Memory wr
 ### Explicit non-deliverables
 
 No production deployment, no Phase 12 changes, no Graphify, no durable Memory writes, no MCP Execute, no lab runtime committed to git.
+
+---
+
+## Phase 13.12 — Context Intelligence Architecture
+
+**Objective:** Define classification-aware context selection, retrieval strategies, and ranking/pruning between Classification and Context Assembly. Architecture only.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/Context_Intelligence.md`
+- `Architecture/ai/Retrieval_Strategies.md`
+- `Architecture/ai/Context_Ranking.md`
+- Updates to Context Assembly / Memory Runtime / Knowledge Runtime (integration)
+- Phase report: `Documentation/Phase13/Context_Intelligence_Model.md`
+
+### Explicit non-deliverables
+
+No Docker, runtime implementation, embeddings/RAG builds, vendor/DB selection changes, or production deployment.
 
 ---
 

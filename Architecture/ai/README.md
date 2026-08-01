@@ -27,6 +27,9 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Interaction_Model.md](Interaction_Model.md) | User-facing interaction patterns |
 | [Explainability.md](Explainability.md) | Why/evidence/contributors without raw CoT |
 | [Context_Assembly.md](Context_Assembly.md) | How KORA builds reasoning context |
+| [Context_Intelligence.md](Context_Intelligence.md) | Classification-aware retrieval intelligence |
+| [Retrieval_Strategies.md](Retrieval_Strategies.md) | Per-class retrieval policies |
+| [Context_Ranking.md](Context_Ranking.md) | Ranking, budgets, pruning |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
 | [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |
@@ -54,6 +57,7 @@ Evaluation report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`
 Vertical slice report: `Documentation/Phase13/Vertical_Slice_Model.md`  
 Prototype spike report: `Documentation/Phase13/Prototype_Spike_Model.md`  
 Runtime spike report: `Documentation/Phase13/Runtime_Spike_Report.md`  
+Context intelligence report: `Documentation/Phase13/Context_Intelligence_Model.md`  
 Runtime spike validation: `Validation/Phase13.11/`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
@@ -94,6 +98,7 @@ KORA is **part of the Council**, not above it.
 | **Council** | Specialized collective reasoning | `Council/` (Dynamics authoritative) |
 | **Memory** | What KORA remembers (conversations, decisions, preferences, lessons) | `Memory.md` / `Memory_Runtime.md` |
 | **Knowledge** | What information exists (docs, standards, ADRs, references) | `Knowledge.md` / `Knowledge_Runtime.md` |
+| **Context Intelligence** | Classification-aware select/filter/rank before assembly | `Context_Intelligence.md` |
 | **Context Assembly** | Builds provenance-labeled reasoning context | `Context_Assembly.md` |
 | **User Experience** | How humans interact with KORA; trust/transparency contract | `User_Experience.md` |
 | **Interaction Model** | User-facing request patterns | `Interaction_Model.md` |

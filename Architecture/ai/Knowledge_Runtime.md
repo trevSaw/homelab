@@ -119,11 +119,12 @@ Examples:
 
 ## Runtime Retrieval Expectations
 
-- Classification-driven relevance (from Council Selection / request class)
+- **Classification-driven relevance** via `Context_Intelligence.md` / `Retrieval_Strategies.md` (not global search)
 - Return provenance, authority tier, freshness cues
-- Prefer minimum sufficient set
+- Prefer minimum sufficient set (`Context_Ranking.md` budgets)
 - Distinguish Working vs Authoritative tiers in results
 - Feed Context Assembly—not automatic decision issuance
+- When strategy says Knowledge is off (e.g. user preference), **do not query** Knowledge
 
 ---
 
@@ -151,6 +152,8 @@ Examples:
 | --- | --- |
 | `Knowledge_Runtime.md` (this file) | Runtime acquisition/validation/update/promotion |
 | `Knowledge.md` | Domains, quality, governance principles |
+| `Context_Intelligence.md` / `Retrieval_Strategies.md` | When Knowledge may be queried |
 | `Context_Assembly.md` | How knowledge enters reasoning context |
 | `Memory_Runtime.md` | Continuity store runtime (separate) |
 | `Documentation/Phase13/Memory_Runtime_Model.md` | Phase 13.5 report |
+| `Documentation/Phase13/Context_Intelligence_Model.md` | Phase 13.12 report |

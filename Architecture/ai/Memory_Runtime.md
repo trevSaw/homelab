@@ -182,6 +182,8 @@ UX contract for view/correct/delete/approve flows: `User_Experience.md` and `Int
 - Prefer recent corrections over older statements
 - Never present Memory as Knowledge authority
 - Label provenance for Context Assembly
+- Obey `Retrieval_Strategies.md`: preference/personal classes are Memory-only; architecture classes typically skip Memory
+- Ranking/budgets: `Context_Ranking.md`
 
 ---
 
@@ -199,6 +201,8 @@ UX contract for view/correct/delete/approve flows: `User_Experience.md` and `Int
 | --- | --- |
 | `Memory_Runtime.md` (this file) | Runtime lifecycle and governance |
 | `Memory.md` | Boundary definition |
+| `Context_Intelligence.md` / `Retrieval_Strategies.md` | When Memory may be queried |
 | `Context_Assembly.md` | How memory enters reasoning context |
 | `Knowledge_Runtime.md` | Sibling runtime for reference corpus |
 | `Documentation/Phase13/Memory_Runtime_Model.md` | Phase 13.5 report |
+| `Documentation/Phase13/Context_Intelligence_Model.md` | Phase 13.12 report |
