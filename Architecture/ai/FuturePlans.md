@@ -14,29 +14,33 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 
 | Track | Focus |
 | --- | --- |
-| 13.0 | ✅ KORA architecture alignment |
-| 13.1 | ✅ Council operational model |
-| 13.2 | ✅ Knowledge architecture |
-| 13.3 | ✅ Agent orchestration architecture |
-| 13.4 | ✅ Tool / MCP architecture |
-| 13.5 | ✅ Memory & knowledge runtime + context assembly |
-| 13.6 | ✅ User experience, interaction model, explainability |
-| 13.7 | ✅ Implementation architecture framework |
-| 13.8 | ✅ Technology evaluation ADRs (Hermes, Open WebUI, Honcho, ChromaDB, Graphify) |
-| 13.9 | ✅ Thin vertical slice architecture |
-| 13.10 | ✅ Prototype spike architecture (planning only) |
-| 13.11 | ✅ Runtime spike execution (non-production lab) |
-| 13.12 | ✅ Context intelligence architecture |
-| 13.13 | ✅ Context intelligence runtime validation (non-production lab) |
-| 13.14 | ✅ Runtime profiles & runtime contracts |
-| 13.15 | ✅ Production implementation architecture |
-| Next | Phase 14 — Production Runtime Implementation (Docker Compose substrate) |
+| 13.0–13.15 | ✅ Complete — architectural definition of KORA |
 
-**Boundary:** Phase 13 completes the architectural definition of KORA (through 13.15). Phase 14 begins implementation under these contracts.
-
-Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
+Authoritative Phase 13 roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
 Canonical architecture: `KORA.md`.
+
+## Phase 14 — Production Runtime Implementation
+
+| Track | Focus |
+| --- | --- |
+| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) |
+| 14.2 | Memory Runtime |
+| 14.3 | Knowledge Runtime (RAG) |
+| 14.4 | Context Assembly Engine |
+| 14.5 | Tool & MCP Runtime |
+| 14.6 | Council Integration |
+| 14.7 | Autonomous Workflows & Agent Orchestration |
+
+Authoritative Phase 14 roadmap: `Documentation/Phase14/Phase14_Roadmap.md`.
+
+**Boundary:** Phase 13 = architecture. Phase 14 = implementation under those contracts.
+
+## Later
+
+| Track | Focus |
+| --- | --- |
+| Phase 15+ | AI Automation (governance assistant workflows)—after 14.1–14.7 |
 
 ## Status
 
-Living notes file — prefer updating the Phase 13 roadmap for formal scope changes.
+Living notes file — prefer updating Phase 13/14 roadmaps for formal scope changes.

@@ -850,11 +850,45 @@ Define production topology, logical service cards, staged rollout, and operation
 
 ---
 
-# Phase 14 — AI Automation
+# Phase 14 — KORA Production Runtime Implementation
 
 **Status:** 🟡 Planned
 
-Gradually automate homelab operations while preserving human governance.
+Implement Phase 13 architecture as production runtime (Docker Compose substrate) in staged slices. Does not rewrite Phase 13 contracts.
+
+**Working roadmap:** `Documentation/Phase14/Phase14_Roadmap.md`
+
+## Sub-phases
+
+| Sub-phase | Title |
+| --- | --- |
+| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) |
+| 14.2 | Memory Runtime |
+| 14.3 | Knowledge Runtime (RAG) |
+| 14.4 | Context Assembly Engine |
+| 14.5 | Tool & MCP Runtime |
+| 14.6 | Council Integration |
+| 14.7 | Autonomous Workflows & Agent Orchestration |
+
+## Constraints
+
+- Solo Runtime is the initial production profile
+- KORA remains product identity; Hermes/Open WebUI/Ollama are substrates
+- Memory ≠ Knowledge; Council ≠ Agents; Tools ≠ Decisions
+- Graphify deferred; Obsidian external only
+- Phase 12 baseline preserved unless explicitly changed
+
+## Goal
+
+Ship a governed KORA production path before broader homelab AI automation.
+
+---
+
+# Phase 15 — AI Automation
+
+**Status:** 🟡 Planned
+
+Gradually automate homelab operations while preserving human governance. Begins after Phase 14 foundation (14.1–14.7) is stable.
 
 ## Automation Targets
 
@@ -910,7 +944,9 @@ AI Architecture & Knowledge Platform (Brainiac / KORA)
         ↓
 Council · Memory · Orchestration · MCP · UX
         ↓
-AI Automation
+KORA Production Runtime (Phase 14)
+        ↓
+AI Automation (Phase 15+)
         ↓
 Continuous Improvement
 ```
