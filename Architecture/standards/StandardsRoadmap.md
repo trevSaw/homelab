@@ -737,6 +737,21 @@ Evaluate first-wave candidates (Hermes, Open WebUI, Honcho, ChromaDB, Graphify) 
 
 ---
 
+# Phase 13.9 — KORA Thin Vertical Slice Architecture
+
+**Status:** ✅ Complete (2026-08-01)
+
+Define the minimum end-to-end KORA workflow, prototype boundaries, and conceptual integration flow. Architecture validation only—no installs or compose.
+
+## Deliverables
+
+- `Architecture/ai/Vertical_Slice.md`
+- `Architecture/ai/Prototype_Boundaries.md`
+- `Architecture/ai/Integration_Flow.md`
+- `Documentation/Phase13/Vertical_Slice_Model.md`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned
