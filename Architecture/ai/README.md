@@ -42,6 +42,8 @@ Tool report: `Documentation/Phase13/Tool_Architecture_Model.md`
 Runtime report: `Documentation/Phase13/Memory_Runtime_Model.md`  
 UX report: `Documentation/Phase13/User_Experience_Model.md`  
 Implementation framework: `Documentation/Phase13/Implementation_Architecture_Model.md`  
+Technology evaluation ADRs: `Architecture/decisions/ADR-0004`–`ADR-0008` (see `ADRIndex.md`)  
+Evaluation report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
