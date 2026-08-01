@@ -35,6 +35,11 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Runtime_Contracts.md](Runtime_Contracts.md) | Observable runtime contracts |
 | [Runtime_Observability.md](Runtime_Observability.md) | Trace / provenance observability requirements |
 | [Runtime_State.md](Runtime_State.md) | Request lifecycle and state ownership |
+| [Production_Architecture.md](Production_Architecture.md) | Production implementation blueprint |
+| [Deployment_Topology.md](Deployment_Topology.md) | Logical production deployment layout |
+| [Production_Service_Topology.md](Production_Service_Topology.md) | Logical services for Phase 14 Compose |
+| [Rollout_Strategy.md](Rollout_Strategy.md) | Staged production enablement |
+| [Operational_Readiness.md](Operational_Readiness.md) | Ops startup/shutdown/degrade philosophy |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
 | [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |
@@ -67,6 +72,8 @@ Context intelligence runtime report: `Documentation/Phase13/Context_Intelligence
 Runtime spike validation: `Validation/Phase13.11/`  
 Context intelligence validation: `Validation/Phase13.13/`
 Runtime profiles report: `Documentation/Phase13/Runtime_Profile_Model.md`
+Production architecture report: `Documentation/Phase13/Production_Architecture_Model.md`
+Production architecture validation: `Validation/Phase13.15/`
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---

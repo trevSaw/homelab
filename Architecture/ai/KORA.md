@@ -401,6 +401,11 @@ Constraints:
 | `Runtime_Contracts.md` | Observable runtime contracts (Phase 13.14) |
 | `Runtime_Observability.md` | Trace / provenance observability requirements |
 | `Runtime_State.md` | Request lifecycle and state ownership |
+| `Production_Architecture.md` | Production implementation blueprint (Phase 13.15) |
+| `Deployment_Topology.md` | Logical production deployment layout |
+| `Production_Service_Topology.md` | Logical services for Phase 14 Compose |
+| `Rollout_Strategy.md` | Staged production enablement |
+| `Operational_Readiness.md` | Ops startup/shutdown/degrade philosophy |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Documentation/Phase13/Technology_Evaluation_ADR_Model.md` | Phase 13.8 evaluation report |
 | `Documentation/Phase13/Vertical_Slice_Model.md` | Phase 13.9 vertical slice report |
@@ -408,6 +413,7 @@ Constraints:
 | `Documentation/Phase13/Runtime_Spike_Report.md` | Phase 13.11 runtime spike report |
 | `Documentation/Phase13/Context_Intelligence_Model.md` | Phase 13.12 context intelligence report |
 | `Documentation/Phase13/Runtime_Profile_Model.md` | Phase 13.14 runtime profiles report |
+| `Documentation/Phase13/Production_Architecture_Model.md` | Phase 13.15 production architecture report |
 | `Validation/Phase13.11/` | Phase 13.11 validation pack |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
@@ -429,6 +435,7 @@ Expected tracks (implementation only when authorized by ADR; architecture first)
 - Runtime spike execution (Phase 13.11: disposable lab + `Runtime_Spike_Execution.md` / `Validation/Phase13.11/`)
 - Context intelligence (Phase 13.12: classification-aware retrieval, ranking, budgets)
 - Runtime profiles & contracts (Phase 13.14: Solo→Hybrid without redesigning KORA)
+- Production implementation architecture (Phase 13.15: blueprint for Phase 14 Compose)
 - Thin vertical slices that preserve Council, Memory, Knowledge, Tools, Agents boundaries
 - Client surfaces satisfying UX / Interaction / Explainability contracts
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
