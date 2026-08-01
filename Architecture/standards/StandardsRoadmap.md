@@ -583,100 +583,130 @@ Complete security modernization deferred or only partially addressed during Phas
 
 ---
 
-# Phase 13 — AI Infrastructure (Brainiac)
+# Phase 13 — AI Architecture & Knowledge Platform (Brainiac / KORA)
 
-**Status:** 🟡 Planned — **starting point is the Phase 12 production baseline**
+**Status:** 🚧 IN PROGRESS (started 2026-08-01)
 
-Establish the local AI platform foundation. Phase 13 is the AI infrastructure layer—not automation.
+Phase 13 shifts the project from infrastructure standardization toward the construction of the AI platform that will operate on top of the homelab. The focus becomes architecture, orchestration, memory, knowledge management, and intelligent services while preserving the stable production baseline established during Phase 12.
 
-**Baseline reference:** `Documentation/Phase12.5/Production_Baseline.md`  
+**Prerequisite / starting point:** `Documentation/Phase12.5/Production_Baseline.md`  
+**Authoritative working roadmap:** `Documentation/Phase13/Phase13_Roadmap.md`  
 **Do not regress:** Phase 12 media `proxy`/`hotio` fabric or Monarch appdata conventions without an explicit change.
 
-AI learns an already-governed personal homelab platform rather than creating one.
-
----
-
-# Phase 13.1 — Core AI Platform
-
-**Status:** 🟡 Planned
-
-Deploy and harden the core local AI runtime stack.
-
-## Deliverables
-
-- Ollama
-- Open WebUI
-- Models
-- Embeddings
-- ChromaDB
-- RAG foundation
-- GPU optimization
-
----
-
-# Phase 13.2 — AI Knowledge Platform
-
-**Status:** 🟡 Planned
-
-**Project Status:** Planning
-
-Build the AI Knowledge Platform as a governed knowledge and retrieval layer on top of the Core AI Platform.
-
-## Deliverables
-
-- Obsidian integration
-- Knowledge Pipeline
-- Graphify
-- Homepage Dashboard
-- AI note organization
-- Semantic search
-- Knowledge graph
-- AI-generated summaries
-- AI-generated tagging
-- Relationship extraction
-
-### Separate Planning Project
-
-The AI Knowledge Platform is maintained as a separate planning project under the `projects/` directory until implementation begins.
-
-All design artifacts, architecture documents, ADRs, validation plans, and implementation guides SHALL be developed independently and later integrated into the Homelab repository during Phase 13.2.
+AI learns and operates on an already-governed personal homelab platform rather than creating one. Architecture precedes implementation.
 
 ### Governance Requirement
 
-This project SHALL conform to the existing Homelab Governance Framework. No new governance standards shall be introduced unless approved through an ADR. All Docker Compose files, directory layouts, documentation, validation artifacts, architecture documents, service definitions, naming conventions, deployment patterns, and future implementations SHALL comply with the governance standards already established within the Homelab repository. In the event of a conflict, the Homelab Governance Framework SHALL take precedence unless explicitly superseded by an approved ADR.
+Phase 13 SHALL conform to the existing Homelab Governance Framework. No new governance standards shall be introduced unless approved through an ADR. All Docker Compose files, directory layouts, documentation, validation artifacts, architecture documents, service definitions, naming conventions, deployment patterns, and future implementations SHALL comply with the governance standards already established within the Homelab repository. In the event of a conflict, the Homelab Governance Framework SHALL take precedence unless explicitly superseded by an approved ADR.
 
 ---
 
-# Phase 13.3 — Persistent AI Memory
+# Phase 13.1 — Council Architecture
 
-**Status:** 🟡 Planned
+**Status:** 🚧 In Progress
 
-Introduce durable AI memory so agents retain long-term context across sessions and workflows.
+Define the Council as the reasoning framework used by KORA.
 
 ## Deliverables
 
-- Honcho
+- Council directory structure
+- Council architecture
+- Dynamics.md
+- Member specifications
+- Selection rules
+- Voting rules
+- Prompt architecture
+- Canonical member template
+
+See `Architecture/ai/Council/` and `Documentation/Phase13/Phase13_Roadmap.md`.
+
+---
+
+# Phase 13.2 — Knowledge Architecture
+
+**Status:** 📋 Planned
+
+Design how KORA stores, retrieves, indexes, and reasons over information.
+
+## Planned deliverables
+
+- Memory architecture
+- Knowledge collections
+- Long-term memory index
+- Retrieval strategy
+- Context assembly
+- Knowledge lifecycle
+- Memory governance
+
+---
+
+# Phase 13.3 — Agent Orchestration
+
+**Status:** 📋 Planned
+
+Define how KORA coordinates reasoning and specialized capabilities.
+
+## Planned deliverables
+
+- Hermes integration
+- Council orchestration
+- Prompt assembly
+- Agent lifecycle
+- Routing
+- Context injection
+- Conversation management
+
+---
+
+# Phase 13.4 — External Integrations
+
+**Status:** 📋 Planned
+
+Connect KORA to the homelab ecosystem.
+
+## Planned deliverables
+
+- Filesystem MCP
+- Git MCP
+- Docker MCP
+- Home Assistant MCP
+- Technitium DNS MCP
+- Future MCP integrations
+
+---
+
+# Phase 13.5 — Knowledge & Memory Runtime
+
+**Status:** 📋 Planned
+
+Implement the production memory system.
+
+## Planned deliverables
+
 - Long-term memory
-- User profile
-- Conversation memory
-- Preference memory
-- AI memory governance
+- Semantic retrieval
+- Reflection
+- User profile memory
+- Project memory
+- Knowledge persistence
 
 ---
 
-# Phase 13.4 — Agent Framework
+# Phase 13.6 — User Experience
 
-**Status:** 🟡 Planned
+**Status:** 📋 Planned
 
-Establish multi-agent orchestration on top of the Core AI Platform, Knowledge Platform, and Persistent AI Memory.
+Build the interface through which users interact with KORA.
 
-## Deliverables
+## Potential deliverables
 
-- Multi-agent orchestration
-- Specialized agents
-- Planning agents
-- Research agents
-- Automation agents
+- Open WebUI
+- Hermes UI
+- Chat interface
+- Council visualization
+- Conversation history
+- Explainability
+- Decision transparency
 
 ---
 
@@ -736,13 +766,9 @@ Storage Modernization
         ↓
 Security Modernization
         ↓
-AI Infrastructure (Brainiac)
+AI Architecture & Knowledge Platform (Brainiac / KORA)
         ↓
-Knowledge Platform
-        ↓
-Persistent AI Memory
-        ↓
-Agent Framework
+Council · Memory · Orchestration · MCP · UX
         ↓
 AI Automation
         ↓
