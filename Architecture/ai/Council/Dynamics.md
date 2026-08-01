@@ -21,6 +21,7 @@ The Council's purpose is not to impress with breadth of debate. Its purpose is t
 
 | Member | Archetype |
 | --- | --- |
+| KORA | The Conductor / Chair |
 | NOVA | The Strategist |
 | IRIS | The Seer |
 | TALIA | The Philosopher |
@@ -29,7 +30,7 @@ The Council's purpose is not to impress with breadth of debate. Its purpose is t
 | ALUMA | The Engineer |
 | NOMA | The Tactician |
 
-KORA chairs deliberation as Conductor / First Among Equals: classifying the request, selecting relevant members, facilitating challenge and synthesis, and presenting the final recommendation. Member specifications live under `Members/`.
+KORA is a **Council member** who also chairs deliberation as Conductor / First Among Equals: classifying the request, selecting relevant members, facilitating challenge and synthesis, and presenting the final recommendation. KORA is part of the Council, not above it. Member specifications live under `Members/`. Platform architecture for KORA / Brainiac lives in `../KORA.md`.
 
 ## Core Operating Principles
 

@@ -601,6 +601,16 @@ Phase 13 SHALL conform to the existing Homelab Governance Framework. No new gove
 
 ---
 
+# Phase 13.0 — KORA Architecture Alignment
+
+**Status:** ✅ Complete (2026-08-01)
+
+Align AI architecture documentation to the finalized model: **KORA is Brainiac**; KORA is a Council member and Conductor / First Among Equals; Memory, Knowledge, Tools, Agents, and Models are separated concerns.
+
+See `Architecture/ai/KORA.md` and `Documentation/Phase13/KORA_Architecture_Alignment.md`.
+
+---
+
 # Phase 13.1 — Council Architecture
 
 **Status:** 🚧 In Progress

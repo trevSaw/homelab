@@ -21,12 +21,28 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 
 | Sub-phase | Title | Status |
 | --- | --- | --- |
+| 13.0 | KORA Architecture Alignment | ✅ Complete (2026-08-01) |
 | 13.1 | Council Architecture | 🚧 In Progress |
 | 13.2 | Knowledge Architecture | 📋 Planned |
 | 13.3 | Agent Orchestration | 📋 Planned |
 | 13.4 | External Integrations | 📋 Planned |
 | 13.5 | Knowledge & Memory Runtime | 📋 Planned |
 | 13.6 | User Experience | 📋 Planned |
+
+---
+
+## Phase 13.0 — KORA Architecture Alignment
+
+**Objective:** Align AI architecture documentation to the finalized model: KORA is Brainiac; KORA is Council Chair/Conductor and a Council member; subsystems separate cleanly.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/KORA.md`
+- Updated `Architecture/ai/README.md`
+- Consistency updates to Council entry docs and subsystem stubs
+- `Documentation/Phase13/KORA_Architecture_Alignment.md`
 
 ---
 
