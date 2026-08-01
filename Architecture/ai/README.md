@@ -31,6 +31,10 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Retrieval_Strategies.md](Retrieval_Strategies.md) | Per-class retrieval policies |
 | [Context_Ranking.md](Context_Ranking.md) | Ranking, budgets, pruning |
 | [Context_Intelligence_Validation.md](Context_Intelligence_Validation.md) | Phase 13.13 runtime validation |
+| [Runtime_Profiles.md](Runtime_Profiles.md) | Solo / Simulated / Distributed / Hybrid profiles |
+| [Runtime_Contracts.md](Runtime_Contracts.md) | Observable runtime contracts |
+| [Runtime_Observability.md](Runtime_Observability.md) | Trace / provenance observability requirements |
+| [Runtime_State.md](Runtime_State.md) | Request lifecycle and state ownership |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
 | [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |
@@ -62,6 +66,7 @@ Context intelligence report: `Documentation/Phase13/Context_Intelligence_Model.m
 Context intelligence runtime report: `Documentation/Phase13/Context_Intelligence_Runtime_Report.md`
 Runtime spike validation: `Validation/Phase13.11/`  
 Context intelligence validation: `Validation/Phase13.13/`
+Runtime profiles report: `Documentation/Phase13/Runtime_Profile_Model.md`
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
