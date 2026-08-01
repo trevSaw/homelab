@@ -29,6 +29,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.5 | Knowledge & Memory Runtime | ✅ Complete (2026-08-01) |
 | 13.6 | User Experience | ✅ Complete (2026-08-01) |
 | 13.7 | Implementation Architecture Framework | ✅ Complete (2026-08-01) |
+| 13.8 | Technology Evaluation & Adoption ADRs | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -187,6 +188,28 @@ Earlier draft listed concrete clients (Open WebUI, Hermes UI). Those remain **fu
 - Candidate list explicitly marked not-selected (Honcho, Graphfy, ChromaDB, Hermes, Open WebUI)
 - Obsidian boundary (external workflow, not runtime dependency)
 - Phase report: `Documentation/Phase13/Implementation_Architecture_Model.md`
+
+---
+
+## Phase 13.8 — Technology Evaluation & Adoption ADRs
+
+**Objective:** Evaluate first-wave technology candidates against KORA architecture contracts. Determine fit and adoption posture—not install services.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md` — Provisional Adopt
+- `Architecture/decisions/ADR-0005-Memory-Runtime-Honcho.md` — Spike
+- `Architecture/decisions/ADR-0006-Knowledge-Retrieval-ChromaDB.md` — Provisional Adopt
+- `Architecture/decisions/ADR-0007-Relationship-Layer-Graphiti.md` — Defer
+- `Architecture/decisions/ADR-0008-User-Interface-OpenWebUI.md` — Provisional Adopt
+- Updated `Architecture/decisions/ADRIndex.md`
+- Phase report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`
+
+### Explicit non-deliverables
+
+No Docker services, compose files, deployments, or final production stack selection.
 
 ---
 

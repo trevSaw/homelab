@@ -386,6 +386,8 @@ Constraints:
 | `Explainability.md` | Why/evidence/contributors without raw CoT |
 | `Implementation_Architecture.md` | Implementation layers & tech evaluation framework |
 | `Technology_Evaluation_ADR_Template.md` | ADR criteria for technology candidates |
+| `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
+| `Documentation/Phase13/Technology_Evaluation_ADR_Model.md` | Phase 13.8 evaluation report |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
@@ -400,7 +402,7 @@ Implementation planning framework: `Implementation_Architecture.md`.
 
 Expected tracks (implementation only when authorized by ADR; architecture first):
 
-- Technology evaluation ADRs for UI / Orchestration / Memory / Knowledge / Tools
+- Technology evaluation ADRs for UI / Orchestration / Memory / Knowledge / Tools (Phase 13.8: ADR-0004–0008)
 - Thin vertical slices that preserve Council, Memory, Knowledge, Tools, Agents boundaries
 - Client surfaces satisfying UX / Interaction / Explainability contracts
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles

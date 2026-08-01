@@ -10,6 +10,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [KORA_Architecture_Alignment.md](KORA_Architecture_Alignment.md) | Phase 13.0 KORA / Brainiac documentation alignment report |
 | [Council_Operational_Model.md](Council_Operational_Model.md) | Phase 13.1 Council operational model report |
 | [Implementation_Architecture_Model.md](Implementation_Architecture_Model.md) | Phase 13.7 Implementation architecture framework report |
+| [Technology_Evaluation_ADR_Model.md](Technology_Evaluation_ADR_Model.md) | Phase 13.8 Technology evaluation ADR report |
 
 ## Related architecture
 
@@ -18,6 +19,8 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | `Architecture/ai/KORA.md` | Canonical KORA / Brainiac architecture |
 | `Architecture/ai/Implementation_Architecture.md` | Implementation framework (Phase 13.7) |
 | `Architecture/ai/Technology_Evaluation_ADR_Template.md` | Tech evaluation ADR template |
+| `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
+| `Architecture/decisions/ADRIndex.md` | ADR index |
 | `Architecture/ai/User_Experience.md` | UX architecture (Phase 13.6) |
 | `Architecture/ai/Interaction_Model.md` | Interaction patterns (Phase 13.6) |
 | `Architecture/ai/Explainability.md` | Explainability contract (Phase 13.6) |
@@ -35,7 +38,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 
 ## Status
 
-**Phase 13:** Architecture definition complete through 13.7; implementation gated by evaluation ADRs  
-**Phase 13.0–13.6:** ✅ Complete  
-**Phase 13.7:** ✅ Complete — Implementation Architecture Framework  
-**Next focus:** Technology evaluation ADRs (first wave)
+**Phase 13:** Architecture through 13.7; first-wave tech evaluation ADRs complete (13.8)  
+**Phase 13.0–13.7:** ✅ Complete  
+**Phase 13.8:** ✅ Complete — Technology Evaluation ADRs  
+**Next focus:** Constrained thin vertical slice / spikes per ADR-0004–0008 (no unbounded install)

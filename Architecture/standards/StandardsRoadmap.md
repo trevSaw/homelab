@@ -723,6 +723,20 @@ Define implementation layers, deployment philosophy, and technology evaluation m
 
 ---
 
+# Phase 13.8 — Technology Evaluation & Adoption ADRs
+
+**Status:** ✅ Complete (2026-08-01)
+
+Evaluate first-wave candidates (Hermes, Open WebUI, Honcho, ChromaDB, Graphiti) against KORA contracts. Evaluation and adoption posture only—no installs or production stack finalization.
+
+## Deliverables
+
+- `Architecture/decisions/ADR-0004`–`ADR-0008`
+- `Architecture/decisions/ADRIndex.md` (updated)
+- `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned
