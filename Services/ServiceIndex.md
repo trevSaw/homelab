@@ -156,7 +156,7 @@ Leave **Documentation** and **Deployment** blank or use `—` for services that 
 
 | Service | Category | Status | Priority | Last Reviewed | Documentation | Deployment | Alternatives | GitHub | Purpose | Notes |
 |---------|----------|--------|----------|---------------|---------------|------------|--------------|--------|---------|-------|
-| Home Assistant | Smart Home | Researching | High | — | — | — | OpenHAB | https://github.com/home-assistant/core | Home automation | Long-term smart home |
+| Home Assistant | Smart Home | Designed (Phase 12 SoT) | High | 2026-07-31 | Documentation/services/homeassistant/service.md | services/homeassistant/ (ADR-0003) | OpenHAB | https://github.com/home-assistant/core | Home automation | `/mnt/monarch/appdata/homeassistant`; Traefik on proxy |
 | Frigate | Security | Researching | High | — | — | — | Shinobi | https://github.com/blakeblackshear/frigate | AI NVR | Coral TPU eventually |
 | OpenHands | AI | Researching | Medium | — | — | — | Hermes Agent | https://github.com/All-Hands-AI/OpenHands | Coding agent | Compare with Hermes |
 | Langfuse | AI | Researching | Medium | — | — | — | Helicone | https://github.com/langfuse/langfuse | LLM observability | AI analytics |

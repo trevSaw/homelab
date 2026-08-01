@@ -12,6 +12,7 @@
 | echoos | Utilities | P0 | present | ./echoos/echoos.md |
 | hermes | Messaging / Communication | P4‑P5 | present | ./hermes/hermes.md |
 | homepage | Infrastructure / Reverse Proxy | P4‑P5 | present | ./homepage/homepage.md |
+| homeassistant | Smart Home | High | present | ./homeassistant/service.md |
 | honcho | Automation | P4‑P5 | present | ./honcho/honcho.md |
 | Hotio | Media | P4‑P5 | present | ./Hotio/Hotio.md |
 | jellyfin | Media | P4‑P5 | present | ./jellyfin/jellyfin.md |
