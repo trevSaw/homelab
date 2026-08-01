@@ -25,7 +25,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.1 | Council Architecture | ✅ Complete (2026-08-01) |
 | 13.2 | Knowledge Architecture | ✅ Complete (2026-08-01) |
 | 13.3 | Agent Orchestration | ✅ Complete (2026-08-01) |
-| 13.4 | External Integrations | 📋 Planned |
+| 13.4 | External Integrations | ✅ Complete (2026-08-01) |
 | 13.5 | Knowledge & Memory Runtime | 📋 Planned |
 | 13.6 | User Experience | 📋 Planned |
 
@@ -112,20 +112,20 @@ Earlier draft listed Hermes integration, prompt assembly, and conversation manag
 
 ## Phase 13.4 — External Integrations
 
-**Objective:** Connect KORA to the homelab ecosystem.
+**Objective:** Define how KORA safely interacts with the external world through a governed tool layer (including conceptual MCP), without deploying integrations.
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-### Planned deliverables
+### Deliverables
 
-- Filesystem MCP
-- Git MCP
-- Docker MCP
-- Home Assistant MCP
-- Technitium DNS MCP
-- Future MCP integrations
+- `Architecture/ai/Tools.md`
+- Expanded `Architecture/ai/MCP.md`
+- Tool lifecycle, permissions, safety, truth model, governance
+- Phase report: `Documentation/Phase13/Tool_Architecture_Model.md`
 
-Integrations MUST respect the Phase 12 production baseline and existing governance standards (networking, secrets, compose SoT, documentation).
+### Note on earlier roadmap wording
+
+Earlier draft listed concrete MCP servers (Filesystem, Git, Docker, Home Assistant, Technitium) as deliverables. Those remain **future implementation candidates** under this architecture—not Phase 13.4 deployment work.
 
 ---
 

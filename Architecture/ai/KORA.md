@@ -125,7 +125,7 @@ KORA’s cognition is **orchestrated multi-perspective reasoning**, not monolith
 | **Council** | Reasoning — specialized perspectives under facilitation |
 | **Memory** | What KORA remembers — interactions, decisions, preferences, lessons |
 | **Knowledge** | What information exists — reference docs, standards, inventories, curated corpora |
-| **Tools** | External capabilities (MCP and related integrations) |
+| **Tools** | Live environment capability — what is true now / what can be interacted with |
 | **Agents** | Temporary execution — do work (not Council seats) |
 | **Models** | Underlying inference engines |
 
@@ -133,11 +133,12 @@ KORA’s cognition is **orchestrated multi-perspective reasoning**, not monolith
 
 1. **KORA First** — All AI capabilities exist as part of KORA’s platform identity (Brainiac).
 2. **Council as Cognitive Framework** — Members provide specialized reasoning perspectives.
-3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns. **Memory ≠ Knowledge. Council ≠ Agents.**
+3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns. **Memory ≠ Knowledge. Council ≠ Agents. Tools ≠ Decisions.**
 4. **Selective Participation** — Not every request requires every member.
 5. **Synthesis over Competition** — Collaboration refines the recommendation; dominance is a failure mode.
 6. **User-First Outcomes** — Internal brilliance that does not help the user is incomplete.
 7. **Delegated Execution under Governance** — Agents are created for bounded work, evaluated by KORA, and terminated; they never outrank Council judgment.
+8. **Tool Evidence under Permission** — External interaction uses governed tools; evidence informs decisions but does not replace them.
 
 ---
 
@@ -248,15 +249,31 @@ The repository remains the primary interim knowledge substrate until runtime ing
 
 ## Tool Relationship
 
-Tools are **external capabilities** KORA may invoke (commonly via MCP) to read or act on the homelab environment.
+Tools are a **subsystem of KORA**: external capabilities that answer *what is true right now?* and *what can be interacted with?*
+
+```text
+KORA
+  |
+Council Reasoning
+  |
+Agent Delegation
+  |
+Tool Layer
+  |
+External Environment
+```
 
 | Tools do | Tools do not |
 | --- | --- |
-| Extend KORA into filesystem, git, Docker, DNS, Home Assistant, etc. | Sit above KORA as a separate AI identity |
-| Supply live facts and bounded actions | Replace NOMA/ALUMA/IRIS reasoning |
-| Require security and governance controls | Bypass user-first and change-control norms |
+| Provide live evidence and bounded actions | Make decisions or replace Council judgment |
+| Expose capabilities (often via MCP-style protocols) | Equal Knowledge or Memory |
+| Enforce permission ceilings (Read→Administrative) | Bypass Phase 12 baseline / change control |
+| Return provenance-labeled results | Silently mutate authoritative Knowledge |
 
-See `MCP.md`. Integration sequencing is Phase 13.4.
+**Tools are not intelligence.** Tool output is evidence for KORA/Council evaluation.
+
+Canonical specification: `Tools.md`  
+Protocol architecture: `MCP.md`
 
 ---
 
@@ -327,7 +344,8 @@ Constraints:
 | `Council/Members/` | Member identity, voice, relationships |
 | `Memory.md` | Memory subsystem (what KORA remembers) |
 | `Knowledge.md` | Knowledge subsystem (what information exists) |
-| `MCP.md` | Tool / MCP subsystem |
+| `Tools.md` | Tool layer architecture (live environment interaction) |
+| `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
 | `Models.md` | Inference engines |
 | `FuturePlans.md` | Forward sequencing notes |
@@ -342,7 +360,7 @@ Expected evolution tracks (documentation and design only until later Phase 13 su
 
 - Memory runtime and deep memory governance (13.5)
 - Hermes / orchestration integration patterns under Agents.md constraints (implementation later)
-- MCP integration set (13.4)
+- MCP / tool runtime implementation under Tools.md + MCP.md constraints (after ADRs)
 - Knowledge / memory runtime implementation (13.5) under ADRs for technology choices
 - User experience and explainability surfaces (13.6)
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
