@@ -1,8 +1,9 @@
 # Knowledge Architecture
 
 **Status:** Canonical architecture specification (Phase 13.2)  
+**Runtime companion:** `Knowledge_Runtime.md` (Phase 13.5)  
 **Platform:** KORA / Brainiac (`KORA.md`)  
-**Companion:** `Memory.md` (separate system — do not merge)
+**Companion:** `Memory.md` / `Memory_Runtime.md` (separate system — do not merge)
 
 Knowledge answers: **What information exists?**  
 Memory answers: **What does KORA remember?**
@@ -392,17 +393,22 @@ These belong to later Phase 13 implementation tracks (especially 13.4 tools and 
 
 | Document | Role |
 | --- | --- |
-| `Knowledge.md` (this file) | Canonical Knowledge Architecture |
+| `Knowledge.md` (this file) | Canonical Knowledge Architecture (domains, quality, governance principles) |
+| `Knowledge_Runtime.md` | Runtime acquisition, validation, updates, promotion |
 | `Memory.md` | Memory subsystem (separate) |
+| `Context_Assembly.md` | How knowledge enters reasoning context |
 | `KORA.md` | Platform architecture; context assembly ownership |
 | `Council/Deliberation.md` | When knowledge enters the session lifecycle |
 | `Council/Selection.md` | Classification that drives knowledge requirements |
-| `MCP.md` | Live tools — not durable Knowledge by default |
+| `Tools.md` | Live tools — not durable Knowledge by default |
+| `MCP.md` | Tool / MCP architecture |
 | `Documentation/Phase13/Knowledge_Architecture_Model.md` | Phase 13.2 report |
+| `Documentation/Phase13/Memory_Runtime_Model.md` | Phase 13.5 report |
 
 ---
 
 ## Status
 
 Phase 13.2 architecture complete at the conceptual level.  
-No databases, vector stores, ingestion services, or RAG implementations are authorized by this document alone.
+Phase 13.5 adds runtime evolution/promotion rules in `Knowledge_Runtime.md`.  
+No databases, vector stores, ingestion services, or RAG implementations are authorized by these documents alone.

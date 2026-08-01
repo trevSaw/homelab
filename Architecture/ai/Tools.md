@@ -228,7 +228,7 @@ Every non-trivial tool invocation should be able to record (conceptually):
 
 - Verify outcome against intent
 - Return evidence to context with provenance
-- Update Memory/Knowledge **only through governance** (never silent authoritative mutation from raw tool output)
+- Update Memory/Knowledge **only through governance** (`Memory_Runtime.md`, `Knowledge_Runtime.md`)—never silent authoritative mutation from raw tool output
 - Surface failures honestly to the user/Council
 
 ---
@@ -315,7 +315,9 @@ Those require later implementation phases and ADRs where technology is chosen.
 | `Tools.md` (this file) | Canonical Tool Architecture |
 | `MCP.md` | Conceptual MCP protocol architecture |
 | `Agents.md` | Who may invoke tools for scoped work |
-| `Knowledge.md` / `Memory.md` | Non-live stores |
+| `Knowledge.md` / `Knowledge_Runtime.md` | Non-live reference stores |
+| `Memory.md` / `Memory_Runtime.md` | Continuity stores |
+| `Context_Assembly.md` | How tool evidence enters reasoning context |
 | `Council/` | Decision evaluation |
 | `Documentation/Phase13/Tool_Architecture_Model.md` | Phase 13.4 report |
 

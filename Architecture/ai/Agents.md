@@ -183,8 +183,8 @@ No agent should outlive its task by default.
 | **KORA → Agents** | Creates, scopes, evaluates, terminates |
 | **Council → Agents** | May request execution support through KORA; does not become the agent |
 | **Agents → Council** | Supply inputs/results; never issue final user recommendations as Council substitutes |
-| **Agents → Knowledge** | May read per permissions; write/promote only through governance |
-| **Agents → Memory** | Temporary task context only; durable memories require KORA evaluation + Memory rules |
+| **Agents → Knowledge** | May read per permissions; write/promote only through `Knowledge_Runtime.md` governance |
+| **Agents → Memory** | Temporary task context only; durable memories require KORA evaluation + `Memory_Runtime.md` |
 | **Agents → Tools** | Sole environmental interface for execution/observation within permission level |
 | **Agents → Models** | May use inference engines as compute; models are not agent identity |
 
@@ -312,8 +312,9 @@ Technology choices require future ADRs. This document only defines governance-sa
 | `Agents.md` (this file) | Canonical Agent Orchestration Architecture |
 | `KORA.md` | Platform ownership of delegation |
 | `Council/*` | Reasoning framework (not execution workers) |
-| `Knowledge.md` | Reference corpus rules agents must respect |
-| `Memory.md` | Continuity store agents do not own |
+| `Knowledge.md` / `Knowledge_Runtime.md` | Reference corpus rules agents must respect |
+| `Memory.md` / `Memory_Runtime.md` | Continuity store agents do not own |
+| `Context_Assembly.md` | How agent results enter reasoning context |
 | `Tools.md` | Tool layer agents may invoke |
 | `MCP.md` | Conceptual protocol for exposing tools |
 | `Documentation/Phase13/Agent_Architecture_Model.md` | Phase 13.3 report |
