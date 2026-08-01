@@ -1,0 +1,31 @@
+# request — conceptual schema
+# Classified user request and selection intent (Phase 13.1)
+# Not tied to a runtime validator or storage engine.
+
+request:
+  id: string                    # optional session/request identifier
+  objective: string             # what the user needs
+  constraints:                  # fixed / forbidden / non-negotiable
+    - string
+  context: string               # summary of assembled context pointers
+  urgency: enum                 # low | normal | high | critical
+  domain: string                # primary domain label
+  complexity: enum              # low | moderate | high | exceptional
+  time_horizon: enum            # immediate | near_term | long_term
+  risk_level: enum              # low | moderate | high | severe
+  required_expertise:           # specialties believed material
+    - string
+  classification_notes: string
+
+selection:
+  invited:                      # minimum viable Council (excluding always-on KORA chair role if listed separately)
+    - member: enum              # KORA | NOVA | IRIS | TALIA | SOLA | LUMA | ALUMA | NOMA
+      reason: string
+  deferred:
+    - member: enum
+      reason: string
+  escalation_triggers:
+    - condition: string
+      add_members:
+        - enum
+  kora_role: string             # always chair/conductor; may also contribute coordination judgment

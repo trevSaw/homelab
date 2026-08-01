@@ -1,0 +1,20 @@
+# member_response — conceptual schema
+# One Council member's specialty contribution (Phase 13.1)
+
+member_response:
+  member: enum                  # KORA | NOVA | IRIS | TALIA | SOLA | LUMA | ALUMA | NOMA
+  perspective: string           # specialty lens for this request
+  assumptions:
+    - string
+  supporting_reasoning: string
+  concerns:
+    - string
+  risks:
+    - string
+  recommendation: string        # specialty-local stance; not a vote
+  confidence: enum              # low | medium | high
+  challenges_to:                # optional explicit cross-examination targets
+    - member: enum
+      point: string
+  abstain: boolean              # true if invited but specialty not yet applicable
+  notes: string

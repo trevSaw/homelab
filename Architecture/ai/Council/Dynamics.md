@@ -2,7 +2,16 @@
 
 If these become Hermes agents, they are positioned as a true advisory council: a collaborative intelligence in which specialized members deliberate under coordinated facilitation, then return a coherent recommendation to the user.
 
-This document defines **how the Council operates as a system**. Individual member personalities, lore, and voice belong in `Members/`. Selection mechanics and voting rules, when formalized, belong in `Selection.md` and `Voting.md`.
+This document defines **how the Council operates as a system**. Individual member personalities, lore, and voice belong in `Members/`.
+
+**Operational mechanics (Phase 13.1):**
+
+- Selection → `Selection.md`
+- Deliberation lifecycle & contributions → `Deliberation.md`
+- Conflict resolution / synthesis → `Voting.md` (deliberative synthesis; not majority voting)
+- Conceptual schemas → `Schemas/`
+- Prompt architecture → `Prompts/`
+
 
 ## Purpose
 

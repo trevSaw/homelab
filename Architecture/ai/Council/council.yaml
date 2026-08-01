@@ -1,1 +1,27 @@
 # council
+# Conceptual Council configuration stub (Phase 13.1)
+# Not a runtime control plane. Points at authoritative docs.
+
+council:
+  identity: KORA_collective_reasoning_framework
+  chair: KORA
+  philosophy:
+    - minimum_viable_participation
+    - informed_disagreement_over_artificial_unanimity
+    - user_first
+  documents:
+    dynamics: Dynamics.md
+    selection: Selection.md
+    deliberation: Deliberation.md
+    synthesis: Voting.md
+    schemas: Schemas/
+    prompts: Prompts/
+  members:
+    - KORA
+    - NOVA
+    - IRIS
+    - TALIA
+    - SOLA
+    - LUMA
+    - ALUMA
+    - NOMA
