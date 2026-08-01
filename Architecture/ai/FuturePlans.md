@@ -25,7 +25,8 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.8 | ✅ Technology evaluation ADRs (Hermes, Open WebUI, Honcho, ChromaDB, Graphify) |
 | 13.9 | ✅ Thin vertical slice architecture |
 | 13.10 | ✅ Prototype spike architecture (planning only) |
-| Next | Explicit authorization for non-production runtime spike (or further planning) |
+| 13.11 | ✅ Runtime spike execution (non-production lab) |
+| Next | Phase 13.12 — retrieval gating / deeper vendor substrate planning (still non-prod) |
 
 Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
 Canonical architecture: `KORA.md`.

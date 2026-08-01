@@ -767,6 +767,20 @@ Define the first controlled non-production spike as planning only: architecture,
 
 ---
 
+# Phase 13.11 — KORA Runtime Spike Execution
+
+**Status:** ✅ Complete (2026-08-01)
+
+Execute disposable non-production runtime spike under `/mnt/monarch/prototypes/kora-spike/`. Repository receives documentation and validation artifacts only—no production deployment.
+
+## Deliverables
+
+- `Architecture/ai/Runtime_Spike_Execution.md`
+- `Documentation/Phase13/Runtime_Spike_Report.md`
+- `Validation/Phase13.11/`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned

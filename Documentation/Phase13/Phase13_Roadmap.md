@@ -32,6 +32,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.8 | Technology Evaluation & Adoption ADRs | ✅ Complete (2026-08-01) |
 | 13.9 | KORA Thin Vertical Slice Architecture | ✅ Complete (2026-08-01) |
 | 13.10 | KORA Prototype Spike Architecture | ✅ Complete (2026-08-01) |
+| 13.11 | KORA Runtime Spike Execution | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -250,6 +251,24 @@ No Docker services, compose files, deployments, or installs of Hermes / Open Web
 ### Explicit non-deliverables
 
 No runtime execution, Docker compose, production deployment, permanent Memory writes, MCP execution, or infrastructure changes.
+
+---
+
+## Phase 13.11 — KORA Runtime Spike Execution
+
+**Objective:** Execute a disposable non-production runtime spike under `/mnt/monarch/prototypes/kora-spike/` to validate architecture contracts. Repo receives docs/validation only.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/Runtime_Spike_Execution.md`
+- `Documentation/Phase13/Runtime_Spike_Report.md`
+- `Validation/Phase13.11/` (checklist, acceptance, boundary, rollback, summary JSON)
+
+### Explicit non-deliverables
+
+No production deployment, no Phase 12 changes, no Graphify, no durable Memory writes, no MCP Execute, no lab runtime committed to git.
 
 ---
 
