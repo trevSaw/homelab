@@ -93,7 +93,7 @@ Reindex on embedding model change. Backup collections + source mapping. Keep ing
 
 ## Integration
 
-Pairs with Context Assembly; complements Graphiti (ADR-0007) for relationships. Must not ingest Memory stores as Knowledge by default.
+Pairs with Context Assembly; complements Graphify (ADR-0007) for relationships. Must not ingest Memory stores as Knowledge by default.
 
 ## Performance
 

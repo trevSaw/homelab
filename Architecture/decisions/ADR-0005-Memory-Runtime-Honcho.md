@@ -92,7 +92,7 @@ Provider upgrades tied to Hermes; document mapping from Honcho artifacts → Mem
 
 ## Integration
 
-Natural with Hermes (ADR-0004). Standalone API possible but increases integration work. Must not replace Knowledge Runtime (ADR-0006) or Graphiti relationships (ADR-0007).
+Natural with Hermes (ADR-0004). Standalone API possible but increases integration work. Must not replace Knowledge Runtime (ADR-0006) or Graphify relationships (ADR-0007).
 
 ## Performance
 
