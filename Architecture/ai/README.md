@@ -54,6 +54,7 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Council/](Council/) | Council structure, members, schemas, prompts |
 
 Working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`  
+Phase 14 implementation roadmap: `Documentation/Phase14/Phase14_Roadmap.md`  
 Alignment record: `Documentation/Phase13/KORA_Architecture_Alignment.md`  
 Council ops report: `Documentation/Phase13/Council_Operational_Model.md`  
 Knowledge report: `Documentation/Phase13/Knowledge_Architecture_Model.md`  
