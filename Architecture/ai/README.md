@@ -14,6 +14,8 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | Document | Purpose |
 | --- | --- |
 | [KORA.md](KORA.md) | Canonical KORA / Brainiac architecture |
+| [Implementation_Architecture.md](Implementation_Architecture.md) | Implementation layers & technology evaluation framework |
+| [Technology_Evaluation_ADR_Template.md](Technology_Evaluation_ADR_Template.md) | Reusable tech-evaluation ADR template |
 | [User_Experience.md](User_Experience.md) | UX philosophy and interaction contract |
 | [Interaction_Model.md](Interaction_Model.md) | User-facing interaction patterns |
 | [Explainability.md](Explainability.md) | Why/evidence/contributors without raw CoT |
@@ -39,6 +41,7 @@ Agent report: `Documentation/Phase13/Agent_Architecture_Model.md`
 Tool report: `Documentation/Phase13/Tool_Architecture_Model.md`  
 Runtime report: `Documentation/Phase13/Memory_Runtime_Model.md`  
 UX report: `Documentation/Phase13/User_Experience_Model.md`  
+Implementation framework: `Documentation/Phase13/Implementation_Architecture_Model.md`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
@@ -82,6 +85,7 @@ KORA is **part of the Council**, not above it.
 | **User Experience** | How humans interact with KORA; trust/transparency contract | `User_Experience.md` |
 | **Interaction Model** | User-facing request patterns | `Interaction_Model.md` |
 | **Explainability** | Why/evidence/contributors without raw CoT | `Explainability.md` |
+| **Implementation Framework** | Layers, sequencing, tech evaluation rules | `Implementation_Architecture.md` |
 | **Tools** | Live environment — what is true now / what can be interacted with | `Tools.md` / `MCP.md` |
 | **Agents** | Temporary execution — do work (not Council seats) | `Agents.md` |
 | **Models** | Underlying inference engines | `Models.md` |
@@ -134,6 +138,8 @@ Do not duplicate member lore into subsystem docs.
 | `User_Experience.md` | UX architecture |
 | `Interaction_Model.md` | Interaction patterns |
 | `Explainability.md` | Explainability contract |
+| `Implementation_Architecture.md` | Implementation architecture framework |
+| `Technology_Evaluation_ADR_Template.md` | Tech evaluation ADR template |
 | `Council/README.md` | Council directory entry |
 | `Council/Dynamics.md` | How the Council operates |
 | `Council/Selection.md` | Request classification and member selection |

@@ -21,7 +21,8 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.4 | ✅ Tool / MCP architecture |
 | 13.5 | ✅ Memory & knowledge runtime + context assembly |
 | 13.6 | ✅ User experience, interaction model, explainability |
-| Next | Implementation architecture / ADRs (technology evaluation) |
+| 13.7 | ✅ Implementation architecture framework |
+| Next | Technology evaluation ADRs (UI / Orchestration / Memory / Knowledge) |
 
 Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
 Canonical architecture: `KORA.md`.
