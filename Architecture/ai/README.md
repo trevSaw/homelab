@@ -40,6 +40,8 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Production_Service_Topology.md](Production_Service_Topology.md) | Logical services for Phase 14 Compose |
 | [Rollout_Strategy.md](Rollout_Strategy.md) | Staged production enablement |
 | [Operational_Readiness.md](Operational_Readiness.md) | Ops startup/shutdown/degrade philosophy |
+| Runtime tree | Production code/config lives in repo root `AI/` (Phase 14+) |
+| Compose SoT | `services/{kora,ollama,open-webui,hermes}/` |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
 | [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |

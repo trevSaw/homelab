@@ -21,9 +21,7 @@ User
  ↓
 Open WebUI (UI only)
  ↓
-Hermes Orchestration
- ↓
-KORA Runtime
+KORA Runtime (Solo Stage 1 primary path — Phase 14.1)
  ↓
 Classification
  ↓
@@ -34,18 +32,10 @@ Context Assembly
 Council Runtime
   (Solo today → Simulated tomorrow → Distributed later)
  ↓
-Memory Runtime (Honcho candidate)
- ↓
-Knowledge Runtime (ChromaDB candidate)
- ↓
-Tool Runtime
- ↓
-External Systems
+Local Ollama (inference)
 ```
 
-Explainability is produced by KORA Runtime (and optional dedicated Explainability Service later) before the response returns through Hermes → Open WebUI.
-
-Optional Relationship Runtime (Graphify) sits beside Knowledge Runtime **only if** ADR-0007 adopts it—off the default path until then.
+**Phase 14.1 note:** Hermes remains a thin execution layer and is **not** on the Solo primary chat path. Full logical flow including Memory / Knowledge / Tools appears in later stages. Historical blueprint also showed `Open WebUI → Hermes → KORA`; Solo production implements direct `Open WebUI → KORA` per Stage 1 acceptance.
 
 ---
 

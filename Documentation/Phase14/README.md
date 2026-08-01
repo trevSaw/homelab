@@ -23,4 +23,5 @@ Phase 14 implements the Phase 13 architecture as a production runtime using Dock
 ## Status
 
 **Phase 14:** 🟡 Planned — roadmap defined  
-**Next:** 14.1 Runtime Foundation (KORA + Hermes + Open WebUI + Ollama)
+**Complete:** [14.1 Runtime Foundation](Phase14.1/Runtime_Foundation_Report.md)  
+**Next:** 14.2 Memory Runtime

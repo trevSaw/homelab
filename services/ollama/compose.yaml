@@ -1,0 +1,59 @@
+# Ollama — Phase 14.1 governance SoT (inference only)
+# Models preserved at /hive/ollama (existing production bind).
+# Open WebUI moved to services/open-webui (Stage 1 path via KORA).
+services:
+  ollama:
+    image: ollama/ollama:0.30.10
+    container_name: ollama
+    hostname: ollama
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      OLLAMA_KV_CACHE_TYPE: ${OLLAMA_KV_CACHE_TYPE:-q8_0}
+      OLLAMA_CONTEXT_LENGTH: ${OLLAMA_CONTEXT_LENGTH:-2048}
+      OLLAMA_MAX_LOADED_MODELS: ${OLLAMA_MAX_LOADED_MODELS:-1}
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-1}
+      OLLAMA_API_KEY: ${OLLAMA_API_KEY}
+      CUDA_VISIBLE_DEVICES: ${CUDA_VISIBLE_DEVICES:--1}
+    volumes:
+      - /hive/ollama:/root/.ollama
+    networks:
+      - ollama-net
+      - ai-assistant
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=ollama
+      - com.homelab.domain=ai
+      - com.homelab.phase=14.1
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    shm_size: "4gb"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+        limits:
+          cpus: "8.0"
+          memory: 12G
+
+networks:
+  # Preserve existing production network name used by Hermes/Honcho/code-server.
+  ollama-net:
+    name: ollama_ollama-net
+    driver: bridge
+  ai-assistant:
+    external: true

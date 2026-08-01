@@ -1,0 +1,64 @@
+# KORA Runtime — Phase 14.1 Solo Stage 1
+# Path: User → Open WebUI → KORA → Ollama
+services:
+  kora:
+    build:
+      context: ../../AI/KORA/Runtime
+      dockerfile: Dockerfile
+    image: homelab/kora-runtime:14.1.0
+    container_name: kora
+    hostname: kora
+    restart: unless-stopped
+    # Startup order (documented): ollama → kora → open-webui.
+    # ollama is a separate compose project; do not depends_on across projects.
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      KORA_DEFAULT_MODEL: ${KORA_DEFAULT_MODEL:-qwen3:8b}
+      KORA_LOG_LEVEL: ${KORA_LOG_LEVEL:-INFO}
+      KORA_CONFIG_DIR: /config
+      KORA_PROMPTS_DIR: /prompts
+    volumes:
+      - ../../AI/KORA/Config:/config:ro
+      - ../../AI/KORA/Prompts:/prompts:ro
+      - /mnt/monarch/appdata/kora:/data
+    networks:
+      - ollama-net
+      - proxy
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=kora
+      - com.homelab.domain=ai
+      - com.homelab.phase=14.1
+      - com.homelab.profile=solo
+      - com.homelab.logging=central
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=3)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+networks:
+  ollama-net:
+    external: true
+    name: ollama_ollama-net
+  proxy:
+    external: true

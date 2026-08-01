@@ -23,7 +23,7 @@ Canonical architecture: `KORA.md`.
 
 | Track | Focus |
 | --- | --- |
-| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) |
+| 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
 | 14.2 | Memory Runtime |
 | 14.3 | Knowledge Runtime (RAG) |
 | 14.4 | Context Assembly Engine |

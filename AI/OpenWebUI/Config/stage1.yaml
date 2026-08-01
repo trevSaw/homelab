@@ -1,0 +1,7 @@
+# Open WebUI Stage 1 connection profile
+
+backend: openai_compatible
+base_url: http://kora:8080/v1
+presented_as: KORA
+enable_ollama_api: false
+bypass_kora: false
