@@ -68,9 +68,14 @@ NOVA     IRIS     TALIA     SOLA      LUMA
  |         |         |
 ALUMA    NOMA
                      |
-         Memory / Knowledge / Tools
-                     |
-          Homelab Environment
+         ---------------------------------
+         |              |                |
+     Knowledge       Memory           Agents
+     "What exists?" "What happened?"  "Do work"
+                                         |
+                                      Tools
+                                         |
+                                   Environment
 ```
 
 **Architectural rule:** KORA is part of the Council, not above it.
@@ -121,17 +126,18 @@ KORA’s cognition is **orchestrated multi-perspective reasoning**, not monolith
 | **Memory** | What KORA remembers — interactions, decisions, preferences, lessons |
 | **Knowledge** | What information exists — reference docs, standards, inventories, curated corpora |
 | **Tools** | External capabilities (MCP and related integrations) |
-| **Agents** | Temporary execution entities for bounded tasks |
+| **Agents** | Temporary execution — do work (not Council seats) |
 | **Models** | Underlying inference engines |
 
 ### Architecture principles
 
 1. **KORA First** — All AI capabilities exist as part of KORA’s platform identity (Brainiac).
 2. **Council as Cognitive Framework** — Members provide specialized reasoning perspectives.
-3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns. **Memory ≠ Knowledge.**
+3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns. **Memory ≠ Knowledge. Council ≠ Agents.**
 4. **Selective Participation** — Not every request requires every member.
 5. **Synthesis over Competition** — Collaboration refines the recommendation; dominance is a failure mode.
 6. **User-First Outcomes** — Internal brilliance that does not help the user is incomplete.
+7. **Delegated Execution under Governance** — Agents are created for bounded work, evaluated by KORA, and terminated; they never outrank Council judgment.
 
 ---
 
@@ -256,17 +262,32 @@ See `MCP.md`. Integration sequencing is Phase 13.4.
 
 ## Agents Relationship
 
-Agents are **temporary execution entities** created for bounded work under KORA’s coordination.
+Agents are a **subsystem of KORA**: temporary execution capability that answers *do work*.
+
+```text
+                    KORA
+                      |
+              Council Reasoning
+                      |
+     ---------------------------------
+     |              |                |
+ Knowledge       Memory           Agents
+ "What exists?" "What happened?"  "Do work"
+                                     |
+                                  Tools
+```
 
 | Agents do | Agents do not |
 | --- | --- |
-| Execute scoped tasks | Permanently replace Council members |
-| Operate under explicit boundaries | Become a parallel “Brainiac” identity |
-| Report results back into KORA’s lifecycle | Own long-term memory policy by default |
+| Execute bounded tasks under KORA | Replace or become Council members |
+| Gather, analyze, draft, run scoped work | Override Council synthesis |
+| Use Tools within conceptual permission levels | Own permanent Memory or silently mutate authoritative Knowledge |
+| Return results for KORA evaluation then terminate | Persist as personalities or parallel Brainiac identities |
 
-Council members are cognitive roles in a reasoning framework. Agents are ephemeral workers. Do not conflate them.
+**Council Member ≠ Agent.**  
+Council members provide judgment. Agents complete tasks.
 
-See `Agents.md`. Orchestration design is Phase 13.3.
+Canonical specification: `Agents.md`.
 
 ---
 
@@ -320,11 +341,12 @@ Constraints:
 Expected evolution tracks (documentation and design only until later Phase 13 sub-phases authorize implementation):
 
 - Memory runtime and deep memory governance (13.5)
-- Hermes / orchestration integration patterns (13.3)
+- Hermes / orchestration integration patterns under Agents.md constraints (implementation later)
 - MCP integration set (13.4)
 - Knowledge / memory runtime implementation (13.5) under ADRs for technology choices
 - User experience and explainability surfaces (13.6)
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
+- Agent runtimes only after Agents.md governance constraints are preserved
 
 Evolution must preserve:
 

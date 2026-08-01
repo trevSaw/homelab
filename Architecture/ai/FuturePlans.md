@@ -17,7 +17,7 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.0 | ✅ KORA architecture alignment |
 | 13.1 | ✅ Council operational model |
 | 13.2 | ✅ Knowledge architecture |
-| 13.3 | Agent orchestration patterns (without conflating agents and Council) |
+| 13.3 | ✅ Agent orchestration architecture |
 | 13.4 | External MCP integrations |
 | 13.5 | Knowledge & memory runtime design |
 | 13.6 | User experience and explainability |

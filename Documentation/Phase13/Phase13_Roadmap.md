@@ -24,7 +24,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.0 | KORA Architecture Alignment | ✅ Complete (2026-08-01) |
 | 13.1 | Council Architecture | ✅ Complete (2026-08-01) |
 | 13.2 | Knowledge Architecture | ✅ Complete (2026-08-01) |
-| 13.3 | Agent Orchestration | 📋 Planned |
+| 13.3 | Agent Orchestration | ✅ Complete (2026-08-01) |
 | 13.4 | External Integrations | 📋 Planned |
 | 13.5 | Knowledge & Memory Runtime | 📋 Planned |
 | 13.6 | User Experience | 📋 Planned |
@@ -94,19 +94,19 @@ Earlier draft deliverables mixed memory runtime items into 13.2. Those runtime i
 
 ## Phase 13.3 — Agent Orchestration
 
-**Objective:** Define how KORA coordinates reasoning and specialized capabilities.
+**Objective:** Define how KORA delegates temporary execution work through agents—without conflating agents with Council members or selecting frameworks.
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-### Planned deliverables
+### Deliverables
 
-- Hermes integration
-- Council orchestration
-- Prompt assembly
-- Agent lifecycle
-- Routing
-- Context injection
-- Conversation management
+- `Architecture/ai/Agents.md` — lifecycle, creation rules, boundaries, permissions, types
+- Explicit **Council ≠ Agents** architecture
+- Phase report: `Documentation/Phase13/Agent_Architecture_Model.md`
+
+### Note on earlier roadmap wording
+
+Earlier draft listed Hermes integration, prompt assembly, and conversation management as 13.3 deliverables. Those remain **implementation concerns** for later tracks. Phase 13.3 locks the agent governance model first.
 
 ---
 
