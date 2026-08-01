@@ -108,8 +108,9 @@ Authoritative operating rules: `Council/Dynamics.md`.
 
 - Replacing specialized Council reasoning with a single generalist answer by default
 - Treating Council members as disposable sub-agents or task workers
-- Owning persistent memory storage semantics (see `Memory.md`; runtime in Phase 13.5)
-- Owning knowledge corpus implementation (see `Knowledge.md`; runtime in Phase 13.5)
+- Owning persistent memory storage semantics (see `Memory.md` / `Memory_Runtime.md`)
+- Owning knowledge corpus implementation (see `Knowledge.md` / `Knowledge_Runtime.md`)
+- Owning context compiler implementation (see `Context_Assembly.md`)
 - Owning raw model serving topology (see Models)
 - Owning MCP server implementation details (see MCP)
 - Owning ephemeral execution agents as permanent identity (see Agents)
@@ -190,26 +191,41 @@ If the problem class changes mid-session, KORA may expand or reduce membership a
 
 Context assembly is KORA’s responsibility as the user-facing coordinator. It is **not** a Council member.
 
+Canonical specification: `Context_Assembly.md`.
+
+```text
+User Request
+Conversation Context
+Relevant Memory
+Relevant Knowledge
+Live Tool Evidence
+Council Selection
+Agent Results
+        =
+   KORA Context
+```
+
 Typical context classes:
 
 | Class | Examples | Concern owner (architecture) |
 | --- | --- | --- |
-| Conversational | Current thread, recent turns | Memory / conversation management |
+| Conversational | Current thread, recent turns | Memory / Temporary Context |
 | Decision history | Prior recommendations and outcomes | Memory |
 | Reference | Standards, runbooks, inventories, ADRs | Knowledge |
-| Live environment | Host/service state via tools | Tools (MCP and related) |
+| Live environment | Host/service state via tools | Tools |
+| Agent outputs | Scoped execution results | Agents → evaluated by KORA |
 | Council state | Active members, open disagreements | Council / Dynamics |
 
 Assembly principles:
 
 - Prefer minimum sufficient context.
 - Do not flood deliberation with irrelevant archives.
-- Separate **what was decided / remembered** (memory) from **what is true by reference** (knowledge) from **what is true now in the environment** (tools).
-- Keep provenance labels on assembled fragments (`memory` | `knowledge` | `tool`).
+- Separate **what was remembered** (memory) from **what exists by reference** (knowledge) from **what is true now** (tools).
+- Keep provenance labels on assembled fragments (`memory` | `knowledge` | `tool` | `agent` | …).
 - Prefer Knowledge for standards and baseline claims; Prefer Tools for live state; Prefer Memory for user continuity.
+- Memory/tool/generated content must not silently become Authoritative Knowledge.
 
-Detailed Knowledge Architecture: `Knowledge.md`.  
-Memory boundaries: `Memory.md` (runtime depth in Phase 13.5).
+Detailed runtime: `Memory_Runtime.md`, `Knowledge_Runtime.md`, `Context_Assembly.md`.
 
 ---
 
@@ -225,7 +241,7 @@ Memory holds persistent traces of interactions and decisions so KORA and the Cou
 | Support continuity and learning | Act as live environmental truth without tools |
 | Inform LUMA/IRIS-style historical and pattern work with durable records | Select models or own MCP servers |
 
-See `Memory.md` for memory boundaries. Runtime memory design is Phase 13.5.
+See `Memory.md` for boundaries and `Memory_Runtime.md` for lifecycle/governance.
 
 ---
 
@@ -242,7 +258,8 @@ Knowledge is a **subsystem of KORA**: reference information that answers *what i
 
 **Knowledge informs reasoning. Knowledge does not make decisions.**
 
-Canonical specification: `Knowledge.md`.  
+Canonical specification: `Knowledge.md`  
+Runtime acquisition/validation/promotion: `Knowledge_Runtime.md`  
 The repository remains the primary interim knowledge substrate until runtime ingestion/retrieval is authorized.
 
 ---
@@ -342,9 +359,12 @@ Constraints:
 | `README.md` | Entry point and document index |
 | `Council/Dynamics.md` | Authoritative Council behavior |
 | `Council/Members/` | Member identity, voice, relationships |
-| `Memory.md` | Memory subsystem (what KORA remembers) |
+| `Memory.md` | Memory subsystem boundaries |
+| `Memory_Runtime.md` | Memory lifecycle and governance runtime |
 | `Knowledge.md` | Knowledge subsystem (what information exists) |
-| `Tools.md` | Tool layer architecture (live environment interaction) |
+| `Knowledge_Runtime.md` | Knowledge acquisition/validation/promotion runtime |
+| `Context_Assembly.md` | How KORA builds reasoning context |
+| `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
 | `Models.md` | Inference engines |
@@ -358,13 +378,9 @@ Constraints:
 
 Expected evolution tracks (documentation and design only until later Phase 13 sub-phases authorize implementation):
 
-- Memory runtime and deep memory governance (13.5)
-- Hermes / orchestration integration patterns under Agents.md constraints (implementation later)
-- MCP / tool runtime implementation under Tools.md + MCP.md constraints (after ADRs)
-- Knowledge / memory runtime implementation (13.5) under ADRs for technology choices
-- User experience and explainability surfaces (13.6)
+- User experience and explainability surfaces (13.6), consuming provenance from Context Assembly
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
-- Agent runtimes only after Agents.md governance constraints are preserved
+- Agent/tool/memory/knowledge runtimes only after their architecture constraints are preserved and ADRs select technology
 
 Evolution must preserve:
 

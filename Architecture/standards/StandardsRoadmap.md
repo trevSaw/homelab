@@ -681,18 +681,16 @@ Define how KORA safely interacts with external systems through a governed tool l
 
 # Phase 13.5 — Knowledge & Memory Runtime
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-Implement the production memory system.
+Define memory runtime, knowledge runtime evolution/promotion, and context assembly architecture. No databases, embeddings, or retrieval systems are deployed in this phase.
 
-## Planned deliverables
+## Deliverables
 
-- Long-term memory
-- Semantic retrieval
-- Reflection
-- User profile memory
-- Project memory
-- Knowledge persistence
+- `Architecture/ai/Memory_Runtime.md`
+- `Architecture/ai/Knowledge_Runtime.md`
+- `Architecture/ai/Context_Assembly.md`
+- `Documentation/Phase13/Memory_Runtime_Model.md`
 
 ---
 

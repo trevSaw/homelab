@@ -26,7 +26,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.2 | Knowledge Architecture | ✅ Complete (2026-08-01) |
 | 13.3 | Agent Orchestration | ✅ Complete (2026-08-01) |
 | 13.4 | External Integrations | ✅ Complete (2026-08-01) |
-| 13.5 | Knowledge & Memory Runtime | 📋 Planned |
+| 13.5 | Knowledge & Memory Runtime | ✅ Complete (2026-08-01) |
 | 13.6 | User Experience | 📋 Planned |
 
 ---
@@ -131,18 +131,23 @@ Earlier draft listed concrete MCP servers (Filesystem, Git, Docker, Home Assista
 
 ## Phase 13.5 — Knowledge & Memory Runtime
 
-**Objective:** Implement the production memory system.
+**Objective:** Define how KORA maintains continuity, evolves knowledge, and assembles provenance-labeled context—without selecting databases or deploying runtimes.
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-### Planned deliverables
+### Deliverables
 
-- Long-term memory
-- Semantic retrieval
-- Reflection
-- User profile memory
-- Project memory
-- Knowledge persistence
+- `Architecture/ai/Memory_Runtime.md`
+- `Architecture/ai/Knowledge_Runtime.md`
+- `Architecture/ai/Context_Assembly.md`
+- Memory lifecycle and user-control governance
+- Knowledge promotion pipeline (Candidate → Authoritative)
+- Context assembly priority, conflict, and provenance rules
+- Phase report: `Documentation/Phase13/Memory_Runtime_Model.md`
+
+### Note on earlier roadmap wording
+
+Earlier draft listed production memory implementation items (semantic retrieval, persistence services). Those remain **future implementation** under this architecture—not Phase 13.5 deployment work.
 
 ---
 

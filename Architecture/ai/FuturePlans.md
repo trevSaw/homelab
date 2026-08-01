@@ -19,7 +19,7 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.2 | ✅ Knowledge architecture |
 | 13.3 | ✅ Agent orchestration architecture |
 | 13.4 | ✅ Tool / MCP architecture |
-| 13.5 | Knowledge & memory runtime design |
+| 13.5 | ✅ Memory & knowledge runtime + context assembly |
 | 13.6 | User experience and explainability |
 
 Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  

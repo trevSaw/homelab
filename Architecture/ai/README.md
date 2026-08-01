@@ -14,11 +14,14 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | Document | Purpose |
 | --- | --- |
 | [KORA.md](KORA.md) | Canonical KORA / Brainiac architecture |
+| [Context_Assembly.md](Context_Assembly.md) | How KORA builds reasoning context |
+| [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
+| [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
+| [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |
+| [Knowledge.md](Knowledge.md) | What information exists (reference knowledge) |
 | [Tools.md](Tools.md) | Live environment tools (evidence, not decisions) |
 | [MCP.md](MCP.md) | Conceptual MCP / tool protocol architecture |
 | [Agents.md](Agents.md) | Temporary execution workers (Council ≠ Agents) |
-| [Knowledge.md](Knowledge.md) | What information exists (reference knowledge) |
-| [Memory.md](Memory.md) | What KORA remembers (continuity) |
 | [Council/Dynamics.md](Council/Dynamics.md) | Authoritative Council operating specification |
 | [Council/Selection.md](Council/Selection.md) | How KORA classifies requests and selects participants |
 | [Council/Deliberation.md](Council/Deliberation.md) | Session lifecycle and contribution model |
@@ -31,6 +34,7 @@ Council ops report: `Documentation/Phase13/Council_Operational_Model.md`
 Knowledge report: `Documentation/Phase13/Knowledge_Architecture_Model.md`  
 Agent report: `Documentation/Phase13/Agent_Architecture_Model.md`  
 Tool report: `Documentation/Phase13/Tool_Architecture_Model.md`  
+Runtime report: `Documentation/Phase13/Memory_Runtime_Model.md`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
@@ -68,14 +72,15 @@ KORA is **part of the Council**, not above it.
 | --- | --- | --- |
 | **KORA** | Platform identity, facilitation, synthesis, user-facing intelligence | `KORA.md` |
 | **Council** | Specialized collective reasoning | `Council/` (Dynamics authoritative) |
-| **Memory** | What KORA remembers (conversations, decisions, preferences, lessons) | `Memory.md` |
-| **Knowledge** | What information exists (docs, standards, ADRs, references) | `Knowledge.md` |
+| **Memory** | What KORA remembers (conversations, decisions, preferences, lessons) | `Memory.md` / `Memory_Runtime.md` |
+| **Knowledge** | What information exists (docs, standards, ADRs, references) | `Knowledge.md` / `Knowledge_Runtime.md` |
+| **Context Assembly** | Builds provenance-labeled reasoning context | `Context_Assembly.md` |
 | **Tools** | Live environment — what is true now / what can be interacted with | `Tools.md` / `MCP.md` |
 | **Agents** | Temporary execution — do work (not Council seats) | `Agents.md` |
 | **Models** | Underlying inference engines | `Models.md` |
 | **Future** | Sequencing and open questions | `FuturePlans.md` |
 
-**Memory ≠ Knowledge. Council ≠ Agents. Tools ≠ Decisions.**
+**Memory ≠ Knowledge. Council ≠ Agents. Tools ≠ Decisions.** Context Assembly combines inputs with provenance; nothing in the substrate independently decides.
 
 ---
 
@@ -115,7 +120,10 @@ Do not duplicate member lore into subsystem docs.
 | --- | --- |
 | `KORA.md` | Complete KORA architecture definition |
 | `Knowledge.md` | Knowledge architecture (reference information) |
+| `Knowledge_Runtime.md` | Knowledge runtime (acquisition/validation/promotion) |
 | `Memory.md` | Memory architecture (what KORA remembers) |
+| `Memory_Runtime.md` | Memory runtime (lifecycle/governance) |
+| `Context_Assembly.md` | Context assembly architecture |
 | `Council/README.md` | Council directory entry |
 | `Council/Dynamics.md` | How the Council operates |
 | `Council/Selection.md` | Request classification and member selection |

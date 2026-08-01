@@ -9,7 +9,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Phase13_Roadmap.md](Phase13_Roadmap.md) | Authoritative working roadmap for Phase 13 |
 | [KORA_Architecture_Alignment.md](KORA_Architecture_Alignment.md) | Phase 13.0 KORA / Brainiac documentation alignment report |
 | [Council_Operational_Model.md](Council_Operational_Model.md) | Phase 13.1 Council operational model report |
-| [Tool_Architecture_Model.md](Tool_Architecture_Model.md) | Phase 13.4 Tool / MCP architecture report |
+| [Memory_Runtime_Model.md](Memory_Runtime_Model.md) | Phase 13.5 Memory / Knowledge runtime + context assembly report |
 
 ## Related architecture
 
@@ -17,7 +17,10 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | --- | --- |
 | `Architecture/ai/KORA.md` | Canonical KORA / Brainiac architecture |
 | `Architecture/ai/Knowledge.md` | Knowledge Architecture (Phase 13.2) |
-| `Architecture/ai/Memory.md` | Memory boundaries (runtime in 13.5) |
+| `Architecture/ai/Knowledge_Runtime.md` | Knowledge runtime (Phase 13.5) |
+| `Architecture/ai/Memory.md` | Memory boundaries |
+| `Architecture/ai/Memory_Runtime.md` | Memory runtime (Phase 13.5) |
+| `Architecture/ai/Context_Assembly.md` | Context assembly (Phase 13.5) |
 | `Architecture/ai/Agents.md` | Agent Orchestration Architecture (Phase 13.3) |
 | `Architecture/ai/Tools.md` | Tool Architecture (Phase 13.4) |
 | `Architecture/ai/MCP.md` | Conceptual MCP protocol architecture (Phase 13.4) |
@@ -33,4 +36,5 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 **Phase 13.2:** ✅ Complete — Knowledge Architecture  
 **Phase 13.3:** ✅ Complete — Agent Orchestration  
 **Phase 13.4:** ✅ Complete — Tool / External Integration Architecture  
-**Next focus:** Phase 13.5 — Knowledge & Memory Runtime
+**Phase 13.5:** ✅ Complete — Memory & Knowledge Runtime  
+**Next focus:** Phase 13.6 — User Experience
