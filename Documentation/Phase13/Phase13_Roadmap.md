@@ -28,6 +28,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.4 | External Integrations | ✅ Complete (2026-08-01) |
 | 13.5 | Knowledge & Memory Runtime | ✅ Complete (2026-08-01) |
 | 13.6 | User Experience | ✅ Complete (2026-08-01) |
+| 13.7 | Implementation Architecture Framework | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -169,6 +170,23 @@ Earlier draft listed production memory implementation items (semantic retrieval,
 ### Note on earlier roadmap wording
 
 Earlier draft listed concrete clients (Open WebUI, Hermes UI). Those remain **future implementation candidates** under this UX contract—not Phase 13.6 product selections.
+
+---
+
+## Phase 13.7 — Implementation Architecture Framework
+
+**Objective:** Define how future implementation decisions will be evaluated so technology cannot redefine KORA.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/Implementation_Architecture.md`
+- `Architecture/ai/Technology_Evaluation_ADR_Template.md`
+- Implementation layers, deployment philosophy, evaluation methodology, sequencing
+- Candidate list explicitly marked not-selected (Honcho, Graphfy, ChromaDB, Hermes, Open WebUI)
+- Obsidian boundary (external workflow, not runtime dependency)
+- Phase report: `Documentation/Phase13/Implementation_Architecture_Model.md`
 
 ---
 

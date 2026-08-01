@@ -709,6 +709,20 @@ Define the KORA user experience contract: interaction patterns, Council visibili
 
 ---
 
+# Phase 13.7 — Implementation Architecture Framework
+
+**Status:** ✅ Complete (2026-08-01)
+
+Define implementation layers, deployment philosophy, and technology evaluation methodology so future selections cannot redefine KORA. Candidates (Honcho, Graphfy, ChromaDB, Hermes, Open WebUI) are evaluation targets only—not adopted by this phase.
+
+## Deliverables
+
+- `Architecture/ai/Implementation_Architecture.md`
+- `Architecture/ai/Technology_Evaluation_ADR_Template.md`
+- `Documentation/Phase13/Implementation_Architecture_Model.md`
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned
