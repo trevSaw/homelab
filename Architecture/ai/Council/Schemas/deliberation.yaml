@@ -1,0 +1,42 @@
+# deliberation — conceptual schema
+# Council session deliberation record (Phase 13.1)
+
+deliberation:
+  request_id: string
+  state: enum                   # classifying | assembling_context | selecting | collecting | examining | synthesizing | recommending | evaluating_persistence | closed
+  participants:
+    - member: enum
+      status: enum              # active | deferred | released
+  viewpoints:                   # condensed positions under discussion
+    - id: string
+      summary: string
+      supported_by:
+        - enum
+      opposed_by:
+        - enum
+  disagreements:
+    - topic: string
+      type: enum                # dimensional | factual | preferential | procedural
+      majority_position: string
+      minority_concerns:
+        - string
+      evidence:
+        - string
+      risks:
+        - string
+      trade_offs:
+        - string
+      conditions_for_alternatives:
+        - string
+      resolved: boolean
+  resolved_points:
+    - string
+  unresolved_points:
+    - string
+  selection_revisions:
+    - reason: string
+      added:
+        - enum
+      removed:
+        - enum
+  synthesis_notes: string       # KORA working synthesis (pre-final)
