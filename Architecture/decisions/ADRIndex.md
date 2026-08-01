@@ -20,6 +20,7 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 
 Evaluation method: `Architecture/ai/Implementation_Architecture.md`  
 Template: `Architecture/ai/Technology_Evaluation_ADR_Template.md`  
-Phase report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`
+Phase report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`  
+Vertical slice: `Architecture/ai/Vertical_Slice.md` (Phase 13.9)
 
 No production installs are authorized by Draft/Provisional/Spike ADRs alone.

@@ -23,7 +23,8 @@ Future AI architecture ideas and sequencing for the KORA (Brainiac) platform.
 | 13.6 | ✅ User experience, interaction model, explainability |
 | 13.7 | ✅ Implementation architecture framework |
 | 13.8 | ✅ Technology evaluation ADRs (Hermes, Open WebUI, Honcho, ChromaDB, Graphify) |
-| Next | Constrained thin vertical slice / spikes per ADR-0004–0008 (no unbounded install) |
+| 13.9 | ✅ Thin vertical slice architecture |
+| Next | Constrained spike planning against vertical-slice interfaces (no unbounded install) |
 
 Authoritative working roadmap: `Documentation/Phase13/Phase13_Roadmap.md`.  
 Canonical architecture: `KORA.md`.
