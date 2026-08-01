@@ -9,7 +9,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Phase13_Roadmap.md](Phase13_Roadmap.md) | Authoritative working roadmap for Phase 13 |
 | [KORA_Architecture_Alignment.md](KORA_Architecture_Alignment.md) | Phase 13.0 KORA / Brainiac documentation alignment report |
 | [Council_Operational_Model.md](Council_Operational_Model.md) | Phase 13.1 Council operational model report |
-| [Knowledge_Architecture_Model.md](Knowledge_Architecture_Model.md) | Phase 13.2 Knowledge Architecture report |
+| [Agent_Architecture_Model.md](Agent_Architecture_Model.md) | Phase 13.3 Agent Orchestration report |
 
 ## Related architecture
 
@@ -18,6 +18,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | `Architecture/ai/KORA.md` | Canonical KORA / Brainiac architecture |
 | `Architecture/ai/Knowledge.md` | Knowledge Architecture (Phase 13.2) |
 | `Architecture/ai/Memory.md` | Memory boundaries (runtime in 13.5) |
+| `Architecture/ai/Agents.md` | Agent Orchestration Architecture (Phase 13.3) |
 | `Architecture/ai/Council/` | Council reasoning framework (Phase 13.1 complete) |
 | `Architecture/standards/StandardsRoadmap.md` | Master governance & AI roadmap |
 | `Documentation/Phase12.5/Production_Baseline.md` | Production baseline prerequisite |
@@ -28,4 +29,5 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 **Phase 13.0:** ✅ Complete — KORA Architecture Alignment  
 **Phase 13.1:** ✅ Complete — Council Operational Model  
 **Phase 13.2:** ✅ Complete — Knowledge Architecture  
-**Next focus:** Phase 13.3 — Agent Orchestration
+**Phase 13.3:** ✅ Complete — Agent Orchestration  
+**Next focus:** Phase 13.4 — External Integrations

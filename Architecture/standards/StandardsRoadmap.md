@@ -651,19 +651,16 @@ Define how KORA organizes, retrieves, governs, and supplies reference informatio
 
 # Phase 13.3 — Agent Orchestration
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-Define how KORA coordinates reasoning and specialized capabilities.
+Define how KORA delegates temporary execution work through agents without conflating agents with Council members. No framework or runtime selection in this phase.
 
-## Planned deliverables
+## Deliverables
 
-- Hermes integration
-- Council orchestration
-- Prompt assembly
-- Agent lifecycle
-- Routing
-- Context injection
-- Conversation management
+- `Architecture/ai/Agents.md`
+- Agent lifecycle, creation rules, boundaries, permissions, types
+- Explicit Council ≠ Agents model
+- `Documentation/Phase13/Agent_Architecture_Model.md`
 
 ---
 
