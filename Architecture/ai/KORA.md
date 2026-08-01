@@ -389,9 +389,13 @@ Constraints:
 | `Vertical_Slice.md` | Thin vertical slice E2E workflow (Phase 13.9) |
 | `Prototype_Boundaries.md` | Prototype allowed / forbidden scope |
 | `Integration_Flow.md` | Conceptual layer integration & provenance flow |
+| `Spike_Architecture.md` | Prototype spike planning architecture (Phase 13.10) |
+| `Spike_Acceptance_Criteria.md` | Spike measurable acceptance criteria |
+| `Spike_Test_Plan.md` | Spike test scenarios |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Documentation/Phase13/Technology_Evaluation_ADR_Model.md` | Phase 13.8 evaluation report |
 | `Documentation/Phase13/Vertical_Slice_Model.md` | Phase 13.9 vertical slice report |
+| `Documentation/Phase13/Prototype_Spike_Model.md` | Phase 13.10 prototype spike report |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
@@ -408,6 +412,7 @@ Expected tracks (implementation only when authorized by ADR; architecture first)
 
 - Technology evaluation ADRs for UI / Orchestration / Memory / Knowledge / Tools (Phase 13.8: ADR-0004–0008)
 - Thin vertical slice architecture (Phase 13.9: `Vertical_Slice.md`, `Prototype_Boundaries.md`, `Integration_Flow.md`)
+- Prototype spike planning (Phase 13.10: `Spike_Architecture.md`, acceptance criteria, test plan)
 - Thin vertical slices that preserve Council, Memory, Knowledge, Tools, Agents boundaries
 - Client surfaces satisfying UX / Interaction / Explainability contracts
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
