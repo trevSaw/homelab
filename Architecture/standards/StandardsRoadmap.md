@@ -796,6 +796,22 @@ Define classification-aware retrieval intelligence, strategies, and ranking betw
 
 ---
 
+# Phase 13.13 — Context Intelligence Runtime Validation
+
+**Status:** ✅ Complete (2026-08-01)
+
+Implement and validate classification-driven retrieval, ranking, budgets, and explainability in the isolated non-production KORA spike. Runtime remains outside Git; repository receives documentation and validation only.
+
+## Deliverables
+
+- `Architecture/ai/Context_Intelligence_Validation.md`
+- `Documentation/Phase13/Context_Intelligence_Runtime_Report.md`
+- `Validation/Phase13.13/`
+
+**Result:** 10/10 scenarios passed; Phase 13.11 preference over-fetch eliminated.
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned

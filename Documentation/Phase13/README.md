@@ -15,6 +15,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Prototype_Spike_Model.md](Prototype_Spike_Model.md) | Phase 13.10 Prototype spike planning report |
 | [Runtime_Spike_Report.md](Runtime_Spike_Report.md) | Phase 13.11 Runtime spike execution report |
 | [Context_Intelligence_Model.md](Context_Intelligence_Model.md) | Phase 13.12 Context intelligence architecture report |
+| [Context_Intelligence_Runtime_Report.md](Context_Intelligence_Runtime_Report.md) | Phase 13.13 Runtime validation report |
 
 ## Related architecture
 
@@ -24,6 +25,7 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | `Architecture/ai/Context_Intelligence.md` | Classification-aware retrieval (Phase 13.12) |
 | `Architecture/ai/Retrieval_Strategies.md` | Per-class retrieval policies (Phase 13.12) |
 | `Architecture/ai/Context_Ranking.md` | Ranking / budgets / pruning (Phase 13.12) |
+| `Architecture/ai/Context_Intelligence_Validation.md` | Runtime validation (Phase 13.13) |
 | `Architecture/ai/Context_Assembly.md` | Context assembly |
 | `Architecture/ai/Runtime_Spike_Execution.md` | Runtime spike execution & isolation (Phase 13.11) |
 | `Architecture/ai/Spike_Architecture.md` | Spike planning architecture (Phase 13.10) |
@@ -31,13 +33,14 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | `Architecture/ai/Implementation_Architecture.md` | Implementation framework (Phase 13.7) |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Validation/Phase13.11/` | Runtime spike validation pack |
+| `Validation/Phase13.13/` | Context Intelligence validation pack |
 | `Architecture/ai/Council/` | Council reasoning framework |
 | `Architecture/standards/StandardsRoadmap.md` | Master governance & AI roadmap |
 | `Documentation/Phase12.5/Production_Baseline.md` | Production baseline prerequisite |
 
 ## Status
 
-**Phase 13:** Through 13.12 (context intelligence architecture)  
-**Phase 13.0–13.11:** ✅ Complete  
-**Phase 13.12:** ✅ Complete — Context Intelligence Architecture  
-**Next focus:** Phase 13.13 — implement/test classification-aware retrieval in non-prod spike (or related planning)
+**Phase 13:** Through 13.13 (Context Intelligence runtime validation)
+**Phase 13.0–13.12:** ✅ Complete
+**Phase 13.13:** ✅ Complete — 10/10 scenarios passed
+**Next focus:** Phase 13.14 — runtime contracts and observability (recommended)

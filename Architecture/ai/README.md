@@ -30,6 +30,7 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | [Context_Intelligence.md](Context_Intelligence.md) | Classification-aware retrieval intelligence |
 | [Retrieval_Strategies.md](Retrieval_Strategies.md) | Per-class retrieval policies |
 | [Context_Ranking.md](Context_Ranking.md) | Ranking, budgets, pruning |
+| [Context_Intelligence_Validation.md](Context_Intelligence_Validation.md) | Phase 13.13 runtime validation |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
 | [Memory.md](Memory.md) | What KORA remembers (continuity boundaries) |
@@ -58,7 +59,9 @@ Vertical slice report: `Documentation/Phase13/Vertical_Slice_Model.md`
 Prototype spike report: `Documentation/Phase13/Prototype_Spike_Model.md`  
 Runtime spike report: `Documentation/Phase13/Runtime_Spike_Report.md`  
 Context intelligence report: `Documentation/Phase13/Context_Intelligence_Model.md`  
+Context intelligence runtime report: `Documentation/Phase13/Context_Intelligence_Runtime_Report.md`
 Runtime spike validation: `Validation/Phase13.11/`  
+Context intelligence validation: `Validation/Phase13.13/`
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
