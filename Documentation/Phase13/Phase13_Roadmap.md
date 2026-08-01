@@ -27,7 +27,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.3 | Agent Orchestration | ✅ Complete (2026-08-01) |
 | 13.4 | External Integrations | ✅ Complete (2026-08-01) |
 | 13.5 | Knowledge & Memory Runtime | ✅ Complete (2026-08-01) |
-| 13.6 | User Experience | 📋 Planned |
+| 13.6 | User Experience | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -153,19 +153,22 @@ Earlier draft listed production memory implementation items (semantic retrieval,
 
 ## Phase 13.6 — User Experience
 
-**Objective:** Build the interface through which users interact with KORA.
+**Objective:** Define how humans interact with KORA—trust, transparency, interaction patterns, and explainability—without selecting UI frameworks or clients.
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-### Potential deliverables
+### Deliverables
 
-- Open WebUI
-- Hermes UI
-- Chat interface
-- Council visualization
-- Conversation history
-- Explainability
-- Decision transparency
+- `Architecture/ai/User_Experience.md`
+- `Architecture/ai/Interaction_Model.md`
+- `Architecture/ai/Explainability.md`
+- Council visibility modes (Invisible / Advisory / Full)
+- Memory/knowledge/project/task UX contracts
+- Phase report: `Documentation/Phase13/User_Experience_Model.md`
+
+### Note on earlier roadmap wording
+
+Earlier draft listed concrete clients (Open WebUI, Hermes UI). Those remain **future implementation candidates** under this UX contract—not Phase 13.6 product selections.
 
 ---
 

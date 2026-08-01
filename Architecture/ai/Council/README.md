@@ -23,3 +23,8 @@ KORA is a Council member (Conductor / Chair / First Among Equals)—not a separa
 | [council.yaml](council.yaml) | Configuration stub |
 
 Phase report: `Documentation/Phase13/Council_Operational_Model.md`
+
+### User-facing Council visibility
+
+UX modes for how much Council process the user sees (Invisible / Advisory / Full) are defined in `../User_Experience.md` and `../Interaction_Model.md`.  
+Dynamics remains authoritative for *how* the Council reasons; UX docs define *how much* of that process is shown.

@@ -9,13 +9,16 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Phase13_Roadmap.md](Phase13_Roadmap.md) | Authoritative working roadmap for Phase 13 |
 | [KORA_Architecture_Alignment.md](KORA_Architecture_Alignment.md) | Phase 13.0 KORA / Brainiac documentation alignment report |
 | [Council_Operational_Model.md](Council_Operational_Model.md) | Phase 13.1 Council operational model report |
-| [Memory_Runtime_Model.md](Memory_Runtime_Model.md) | Phase 13.5 Memory / Knowledge runtime + context assembly report |
+| [User_Experience_Model.md](User_Experience_Model.md) | Phase 13.6 User Experience architecture report |
 
 ## Related architecture
 
 | Path | Purpose |
 | --- | --- |
 | `Architecture/ai/KORA.md` | Canonical KORA / Brainiac architecture |
+| `Architecture/ai/User_Experience.md` | UX architecture (Phase 13.6) |
+| `Architecture/ai/Interaction_Model.md` | Interaction patterns (Phase 13.6) |
+| `Architecture/ai/Explainability.md` | Explainability contract (Phase 13.6) |
 | `Architecture/ai/Knowledge.md` | Knowledge Architecture (Phase 13.2) |
 | `Architecture/ai/Knowledge_Runtime.md` | Knowledge runtime (Phase 13.5) |
 | `Architecture/ai/Memory.md` | Memory boundaries |
@@ -30,11 +33,12 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 
 ## Status
 
-**Phase 13:** 🚧 IN PROGRESS (started 2026-08-01)  
+**Phase 13:** 🚧 IN PROGRESS (architecture docs 13.0–13.6 complete; implementation follows)  
 **Phase 13.0:** ✅ Complete — KORA Architecture Alignment  
 **Phase 13.1:** ✅ Complete — Council Operational Model  
 **Phase 13.2:** ✅ Complete — Knowledge Architecture  
 **Phase 13.3:** ✅ Complete — Agent Orchestration  
 **Phase 13.4:** ✅ Complete — Tool / External Integration Architecture  
 **Phase 13.5:** ✅ Complete — Memory & Knowledge Runtime  
-**Next focus:** Phase 13.6 — User Experience
+**Phase 13.6:** ✅ Complete — User Experience  
+**Next focus:** Implementation architecture & technology evaluation (ADRs)

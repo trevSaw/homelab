@@ -171,6 +171,8 @@ Each durable memory should carry conceptual confidence:
 
 **The user controls personal memory.**
 
+UX contract for view/correct/delete/approve flows: `User_Experience.md` and `Interaction_Model.md`.
+
 ---
 
 ## Retrieval Rules (Conceptual)

@@ -696,19 +696,16 @@ Define memory runtime, knowledge runtime evolution/promotion, and context assemb
 
 # Phase 13.6 — User Experience
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-Build the interface through which users interact with KORA.
+Define the KORA user experience contract: interaction patterns, Council visibility modes, memory/knowledge UX, and explainability without raw chain-of-thought. No UI frameworks or clients are selected in this phase.
 
-## Potential deliverables
+## Deliverables
 
-- Open WebUI
-- Hermes UI
-- Chat interface
-- Council visualization
-- Conversation history
-- Explainability
-- Decision transparency
+- `Architecture/ai/User_Experience.md`
+- `Architecture/ai/Interaction_Model.md`
+- `Architecture/ai/Explainability.md`
+- `Documentation/Phase13/User_Experience_Model.md`
 
 ---
 
