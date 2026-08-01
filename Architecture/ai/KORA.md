@@ -392,10 +392,13 @@ Constraints:
 | `Spike_Architecture.md` | Prototype spike planning architecture (Phase 13.10) |
 | `Spike_Acceptance_Criteria.md` | Spike measurable acceptance criteria |
 | `Spike_Test_Plan.md` | Spike test scenarios |
+| `Runtime_Spike_Execution.md` | Runtime spike execution & isolation (Phase 13.11) |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Documentation/Phase13/Technology_Evaluation_ADR_Model.md` | Phase 13.8 evaluation report |
 | `Documentation/Phase13/Vertical_Slice_Model.md` | Phase 13.9 vertical slice report |
 | `Documentation/Phase13/Prototype_Spike_Model.md` | Phase 13.10 prototype spike report |
+| `Documentation/Phase13/Runtime_Spike_Report.md` | Phase 13.11 runtime spike report |
+| `Validation/Phase13.11/` | Phase 13.11 validation pack |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
@@ -413,6 +416,7 @@ Expected tracks (implementation only when authorized by ADR; architecture first)
 - Technology evaluation ADRs for UI / Orchestration / Memory / Knowledge / Tools (Phase 13.8: ADR-0004–0008)
 - Thin vertical slice architecture (Phase 13.9: `Vertical_Slice.md`, `Prototype_Boundaries.md`, `Integration_Flow.md`)
 - Prototype spike planning (Phase 13.10: `Spike_Architecture.md`, acceptance criteria, test plan)
+- Runtime spike execution (Phase 13.11: disposable lab + `Runtime_Spike_Execution.md` / `Validation/Phase13.11/`)
 - Thin vertical slices that preserve Council, Memory, Knowledge, Tools, Agents boundaries
 - Client surfaces satisfying UX / Interaction / Explainability contracts
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles

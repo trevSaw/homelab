@@ -13,40 +13,32 @@ Phase 13 contains all planning, implementation tracking, validation, and documen
 | [Technology_Evaluation_ADR_Model.md](Technology_Evaluation_ADR_Model.md) | Phase 13.8 Technology evaluation ADR report |
 | [Vertical_Slice_Model.md](Vertical_Slice_Model.md) | Phase 13.9 Thin vertical slice architecture report |
 | [Prototype_Spike_Model.md](Prototype_Spike_Model.md) | Phase 13.10 Prototype spike planning report |
+| [Runtime_Spike_Report.md](Runtime_Spike_Report.md) | Phase 13.11 Runtime spike execution report |
 
 ## Related architecture
 
 | Path | Purpose |
 | --- | --- |
 | `Architecture/ai/KORA.md` | Canonical KORA / Brainiac architecture |
-| `Architecture/ai/Implementation_Architecture.md` | Implementation framework (Phase 13.7) |
-| `Architecture/ai/Vertical_Slice.md` | Thin vertical slice workflow (Phase 13.9) |
-| `Architecture/ai/Prototype_Boundaries.md` | Prototype scope (Phase 13.9) |
-| `Architecture/ai/Integration_Flow.md` | Integration & provenance flow (Phase 13.9) |
+| `Architecture/ai/Runtime_Spike_Execution.md` | Runtime spike execution & isolation (Phase 13.11) |
 | `Architecture/ai/Spike_Architecture.md` | Spike planning architecture (Phase 13.10) |
 | `Architecture/ai/Spike_Acceptance_Criteria.md` | Spike acceptance criteria (Phase 13.10) |
 | `Architecture/ai/Spike_Test_Plan.md` | Spike test plan (Phase 13.10) |
+| `Architecture/ai/Vertical_Slice.md` | Thin vertical slice workflow (Phase 13.9) |
+| `Architecture/ai/Prototype_Boundaries.md` | Prototype scope (Phase 13.9) |
+| `Architecture/ai/Integration_Flow.md` | Integration & provenance flow (Phase 13.9) |
+| `Architecture/ai/Implementation_Architecture.md` | Implementation framework (Phase 13.7) |
 | `Architecture/ai/Technology_Evaluation_ADR_Template.md` | Tech evaluation ADR template |
 | `Architecture/decisions/ADR-0004`–`ADR-0008` | Phase 13.8 technology evaluation ADRs |
 | `Architecture/decisions/ADRIndex.md` | ADR index |
-| `Architecture/ai/User_Experience.md` | UX architecture (Phase 13.6) |
-| `Architecture/ai/Interaction_Model.md` | Interaction patterns (Phase 13.6) |
-| `Architecture/ai/Explainability.md` | Explainability contract (Phase 13.6) |
-| `Architecture/ai/Knowledge.md` | Knowledge Architecture (Phase 13.2) |
-| `Architecture/ai/Knowledge_Runtime.md` | Knowledge runtime (Phase 13.5) |
-| `Architecture/ai/Memory.md` | Memory boundaries |
-| `Architecture/ai/Memory_Runtime.md` | Memory runtime (Phase 13.5) |
-| `Architecture/ai/Context_Assembly.md` | Context assembly (Phase 13.5) |
-| `Architecture/ai/Agents.md` | Agent Orchestration Architecture (Phase 13.3) |
-| `Architecture/ai/Tools.md` | Tool Architecture (Phase 13.4) |
-| `Architecture/ai/MCP.md` | Conceptual MCP protocol architecture (Phase 13.4) |
-| `Architecture/ai/Council/` | Council reasoning framework (Phase 13.1 complete) |
+| `Validation/Phase13.11/` | Runtime spike validation pack |
+| `Architecture/ai/Council/` | Council reasoning framework |
 | `Architecture/standards/StandardsRoadmap.md` | Master governance & AI roadmap |
 | `Documentation/Phase12.5/Production_Baseline.md` | Production baseline prerequisite |
 
 ## Status
 
-**Phase 13:** Architecture through 13.10 (spike planning)  
-**Phase 13.0–13.9:** ✅ Complete  
-**Phase 13.10:** ✅ Complete — Prototype Spike Architecture (planning only)  
-**Next focus:** Explicit authorization for non-production runtime spike (or further planning)
+**Phase 13:** Through 13.11 (non-production runtime spike executed)  
+**Phase 13.0–13.10:** ✅ Complete  
+**Phase 13.11:** ✅ Complete — Runtime Spike Execution (lab outside git)  
+**Next focus:** Phase 13.12 — retrieval gating / deeper vendor substrate planning (still non-prod)
