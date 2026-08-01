@@ -15,7 +15,7 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 | [ADR‑0004 – KORA Orchestration (Hermes)](./ADR-0004-KORA-Orchestration-Hermes.md) | Hermes | Orchestration | Provisional Adopt |
 | [ADR‑0005 – Memory Runtime (Honcho)](./ADR-0005-Memory-Runtime-Honcho.md) | Honcho | Memory Runtime | Spike |
 | [ADR‑0006 – Knowledge Retrieval (ChromaDB)](./ADR-0006-Knowledge-Retrieval-ChromaDB.md) | ChromaDB | Knowledge Runtime | Provisional Adopt |
-| [ADR‑0007 – Relationship Layer (Graphiti)](./ADR-0007-Relationship-Layer-Graphiti.md) | Graphiti | Relationship Knowledge | Defer |
+| [ADR‑0007 – Relationship Layer (Graphify)](./ADR-0007-Relationship-Layer-Graphify.md) | Graphify | Relationship Knowledge | Defer |
 | [ADR‑0008 – User Interface (Open WebUI)](./ADR-0008-User-Interface-OpenWebUI.md) | Open WebUI | User Interface | Provisional Adopt |
 
 Evaluation method: `Architecture/ai/Implementation_Architecture.md`  

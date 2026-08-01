@@ -26,12 +26,12 @@ Begin the implementation transition after Phase 13.0–13.7 by evaluating candid
 | ADR-0004 | `Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md` | Hermes | Orchestration |
 | ADR-0005 | `Architecture/decisions/ADR-0005-Memory-Runtime-Honcho.md` | Honcho | Memory Runtime |
 | ADR-0006 | `Architecture/decisions/ADR-0006-Knowledge-Retrieval-ChromaDB.md` | ChromaDB | Knowledge Runtime |
-| ADR-0007 | `Architecture/decisions/ADR-0007-Relationship-Layer-Graphiti.md` | Graphiti | Relationship Knowledge |
+| ADR-0007 | `Architecture/decisions/ADR-0007-Relationship-Layer-Graphify.md` | Graphify | Relationship Knowledge |
 | ADR-0008 | `Architecture/decisions/ADR-0008-User-Interface-OpenWebUI.md` | Open WebUI | User Interface |
 
 Template used: `Architecture/ai/Technology_Evaluation_ADR_Template.md`
 
-Note: Relationship candidate naming corrected to **Graphiti** (supersedes informal “Graphfy”).
+Note: Relationship candidate is **Graphify** ([Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)). An interim mis-label as “Graphiti” was corrected; informal “Graphfy” spelling in earlier docs refers to the same intended product.
 
 ---
 
@@ -43,7 +43,7 @@ Note: Relationship candidate naming corrected to **Graphiti** (supersedes inform
 | Open WebUI | Chat interaction surface only |
 | Honcho | User-modeling memory backend candidate |
 | ChromaDB | Semantic retrieval index (not authority) |
-| Graphiti | Temporal relationship / context graph |
+| Graphify | Repo/docs → queryable relationship knowledge graph (local AST; no vector store) |
 
 ---
 
@@ -54,7 +54,7 @@ Note: Relationship candidate naming corrected to **Graphiti** (supersedes inform
 | ADR-0004 Hermes | **Provisional Adopt** | Preferred orchestration substrate for a constrained spike; KORA identity + Council façade mandatory |
 | ADR-0005 Honcho | **Spike** | Strong User Memory candidate; incomplete Memory_Runtime category/governance coverage |
 | ADR-0006 ChromaDB | **Provisional Adopt** | Preferred retrieval store; repo/ADRs remain SoT |
-| ADR-0007 Graphiti | **Defer** | Strong relationship fit; deferred for operational sequencing until thin slice exists |
+| ADR-0007 Graphify | **Defer** | Preferred relationship candidate; deferred for thin-slice sequencing + skill-vs-runtime packaging validation |
 | ADR-0008 Open WebUI | **Provisional Adopt** | Preferred UI candidate; not KORA; must route via orchestration façade |
 
 No candidate was selected as a final production stack. No Reject outcomes in this wave.
@@ -65,7 +65,7 @@ No candidate was selected as a final production stack. No Reject outcomes in thi
 
 | Item | Why |
 | --- | --- |
-| Graphiti implementation | Operational complexity before thin vertical slice |
+| Graphify implementation | Sequencing + validate skill vs durable KORA Relationship Knowledge runtime |
 | Full Memory Runtime adoption | Honcho spike must prove category/governance mapping first |
 | Docker / compose / installs | Explicitly out of scope for 13.8 |
 | MCP server deployment | Later implementation |
@@ -85,7 +85,7 @@ No candidate was selected as a final production stack. No Reject outcomes in thi
 | Tools ≠ decisions | ✅ MCP/tools remain later; Execute gated |
 | Open WebUI ≠ KORA | ✅ ADR-0008 explicit |
 | Hermes ≠ KORA identity | ✅ ADR-0004 branding/façade constraints |
-| Databases ≠ SoT | ✅ Chroma/Graphiti non-authority |
+| Databases ≠ SoT | ✅ Chroma/Graphify non-authority |
 | Phase 12 infrastructure untouched | ✅ No compose/network changes |
 | Required criteria covered | ✅ Fit, alignment, Council, boundaries, security, governance, maintenance, integration, migration, performance, community, ops, decision |
 
@@ -111,6 +111,6 @@ No candidate was selected as a final production stack. No Reject outcomes in thi
 2. Route Open WebUI → façade (ADR-0008)
 3. Prototype Chroma ingestion metadata contract (ADR-0006) against repo docs
 4. Run Honcho spike mapping to Memory categories (ADR-0005)
-5. Reopen Graphiti (ADR-0007) only after retrieval path exists
+5. Reopen Graphify (ADR-0007) only after retrieval path exists and packaging fit is clear
 
 Still no unbounded automation; still no Phase 12 regression.

@@ -185,7 +185,7 @@ Earlier draft listed concrete clients (Open WebUI, Hermes UI). Those remain **fu
 - `Architecture/ai/Implementation_Architecture.md`
 - `Architecture/ai/Technology_Evaluation_ADR_Template.md`
 - Implementation layers, deployment philosophy, evaluation methodology, sequencing
-- Candidate list explicitly marked not-selected (Honcho, Graphfy, ChromaDB, Hermes, Open WebUI)
+- Candidate list explicitly marked not-selected (Honcho, Graphify, ChromaDB, Hermes, Open WebUI)
 - Obsidian boundary (external workflow, not runtime dependency)
 - Phase report: `Documentation/Phase13/Implementation_Architecture_Model.md`
 
@@ -202,7 +202,7 @@ Earlier draft listed concrete clients (Open WebUI, Hermes UI). Those remain **fu
 - `Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md` — Provisional Adopt
 - `Architecture/decisions/ADR-0005-Memory-Runtime-Honcho.md` — Spike
 - `Architecture/decisions/ADR-0006-Knowledge-Retrieval-ChromaDB.md` — Provisional Adopt
-- `Architecture/decisions/ADR-0007-Relationship-Layer-Graphiti.md` — Defer
+- `Architecture/decisions/ADR-0007-Relationship-Layer-Graphify.md` — Defer
 - `Architecture/decisions/ADR-0008-User-Interface-OpenWebUI.md` — Provisional Adopt
 - Updated `Architecture/decisions/ADRIndex.md`
 - Phase report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`

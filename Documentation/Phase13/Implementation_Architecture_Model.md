@@ -45,7 +45,7 @@ Bridge architecture and implementation by defining:
 
 1. **Technology must fit KORA architecture; architecture is not rewritten for a tool.**
 2. **Six implementation layers:** UI, Orchestration, Memory Runtime, Knowledge Runtime, Relationship Knowledge, Tool Integration.
-3. **Candidates only (not selected):** Open WebUI, Hermes, Honcho, ChromaDB, Graphfy.
+3. **Candidates only (not selected):** Open WebUI, Hermes, Honcho, ChromaDB, Graphify.
 4. **Open WebUI must be evaluated as UI integrating with orchestration—not as a replacement for KORA/Hermes identity.**
 5. **Obsidian is external workflow, not a KORA runtime dependency.**
 6. **All selections require ADRs** using Architecture Fit, Security, Maintenance, Integration, Performance, Migration, Community, Operational Complexity, Governance, Decision.

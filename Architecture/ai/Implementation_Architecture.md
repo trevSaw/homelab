@@ -82,7 +82,7 @@ Layers are **service boundaries in principle**, not a mandate to deploy one cont
 | Orchestration / Council / agents coordination | KORA Orchestration Layer | Hermes (evaluate) |
 | Memory lifecycle | Memory Runtime Layer | Honcho (evaluate) |
 | Semantic retrieval / knowledge store | Knowledge Runtime Layer | ChromaDB (evaluate) |
-| Relationship modeling | Relationship Knowledge Layer | Graphfy (evaluate) |
+| Relationship modeling | Relationship Knowledge Layer | Graphify (evaluate) |
 | Live environment capability | Tool Integration Layer | MCP-compatible tools (evaluate later) |
 | Inference | Models (cross-cutting) | Deferred; `Models.md` |
 
@@ -214,7 +214,8 @@ Evaluate against:
 
 **Purpose:** Represent relationships among services, projects, docs, decisions, infrastructure, and concepts.
 
-**Candidate:** Graphfy  
+**Candidate:** Graphify  
+**Source:** https://github.com/Graphify-Labs/graphify  
 
 Evaluate against:
 
@@ -323,7 +324,7 @@ Reusable template: `Technology_Evaluation_ADR_Template.md`.
 | Candidate | Potential role | Status |
 | --- | --- | --- |
 | Honcho | Memory Runtime | Candidate — not selected |
-| Graphfy | Relationship / graph knowledge | Candidate — not selected |
+| Graphify | Relationship / graph knowledge | Candidate — not selected |
 | ChromaDB | Semantic retrieval / knowledge store | Candidate — not selected |
 | Hermes | Orchestration / agent coordination | Candidate — not selected |
 | Open WebUI | UI layer | Candidate — not selected; must not replace Hermes/KORA |

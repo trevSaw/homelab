@@ -713,7 +713,7 @@ Define the KORA user experience contract: interaction patterns, Council visibili
 
 **Status:** ✅ Complete (2026-08-01)
 
-Define implementation layers, deployment philosophy, and technology evaluation methodology so future selections cannot redefine KORA. Candidates (Honcho, Graphfy, ChromaDB, Hermes, Open WebUI) are evaluation targets only—not adopted by this phase.
+Define implementation layers, deployment philosophy, and technology evaluation methodology so future selections cannot redefine KORA. Candidates (Honcho, Graphify, ChromaDB, Hermes, Open WebUI) are evaluation targets only—not adopted by this phase.
 
 ## Deliverables
 
@@ -727,7 +727,7 @@ Define implementation layers, deployment philosophy, and technology evaluation m
 
 **Status:** ✅ Complete (2026-08-01)
 
-Evaluate first-wave candidates (Hermes, Open WebUI, Honcho, ChromaDB, Graphiti) against KORA contracts. Evaluation and adoption posture only—no installs or production stack finalization.
+Evaluate first-wave candidates (Hermes, Open WebUI, Honcho, ChromaDB, Graphify) against KORA contracts. Evaluation and adoption posture only—no installs or production stack finalization.
 
 ## Deliverables
 
