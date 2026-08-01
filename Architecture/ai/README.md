@@ -14,6 +14,9 @@ KORA is the primary AI entity: user-facing intelligence, Council Chair/Conductor
 | Document | Purpose |
 | --- | --- |
 | [KORA.md](KORA.md) | Canonical KORA / Brainiac architecture |
+| [User_Experience.md](User_Experience.md) | UX philosophy and interaction contract |
+| [Interaction_Model.md](Interaction_Model.md) | User-facing interaction patterns |
+| [Explainability.md](Explainability.md) | Why/evidence/contributors without raw CoT |
 | [Context_Assembly.md](Context_Assembly.md) | How KORA builds reasoning context |
 | [Memory_Runtime.md](Memory_Runtime.md) | Memory lifecycle and governance runtime |
 | [Knowledge_Runtime.md](Knowledge_Runtime.md) | Knowledge acquisition/validation/promotion runtime |
@@ -35,6 +38,7 @@ Knowledge report: `Documentation/Phase13/Knowledge_Architecture_Model.md`
 Agent report: `Documentation/Phase13/Agent_Architecture_Model.md`  
 Tool report: `Documentation/Phase13/Tool_Architecture_Model.md`  
 Runtime report: `Documentation/Phase13/Memory_Runtime_Model.md`  
+UX report: `Documentation/Phase13/User_Experience_Model.md`  
 Production prerequisite: `Documentation/Phase12.5/Production_Baseline.md`
 
 ---
@@ -75,6 +79,9 @@ KORA is **part of the Council**, not above it.
 | **Memory** | What KORA remembers (conversations, decisions, preferences, lessons) | `Memory.md` / `Memory_Runtime.md` |
 | **Knowledge** | What information exists (docs, standards, ADRs, references) | `Knowledge.md` / `Knowledge_Runtime.md` |
 | **Context Assembly** | Builds provenance-labeled reasoning context | `Context_Assembly.md` |
+| **User Experience** | How humans interact with KORA; trust/transparency contract | `User_Experience.md` |
+| **Interaction Model** | User-facing request patterns | `Interaction_Model.md` |
+| **Explainability** | Why/evidence/contributors without raw CoT | `Explainability.md` |
 | **Tools** | Live environment — what is true now / what can be interacted with | `Tools.md` / `MCP.md` |
 | **Agents** | Temporary execution — do work (not Council seats) | `Agents.md` |
 | **Models** | Underlying inference engines | `Models.md` |
@@ -124,6 +131,9 @@ Do not duplicate member lore into subsystem docs.
 | `Memory.md` | Memory architecture (what KORA remembers) |
 | `Memory_Runtime.md` | Memory runtime (lifecycle/governance) |
 | `Context_Assembly.md` | Context assembly architecture |
+| `User_Experience.md` | UX architecture |
+| `Interaction_Model.md` | Interaction patterns |
+| `Explainability.md` | Explainability contract |
 | `Council/README.md` | Council directory entry |
 | `Council/Dynamics.md` | How the Council operates |
 | `Council/Selection.md` | Request classification and member selection |

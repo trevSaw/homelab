@@ -155,11 +155,10 @@ Assembly may refresh after agent tool work or mid-session expansion.
 
 ---
 
-## Non-goals
+## Explainability Hook
 
-- Implementing a context compiler service
-- Choosing RAG/retriever stacks
-- Fixed prompt packing formats
+Assembled context with provenance is the substrate for user-facing explanations (`Explainability.md`).  
+Do not strip provenance during assembly if explainability must remain honest.
 
 ---
 
@@ -172,3 +171,4 @@ Assembly may refresh after agent tool work or mid-session expansion.
 | `Tools.md` / `Agents.md` | Live evidence and mediated results |
 | `Council/Selection.md` / `Deliberation.md` | When/why context is consumed |
 | `Documentation/Phase13/Memory_Runtime_Model.md` | Phase 13.5 report |
+| `Explainability.md` | Consumes provenance-labeled context for user-facing why |

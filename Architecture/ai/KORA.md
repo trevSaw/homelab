@@ -339,6 +339,23 @@ See `Models.md`. Runtime selection is deferred; this phase does not choose techn
 
 ---
 
+## User Experience Relationship
+
+KORA is the primary user-facing intelligence. Interfaces are windows into KORA—not separate products.
+
+UX must expose enough structure for trust:
+
+- Council visibility modes (Invisible / Advisory / Full)
+- Memory inspect/correct/delete
+- Knowledge provenance exploration
+- Tool evidence labeling
+- Agent task boundaries
+- Explainability without raw chain-of-thought
+
+Canonical specs: `User_Experience.md`, `Interaction_Model.md`, `Explainability.md`.
+
+---
+
 ## Relationship to Homelab Environment
 
 KORA operates **on top of** the governed Phase 12 production baseline. The homelab is the environment of truth for infrastructure questions; KORA must not invent a parallel undocumented platform.
@@ -364,6 +381,9 @@ Constraints:
 | `Knowledge.md` | Knowledge subsystem (what information exists) |
 | `Knowledge_Runtime.md` | Knowledge acquisition/validation/promotion runtime |
 | `Context_Assembly.md` | How KORA builds reasoning context |
+| `User_Experience.md` | UX philosophy and interaction contract |
+| `Interaction_Model.md` | User-facing interaction patterns |
+| `Explainability.md` | Why/evidence/contributors without raw CoT |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
 | `Agents.md` | Temporary execution entities |
@@ -376,11 +396,11 @@ Constraints:
 
 (placeholder)
 
-Expected evolution tracks (documentation and design only until later Phase 13 sub-phases authorize implementation):
+Expected evolution tracks (implementation only when authorized; architecture first):
 
-- User experience and explainability surfaces (13.6), consuming provenance from Context Assembly
+- Client surfaces satisfying `User_Experience.md` / `Interaction_Model.md` / `Explainability.md`
+- Agent/tool/memory/knowledge runtimes under existing architecture constraints and ADRs for technology choices
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
-- Agent/tool/memory/knowledge runtimes only after their architecture constraints are preserved and ADRs select technology
 
 Evolution must preserve:
 
