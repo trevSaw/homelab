@@ -191,7 +191,8 @@ If the problem class changes mid-session, KORA may expand or reduce membership a
 
 Context assembly is KORA’s responsibility as the user-facing coordinator. It is **not** a Council member.
 
-Canonical specification: `Context_Assembly.md`.
+Canonical specification: `Context_Assembly.md`.  
+Classification-aware retrieval plan: `Context_Intelligence.md`.
 
 ```text
 User Request
@@ -381,6 +382,9 @@ Constraints:
 | `Knowledge.md` | Knowledge subsystem (what information exists) |
 | `Knowledge_Runtime.md` | Knowledge acquisition/validation/promotion runtime |
 | `Context_Assembly.md` | How KORA builds reasoning context |
+| `Context_Intelligence.md` | Classification-aware retrieval plan (Phase 13.12) |
+| `Retrieval_Strategies.md` | Per-class store query policies |
+| `Context_Ranking.md` | Ranking, budgets, pruning |
 | `User_Experience.md` | UX philosophy and interaction contract |
 | `Interaction_Model.md` | User-facing interaction patterns |
 | `Explainability.md` | Why/evidence/contributors without raw CoT |
@@ -398,6 +402,7 @@ Constraints:
 | `Documentation/Phase13/Vertical_Slice_Model.md` | Phase 13.9 vertical slice report |
 | `Documentation/Phase13/Prototype_Spike_Model.md` | Phase 13.10 prototype spike report |
 | `Documentation/Phase13/Runtime_Spike_Report.md` | Phase 13.11 runtime spike report |
+| `Documentation/Phase13/Context_Intelligence_Model.md` | Phase 13.12 context intelligence report |
 | `Validation/Phase13.11/` | Phase 13.11 validation pack |
 | `Tools.md` | Tool layer architecture |
 | `MCP.md` | Conceptual MCP / protocol integration architecture |
@@ -417,6 +422,7 @@ Expected tracks (implementation only when authorized by ADR; architecture first)
 - Thin vertical slice architecture (Phase 13.9: `Vertical_Slice.md`, `Prototype_Boundaries.md`, `Integration_Flow.md`)
 - Prototype spike planning (Phase 13.10: `Spike_Architecture.md`, acceptance criteria, test plan)
 - Runtime spike execution (Phase 13.11: disposable lab + `Runtime_Spike_Execution.md` / `Validation/Phase13.11/`)
+- Context intelligence (Phase 13.12: classification-aware retrieval, ranking, budgets)
 - Thin vertical slices that preserve Council, Memory, Knowledge, Tools, Agents boundaries
 - Client surfaces satisfying UX / Interaction / Explainability contracts
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles

@@ -1,11 +1,14 @@
 # Context Assembly Architecture
 
-**Status:** Canonical architecture specification (Phase 13.5)  
+**Status:** Canonical architecture specification (Phase 13.5; Context Intelligence integration Phase 13.12)  
 **Platform:** KORA / Brainiac (`KORA.md`)  
-**Inputs:** `Memory_Runtime.md`, `Knowledge_Runtime.md`, `Tools.md`, `Agents.md`, `Council/`
+**Inputs:** `Context_Intelligence.md`, `Retrieval_Strategies.md`, `Context_Ranking.md`, `Memory_Runtime.md`, `Knowledge_Runtime.md`, `Tools.md`, `Agents.md`, `Council/`
 
 Context Assembly is how KORA builds the **reasoning context** for a request.  
 It is a KORA responsibility—not a Council member, agent, or tool.
+
+**Upstream:** Classification → **Context Intelligence** (select/filter/rank plan) → selective retrieval → **Context Assembly** (this document).
+
 
 ---
 
@@ -34,6 +37,9 @@ Relationship view:
 ```text
              KORA
               |
+     Context Intelligence
+     (strategy / rank / prune)
+              |
       Context Assembly
     /        |        \
 Memory   Knowledge   Tools
@@ -43,7 +49,9 @@ Memory   Knowledge   Tools
       Council Reasoning
 ```
 
-None of these inputs independently make the final decision. Council reasons; KORA synthesizes.
+None of these inputs independently make the final decision. Council reasons; KORA synthesizes.  
+Assembly consumes **already strategy-gated and ranked** candidates; it must not re-open ignored stores unless KORA requests expansion.
+
 
 ---
 
@@ -129,7 +137,9 @@ Assembly must prefer **minimum sufficient context**:
 - Expand on demand when Council/KORA identifies missing information
 - Re-assemble if selection/problem class changes mid-deliberation
 
-Exact token/byte budgets are implementation concerns—not fixed here.
+Exact token/byte budgets are implementation concerns—not fixed here.  
+Conceptual budgets and pruning rules: `Context_Ranking.md`. Classification-aware store selection: `Retrieval_Strategies.md`.
+
 
 ---
 
@@ -149,9 +159,10 @@ Exact token/byte budgets are implementation concerns—not fixed here.
 
 Within Council deliberation (`Council/Deliberation.md`):
 
-`Classification → Context Assembly → Member Selection → …`
+`Classification → Context Intelligence → Selective Retrieval → Context Assembly → Member Selection → …`
 
-Assembly may refresh after agent tool work or mid-session expansion.
+Assembly may refresh after agent tool work or mid-session expansion (re-run Intelligence with gap flags).
+
 
 ---
 
@@ -167,8 +178,12 @@ Do not strip provenance during assembly if explainability must remain honest.
 | Document | Role |
 | --- | --- |
 | `Context_Assembly.md` (this file) | How KORA builds reasoning context |
+| `Context_Intelligence.md` | Classification-aware select/filter/rank plan (Phase 13.12) |
+| `Retrieval_Strategies.md` | Per-class store query policies |
+| `Context_Ranking.md` | Ranking, budgets, pruning |
 | `Memory_Runtime.md` / `Knowledge_Runtime.md` | Store runtimes feeding assembly |
 | `Tools.md` / `Agents.md` | Live evidence and mediated results |
 | `Council/Selection.md` / `Deliberation.md` | When/why context is consumed |
 | `Documentation/Phase13/Memory_Runtime_Model.md` | Phase 13.5 report |
+| `Documentation/Phase13/Context_Intelligence_Model.md` | Phase 13.12 report |
 | `Explainability.md` | Consumes provenance-labeled context for user-facing why |
