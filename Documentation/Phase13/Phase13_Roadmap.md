@@ -35,6 +35,7 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | 13.11 | KORA Runtime Spike Execution | ✅ Complete (2026-08-01) |
 | 13.12 | Context Intelligence Architecture | ✅ Complete (2026-08-01) |
 | 13.13 | Context Intelligence Runtime Validation | ✅ Complete (2026-08-01) |
+| 13.14 | Runtime Profiles & Runtime Contracts | ✅ Complete (2026-08-01) |
 
 ---
 
@@ -314,6 +315,26 @@ No Docker, runtime implementation, embeddings/RAG builds, vendor/DB selection ch
 ### Explicit non-deliverables
 
 No production deployment, Phase 12 changes, permanent Memory writes, Knowledge promotion, Graphify, or production secrets.
+
+---
+
+## Phase 13.14 — Runtime Profiles & Runtime Contracts
+
+**Objective:** Define how the same KORA architecture operates across hardware profiles (Solo → Hybrid) with fixed behavioral contracts, observability, and state ownership—without redesigning KORA.
+
+**Status:** ✅ Complete (2026-08-01)
+
+### Deliverables
+
+- `Architecture/ai/Runtime_Profiles.md`
+- `Architecture/ai/Runtime_Contracts.md`
+- `Architecture/ai/Runtime_Observability.md`
+- `Architecture/ai/Runtime_State.md`
+- Phase report: `Documentation/Phase13/Runtime_Profile_Model.md`
+
+### Explicit non-deliverables
+
+No Docker/compose, production deployment, technology selection changes, or redesign of Council/Memory/Knowledge/Tools.
 
 ---
 

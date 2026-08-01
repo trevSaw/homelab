@@ -812,6 +812,24 @@ Implement and validate classification-driven retrieval, ranking, budgets, and ex
 
 ---
 
+# Phase 13.14 — Runtime Profiles & Runtime Contracts
+
+**Status:** ✅ Complete (2026-08-01)
+
+Define Solo / Simulated / Distributed / Hybrid runtime profiles plus behavioral contracts, observability requirements, and state ownership. Architecture only—no production deployment.
+
+## Deliverables
+
+- `Architecture/ai/Runtime_Profiles.md`
+- `Architecture/ai/Runtime_Contracts.md`
+- `Architecture/ai/Runtime_Observability.md`
+- `Architecture/ai/Runtime_State.md`
+- `Documentation/Phase13/Runtime_Profile_Model.md`
+
+**Sequence:** 13.14 → 13.15 Production Implementation Architecture → Phase 14 Production Runtime Implementation.
+
+---
+
 # Phase 14 — AI Automation
 
 **Status:** 🟡 Planned
