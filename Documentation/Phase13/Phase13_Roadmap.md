@@ -22,8 +22,8 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 | Sub-phase | Title | Status |
 | --- | --- | --- |
 | 13.0 | KORA Architecture Alignment | ✅ Complete (2026-08-01) |
-| 13.1 | Council Architecture | 🚧 In Progress |
-| 13.2 | Knowledge Architecture | 📋 Planned |
+| 13.1 | Council Architecture | ✅ Complete (2026-08-01) |
+| 13.2 | Knowledge Architecture | ✅ Complete (2026-08-01) |
 | 13.3 | Agent Orchestration | 📋 Planned |
 | 13.4 | External Integrations | 📋 Planned |
 | 13.5 | Knowledge & Memory Runtime | 📋 Planned |
@@ -48,9 +48,9 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 
 ## Phase 13.1 — Council Architecture
 
-**Objective:** Define the Council as the reasoning framework used by KORA.
+**Objective:** Define the Council as the reasoning framework used by KORA, including operational selection, deliberation, and synthesis mechanics.
 
-**Status:** 🚧 In Progress
+**Status:** ✅ Complete (2026-08-01)
 
 ### Deliverables
 
@@ -59,33 +59,36 @@ Phase 13 shifts the project from infrastructure standardization toward the const
 - Dynamics.md
 - Member specifications
 - Selection rules
-- Voting rules
-- Prompt architecture
+- Voting / deliberative synthesis rules
+- Deliberation lifecycle
+- Prompt architecture (conceptual)
+- Conceptual schemas
 - Canonical member template
 
 ### Working tree
 
-Primary artifacts live under `Architecture/ai/Council/`, including member specifications, dynamics, and supporting configuration.
+Primary artifacts live under `Architecture/ai/Council/`.
 
-Council work begun 2026-08-01 is the starting workstream of Phase 13.
+Phase report: `Documentation/Phase13/Council_Operational_Model.md`
 
 ---
 
 ## Phase 13.2 — Knowledge Architecture
 
-**Objective:** Design how KORA stores, retrieves, indexes, and reasons over information.
+**Objective:** Design how KORA organizes, retrieves, governs, and supplies reference information to Council reasoning—without selecting databases or RAG stacks.
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-### Planned deliverables
+### Deliverables
 
-- Memory architecture
-- Knowledge collections
-- Long-term memory index
-- Retrieval strategy
-- Context assembly
-- Knowledge lifecycle
-- Memory governance
+- `Architecture/ai/Knowledge.md`
+- Knowledge domains, lifecycle, quality, retrieval, governance, and conceptual relationships
+- Memory ≠ Knowledge boundary clarified in `Memory.md` and `KORA.md`
+- Phase report: `Documentation/Phase13/Knowledge_Architecture_Model.md`
+
+### Note on roadmap wording
+
+Earlier draft deliverables mixed memory runtime items into 13.2. Those runtime items remain **Phase 13.5**. Phase 13.2 defines Knowledge Architecture and clarifies Memory boundaries only.
 
 ---
 

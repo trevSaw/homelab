@@ -613,9 +613,9 @@ See `Architecture/ai/KORA.md` and `Documentation/Phase13/KORA_Architecture_Align
 
 # Phase 13.1 — Council Architecture
 
-**Status:** 🚧 In Progress
+**Status:** ✅ Complete (2026-08-01)
 
-Define the Council as the reasoning framework used by KORA.
+Define the Council as the reasoning framework used by KORA, including selection, deliberation lifecycle, deliberative synthesis, conceptual schemas, and prompt architecture.
 
 ## Deliverables
 
@@ -624,29 +624,28 @@ Define the Council as the reasoning framework used by KORA.
 - Dynamics.md
 - Member specifications
 - Selection rules
-- Voting rules
+- Voting / deliberative synthesis rules
+- Deliberation lifecycle
 - Prompt architecture
+- Conceptual schemas
 - Canonical member template
 
-See `Architecture/ai/Council/` and `Documentation/Phase13/Phase13_Roadmap.md`.
+See `Architecture/ai/Council/` and `Documentation/Phase13/Council_Operational_Model.md`.
 
 ---
 
 # Phase 13.2 — Knowledge Architecture
 
-**Status:** 📋 Planned
+**Status:** ✅ Complete (2026-08-01)
 
-Design how KORA stores, retrieves, indexes, and reasons over information.
+Define how KORA organizes, retrieves, governs, and supplies reference information to Council reasoning. Memory remains a separate system; runtime memory/knowledge implementation is Phase 13.5.
 
-## Planned deliverables
+## Deliverables
 
-- Memory architecture
-- Knowledge collections
-- Long-term memory index
-- Retrieval strategy
-- Context assembly
-- Knowledge lifecycle
-- Memory governance
+- `Architecture/ai/Knowledge.md`
+- Knowledge domains, lifecycle, quality model, retrieval, governance, conceptual relationships
+- Memory ≠ Knowledge boundary clarified
+- `Documentation/Phase13/Knowledge_Architecture_Model.md`
 
 ---
 

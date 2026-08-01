@@ -103,7 +103,8 @@ Authoritative operating rules: `Council/Dynamics.md`.
 
 - Replacing specialized Council reasoning with a single generalist answer by default
 - Treating Council members as disposable sub-agents or task workers
-- Owning persistent memory storage semantics (see Memory / Knowledge architecture)
+- Owning persistent memory storage semantics (see `Memory.md`; runtime in Phase 13.5)
+- Owning knowledge corpus implementation (see `Knowledge.md`; runtime in Phase 13.5)
 - Owning raw model serving topology (see Models)
 - Owning MCP server implementation details (see MCP)
 - Owning ephemeral execution agents as permanent identity (see Agents)
@@ -117,8 +118,8 @@ KORA’s cognition is **orchestrated multi-perspective reasoning**, not monolith
 | Layer | Responsibility |
 | --- | --- |
 | **Council** | Reasoning — specialized perspectives under facilitation |
-| **Memory** | Persistent knowledge of past interactions and decisions |
-| **Knowledge** | Reference information (homelab docs, standards, inventories, external corpora) |
+| **Memory** | What KORA remembers — interactions, decisions, preferences, lessons |
+| **Knowledge** | What information exists — reference docs, standards, inventories, curated corpora |
 | **Tools** | External capabilities (MCP and related integrations) |
 | **Agents** | Temporary execution entities for bounded tasks |
 | **Models** | Underlying inference engines |
@@ -127,7 +128,7 @@ KORA’s cognition is **orchestrated multi-perspective reasoning**, not monolith
 
 1. **KORA First** — All AI capabilities exist as part of KORA’s platform identity (Brainiac).
 2. **Council as Cognitive Framework** — Members provide specialized reasoning perspectives.
-3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns.
+3. **Separation of Responsibilities** — Reasoning, memory, knowledge, tools, agents, and models remain distinct concerns. **Memory ≠ Knowledge.**
 4. **Selective Participation** — Not every request requires every member.
 5. **Synthesis over Competition** — Collaboration refines the recommendation; dominance is a failure mode.
 6. **User-First Outcomes** — Internal brilliance that does not help the user is incomplete.
@@ -196,9 +197,12 @@ Assembly principles:
 
 - Prefer minimum sufficient context.
 - Do not flood deliberation with irrelevant archives.
-- Separate **what was decided** (memory) from **what is true by reference** (knowledge) from **what is true now in the environment** (tools).
+- Separate **what was decided / remembered** (memory) from **what is true by reference** (knowledge) from **what is true now in the environment** (tools).
+- Keep provenance labels on assembled fragments (`memory` | `knowledge` | `tool`).
+- Prefer Knowledge for standards and baseline claims; Prefer Tools for live state; Prefer Memory for user continuity.
 
-Detailed designs belong in later Phase 13 knowledge/memory documents; this file defines ownership only.
+Detailed Knowledge Architecture: `Knowledge.md`.  
+Memory boundaries: `Memory.md` (runtime depth in Phase 13.5).
 
 ---
 
@@ -214,21 +218,25 @@ Memory holds persistent traces of interactions and decisions so KORA and the Cou
 | Support continuity and learning | Act as live environmental truth without tools |
 | Inform LUMA/IRIS-style historical and pattern work with durable records | Select models or own MCP servers |
 
-See `Memory.md` for the memory architecture stub and Phase 13.2 / 13.5 for design and runtime.
+See `Memory.md` for memory boundaries. Runtime memory design is Phase 13.5.
 
 ---
 
 ## Knowledge Relationship
 
-Knowledge is **reference information** available to KORA: governed documentation, standards, service facts, and curated corpora.
+Knowledge is a **subsystem of KORA**: reference information that answers *what information exists?*
 
 | Knowledge does | Knowledge does not |
 | --- | --- |
-| Provide authoritative reference material | Substitute for deliberation |
-| Ground recommendations in repository truth | Equal “whatever was said in chat” |
-| Support retrieval and citation patterns | Own Council facilitation |
+| Provide authoritative reference material | Substitute for Council deliberation |
+| Ground recommendations in governed sources | Equal “whatever was said in chat” (that is Memory) |
+| Support retrieval, attribution, and freshness awareness | Own Council facilitation |
+| Inform members with shared source material | Make the final decision |
 
-Knowledge architecture is planned under Phase 13.2. Until then, the repository itself is the primary knowledge substrate.
+**Knowledge informs reasoning. Knowledge does not make decisions.**
+
+Canonical specification: `Knowledge.md`.  
+The repository remains the primary interim knowledge substrate until runtime ingestion/retrieval is authorized.
 
 ---
 
@@ -296,8 +304,8 @@ Constraints:
 | `README.md` | Entry point and document index |
 | `Council/Dynamics.md` | Authoritative Council behavior |
 | `Council/Members/` | Member identity, voice, relationships |
-| `Memory.md` | Memory subsystem |
-| Knowledge (Phase 13.2) | Reference-information architecture |
+| `Memory.md` | Memory subsystem (what KORA remembers) |
+| `Knowledge.md` | Knowledge subsystem (what information exists) |
 | `MCP.md` | Tool / MCP subsystem |
 | `Agents.md` | Temporary execution entities |
 | `Models.md` | Inference engines |
@@ -311,9 +319,10 @@ Constraints:
 
 Expected evolution tracks (documentation and design only until later Phase 13 sub-phases authorize implementation):
 
-- Formal knowledge architecture and memory governance (13.2 / 13.5)
+- Memory runtime and deep memory governance (13.5)
 - Hermes / orchestration integration patterns (13.3)
 - MCP integration set (13.4)
+- Knowledge / memory runtime implementation (13.5) under ADRs for technology choices
 - User experience and explainability surfaces (13.6)
 - Expansion of Council membership or capabilities without violating First Among Equals or Dynamics principles
 
