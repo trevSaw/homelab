@@ -22,6 +22,12 @@ Phase 14 implements the Phase 13 architecture as a production runtime using Dock
 
 ## Status
 
-**Phase 14:** 🟡 Planned — roadmap defined  
-**Complete:** [14.1 Runtime Foundation](Phase14.1/Runtime_Foundation_Report.md)  
-**Next:** 14.2 Memory Runtime
+**Phase 14:** 🟡 In progress
+
+**Complete:** [14.1 Runtime Foundation](Phase14.1/Runtime_Foundation_Report.md)
+
+**Preflight:** [14.2 Preflight](Phase14.2/README.md) (ownership migration + Memory approval UX design)
+
+**Complete:** [14.2A Memory Runtime Foundation](Phase14.2A/README.md) (Event Bus + ephemeral proposals)
+
+**Next:** 14.2B approval integration and durable Memory adapter

@@ -1,6 +1,6 @@
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** 🟡 Planned (roadmap defined; implementation not started)  
+**Status:** 🟡 In progress (14.1 and 14.2A complete)
 
 **Prerequisite:** Phase 13 complete (architecture through 13.15)  
 
@@ -19,7 +19,8 @@
 | Sub-phase | Title | Status |
 | --- | --- | --- |
 | 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
-| 14.2 | Memory Runtime | 🟡 Planned |
+| 14.2A | Event Bus + Memory Runtime Foundation | ✅ Complete (2026-08-03) |
+| 14.2B | Approval integration + durable Memory adapter | 🟡 Planned |
 | 14.3 | Knowledge Runtime (RAG) | 🟡 Planned |
 | 14.4 | Context Assembly Engine | 🟡 Planned |
 | 14.5 | Tool & MCP Runtime | 🟡 Planned |
@@ -74,20 +75,43 @@
 
 **Objective:** Enable governed continuity Memory (Honcho candidate per ADR-0005).
 
+**Preflight (2026-08-01):** ✅ Complete — see `Phase14.2/` (Ollama/Hermes ownership aligned; Open WebUI SoT boundaries confirmed; Memory approval UX designed). Durable Honcho writes **not** enabled in preflight.
+
+### Phase 14.2A — Foundation
+
+**Status:** ✅ Complete (2026-08-03)
+
+**Includes:**
+
+- General internal Event Bus abstraction (ADR-14.2A-001)
+- JSON-serializable event envelopes and in-process adapter
+- Logical Memory Runtime and Approval Engine services in the KORA process
+- Ephemeral proposal model, eligibility, deduplication, expiry, and audit state
+- Read-only proposal status APIs
+- No durable storage or event replay
+
+**Artifacts:** `AI/KORA/Runtime/app/`, `services/{event-bus,memory-runtime}/`,
+`Documentation/Phase14/Phase14.2A/`, `Validation/Phase14.2A/`
+
+### Phase 14.2B — Approval and durable Memory
+
+**Status:** ✅ Complete
+
 **Includes (planned):**
 
-- Memory Runtime service
-- Approval-gated durable writes
-- Preference / personal / project Memory read paths
+- Approval surface and authenticated transition APIs
+- Approval-gated durable adapter (per `Phase14.2/Memory_Approval_UX.md`)
+- Memory proposal status APIs and approval workflow APIs (read-only status access; durable Memory retrieval deferred)
 
 **Maps to:** Rollout Stage 3
 
-**Acceptance (planned):**
+**Acceptance (14.2B completed):**
 
-- Preference strategies query Memory only
-- No silent durable writes
-- Empty Memory valid
-- Memory never labeled as Knowledge
+- Memory proposal status APIs are available (read‑only)
+- Approval workflow APIs are available (read‑only status access)
+- No silent durable writes (writes only after explicit approval)
+- Durable Memory retrieval is deferred to a later phase
+- Explicit approve/reject UX before commit
 
 ---
 
