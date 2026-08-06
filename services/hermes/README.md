@@ -30,9 +30,10 @@ Orchestration **substrate** only (ADR-0004). Hermes is not KORA.
 | Item | Decision |
 | --- | --- |
 | Prior SoT | `/mnt/monarch/appdata/hermes/compose.yml` |
-| New SoT | `services/hermes/compose.yaml` |
+| Compose SoT now | `services/hermes/compose.yaml` (**live ownership migrated 2026-08-01**) |
 | Data | **Preserved** `/mnt/monarch/appdata/hermes` |
-| Action | Refactor compose to governance; keep running |
+| Action | Align live project to repo SoT; thin-layer role retained |
+| Legacy appdata compose | Disabled; see appdata `README.COMPOSE_OWNERSHIP.md` |
 
 ## Exceptions
 

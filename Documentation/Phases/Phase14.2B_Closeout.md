@@ -49,9 +49,9 @@ Provide a governed, durable Memory store that only persists proposals after an e
 **Future follow‑up items**
 
 - Migrate FastAPI lifespan handling to the new `lifespan` API (maintenance).
-- Add optional read‑only API for durable memory (planned for Phase 14.3 Knowledge Runtime).
+- Add optional read‑only API for durable memory (planned for Phase 14.2C Knowledge ingestion).
 - Integrate with Council and Tool runtimes when those phases begin.
 
 **Next phase entry point**
 
-Phase 14.3 – Knowledge Runtime (RAG) will build on the now‑stable Memory foundation. See `Documentation/Phase14/Phase14.3/README.md` for the upcoming roadmap.
+Phase 14.2C — Knowledge ingestion will extend the Memory foundation with ingestion pipelines. Subsequent work includes Phase 14.2D — Production validation before moving to Phase 14.3.

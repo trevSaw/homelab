@@ -3,7 +3,7 @@
 **Status:** Canonical runtime architecture specification (Phase 13.5)  
 **Boundary companion:** `Memory.md`  
 **Platform:** KORA / Brainiac (`KORA.md`)  
-**Related:** `Knowledge_Runtime.md`, `Context_Assembly.md`
+**Related:** `Knowledge_Runtime.md`, `Context_Assembly.md`, ADR-14.2A-001
 
 Memory answers: **What does KORA remember about continuity, interaction, preferences, and prior context?**
 
@@ -39,6 +39,18 @@ It does **not** select databases, embeddings, or memory products.
 | Not automatically authoritative | Still never silently becomes Knowledge |
 
 Raw conversation may feed Capture; only evaluated items become durable Memory categories.
+
+### Phase 14.2A runtime foundation
+
+ADR-14.2A-001 refines Capture into an event-driven interface. Memory Runtime
+subscribes to relevant general Event Bus topics and determines whether an
+explicit candidate is eligible to become an ephemeral proposal. Producers do
+not invoke Memory Runtime directly.
+
+Approval Engine owns proposal transitions. Memory Runtime coordinates the
+proposal lifecycle, while Honcho remains disconnected and reserved for future
+durable persistence. Phase 14.2A implements no storage, replay, retrieval, or
+durable write path.
 
 ---
 

@@ -1,7 +1,8 @@
-"""KORA Solo Runtime — Phase 14.1 Stage 1 conductor.
+"""KORA Solo Runtime — Phase 14.2B approval-gated durable Memory.
 
 OpenAI-compatible façade between Open WebUI and local Ollama.
-Does not implement Memory, Knowledge, Tools, MCP, or multi-member Council.
+Memory proposals are event-driven and approved content persists only through
+the durable-store adapter. Chat retrieval remains disabled.
 """
 
 from __future__ import annotations
@@ -20,6 +21,25 @@ import yaml
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from .approval_engine import InvalidProposalTransitionError, ProposalNotFoundError
+from .auth import (
+    AuthenticationError,
+    AuthorizationError,
+    BearerAuthorizer,
+    MemoryScope,
+    Principal,
+)
+from .commit_coordinator import CommitFailedError, MemoryCommitCoordinator
+from .event_bus import InProcessEventBus
+from .honcho_adapter import durable_store_from_config
+from .memory_models import ProposalStatus
+from .memory_runtime import (
+    EventDrivenMemoryRuntime,
+    MemoryRuntimeConfig,
+    ProposalIneligibleError,
+)
+from .proposal_repository import InMemoryProposalRepository, SQLiteProposalRepository
+
 PRODUCT_NAME = "KORA"
 PRODUCT_AKA = "Brainiac"
 CONFIG_DIR = Path(os.environ.get("KORA_CONFIG_DIR", "/config"))
@@ -31,7 +51,7 @@ LOG_LEVEL = os.environ.get("KORA_LOG_LEVEL", "INFO")
 logging.basicConfig(level=LOG_LEVEL, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("kora")
 
-app = FastAPI(title="KORA Runtime", version="14.1.0", docs_url=None, redoc_url=None)
+app = FastAPI(title="KORA Runtime", version="14.2b.0", docs_url=None, redoc_url=None)
 
 
 def _load_yaml(name: str) -> dict[str, Any]:
@@ -46,6 +66,48 @@ def _load_yaml(name: str) -> dict[str, Any]:
 RUNTIME = _load_yaml("runtime.yaml")
 COUNCIL = _load_yaml("council_registration.yaml")
 HERMES = _load_yaml("hermes_registration.yaml")
+MEMORY_CONFIG = _load_yaml("memory_runtime.yaml")
+
+EVENT_BUS = InProcessEventBus()
+WORKFLOW_CONFIG = MEMORY_CONFIG.get("workflow") or {}
+if WORKFLOW_CONFIG.get("sqlite_enabled", False):
+    database_path = os.environ.get(
+        "KORA_MEMORY_DB_PATH",
+        str(WORKFLOW_CONFIG.get("database_path", "/data/memory-runtime.sqlite3")),
+    )
+    PROPOSAL_REPOSITORY = SQLiteProposalRepository(database_path)
+else:
+    PROPOSAL_REPOSITORY = InMemoryProposalRepository()
+
+MEMORY_RUNTIME = EventDrivenMemoryRuntime(
+    EVENT_BUS,
+    MemoryRuntimeConfig.from_dict(MEMORY_CONFIG),
+    repository=PROPOSAL_REPOSITORY,
+)
+DURABLE_STORE = durable_store_from_config(MEMORY_CONFIG)
+COMMIT_COORDINATOR = MemoryCommitCoordinator(MEMORY_RUNTIME, DURABLE_STORE)
+MEMORY_AUTHORIZER = BearerAuthorizer.from_environment()
+RECOVERY_STATE: dict[str, Any] = {"status": "not_started"}
+
+
+@app.on_event("startup")
+async def recover_memory_runtime() -> None:
+    global RECOVERY_STATE
+    consistency = PROPOSAL_REPOSITORY.consistency_check()
+    try:
+        recovery = await COMMIT_COORDINATOR.recover()
+        RECOVERY_STATE = {
+            "status": "ok" if consistency["status"] == "ok" else "error",
+            "repository": consistency,
+            "recovery": recovery,
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.exception("Memory Runtime recovery failed")
+        RECOVERY_STATE = {
+            "status": "error",
+            "repository": consistency,
+            "error_type": type(exc).__name__,
+        }
 
 
 def _solo_system_prompt() -> str:
@@ -99,7 +161,7 @@ def classify(text: str) -> dict[str, Any]:
         return {
             "label": "preference",
             "confidence": "medium",
-            "rationale": "Preference-like language; Memory Runtime disabled in Stage 1",
+            "rationale": "Preference-like language; Memory capture requires explicit approval",
         }
     if re.search(r"\b(architecture|adr|standard|policy)\b", lower):
         return {
@@ -125,7 +187,7 @@ def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
         "stores_queried": [],
         "stores_skipped": ["memory", "knowledge", "tools", "agents", "graphify"],
         "skip_reasons": {
-            "memory": "Memory Runtime not enabled until Phase 14.2",
+            "memory": "Phase 14.2B durable retrieval is internal and not on chat path",
             "knowledge": "Knowledge Runtime not enabled until Phase 14.3",
             "tools": "Tool Runtime not enabled until Phase 14.5",
             "agents": "Autonomous agents not enabled until Phase 14.7",
@@ -163,7 +225,7 @@ def explainability(
         "identity": PRODUCT_NAME,
         "aka": PRODUCT_AKA,
         "profile": "solo",
-        "phase": "14.1",
+        "phase": "14.2B",
         "classification": classification,
         "retrieval_strategy": strategy["name"],
         "stores_queried": strategy["stores_queried"],
@@ -201,7 +263,7 @@ def _refusal_message(classification: dict[str, Any]) -> str:
         f"Classification: {classification['label']}.\n"
         f"Reason: {classification['rationale']}.\n\n"
         "Execute and Administrative actions require gated approval UX that is not enabled yet. "
-        "Memory, Knowledge, and Tools runtimes are also disabled in Phase 14.1."
+        "Memory retrieval, Knowledge, and Tools remain disabled on the chat path."
     )
 
 
@@ -276,16 +338,132 @@ async def health() -> dict[str, Any]:
         "status": status,
         "product": PRODUCT_NAME,
         "profile": "solo",
-        "phase": "14.1",
+        "phase": "14.2B",
         "ollama": ollama_ok,
         "council_mode": COUNCIL.get("mode", "conceptual"),
         "hermes_role": HERMES.get("role", "thin_execution_layer"),
+        "event_bus": "in_process",
+        "pending_memory_proposals": len(MEMORY_RUNTIME.list_pending()),
+        "memory_repository": PROPOSAL_REPOSITORY.consistency_check(),
+        "memory_recovery": RECOVERY_STATE,
     }
 
 
 @app.get("/v1/models")
 async def list_models() -> dict[str, Any]:
     return {"object": "list", "data": await ollama_tags()}
+
+
+def _authorize(request: Request, scope: MemoryScope) -> Principal:
+    try:
+        return MEMORY_AUTHORIZER.authorize(request.headers.get("Authorization"), scope)
+    except AuthenticationError as exc:
+        raise HTTPException(
+            status_code=401,
+            detail=str(exc),
+            headers={"WWW-Authenticate": "Bearer"},
+        ) from exc
+    except AuthorizationError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+
+
+async def _optional_json(request: Request) -> dict[str, Any]:
+    if not await request.body():
+        return {}
+    body = await request.json()
+    if not isinstance(body, dict):
+        raise HTTPException(status_code=422, detail="request body must be an object")
+    return body
+
+
+@app.get("/v1/memory/proposals")
+async def list_memory_proposals(
+    request: Request,
+    status: ProposalStatus = ProposalStatus.PENDING_REVIEW,
+) -> dict[str, Any]:
+    _authorize(request, MemoryScope.READ)
+    MEMORY_RUNTIME.expire_due()
+    proposals = MEMORY_RUNTIME.list_by_status(status)
+    return {
+        "object": "list",
+        "status": status.value,
+        "data": [proposal.to_dict() for proposal in proposals],
+    }
+
+
+@app.get("/v1/memory/proposals/{proposal_id}")
+async def get_memory_proposal(proposal_id: str, request: Request) -> dict[str, Any]:
+    _authorize(request, MemoryScope.READ)
+    MEMORY_RUNTIME.expire_due()
+    try:
+        return MEMORY_RUNTIME.get_proposal(proposal_id).to_dict()
+    except ProposalNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="proposal not found") from exc
+
+
+@app.post("/v1/memory/proposals/{proposal_id}/approve")
+async def approve_memory_proposal(proposal_id: str, request: Request) -> dict[str, Any]:
+    principal = _authorize(request, MemoryScope.APPROVE)
+    body = await _optional_json(request)
+    try:
+        proposal = await COMMIT_COORDINATOR.approve_and_commit(
+            proposal_id,
+            actor=principal.principal_id,
+            text_final=body.get("text_final"),
+        )
+        return proposal.to_dict()
+    except ProposalNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="proposal not found") from exc
+    except ProposalIneligibleError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except (CommitFailedError, InvalidProposalTransitionError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.post("/v1/memory/proposals/{proposal_id}/reject")
+async def reject_memory_proposal(proposal_id: str, request: Request) -> dict[str, Any]:
+    principal = _authorize(request, MemoryScope.APPROVE)
+    body = await _optional_json(request)
+    try:
+        return MEMORY_RUNTIME.reject(
+            proposal_id,
+            actor=principal.principal_id,
+            reason=body.get("reason"),
+        ).to_dict()
+    except ProposalNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="proposal not found") from exc
+    except InvalidProposalTransitionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.post("/v1/memory/proposals/{proposal_id}/withdraw")
+async def withdraw_memory_proposal(proposal_id: str, request: Request) -> dict[str, Any]:
+    principal = _authorize(request, MemoryScope.OPERATE)
+    body = await _optional_json(request)
+    try:
+        return MEMORY_RUNTIME.withdraw(
+            proposal_id,
+            actor=principal.principal_id,
+            reason=body.get("reason"),
+        ).to_dict()
+    except ProposalNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="proposal not found") from exc
+    except InvalidProposalTransitionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.post("/v1/memory/proposals/{proposal_id}/expire")
+async def expire_memory_proposal(proposal_id: str, request: Request) -> dict[str, Any]:
+    principal = _authorize(request, MemoryScope.OPERATE)
+    try:
+        return MEMORY_RUNTIME.expire(
+            proposal_id,
+            actor=principal.principal_id,
+        ).to_dict()
+    except ProposalNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="proposal not found") from exc
+    except InvalidProposalTransitionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @app.post("/v1/chat/completions")
@@ -444,7 +622,7 @@ async def root() -> dict[str, Any]:
     return {
         "product": PRODUCT_NAME,
         "aka": PRODUCT_AKA,
-        "phase": "14.1",
+        "phase": "14.2B",
         "profile": "solo",
-        "message": "KORA Runtime Stage 1 — OpenAI-compatible conductor façade",
+        "message": "KORA Runtime — Solo conductor with approval-gated durable Memory",
     }

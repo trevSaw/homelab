@@ -15,15 +15,16 @@ related_documents:
 
 Local LLM inference for KORA Stage 1. Product identity remains **KORA**, not Ollama.
 
-## Migration (Phase 14.1)
+## Migration (Phase 14.1 → 14.2 preflight)
 
 | Item | Decision |
 | --- | --- |
-| Live project | Was `/hive/ollama/compose.yml` (ollama + open-webui) |
-| New SoT | `services/ollama/compose.yaml` (ollama only) |
+| Prior live project | `/hive/ollama/compose.yml` (ollama + open-webui) |
+| Compose SoT now | `services/ollama/compose.yaml` (**live ownership migrated 2026-08-01**) |
 | Models volume | **Preserved** `/hive/ollama:/root/.ollama` |
+| Network | `ollama_ollama-net` marked **external** — do not delete |
 | Open WebUI | Split to `services/open-webui` → routes via KORA |
-| Network | Keep project network name `ollama_ollama-net` for Hermes/Honcho dependents |
+| Legacy hive compose | Disabled; see `/hive/ollama/README.COMPOSE_OWNERSHIP.md` |
 
 ## Deployment
 

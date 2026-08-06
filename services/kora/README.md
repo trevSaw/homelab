@@ -4,17 +4,18 @@ document_type: README
 service: kora
 owner: Homelab
 status: Active
-version: 14.1.0
-last_reviewed: 2026-08-01
+version: 14.2A
+last_reviewed: 2026-08-03
 related_documents:
   - Architecture/ai/Production_Architecture.md
   - Architecture/ai/Rollout_Strategy.md
   - Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md
   - Architecture/decisions/ADR-0008-User-Interface-OpenWebUI.md
-  - Validation/Phase14.1/
+  - Architecture/decisions/ADR-14.2A-001-Internal-Event-Bus.md
+  - Validation/Phase14.2A/
 ---
 
-# KORA Runtime (Solo Stage 1)
+# KORA Runtime (Solo + Phase 14.2A foundation)
 
 ## Overview
 
@@ -28,7 +29,8 @@ Open WebUI → http://kora:8080/v1 → Ollama
 
 - Product identity: **KORA** (Brainiac)
 - Hermes is thin/optional and not on the primary Stage 1 chat path
-- Memory / Knowledge / Tools: disabled stubs with skip logging
+- Event Bus / Memory proposals: in-process, ephemeral logical services
+- Memory retrieval / durable writes / Knowledge / Tools: disabled
 
 ## Required external resources
 

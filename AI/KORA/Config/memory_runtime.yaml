@@ -1,0 +1,51 @@
+# Phase 14.2B — approval-gated durable Memory
+
+proposals:
+  expiration_seconds: 604800
+  maximum_pending: 100
+  confidence_threshold: 0.70
+  categories:
+    - user
+    - project
+    - operational
+    - temporary
+
+events:
+  # The bus is general-purpose. Memory Runtime consumes only topics that may
+  # carry an explicit `memory_candidate`; it performs no autonomous extraction.
+  memory_runtime_subscriptions:
+    - memory.candidate
+    - conversation.*
+    - filesystem.*
+    - git.*
+    - calendar.*
+    - email.*
+    - docker.*
+    - graph.*
+  enabled_producers:
+    - kora
+  filtering:
+    require_explicit_memory_candidate: true
+  envelope_schema_version: "1.0"
+
+logging:
+  level: INFO
+  log_payloads: false
+
+workflow:
+  sqlite_enabled: true
+  database_path: /data/memory-runtime.sqlite3
+  approved_content_in_sqlite: false
+  recover_pending_on_startup: true
+
+honcho:
+  enabled: true
+  endpoint: http://honcho-api:8000
+  durable_writes: true
+  workspace_id: kora
+  observer_id: kora
+  observed_id: user
+  timeout_seconds: 10
+  retry_attempts: 3
+  retry_base_seconds: 0.2
+  use_sessions_or_deriver: false

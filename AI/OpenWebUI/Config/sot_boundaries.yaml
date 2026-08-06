@@ -1,0 +1,41 @@
+# Open WebUI ↔ KORA Source-of-Truth boundaries (Phase 14.2 preflight)
+# ADR-0008: Open WebUI is UI only. It is not Memory Runtime or Knowledge Runtime.
+
+open_webui:
+  role: conversational_ui
+  product_identity: KORA  # branding only
+  durable_authority: false
+
+allowed_storage:
+  - path: /mnt/monarch/appdata/open-webui
+    mount: /app/backend/data
+    contents:
+      - webui.db          # UI sessions/chats/users
+      - vector_db         # Open WebUI built-in RAG index (UI-local)
+      - uploads           # UI uploads
+      - cache             # embeddings/whisper/tiktoken caches
+    classification: application_runtime_data
+    kora_sot: false
+
+forbidden_mounts_for_open_webui:
+  - AI/KORA/Memory
+  - AI/KORA/Knowledge
+  - /mnt/monarch/appdata/honcho
+  - /mnt/monarch/appdata/kora   # reserved for KORA runtime; not UI RAG
+  - /hive/ollama               # model store; inference only via KORA→Ollama
+
+kora_sot_paths:
+  memory_runtime: deferred_phase_14.2   # Honcho candidate; approval-gated
+  knowledge_runtime: deferred_phase_14.3
+  architecture_docs: Architecture/ai/
+
+rules:
+  - Open WebUI built-in RAG/memory/embeddings must never be treated as KORA Memory or Knowledge.
+  - No automatic writes from Open WebUI into KORA-controlled knowledge/memory directories.
+  - Durable Memory writes (when enabled) flow: KORA → proposal → user approval → Memory Runtime.
+  - Operators must not symlink or bind-mount UI vector_db into KORA SoT trees.
+
+recommended_operator_posture:
+  - Prefer chat via KORA OpenAI façade (already configured).
+  - Avoid enabling Open WebUI features that present UI RAG as platform knowledge.
+  - Do not configure Open WebUI document collections as the homelab standards corpus.

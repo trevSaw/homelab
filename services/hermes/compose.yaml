@@ -36,7 +36,7 @@ services:
       - traefik.http.services.hermes.loadbalancer.server.port=9119
       - com.homelab.service=hermes
       - com.homelab.domain=ai
-      - com.homelab.phase=14.1
+      - com.homelab.phase=14.2-preflight
       - com.homelab.role=thin-execution-layer
       - com.homelab.logging=central
     healthcheck:
