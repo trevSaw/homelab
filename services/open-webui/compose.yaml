@@ -18,7 +18,12 @@ services:
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
       WEBUI_NAME: ${WEBUI_NAME:-KORA}
       DEFAULT_MODELS: ${DEFAULT_MODELS:-qwen3:8b}
+      # Boundary: Open WebUI internal RAG/embeddings are UI-local only.
+      # They are NOT KORA Memory SoT and MUST NOT mount AI/KORA/{Memory,Knowledge}.
+      # See AI/OpenWebUI/Config/sot_boundaries.yaml and Phase 14.2 preflight docs.
     volumes:
+      # UI application data only (chats, UI vector_db, uploads, caches).
+      # Forbidden: AI/KORA/Memory, AI/KORA/Knowledge, Honcho volumes, /hive/ollama models.
       - /mnt/monarch/appdata/open-webui:/app/backend/data
     networks:
       - ollama-net
@@ -34,7 +39,7 @@ services:
       - traefik.http.services.openwebui.loadbalancer.server.port=8080
       - com.homelab.service=open-webui
       - com.homelab.domain=ai
-      - com.homelab.phase=14.1
+      - com.homelab.phase=14.2-preflight
       - com.homelab.logging=central
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health >/dev/null || exit 1"]

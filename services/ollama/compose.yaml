@@ -1,6 +1,7 @@
-# Ollama — Phase 14.1 governance SoT (inference only)
-# Models preserved at /hive/ollama (existing production bind).
-# Open WebUI moved to services/open-webui (Stage 1 path via KORA).
+# Ollama — Phase 14.1/14.2 governance SoT (inference only)
+# Models preserved at /hive/ollama (production data bind — do not relocate).
+# Compose ownership: services/ollama (NOT /hive/ollama).
+# CRITICAL: ollama_ollama-net is external — never delete this network.
 services:
   ollama:
     image: ollama/ollama:0.30.10
@@ -26,7 +27,7 @@ services:
       - traefik.enable=false
       - com.homelab.service=ollama
       - com.homelab.domain=ai
-      - com.homelab.phase=14.1
+      - com.homelab.phase=14.2-preflight
       - com.homelab.logging=central
     healthcheck:
       test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
@@ -41,19 +42,20 @@ services:
     shm_size: "4gb"
     deploy:
       resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+      #  reservations:
+       #   devices:
+        #    - driver: nvidia
+         #     count: all
+          #    capabilities: [gpu]
         limits:
-          cpus: "8.0"
-          memory: 12G
+          cpus: "12.0"
+          memory: 48G
 
 networks:
-  # Preserve existing production network name used by Hermes/Honcho/code-server.
+  # EXTERNAL — shared by kora, open-webui, hermes, honcho, code-server, odysseus.
+  # Must never be removed by compose down.
   ollama-net:
+    external: true
     name: ollama_ollama-net
-    driver: bridge
   ai-assistant:
     external: true

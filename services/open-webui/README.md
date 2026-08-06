@@ -49,6 +49,15 @@ docker compose -f compose.yaml up -d
 
 Requires `kora` healthy on `ollama_ollama-net` before chat works.
 
+## SoT boundaries
+
+Open WebUI data at `/mnt/monarch/appdata/open-webui` is **UI application runtime
+data only** (including built-in `vector_db` / embeddings caches). It is **not**
+KORA Memory or Knowledge Source of Truth.
+
+See `AI/OpenWebUI/Config/sot_boundaries.yaml` and
+`Documentation/Phase14/Phase14.2/Preflight_Assessment.md`.
+
 ## Exceptions
 
 | Item | Exception |

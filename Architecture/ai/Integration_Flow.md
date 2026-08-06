@@ -2,7 +2,7 @@
 
 **Status:** Canonical integration-flow specification (Phase 13.9)  
 **Platform:** KORA / Brainiac (`KORA.md`)  
-**Companions:** `Vertical_Slice.md`, `Prototype_Boundaries.md`, ADR-0004–0008  
+**Companions:** `Vertical_Slice.md`, `Prototype_Boundaries.md`, ADR-0004–0008, ADR-14.2A-001
 **Rule:** Describe conceptual interactions. Technology candidates implement layers; they do not redefine ownership.
 
 ---
@@ -12,6 +12,18 @@
 Define how layers interact in the thin vertical slice: what data moves, what must not move, who owns each concern, and how provenance is preserved.
 
 Candidate technologies appear only as **ADR-governed layer mappings**, not as required installs.
+
+## Phase 14.2A transport refinement
+
+ADR-14.2A-001 adopts a general internal Event Bus as KORA's canonical
+component-messaging mechanism. The invocation arrows in this Phase 13 document
+remain logical ownership flows; implementations carry internal events through
+the Event Bus instead of coupling producers directly to consumers.
+
+The bus owns delivery and decoupling only. KORA still owns orchestration and
+policy, and each receiving component retains its established responsibility.
+The initial adapter is volatile and in-process; service boundaries are
+architectural rather than deployment boundaries.
 
 ---
 
@@ -46,6 +58,7 @@ Reading tip: arrows mean “invokes / requests,” not “is replaced by.”
 | User Interface | Open WebUI (0008) | Capture request; render recommendation/explanation | Intelligence, Council, SoT |
 | Orchestration | Hermes (0004) | Routing, agent spawn hooks, tool transport | KORA brand; Council rules |
 | Conductor / synthesis | **KORA** | Classification, assembly, synthesis, explainability | Vendor product identity |
+| Internal messaging | Event Bus (14.2A-001) | Envelope delivery, subscriptions, correlation | Policy, domain decisions, SoT |
 | Council | Council docs | Deliberation contributions | Execution; tool authority |
 | Memory Runtime | Honcho spike (0005) | Continuity retrieval/governance | Knowledge authority |
 | Knowledge Runtime | ChromaDB (0006) | Semantic retrieval index | Document SoT / promotion |
@@ -61,8 +74,8 @@ Reading tip: arrows mean “invokes / requests,” not “is replaced by.”
 | UI → Orchestration | User message, session id, UI mode flags | Request envelope |
 | Orchestration → KORA | Same envelope + transport metadata | Conductor invocation |
 | KORA → Classification/Selection | Request + conversation Temporary Context | Internal KORA process |
-| KORA → Memory Runtime | Retrieval query + scope (user/project/…) | Memory query |
-| Memory Runtime → KORA | Memory hits + provenance/confidence | Memory result set (may be empty) |
+| KORA → Event Bus → Memory Runtime | Candidate/retrieval message + governed scope | Serializable event envelope |
+| Memory Runtime → Event Bus → KORA | Proposal status or future Memory result | Serializable event envelope |
 | KORA → Knowledge Runtime | Retrieval query + filters (authority/freshness) | Knowledge query |
 | Knowledge Runtime → KORA | Knowledge hits + provenance/authority/freshness | Knowledge result set (may be empty) |
 | KORA → Context Assembly | Request, selection, memory, knowledge, optional tool/agent | Assembled context package |
@@ -99,6 +112,7 @@ User owns ....... personal Memory control rights; final accept/reject of advice
 UI owns ......... presentation and capture only
 Orchestration owns transport/runtime substrate, not policy
 KORA owns ....... classification, selection orchestration, assembly, synthesis, explanation
+Event Bus owns ... internal envelope delivery and subscriptions, not policy
 Council owns .... specialty judgment contributions under Dynamics
 Memory Runtime owns continuity artifacts under Memory_Runtime governance
 Knowledge Runtime owns retrieval over governed sources; not promotion authority
@@ -131,10 +145,11 @@ For Phase 13.9 validation (and the first allowed spike later):
 
 ```text
 Open WebUI → Hermes → KORA → Council
-                 ↘ Memory Runtime (read)
-                 ↘ Knowledge Runtime (read)
-                 ↘ Tools (omit by default)
-                 ↘ Graphify (omit; deferred)
+                         ↓
+                    Event Bus
+                 ↙       ↓       ↘
+ Memory Runtime (read) Knowledge  Tools (optional)
+                 Graphify remains omitted/deferred
 ```
 
 Write paths (Memory durable store, Knowledge promotion, tool Execute) remain **out of default path**.

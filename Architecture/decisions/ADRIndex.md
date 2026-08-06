@@ -18,6 +18,13 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 | [ADR‑0007 – Relationship Layer (Graphify)](./ADR-0007-Relationship-Layer-Graphify.md) | Graphify | Relationship Knowledge | Defer |
 | [ADR‑0008 – User Interface (Open WebUI)](./ADR-0008-User-Interface-OpenWebUI.md) | Open WebUI | User Interface | Provisional Adopt |
 
+### KORA implementation architecture (Phase 14)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR-14.2A-001 – Internal Event Bus](./ADR-14.2A-001-Internal-Event-Bus.md) | General KORA internal messaging | Approved |
+| [ADR-14.2B-001 – Approval-Gated Durable Memory](./ADR-14.2B-001-Approval-Gated-Durable-Memory.md) | Honcho adapter + workflow recovery + API authorization | Approved |
+
 Evaluation method: `Architecture/ai/Implementation_Architecture.md`  
 Template: `Architecture/ai/Technology_Evaluation_ADR_Template.md`  
 Phase report: `Documentation/Phase13/Technology_Evaluation_ADR_Model.md`  

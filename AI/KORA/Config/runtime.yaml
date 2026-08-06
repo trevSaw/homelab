@@ -1,8 +1,8 @@
-# KORA Solo Runtime configuration — Phase 14.1 Stage 1
+# KORA Solo Runtime configuration — Phase 14.2B
 # Architecture: Architecture/ai/Runtime_Profiles.md (Solo)
 
 profile: solo
-phase: "14.1"
+phase: "14.2B"
 product:
   name: KORA
   aka: Brainiac
@@ -22,20 +22,22 @@ inference:
 
 pipeline:
   # Solo Stage 1: classify → strategy → assemble → synthesize → explain
-  # Memory / Knowledge / Tools backends are registered as disabled stubs.
+  # Durable Memory writes are approval-gated; retrieval is internal-only.
   classify: true
   context_intelligence: true
   context_assembly: true
   council: solo_conceptual
   explainability: true
-  memory_runtime: disabled
+  event_bus: in_process
+  memory_runtime: approval_gated_durable
+  memory_retrieval: internal_only
   knowledge_runtime: disabled
   tool_runtime: disabled
 
 governance:
   refuse_execute: true
   refuse_administrative: true
-  durable_memory_writes: false
+  durable_memory_writes: approval_only
   knowledge_promotion: false
 
 observability:

@@ -1,11 +1,11 @@
-# KORA Runtime — Phase 14.1 Solo Stage 1
+# KORA Runtime — Phase 14.2B approval-gated durable Memory
 # Path: User → Open WebUI → KORA → Ollama
 services:
   kora:
     build:
       context: ../../AI/KORA/Runtime
       dockerfile: Dockerfile
-    image: homelab/kora-runtime:14.1.0
+    image: homelab/kora-runtime:14.2b.0
     container_name: kora
     hostname: kora
     restart: unless-stopped
@@ -20,6 +20,7 @@ services:
       KORA_LOG_LEVEL: ${KORA_LOG_LEVEL:-INFO}
       KORA_CONFIG_DIR: /config
       KORA_PROMPTS_DIR: /prompts
+      KORA_MEMORY_DB_PATH: ${KORA_MEMORY_DB_PATH:-/data/memory-runtime.sqlite3}
     volumes:
       - ../../AI/KORA/Config:/config:ro
       - ../../AI/KORA/Prompts:/prompts:ro
@@ -31,7 +32,7 @@ services:
       - traefik.enable=false
       - com.homelab.service=kora
       - com.homelab.domain=ai
-      - com.homelab.phase=14.1
+      - com.homelab.phase=14.2B
       - com.homelab.profile=solo
       - com.homelab.logging=central
     healthcheck:

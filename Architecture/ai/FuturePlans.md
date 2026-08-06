@@ -24,7 +24,9 @@ Canonical architecture: `KORA.md`.
 | Track | Focus |
 | --- | --- |
 | 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
-| 14.2 | Memory Runtime |
+| 14.2 preflight | Ownership migration + Memory approval UX design | ✅ Complete (2026-08-01) |
+| 14.2A | Event Bus + Memory proposal foundation | ✅ Complete (2026-08-03) |
+| 14.2B | Approval integration + durable Memory adapter | 🟡 Planned |
 | 14.3 | Knowledge Runtime (RAG) |
 | 14.4 | Context Assembly Engine |
 | 14.5 | Tool & MCP Runtime |
@@ -33,7 +35,9 @@ Canonical architecture: `KORA.md`.
 
 Authoritative Phase 14 roadmap: `Documentation/Phase14/Phase14_Roadmap.md`.
 
-**Boundary:** Phase 13 = architecture. Phase 14 = implementation under those contracts.
+**Boundary:** Phase 13 = architecture. Phase 14 = implementation under those
+contracts. ADR-14.2A-001 additively refines internal component communication
+through the Event Bus without transferring ownership.
 
 ## Later
 

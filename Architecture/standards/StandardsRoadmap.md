@@ -852,7 +852,7 @@ Define production topology, logical service cards, staged rollout, and operation
 
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** 🟡 In Progress (14.1 complete)
+**Status:** 🟡 In Progress (14.1 and 14.2A complete)
 
 **Primary Goal:** Implement KORA production runtime in staged slices without rewriting Phase 13 architecture.
 
@@ -865,7 +865,8 @@ Implement Phase 13 architecture as production runtime (Docker Compose substrate)
 | Sub-phase | Title | Status |
 | --- | --- | --- |
 | 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
-| 14.2 | Memory Runtime | Planned |
+| 14.2A | Event Bus + Memory Runtime Foundation | ✅ Complete (2026-08-03) |
+| 14.2B | Approval integration + durable Memory adapter | Planned |
 | 14.3 | Knowledge Runtime (RAG) | Planned |
 | 14.4 | Context Assembly Engine | Planned |
 | 14.5 | Tool & MCP Runtime | Planned |
