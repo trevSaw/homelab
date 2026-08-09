@@ -1,11 +1,11 @@
-# KORA Runtime — Phase 14.2B approval-gated durable Memory
-# Path: User → Open WebUI → KORA → Ollama
+# KORA Runtime — Phase 14.3 Knowledge Platform
+# Path: User → Open WebUI → KORA → Knowledge (Chroma) → Ollama
 services:
   kora:
     build:
-      context: ../../AI/KORA/Runtime
-      dockerfile: Dockerfile
-    image: homelab/kora-runtime:14.2b.0
+      context: ../../AI/KORA
+      dockerfile: Runtime/Dockerfile
+    image: homelab/kora-runtime:14.3.0
     container_name: kora
     hostname: kora
     restart: unless-stopped
@@ -21,6 +21,10 @@ services:
       KORA_CONFIG_DIR: /config
       KORA_PROMPTS_DIR: /prompts
       KORA_MEMORY_DB_PATH: ${KORA_MEMORY_DB_PATH:-/data/memory-runtime.sqlite3}
+      KORA_EMBEDDING_MODEL: ${KORA_EMBEDDING_MODEL:-nomic-embed-text}
+      KORA_CHROMA_BASE_URL: ${KORA_CHROMA_BASE_URL:-http://chromadb:8000}
+      KORA_CHROMA_COLLECTION: ${KORA_CHROMA_COLLECTION:-kora_knowledge}
+      KORA_INDEX_METADATA_DB_PATH: ${KORA_INDEX_METADATA_DB_PATH:-/data/knowledge-index.sqlite3}
     volumes:
       - ../../AI/KORA/Config:/config:ro
       - ../../AI/KORA/Prompts:/prompts:ro
@@ -32,7 +36,7 @@ services:
       - traefik.enable=false
       - com.homelab.service=kora
       - com.homelab.domain=ai
-      - com.homelab.phase=14.2B
+      - com.homelab.phase=14.3
       - com.homelab.profile=solo
       - com.homelab.logging=central
     healthcheck:
@@ -56,6 +60,37 @@ services:
         limits:
           cpus: "1.0"
           memory: 512M
+
+  # Chroma is vector index / retrieval infrastructure — never Knowledge authority.
+  chromadb:
+    image: docker.io/chromadb/chroma:latest
+    container_name: kora-chromadb
+    hostname: kora-chromadb
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      - kora-chroma-data:/chroma/chroma
+    networks:
+      - ollama-net
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=chromadb
+      - com.homelab.domain=ai
+      - com.homelab.phase=14.3
+      - com.homelab.profile=solo
+      - com.homelab.logging=central
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+volumes:
+  kora-chroma-data:
 
 networks:
   ollama-net:

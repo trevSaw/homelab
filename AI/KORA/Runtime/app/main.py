@@ -1,8 +1,9 @@
-"""KORA Solo Runtime — Phase 14.2B approval-gated durable Memory.
+"""KORA Solo Runtime — Phase 14.3 Knowledge Platform.
 
 OpenAI-compatible façade between Open WebUI and local Ollama.
 Memory proposals are event-driven and approved content persists only through
-the durable-store adapter. Chat retrieval remains disabled.
+the durable-store adapter. Knowledge retrieval is classification-driven and
+remains separate from Memory.
 """
 
 from __future__ import annotations
@@ -40,6 +41,13 @@ from .memory_runtime import (
 )
 from .proposal_repository import InMemoryProposalRepository, SQLiteProposalRepository
 
+try:
+    from Knowledge.config import KnowledgeConfig
+    from Knowledge.service import build_knowledge_service
+except ImportError:  # pragma: no cover - non-Runtime environments
+    KnowledgeConfig = None  # type: ignore[assignment,misc]
+    build_knowledge_service = None  # type: ignore[assignment]
+
 PRODUCT_NAME = "KORA"
 PRODUCT_AKA = "Brainiac"
 CONFIG_DIR = Path(os.environ.get("KORA_CONFIG_DIR", "/config"))
@@ -51,7 +59,7 @@ LOG_LEVEL = os.environ.get("KORA_LOG_LEVEL", "INFO")
 logging.basicConfig(level=LOG_LEVEL, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("kora")
 
-app = FastAPI(title="KORA Runtime", version="14.2b.0", docs_url=None, redoc_url=None)
+app = FastAPI(title="KORA Runtime", version="14.3.0", docs_url=None, redoc_url=None)
 
 
 def _load_yaml(name: str) -> dict[str, Any]:
@@ -67,6 +75,7 @@ RUNTIME = _load_yaml("runtime.yaml")
 COUNCIL = _load_yaml("council_registration.yaml")
 HERMES = _load_yaml("hermes_registration.yaml")
 MEMORY_CONFIG = _load_yaml("memory_runtime.yaml")
+KNOWLEDGE_CONFIG = _load_yaml("knowledge_runtime.yaml")
 
 EVENT_BUS = InProcessEventBus()
 WORKFLOW_CONFIG = MEMORY_CONFIG.get("workflow") or {}
@@ -88,6 +97,20 @@ DURABLE_STORE = durable_store_from_config(MEMORY_CONFIG)
 COMMIT_COORDINATOR = MemoryCommitCoordinator(MEMORY_RUNTIME, DURABLE_STORE)
 MEMORY_AUTHORIZER = BearerAuthorizer.from_environment()
 RECOVERY_STATE: dict[str, Any] = {"status": "not_started"}
+
+if KnowledgeConfig is not None and build_knowledge_service is not None:
+    _knowledge_cfg = KnowledgeConfig.from_dict(KNOWLEDGE_CONFIG).with_env_overrides()
+    from Knowledge.storage.in_memory import InMemoryKnowledgeStore
+
+    KNOWLEDGE_STORE = InMemoryKnowledgeStore()
+    KNOWLEDGE_SERVICE = build_knowledge_service(
+        config=_knowledge_cfg,
+        store=KNOWLEDGE_STORE,
+        event_bus=EVENT_BUS,
+    )
+else:  # pragma: no cover - non-Runtime environments
+    KNOWLEDGE_STORE = None
+    KNOWLEDGE_SERVICE = None
 
 
 @app.on_event("startup")
@@ -177,23 +200,34 @@ def classify(text: str) -> dict[str, Any]:
 
 
 def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
-    """Context Intelligence stub — all external stores skipped in Stage 1."""
+    """Context Intelligence stub — Phase 14.3 Knowledge retrieval is enabled for
+    architecture-style queries; Memory and Tools remain off the chat path."""
     label = classification["label"]
+    query_knowledge = label == "architecture"
+    query_memory = False
+    query_tools = False
+    stores_queried: list[str] = []
+    stores_skipped = ["memory", "tools", "agents", "graphify"]
+    skip_reasons: dict[str, str] = {
+        "memory": "Memory retrieval is internal and not on the chat path",
+        "tools": "Tool Runtime not enabled until Phase 14.5",
+        "agents": "Autonomous agents not enabled until a later phase",
+        "graphify": "Graphify is planned for Phase 14.4; not implemented",
+    }
+    if query_knowledge:
+        stores_queried.append("knowledge")
+    else:
+        stores_skipped.append("knowledge")
+        skip_reasons["knowledge"] = "Knowledge retrieval not selected for this classification"
     return {
         "name": f"solo_stage1_{label}",
-        "query_memory": False,
-        "query_knowledge": False,
-        "query_tools": False,
-        "stores_queried": [],
-        "stores_skipped": ["memory", "knowledge", "tools", "agents", "graphify"],
-        "skip_reasons": {
-            "memory": "Phase 14.2B durable retrieval is internal and not on chat path",
-            "knowledge": "Knowledge Runtime not enabled until Phase 14.3",
-            "tools": "Tool Runtime not enabled until Phase 14.5",
-            "agents": "Autonomous agents not enabled until Phase 14.7",
-            "graphify": "ADR-0007 deferred",
-        },
-        "budgets": {"memory": 0, "knowledge": 0, "tools": 0, "conversation": 1},
+        "query_memory": query_memory,
+        "query_knowledge": query_knowledge,
+        "query_tools": query_tools,
+        "stores_queried": stores_queried,
+        "stores_skipped": stores_skipped,
+        "skip_reasons": skip_reasons,
+        "budgets": {"memory": 0, "knowledge": 1 if query_knowledge else 0, "tools": 0, "conversation": 1},
         "confidence_posture": "conversation_only",
     }
 
@@ -225,7 +259,7 @@ def explainability(
         "identity": PRODUCT_NAME,
         "aka": PRODUCT_AKA,
         "profile": "solo",
-        "phase": "14.2B",
+        "phase": "14.3",
         "classification": classification,
         "retrieval_strategy": strategy["name"],
         "stores_queried": strategy["stores_queried"],
@@ -255,6 +289,33 @@ def _user_text(messages: list[dict[str, Any]]) -> str:
                 return " ".join(parts)
             return str(content)
     return ""
+
+
+async def _retrieve_knowledge_context(
+    user_text: str,
+    strategy: dict[str, Any],
+    classification: dict[str, Any],
+) -> dict[str, Any]:
+    """Phase 14.3 — retrieve Knowledge context when the strategy selects it.
+
+    Degrades gracefully: any failure yields empty context so the chat path is
+    never broken by Knowledge backend unavailability.
+    """
+    if not strategy.get("query_knowledge"):
+        return {"text": "", "status": "skipped", "sources": [], "chunks": []}
+    if KNOWLEDGE_SERVICE is None:
+        return {"text": "", "status": "disabled", "sources": [], "chunks": []}
+    try:
+        context = await KNOWLEDGE_SERVICE.build_context(user_text)
+        return {
+            "text": context.knowledge_text,
+            "status": context.status,
+            "sources": list(context.sources),
+            "chunks": [chunk for chunk in context.chunks],
+        }
+    except Exception as exc:  # noqa: BLE001
+        log.warning("knowledge retrieval degraded during chat turn: %s", exc)
+        return {"text": "", "status": "degraded", "sources": [], "chunks": []}
 
 
 def _refusal_message(classification: dict[str, Any]) -> str:
@@ -338,7 +399,7 @@ async def health() -> dict[str, Any]:
         "status": status,
         "product": PRODUCT_NAME,
         "profile": "solo",
-        "phase": "14.2B",
+        "phase": "14.3",
         "ollama": ollama_ok,
         "council_mode": COUNCIL.get("mode", "conceptual"),
         "hermes_role": HERMES.get("role", "thin_execution_layer"),
@@ -346,7 +407,18 @@ async def health() -> dict[str, Any]:
         "pending_memory_proposals": len(MEMORY_RUNTIME.list_pending()),
         "memory_repository": PROPOSAL_REPOSITORY.consistency_check(),
         "memory_recovery": RECOVERY_STATE,
+        "knowledge": await _knowledge_health(),
     }
+
+
+async def _knowledge_health() -> dict[str, Any]:
+    if KNOWLEDGE_SERVICE is None:
+        return {"status": "disabled", "phase": "14.3"}
+    try:
+        return await KNOWLEDGE_SERVICE.health()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("knowledge health degraded: %s", exc)
+        return {"status": "degraded", "phase": "14.3", "error": type(exc).__name__}
 
 
 @app.get("/v1/models")
@@ -492,6 +564,10 @@ async def chat_completions(request: Request) -> Any:
         content = _refusal_message(classification)
         return _openai_response(model, content, explanation, finish_reason="stop")
 
+    knowledge_context = await _retrieve_knowledge_context(
+        user_text, strategy, classification
+    )
+
     system = {
         "role": "system",
         "content": _solo_system_prompt()
@@ -499,11 +575,13 @@ async def chat_completions(request: Request) -> Any:
         + json.dumps(
             {
                 "classification": classification["label"],
+                "stores_queried": strategy["stores_queried"],
                 "stores_skipped": strategy["stores_skipped"],
                 "council_mode": "solo_conceptual",
             },
             indent=2,
-        ),
+        )
+        + (f"\n\n[Knowledge context]\n{knowledge_context['text']}" if knowledge_context["text"] else ""),
     }
     ollama_messages = [system] + [
         {"role": m.get("role", "user"), "content": _stringify_content(m.get("content", ""))}
@@ -622,7 +700,7 @@ async def root() -> dict[str, Any]:
     return {
         "product": PRODUCT_NAME,
         "aka": PRODUCT_AKA,
-        "phase": "14.2B",
+        "phase": "14.3",
         "profile": "solo",
-        "message": "KORA Runtime — Solo conductor with approval-gated durable Memory",
+        "message": "KORA Runtime — Solo conductor with approval-gated durable Memory and Knowledge retrieval",
     }

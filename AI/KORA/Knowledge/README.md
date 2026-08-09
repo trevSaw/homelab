@@ -1,10 +1,35 @@
 # Knowledge domain for KORA
 
-This directory contains the foundation for Knowledge ingestion.
+Phase 14.3 — Knowledge Platform: **KORA can understand and retrieve knowledge.**
+
+## Components
 
 - **KnowledgeDocument** – immutable representation of a knowledge source.
-- **Ingestion pipeline** – reads local files, creates a document, extracts minimal metadata, and stores it via a pluggable `KnowledgeStore`.
-- **Storage abstraction** – `KnowledgeStore` protocol defines async CRUD operations; an in‑memory implementation is provided for tests.
-- **EventBus integration** – ingestion publishes events on the `knowledge.*` namespace using the shared internal `EventBus`.
+- **KnowledgeVersion** – stable document identity + version + content hash.
+- **KnowledgeChunk** – deterministic segment with full provenance metadata.
+- **Ingestion pipeline** – reads local files, stores documents, publishes
+  `knowledge.ingestion.file` events.
+- **Chunking** – deterministic fixed-size chunker with overlap.
+- **Embedding provider** – Ollama-backed, config-driven model
+  (`KORA_EMBEDDING_MODEL`, default `nomic-embed-text`).
+- **VectorStore abstraction** – KORA depends on this, not on Chroma directly.
+- **ChromaVectorStore** – Chroma v2 adapter (infrastructure; not Knowledge
+  authority).
+- **Index metadata store** – SQLite/in-memory synchronization state.
+- **Indexing coordinator** – event-driven, idempotent, replace-on-success.
+- **Retrieval service** – provenance-aware, top-k, filtering, graceful
+  degradation.
+- **Context assembly** – knowledge → provenance-labeled LLM context.
 
-All services are internal Python components; no HTTP endpoints are exposed at this stage.
+## Boundaries
+
+- Knowledge ≠ Memory. No automatic promotion in either direction.
+- Chroma is an index/retrieval layer; the authoritative Knowledge model remains
+  inside KORA.
+- Open WebUI is the UI layer and is not a Knowledge authority.
+- Graphify (Phase 14.4) is complementary to Chroma and not implemented here.
+
+## Configuration
+
+`AI/KORA/Config/knowledge_runtime.yaml` plus `KORA_*` environment overrides.
+See `Documentation/Phase14/Phase14.3/`.

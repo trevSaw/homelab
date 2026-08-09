@@ -7,10 +7,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     KORA_CONFIG_DIR=/config \
     KORA_PROMPTS_DIR=/prompts
 
-COPY requirements.txt .
+COPY Runtime/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
+COPY Runtime/app ./app
+COPY Knowledge ./Knowledge
 
 EXPOSE 8080
 
