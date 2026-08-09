@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY Runtime/app ./app
 COPY Knowledge ./Knowledge
+COPY Tools ./Tools
 
 EXPOSE 8080
 

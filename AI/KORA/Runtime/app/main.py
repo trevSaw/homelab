@@ -76,6 +76,7 @@ COUNCIL = _load_yaml("council_registration.yaml")
 HERMES = _load_yaml("hermes_registration.yaml")
 MEMORY_CONFIG = _load_yaml("memory_runtime.yaml")
 KNOWLEDGE_CONFIG = _load_yaml("knowledge_runtime.yaml")
+TOOLS_CONFIG = _load_yaml("tools.yaml")
 
 EVENT_BUS = InProcessEventBus()
 WORKFLOW_CONFIG = MEMORY_CONFIG.get("workflow") or {}
@@ -111,6 +112,18 @@ if KnowledgeConfig is not None and build_knowledge_service is not None:
 else:  # pragma: no cover - non-Runtime environments
     KNOWLEDGE_STORE = None
     KNOWLEDGE_SERVICE = None
+
+try:
+    from Tools.builder import build_tool_platform
+    from Tools.config.tool_config import ToolConfig
+
+    TOOL_PLATFORM = build_tool_platform(
+        config=ToolConfig.from_dict(TOOLS_CONFIG).with_env_overrides(),
+        event_bus=EVENT_BUS,
+        ollama_base_url=OLLAMA_BASE_URL,
+    )
+except ImportError:  # pragma: no cover - non-Runtime environments
+    TOOL_PLATFORM = None
 
 
 @app.on_event("startup")
@@ -197,7 +210,13 @@ def classify(text: str) -> dict[str, Any]:
         return {
             "label": "architecture",
             "confidence": "medium",
-            "rationale": "Architecture-like question; Knowledge Runtime disabled in Stage 1",
+            "rationale": "Architecture-like question; Knowledge retrieval applicable",
+        }
+    if re.search(r"\b(models?|running|status|list|health|metrics?)\b", lower):
+        return {
+            "label": "operational",
+            "confidence": "medium",
+            "rationale": "Operational question; read-only Tool access may apply",
         }
     return {
         "label": "general",
@@ -208,18 +227,17 @@ def classify(text: str) -> dict[str, Any]:
 
 def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
     """Context Intelligence stub — Phase 14.3/14.4 Knowledge retrieval (semantic +
-    graph) is enabled for architecture-style queries; Memory and Tools remain off
-    the chat path."""
+    graph) for architecture queries; Phase 14.5 read-only Tools for operational
+    queries. Memory remains off the chat path; no autonomous tool loops."""
     label = classification["label"]
     query_knowledge = label == "architecture"
     query_graph = label == "architecture"
+    query_tools = label == "operational"
     query_memory = False
-    query_tools = False
     stores_queried: list[str] = []
-    stores_skipped = ["memory", "tools", "agents"]
+    stores_skipped = ["memory", "agents"]
     skip_reasons: dict[str, str] = {
         "memory": "Memory retrieval is internal and not on the chat path",
-        "tools": "Tool Runtime not enabled until Phase 14.5",
         "agents": "Autonomous agents not enabled until a later phase",
     }
     if query_knowledge:
@@ -232,6 +250,11 @@ def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
     else:
         stores_skipped.append("graphify")
         skip_reasons["graphify"] = "Graph retrieval not selected for this classification"
+    if query_tools:
+        stores_queried.append("tools")
+    else:
+        stores_skipped.append("tools")
+        skip_reasons["tools"] = "Tool access not selected for this classification"
     return {
         "name": f"solo_stage1_{label}",
         "query_memory": query_memory,
@@ -241,7 +264,12 @@ def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
         "stores_queried": stores_queried,
         "stores_skipped": stores_skipped,
         "skip_reasons": skip_reasons,
-        "budgets": {"memory": 0, "knowledge": 1 if query_knowledge else 0, "tools": 0, "conversation": 1},
+        "budgets": {
+            "memory": 0,
+            "knowledge": 1 if query_knowledge else 0,
+            "tools": 1 if query_tools else 0,
+            "conversation": 1,
+        },
         "confidence_posture": "conversation_only",
     }
 
@@ -349,6 +377,36 @@ async def _retrieve_knowledge_context(
     except Exception as exc:  # noqa: BLE001
         log.warning("knowledge retrieval degraded during chat turn: %s", exc)
         return {"text": "", "status": "degraded", "sources": [], "chunks": [], "graph": {}}
+
+
+async def _retrieve_tool_context(
+    user_text: str,
+    strategy: dict[str, Any],
+) -> dict[str, Any]:
+    """Phase 14.5 — invoke authorized read-only tools when the strategy selects
+    tools. Returns normalized tool results; never breaks the chat path on failure.
+
+    Only enabled, read-only/low-risk tools are auto-invoked; anything requiring
+    approval is surfaced as unavailable (no silent execution).
+    """
+    if not strategy.get("query_tools"):
+        return {"text": "", "status": "skipped"}
+    if TOOL_PLATFORM is None:
+        return {"text": "", "status": "disabled"}
+    lines: list[str] = []
+    for tool in TOOL_PLATFORM.list_tools(enabled_only=True):
+        if tool.risk not in {"read_only", "low_risk_mutation"}:
+            continue
+        if tool.requires_approval:
+            continue
+        try:
+            result = await TOOL_PLATFORM.invoke(tool.tool_id, {})
+        except Exception as exc:  # noqa: BLE001
+            log.warning("tool invocation degraded for %s: %s", tool.name, exc)
+            continue
+        if result.success:
+            lines.append(f"{tool.name}: {result.result}")
+    return {"text": "\n".join(lines), "status": "ok"}
 
 
 def _refusal_message(classification: dict[str, Any]) -> str:
@@ -600,6 +658,7 @@ async def chat_completions(request: Request) -> Any:
     knowledge_context = await _retrieve_knowledge_context(
         user_text, strategy, classification
     )
+    tool_results = await _retrieve_tool_context(user_text, strategy)
 
     system = {
         "role": "system",
@@ -614,7 +673,8 @@ async def chat_completions(request: Request) -> Any:
             },
             indent=2,
         )
-        + (f"\n\n[Knowledge context]\n{knowledge_context['text']}" if knowledge_context["text"] else ""),
+        + (f"\n\n[Knowledge context]\n{knowledge_context['text']}" if knowledge_context["text"] else "")
+        + (f"\n\n[Tool results]\n{tool_results['text']}" if tool_results["text"] else ""),
     }
     ollama_messages = [system] + [
         {"role": m.get("role", "user"), "content": _stringify_content(m.get("content", ""))}
