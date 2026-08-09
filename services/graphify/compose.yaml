@@ -1,0 +1,57 @@
+# Graphify — Knowledge Graph serve layer (Phase 14.4)
+# Independent Compose project. Serves KORA's derived graph (graph.json) over
+# MCP Streamable HTTP so KORA can query entities/relationships and visualize the
+# Knowledge graph.
+#
+# Graphify is a relationship graph derived from authoritative Knowledge. It is
+# NOT the Knowledge authority and NOT a vector store.
+services:
+  graphify:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: homelab/graphify:14.4.0
+    container_name: graphify
+    hostname: graphify
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      GRAPHIFY_API_KEY: ${GRAPHIFY_API_KEY:-}
+    volumes:
+      # KORA exports its derived graph to /data/graph.json (same host path KORA
+      # mounts as /data). Graphify serves it read-only.
+      - /mnt/monarch/appdata/kora:/data:ro
+    networks:
+      - ollama-net
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=graphify
+      - com.homelab.domain=ai
+      - com.homelab.phase=14.4
+      - com.homelab.profile=solo
+      - com.homelab.logging=central
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request,json; body=json.dumps({'jsonrpc':'2.0','id':'hc','method':'initialize','params':{'protocolVersion':'2025-03-26','capabilities':{},'clientInfo':{'name':'hc','version':'1'}}}).encode(); req=urllib.request.Request('http://127.0.0.1:8080/mcp', data=body, headers={'Content-Type':'application/json','Accept':'application/json'}); urllib.request.urlopen(req, timeout=3)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  ollama-net:
+    external: true
+    name: ollama_ollama-net

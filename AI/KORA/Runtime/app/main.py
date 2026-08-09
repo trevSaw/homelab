@@ -132,6 +132,13 @@ async def recover_memory_runtime() -> None:
             "error_type": type(exc).__name__,
         }
 
+    if KNOWLEDGE_SERVICE is not None and getattr(KNOWLEDGE_SERVICE, "graph_store", None) is not None:
+        try:
+            await KNOWLEDGE_SERVICE.export_graph()
+            log.info("exported Knowledge graph for Graphify")
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Knowledge graph export failed at startup: %s", exc)
+
 
 def _solo_system_prompt() -> str:
     path = PROMPTS_DIR / "solo_system.txt"
@@ -200,29 +207,36 @@ def classify(text: str) -> dict[str, Any]:
 
 
 def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
-    """Context Intelligence stub — Phase 14.3 Knowledge retrieval is enabled for
-    architecture-style queries; Memory and Tools remain off the chat path."""
+    """Context Intelligence stub — Phase 14.3/14.4 Knowledge retrieval (semantic +
+    graph) is enabled for architecture-style queries; Memory and Tools remain off
+    the chat path."""
     label = classification["label"]
     query_knowledge = label == "architecture"
+    query_graph = label == "architecture"
     query_memory = False
     query_tools = False
     stores_queried: list[str] = []
-    stores_skipped = ["memory", "tools", "agents", "graphify"]
+    stores_skipped = ["memory", "tools", "agents"]
     skip_reasons: dict[str, str] = {
         "memory": "Memory retrieval is internal and not on the chat path",
         "tools": "Tool Runtime not enabled until Phase 14.5",
         "agents": "Autonomous agents not enabled until a later phase",
-        "graphify": "Graphify is planned for Phase 14.4; not implemented",
     }
     if query_knowledge:
         stores_queried.append("knowledge")
     else:
         stores_skipped.append("knowledge")
         skip_reasons["knowledge"] = "Knowledge retrieval not selected for this classification"
+    if query_graph:
+        stores_queried.append("graphify")
+    else:
+        stores_skipped.append("graphify")
+        skip_reasons["graphify"] = "Graph retrieval not selected for this classification"
     return {
         "name": f"solo_stage1_{label}",
         "query_memory": query_memory,
         "query_knowledge": query_knowledge,
+        "query_graph": query_graph,
         "query_tools": query_tools,
         "stores_queried": stores_queried,
         "stores_skipped": stores_skipped,
@@ -296,26 +310,45 @@ async def _retrieve_knowledge_context(
     strategy: dict[str, Any],
     classification: dict[str, Any],
 ) -> dict[str, Any]:
-    """Phase 14.3 — retrieve Knowledge context when the strategy selects it.
+    """Phase 14.3/14.4 — retrieve Knowledge (semantic + graph) context when the
+    strategy selects it.
 
-    Degrades gracefully: any failure yields empty context so the chat path is
-    never broken by Knowledge backend unavailability.
+    When graph retrieval is selected and available, the graph-aware assembler is
+    used so the context includes relationship evidence with provenance. Degrades
+    gracefully: any failure yields empty context so the chat path is never broken
+    by Knowledge backend unavailability.
     """
     if not strategy.get("query_knowledge"):
-        return {"text": "", "status": "skipped", "sources": [], "chunks": []}
+        return {"text": "", "status": "skipped", "sources": [], "chunks": [], "graph": {}}
     if KNOWLEDGE_SERVICE is None:
-        return {"text": "", "status": "disabled", "sources": [], "chunks": []}
+        return {"text": "", "status": "disabled", "sources": [], "chunks": [], "graph": {}}
     try:
+        if (
+            strategy.get("query_graph")
+            and getattr(KNOWLEDGE_SERVICE, "build_graph_context", None) is not None
+        ):
+            context = await KNOWLEDGE_SERVICE.build_graph_context(user_text)
+            return {
+                "text": context.text,
+                "status": context.status,
+                "sources": list(context.knowledge_sources),
+                "chunks": [c for c in context.graph_entities] + [r for r in context.graph_relationships],
+                "graph": {
+                    "entities": list(context.graph_entities),
+                    "relationships": list(context.graph_relationships),
+                },
+            }
         context = await KNOWLEDGE_SERVICE.build_context(user_text)
         return {
             "text": context.knowledge_text,
             "status": context.status,
             "sources": list(context.sources),
             "chunks": [chunk for chunk in context.chunks],
+            "graph": {},
         }
     except Exception as exc:  # noqa: BLE001
         log.warning("knowledge retrieval degraded during chat turn: %s", exc)
-        return {"text": "", "status": "degraded", "sources": [], "chunks": []}
+        return {"text": "", "status": "degraded", "sources": [], "chunks": [], "graph": {}}
 
 
 def _refusal_message(classification: dict[str, Any]) -> str:
