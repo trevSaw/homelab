@@ -1,0 +1,36 @@
+"""Graph store abstraction.
+
+KORA owns the graph model. ``GraphStore`` implementations persist entities and
+relationships derived from authoritative Knowledge. The store is NOT authoritative
+Knowledge and is independent of Chroma.
+"""
+
+from __future__ import annotations
+
+from typing import Protocol
+
+from .models import GraphEntity, GraphRelationship
+
+
+class GraphStore(Protocol):
+    def get_entity(self, entity_id: str) -> GraphEntity | None: ...
+
+    def upsert_entity(self, entity: GraphEntity) -> None: ...
+
+    def list_entities(self) -> list[GraphEntity]: ...
+
+    def find_entities_by_name(self, name: str) -> list[GraphEntity]: ...
+
+    def get_relationship(self, relationship_id: str) -> GraphRelationship | None: ...
+
+    def upsert_relationship(self, relationship: GraphRelationship) -> None: ...
+
+    def list_relationships(self) -> list[GraphRelationship]: ...
+
+    def relationships_for_entity(self, entity_id: str) -> list[GraphRelationship]: ...
+
+    def neighbors(self, entity_id: str) -> list[str]: ...
+
+    def delete_by_knowledge(self, source_knowledge_id: str) -> None: ...
+
+    def close(self) -> None: ...

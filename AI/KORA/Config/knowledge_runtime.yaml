@@ -1,6 +1,7 @@
-# Phase 14.3 — Knowledge Platform configuration
+# Phase 14.3/14.4 — Knowledge Platform configuration
 # KORA owns what Knowledge means and how Knowledge is used.
-# Chroma is an index/retrieval layer, never the Knowledge authority.
+# Chroma is a semantic index; Graphify is a relationship graph; neither is the
+# Knowledge authority.
 
 embedding:
   provider: ollama
@@ -33,4 +34,17 @@ retrieval:
 
 events:
   indexing_topics:
+    - knowledge.ingestion.file
+
+graph:
+  enabled: true
+  provider: local          # local (KORA-owned SQLite) | graphify (Graphify MCP server)
+  store_sqlite_enabled: true
+  store_db_path: /data/knowledge-graph.sqlite3
+  graphify_base_url: http://graphify:8080
+  graphify_api_key: ""
+  graphify_timeout_seconds: 30
+  graphify_retry_attempts: 2
+  export_path: /data/graph.json
+  event_topics:
     - knowledge.ingestion.file

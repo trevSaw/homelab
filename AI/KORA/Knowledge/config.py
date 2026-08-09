@@ -46,6 +46,18 @@ class KnowledgeConfig:
     # Eventing
     indexing_event_topics: tuple[str, ...] = ("knowledge.ingestion.file",)
 
+    # Graph (Phase 14.4)
+    graph_enabled: bool = True
+    graph_provider: str = "local"  # "local" | "graphify"
+    graph_store_sqlite_enabled: bool = True
+    graph_store_db_path: str = "/data/knowledge-graph.sqlite3"
+    graphify_base_url: str = "http://graphify:8080"
+    graphify_api_key: str = ""
+    graphify_timeout_seconds: float = 30.0
+    graphify_retry_attempts: int = 2
+    graph_export_path: str = "/data/graph.json"
+    graph_event_topics: tuple[str, ...] = ("knowledge.ingestion.file",)
+
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> "KnowledgeConfig":
         embedding = value.get("embedding") or {}
@@ -54,6 +66,7 @@ class KnowledgeConfig:
         indexing = value.get("indexing") or {}
         retrieval = value.get("retrieval") or {}
         events = value.get("events") or {}
+        graph = value.get("graph") or {}
         return cls(
             embedding_provider=str(embedding.get("provider", "ollama")),
             embedding_model=str(embedding.get("model", "nomic-embed-text")),
@@ -81,6 +94,20 @@ class KnowledgeConfig:
             indexing_event_topics=tuple(
                 events.get("indexing_topics")
                 or ("knowledge.ingestion.file",)
+            ),
+            graph_enabled=bool(graph.get("enabled", True)),
+            graph_provider=str(graph.get("provider", "local")),
+            graph_store_sqlite_enabled=bool(graph.get("store_sqlite_enabled", True)),
+            graph_store_db_path=str(
+                graph.get("store_db_path", "/data/knowledge-graph.sqlite3")
+            ),
+            graphify_base_url=str(graph.get("graphify_base_url", "http://graphify:8080")),
+            graphify_api_key=str(graph.get("graphify_api_key", "")),
+            graphify_timeout_seconds=float(graph.get("graphify_timeout_seconds", 30.0)),
+            graphify_retry_attempts=int(graph.get("graphify_retry_attempts", 2)),
+            graph_export_path=str(graph.get("export_path", "/data/graph.json")),
+            graph_event_topics=tuple(
+                graph.get("event_topics") or ("knowledge.ingestion.file",)
             ),
         )
 
@@ -125,6 +152,24 @@ class KnowledgeConfig:
             retrieval_enabled=_env_bool("KORA_RETRIEVAL_ENABLED", cfg.retrieval_enabled),
             retrieval_top_k=int(os.environ.get("KORA_RETRIEVAL_TOP_K", cfg.retrieval_top_k)),
             indexing_event_topics=cfg.indexing_event_topics,
+            graph_enabled=_env_bool("KORA_GRAPH_ENABLED", cfg.graph_enabled),
+            graph_provider=os.environ.get("KORA_GRAPH_PROVIDER", cfg.graph_provider),
+            graph_store_sqlite_enabled=_env_bool(
+                "KORA_GRAPH_STORE_SQLITE", cfg.graph_store_sqlite_enabled
+            ),
+            graph_store_db_path=os.environ.get(
+                "KORA_GRAPH_STORE_DB_PATH", cfg.graph_store_db_path
+            ),
+            graphify_base_url=os.environ.get("KORA_GRAPHIFY_BASE_URL", cfg.graphify_base_url),
+            graphify_api_key=os.environ.get("KORA_GRAPHIFY_API_KEY", cfg.graphify_api_key),
+            graphify_timeout_seconds=float(
+                os.environ.get("KORA_GRAPHIFY_TIMEOUT_SECONDS", cfg.graphify_timeout_seconds)
+            ),
+            graphify_retry_attempts=int(
+                os.environ.get("KORA_GRAPHIFY_RETRY_ATTEMPTS", cfg.graphify_retry_attempts)
+            ),
+            graph_export_path=os.environ.get("KORA_GRAPH_EXPORT_PATH", cfg.graph_export_path),
+            graph_event_topics=cfg.graph_event_topics,
         )
 
 
@@ -165,6 +210,24 @@ class KnowledgeConfig:
             retrieval_enabled=_env_bool("KORA_RETRIEVAL_ENABLED", self.retrieval_enabled),
             retrieval_top_k=int(os.environ.get("KORA_RETRIEVAL_TOP_K", self.retrieval_top_k)),
             indexing_event_topics=self.indexing_event_topics,
+            graph_enabled=_env_bool("KORA_GRAPH_ENABLED", self.graph_enabled),
+            graph_provider=os.environ.get("KORA_GRAPH_PROVIDER", self.graph_provider),
+            graph_store_sqlite_enabled=_env_bool(
+                "KORA_GRAPH_STORE_SQLITE", self.graph_store_sqlite_enabled
+            ),
+            graph_store_db_path=os.environ.get(
+                "KORA_GRAPH_STORE_DB_PATH", self.graph_store_db_path
+            ),
+            graphify_base_url=os.environ.get("KORA_GRAPHIFY_BASE_URL", self.graphify_base_url),
+            graphify_api_key=os.environ.get("KORA_GRAPHIFY_API_KEY", self.graphify_api_key),
+            graphify_timeout_seconds=float(
+                os.environ.get("KORA_GRAPHIFY_TIMEOUT_SECONDS", self.graphify_timeout_seconds)
+            ),
+            graphify_retry_attempts=int(
+                os.environ.get("KORA_GRAPHIFY_RETRY_ATTEMPTS", self.graphify_retry_attempts)
+            ),
+            graph_export_path=os.environ.get("KORA_GRAPH_EXPORT_PATH", self.graph_export_path),
+            graph_event_topics=self.graph_event_topics,
         )
 
 

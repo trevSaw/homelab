@@ -1,11 +1,11 @@
-# KORA Runtime — Phase 14.3 Knowledge Platform
-# Path: User → Open WebUI → KORA → Knowledge (Chroma) → Ollama
+# KORA Runtime — Phase 14.4 Knowledge Graph
+# Path: User → Open WebUI → KORA → Knowledge (Chroma + Graphify) → Ollama
 services:
   kora:
     build:
       context: ../../AI/KORA
       dockerfile: Runtime/Dockerfile
-    image: homelab/kora-runtime:14.3.0
+    image: homelab/kora-runtime:14.4.0
     container_name: kora
     hostname: kora
     restart: unless-stopped
@@ -25,6 +25,12 @@ services:
       KORA_CHROMA_BASE_URL: ${KORA_CHROMA_BASE_URL:-http://chromadb:8000}
       KORA_CHROMA_COLLECTION: ${KORA_CHROMA_COLLECTION:-kora_knowledge}
       KORA_INDEX_METADATA_DB_PATH: ${KORA_INDEX_METADATA_DB_PATH:-/data/knowledge-index.sqlite3}
+      KORA_GRAPH_ENABLED: ${KORA_GRAPH_ENABLED:-true}
+      KORA_GRAPH_PROVIDER: ${KORA_GRAPH_PROVIDER:-graphify}
+      KORA_GRAPH_STORE_DB_PATH: ${KORA_GRAPH_STORE_DB_PATH:-/data/knowledge-graph.sqlite3}
+      KORA_GRAPHIFY_BASE_URL: ${KORA_GRAPHIFY_BASE_URL:-http://graphify:8080}
+      KORA_GRAPHIFY_API_KEY: ${KORA_GRAPHIFY_API_KEY:-}
+      KORA_GRAPH_EXPORT_PATH: ${KORA_GRAPH_EXPORT_PATH:-/data/graph.json}
     volumes:
       - ../../AI/KORA/Config:/config:ro
       - ../../AI/KORA/Prompts:/prompts:ro
@@ -60,37 +66,6 @@ services:
         limits:
           cpus: "1.0"
           memory: 512M
-
-  # Chroma is vector index / retrieval infrastructure — never Knowledge authority.
-  chromadb:
-    image: docker.io/chromadb/chroma:latest
-    container_name: kora-chromadb
-    hostname: kora-chromadb
-    restart: unless-stopped
-    environment:
-      TZ: ${TZ:-Asia/Tokyo}
-    volumes:
-      - kora-chroma-data:/chroma/chroma
-    networks:
-      - ollama-net
-    labels:
-      - traefik.enable=false
-      - com.homelab.service=chromadb
-      - com.homelab.domain=ai
-      - com.homelab.phase=14.3
-      - com.homelab.profile=solo
-      - com.homelab.logging=central
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "3"
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-
-volumes:
-  kora-chroma-data:
 
 networks:
   ollama-net:
