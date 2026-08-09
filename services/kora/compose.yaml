@@ -5,7 +5,7 @@ services:
     build:
       context: ../../AI/KORA
       dockerfile: Runtime/Dockerfile
-    image: homelab/kora-runtime:14.4.0
+    image: homelab/kora-runtime:14.5.0
     container_name: kora
     hostname: kora
     restart: unless-stopped
@@ -31,6 +31,7 @@ services:
       KORA_GRAPHIFY_BASE_URL: ${KORA_GRAPHIFY_BASE_URL:-http://graphify:8080}
       KORA_GRAPHIFY_API_KEY: ${KORA_GRAPHIFY_API_KEY:-}
       KORA_GRAPH_EXPORT_PATH: ${KORA_GRAPH_EXPORT_PATH:-/data/graph.json}
+      KORA_TOOLS_ENABLED: ${KORA_TOOLS_ENABLED:-true}
     volumes:
       - ../../AI/KORA/Config:/config:ro
       - ../../AI/KORA/Prompts:/prompts:ro
@@ -42,7 +43,7 @@ services:
       - traefik.enable=false
       - com.homelab.service=kora
       - com.homelab.domain=ai
-      - com.homelab.phase=14.3
+      - com.homelab.phase=14.5
       - com.homelab.profile=solo
       - com.homelab.logging=central
     healthcheck:

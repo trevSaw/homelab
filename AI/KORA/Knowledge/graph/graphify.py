@@ -1,23 +1,18 @@
-"""Graphify HTTP MCP client.
+"""Graphify HTTP MCP client — Graphify-specific integration (Phase 14.4).
 
-A minimal MCP Streamable HTTP (JSON-RPC 2.0) client for the Graphify serve layer
-(``python -m graphify.serve graph.json --transport http --host 0.0.0.0
---port 8080 --api-key KEY --json-response``).
-
-This talks to a REAL Graphify server exposing the tools documented by Graphify
+This client reuses the generic :class:`MCPClient` for MCP Streamable HTTP
+transport/protocol handling, and keeps Graphify-specific operations
 (``query_graph``, ``get_node``, ``get_neighbors``, ``shortest_path``,
-``graph_stats``). A ``transport`` may be injected for tests (mirrors the
-Chroma/Honcho adapter pattern).
+``graph_stats``) here. It remains a Knowledge Graph integration — NOT the
+Phase 14.5 Tool Platform.
 """
 
 from __future__ import annotations
 
-import json
 import logging
-import uuid
 from typing import Any
 
-import httpx
+from Tools.mcp.client import MCPClient
 
 log = logging.getLogger("kora.knowledge.graphify")
 
@@ -31,6 +26,8 @@ class GraphifyUnavailableError(GraphifyError):
 
 
 class GraphifyClient:
+    """Graphify serve-layer client built on the generic MCP client."""
+
     def __init__(
         self,
         *,
@@ -38,130 +35,35 @@ class GraphifyClient:
         api_key: str | None = None,
         timeout_seconds: float = 30.0,
         retry_attempts: int = 2,
-        transport: httpx.AsyncBaseTransport | None = None,
+        transport: Any | None = None,
         path: str = "/mcp",
     ) -> None:
-        self._base_url = base_url.rstrip("/")
-        self._api_key = api_key
-        self._timeout = timeout_seconds
-        self._retry_attempts = max(1, retry_attempts)
-        self._path = path
-        self._client = httpx.AsyncClient(
-            timeout=httpx.Timeout(self._timeout),
+        self._mcp = MCPClient(
+            base_url=base_url,
+            api_key=api_key,
+            timeout_seconds=timeout_seconds,
+            retry_attempts=retry_attempts,
             transport=transport,
+            path=path,
+            client_name="kora-graphify",
+            client_version="14.4",
         )
-        self._session_id: str | None = None
 
     async def close(self) -> None:
-        await self._client.aclose()
+        await self._mcp.close()
 
     async def health(self) -> bool:
-        try:
-            await self._initialize()
-            return True
-        except GraphifyError:
-            return False
-
-    async def _initialize(self) -> None:
-        """Establish a stateful MCP session and capture the session id."""
-        if self._session_id:
-            return
-        request_id = str(uuid.uuid4())
-        response = await self._rpc(
-            {
-                "jsonrpc": "2.0",
-                "id": request_id,
-                "method": "initialize",
-                "params": {
-                    "protocolVersion": "2025-03-26",
-                    "capabilities": {},
-                    "clientInfo": {"name": "kora", "version": "14.4"},
-                },
-            },
-            establish=True,
-        )
-        if not self._session_id:
-            raise GraphifyError("graphify did not return an mcp-session-id")
-        # Notify the server that initialization completed.
-        try:
-            await self._rpc(
-                {"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}},
-                no_response=True,
-            )
-        except GraphifyError:
-            pass
-
-    async def _headers(self) -> dict[str, str]:
-        headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        }
-        if self._api_key:
-            headers["X-API-Key"] = self._api_key
-        if self._session_id:
-            headers["mcp-session-id"] = self._session_id
-        return headers
-
-    async def _rpc(
-        self,
-        payload: dict[str, Any],
-        *,
-        establish: bool = False,
-        no_response: bool = False,
-    ) -> dict[str, Any]:
-        last_error: Exception | None = None
-        for _ in range(self._retry_attempts):
-            try:
-                response = await self._client.post(
-                    f"{self._base_url}{self._path}",
-                    headers=await self._headers(),
-                    json=payload,
-                )
-                if response.status_code == 401:
-                    raise GraphifyError("graphify rejected the API key")
-                if response.status_code == 404:
-                    # Session expired or not found; reset and retry initialize.
-                    self._session_id = None
-                    raise GraphifyError("graphify session not found")
-                if response.status_code >= 400:
-                    raise GraphifyError(
-                        f"graphify rejected request: HTTP {response.status_code}"
-                    )
-                if no_response:
-                    return {}
-                if establish:
-                    self._session_id = response.headers.get("mcp-session-id")
-                body = response.json()
-                if isinstance(body, dict) and body.get("error"):
-                    raise GraphifyError(
-                        f"graphify RPC error: {json.dumps(body['error'])[:500]}"
-                    )
-                return body
-            except GraphifyError:
-                raise
-            except (httpx.TimeoutException, httpx.NetworkError) as exc:
-                last_error = exc
-        raise GraphifyUnavailableError("graphify unavailable after retries") from last_error
+        return await self._mcp.health()
 
     async def call_tool(self, name: str, arguments: dict[str, Any]) -> str:
-        await self._initialize()
-        request_id = str(uuid.uuid4())
-        response = await self._rpc(
-            {
-                "jsonrpc": "2.0",
-                "id": request_id,
-                "method": "tools/call",
-                "params": {"name": name, "arguments": arguments},
-            }
-        )
-        result = response.get("result") or {}
-        content = result.get("content") or []
-        if content and isinstance(content, list):
-            text_parts = [
-                item.get("text", "") for item in content if isinstance(item, dict)
-            ]
-            return "\n".join(text_parts)
-        return json.dumps(result) if result else ""
+        from Tools.mcp.client import MCPUnavailableError
+
+        try:
+            return await self._mcp.call_tool(name, arguments)
+        except MCPUnavailableError as exc:
+            raise GraphifyUnavailableError("graphify unavailable after retries") from exc
+        except Exception as exc:  # noqa: BLE001
+            raise GraphifyError(f"graphify call failed: {exc}") from exc
 
     async def query_graph(self, question: str, **kwargs: Any) -> str:
         args: dict[str, Any] = {"question": question}
