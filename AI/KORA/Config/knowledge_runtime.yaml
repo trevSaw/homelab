@@ -1,0 +1,36 @@
+# Phase 14.3 — Knowledge Platform configuration
+# KORA owns what Knowledge means and how Knowledge is used.
+# Chroma is an index/retrieval layer, never the Knowledge authority.
+
+embedding:
+  provider: ollama
+  model: nomic-embed-text
+  base_url: http://ollama:11434
+  timeout_seconds: 60
+  retry_attempts: 2
+  retry_base_seconds: 0.2
+
+vector:
+  provider: chroma
+  base_url: http://chromadb:8000
+  collection: kora_knowledge
+  timeout_seconds: 30
+  retry_attempts: 2
+
+chunking:
+  size: 512
+  overlap: 64
+
+indexing:
+  enabled: true
+  replace_on_success: true
+  metadata_sqlite_enabled: true
+  metadata_db_path: /data/knowledge-index.sqlite3
+
+retrieval:
+  enabled: true
+  top_k: 5
+
+events:
+  indexing_topics:
+    - knowledge.ingestion.file
