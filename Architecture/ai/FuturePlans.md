@@ -26,12 +26,12 @@ Canonical architecture: `KORA.md`.
 | 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
 | 14.2 preflight | Ownership migration + Memory approval UX design | ✅ Complete (2026-08-01) |
 | 14.2A | Event Bus + Memory proposal foundation | ✅ Complete (2026-08-03) |
-| 14.2B | Approval integration + durable Memory adapter | 🟡 Planned |
-| 14.3 | Knowledge Runtime (RAG) |
-| 14.4 | Context Assembly Engine |
-| 14.5 | Tool & MCP Runtime |
-| 14.6 | Council Integration |
-| 14.7 | Autonomous Workflows & Agent Orchestration |
+| 14.2B | Approval integration + durable Memory adapter | ✅ Complete |
+| 14.2C | Knowledge Ingestion Foundation | ✅ Complete |
+| 14.2D | Production Validation | ✅ Complete |
+| 14.3 | Knowledge Platform | Planned |
+| 14.4 | Knowledge Graph | Planned |
+| 14.5 | Tool Platform | Planned |
 
 Authoritative Phase 14 roadmap: `Documentation/Phase14/Phase14_Roadmap.md`.
 
@@ -43,7 +43,11 @@ through the Event Bus without transferring ownership.
 
 | Track | Focus |
 | --- | --- |
-| Phase 15+ | AI Automation (governance assistant workflows)—after 14.1–14.7 |
+| Phase 15 | Council & Intelligence (hardware-agnostic Council orchestration + Context Intelligence hardening) |
+| Phase 16 | Automation & Autonomous Workflows (governed autonomous workflows) |
+| Phase 16+ | AI Automation (governance assistant workflows) |
+
+Capability progression: Knowledge Platform → Knowledge Graph → Tool Platform → Council & Intelligence → Automation & Autonomous Workflows.
 
 ## Status
 

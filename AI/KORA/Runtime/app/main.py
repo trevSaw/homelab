@@ -159,7 +159,7 @@ def _solo_system_prompt() -> str:
         return path.read_text(encoding="utf-8").strip()
     return (
         f"You are {PRODUCT_NAME} ({PRODUCT_AKA}). "
-        "Refuse Execute/Administrative actions in Stage 1."
+        "Refuse Execute/Administrative actions."
     )
 
 
@@ -178,7 +178,7 @@ ADMIN_PATTERNS = [
 
 
 def classify(text: str) -> dict[str, Any]:
-    """Stage 1 classifier — heuristic only; no store retrieval before this."""
+    """Heuristic classifier — no store retrieval before this."""
     lower = text.lower().strip()
     for pattern in EXECUTE_PATTERNS:
         if re.search(pattern, lower, re.I):
@@ -212,6 +212,15 @@ def classify(text: str) -> dict[str, Any]:
             "confidence": "medium",
             "rationale": "Architecture-like question; Knowledge retrieval applicable",
         }
+    if re.search(
+        r"\b(relationship|relate|related|relation|between|connect|connected|connection|link|linked|dependency|depends|graph)\b",
+        lower,
+    ):
+        return {
+            "label": "relationship",
+            "confidence": "medium",
+            "rationale": "Relationship-oriented question; graph + semantic Knowledge retrieval applicable",
+        }
     if re.search(r"\b(models?|running|status|list|health|metrics?)\b", lower):
         return {
             "label": "operational",
@@ -226,12 +235,13 @@ def classify(text: str) -> dict[str, Any]:
 
 
 def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
-    """Context Intelligence stub — Phase 14.3/14.4 Knowledge retrieval (semantic +
-    graph) for architecture queries; Phase 14.5 read-only Tools for operational
-    queries. Memory remains off the chat path; no autonomous tool loops."""
+    """Context Intelligence stub — Knowledge (semantic + graph) retrieval for
+    architecture and relationship queries; Phase 14.5 read-only Tools for
+    operational queries. Memory remains off the chat path; no autonomous loops."""
     label = classification["label"]
-    query_knowledge = label == "architecture"
-    query_graph = label == "architecture"
+    retrieval_labels = {"architecture", "relationship"}
+    query_knowledge = label in retrieval_labels
+    query_graph = label in retrieval_labels
     query_tools = label == "operational"
     query_memory = False
     stores_queried: list[str] = []
@@ -256,7 +266,7 @@ def select_strategy(classification: dict[str, Any]) -> dict[str, Any]:
         stores_skipped.append("tools")
         skip_reasons["tools"] = "Tool access not selected for this classification"
     return {
-        "name": f"solo_stage1_{label}",
+        "name": f"solo_{label}",
         "query_memory": query_memory,
         "query_knowledge": query_knowledge,
         "query_graph": query_graph,
@@ -411,11 +421,11 @@ async def _retrieve_tool_context(
 
 def _refusal_message(classification: dict[str, Any]) -> str:
     return (
-        f"I am {PRODUCT_NAME}. I must refuse this request in Stage 1 (Solo Runtime).\n\n"
+        f"I am {PRODUCT_NAME}. I must refuse this request.\n\n"
         f"Classification: {classification['label']}.\n"
         f"Reason: {classification['rationale']}.\n\n"
-        "Execute and Administrative actions require gated approval UX that is not enabled yet. "
-        "Memory retrieval, Knowledge, and Tools remain disabled on the chat path."
+        "Execute and Administrative actions require gated approval that is not enabled. "
+        "Memory is approval-gated; Knowledge, Graph, and read-only Tools remain governed."
     )
 
 
@@ -663,7 +673,7 @@ async def chat_completions(request: Request) -> Any:
     system = {
         "role": "system",
         "content": _solo_system_prompt()
-        + "\n\n[Stage-1 explainability context]\n"
+        + "\n\n[Explainability context]\n"
         + json.dumps(
             {
                 "classification": classification["label"],

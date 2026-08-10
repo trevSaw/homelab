@@ -26,7 +26,7 @@ Each candidate is scored along:
 | **Authority** | Knowledge tier (Authoritative > Validated > Candidate > informal) |
 | **Freshness** | Recency / valid-as-of; critical for Tools |
 | **Confidence** | Memory confidence or Knowledge certainty cues |
-| **Relationship weight** | Conceptual link strength to the request topic (Graphify deferred—use doc links/metadata when present) |
+| **Relationship weight** | Conceptual link strength to the request topic (Graphify planned for Phase 14.4; use doc links/metadata when present) |
 | **Safety** | Hard filter: secrets/forbidden content score as exclude |
 
 Ranking **orders within an allowed store**. It must not promote Memory above Knowledge authority for standards questions, nor Knowledge above Tools for live state.

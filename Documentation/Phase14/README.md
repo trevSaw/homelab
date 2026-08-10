@@ -6,7 +6,7 @@ Phase 14 implements the Phase 13 architecture as a production runtime using Dock
 
 | Document | Purpose |
 | --- | --- |
-| [Phase14_Roadmap.md](Phase14_Roadmap.md) | Authoritative Phase 14 implementation roadmap (14.1–14.7) |
+| [Phase14_Roadmap.md](Phase14_Roadmap.md) | Authoritative Phase 14 implementation roadmap (14.1–14.5, then Phase 15 Council & Intelligence, Phase 16 Automation) |
 
 ## Related architecture (Phase 13)
 
@@ -22,7 +22,7 @@ Phase 14 implements the Phase 13 architecture as a production runtime using Dock
 
 ## Status
 
-**Phase 14:** 🟡 In progress
+**Phase 14:** 🟡 In progress (14.2 complete)
 
 **Complete:** [14.1 Runtime Foundation](Phase14.1/Runtime_Foundation_Report.md)
 
@@ -30,4 +30,10 @@ Phase 14 implements the Phase 13 architecture as a production runtime using Dock
 
 **Complete:** [14.2A Memory Runtime Foundation](Phase14.2A/README.md) (Event Bus + ephemeral proposals)
 
-**Next:** 14.2B approval integration and durable Memory adapter
+**Complete:** [14.2B Approval integration + durable Memory adapter](Phases/Phase14.2B_Closeout.md)
+
+**Complete:** [14.2C Knowledge Ingestion Foundation](Phase14.2C/README.md)
+
+**Complete:** [14.2D Production Validation](Phase14.2D/README.md)
+
+**Next:** 14.3 Knowledge Platform

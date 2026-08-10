@@ -23,7 +23,7 @@ No mounts to:
 | --- | --- |
 | `/mnt/monarch/appdata/open-webui` | Application runtime data (not KORA SoT) |
 | `AI/KORA/Memory` | KORA Memory skeleton (Phase 14.2+) |
-| `AI/KORA/Knowledge` | KORA Knowledge skeleton (Phase 14.3+) |
+| `AI/KORA/Knowledge` | KORA Knowledge skeleton (Phase 14.3+ Knowledge Platform) |
 | Honcho volumes | Memory candidate backend (writes gated; not enabled in preflight) |
 
 Boundary config: `AI/OpenWebUI/Config/sot_boundaries.yaml`

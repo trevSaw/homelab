@@ -95,7 +95,7 @@ class GraphRetrievalService:
 
     async def lookup_entity(self, name: str) -> GraphRetrievalResult:
         try:
-            matches = self._graph_store.find_entities_by_name(name)
+            matches = resolve_entities(self._graph_store, name)
         except Exception as exc:  # noqa: BLE001
             log.warning("graph entity lookup degraded: %s", exc)
             return GraphRetrievalResult(name, "degraded", self._backend_name, (), ())
@@ -158,6 +158,103 @@ class GraphRetrievalService:
             return True
         except Exception:  # noqa: BLE001
             return False
+
+
+# High-frequency tokens that should not anchor an entity match. Note: these are
+# used ONLY for single-token partial matching — they never discard a whole
+# canonical name. An entity whose name is entirely stopwords (e.g. "Memory")
+# is still resolvable via exact / multi-token matching.
+_SINGLE_TOKEN_STOPWORDS = frozenset({
+    "what", "is", "are", "the", "a", "an", "how", "does", "do", "which",
+    "where", "when", "who", "why", "can", "and", "or", "of", "to", "in",
+    "for", "with", "about", "between", "relationship", "relate", "related",
+    "relation", "connection", "connect", "connected", "link", "linked",
+    "dependency", "depends", "graph", "please", "tell", "me", "explain",
+})
+
+
+def resolve_entities(graph_store: GraphStore, query: str) -> list[GraphEntity]:
+    """Deterministically resolve graph entities for a natural-language query.
+
+    Match priority:
+      1. exact canonical-name match
+      2. exact alias match
+      3. normalized multi-token / entity-name match (entity's full name appears
+         in the query, or the query's content tokens all appear in the entity)
+      4. single-token partial match, only when it selects exactly one entity
+         (unambiguous); otherwise no match
+      5. otherwise no match
+
+    Stopwords never discard an entity name: matching operates on the full
+    canonical name token set, and single-token partial matching only falls back
+    to non-stopword tokens.
+    """
+    # 1 & 2. exact canonical-name / alias match.
+    exact = graph_store.find_entities_by_name(query)
+    if exact:
+        return exact
+
+    entities = graph_store.list_entities()
+    if not entities:
+        return []
+
+    query_tokens = _tokenize(query)
+    if not query_tokens:
+        return []
+
+    # 3. normalized multi-token match.
+    #
+    # 3a. Entity whose full canonical name token set is contained in the query
+    #     (i.e. the entity is "mentioned" in the query). This is the primary
+    #     natural-language path and is safe against stopword discarding.
+    mentioned: list[GraphEntity] = []
+    for entity in entities:
+        name_tokens = _tokenize(entity.canonical_name)
+        if not name_tokens:
+            continue
+        if name_tokens <= query_tokens:
+            mentioned.append(entity)
+    if mentioned:
+        return _sort_entities(mentioned)
+
+    # 3b. Query content tokens all appear within a single entity's name. Only
+    #     return when that match is unambiguous (exactly one entity).
+    content_tokens = query_tokens - _SINGLE_TOKEN_STOPWORDS
+    if content_tokens:
+        covered: list[GraphEntity] = []
+        for entity in entities:
+            name_tokens = _tokenize(entity.canonical_name)
+            if name_tokens and content_tokens <= name_tokens:
+                covered.append(entity)
+        if len(covered) == 1:
+            return covered
+
+    # 4. single-token partial match, only when unambiguous.
+    for token in sorted(content_tokens, key=lambda t: len(t), reverse=True):
+        matches = [
+            entity
+            for entity in entities
+            if token in _tokenize(entity.canonical_name)
+            or any(token in _tokenize(alias) for alias in entity.aliases)
+        ]
+        if len(matches) == 1:
+            return matches
+        if matches:
+            # Ambiguous: do not guess.
+            return []
+
+    return []
+
+
+def _tokenize(value: str) -> set[str]:
+    """Lowercase alphanumeric token set; strips punctuation and whitespace."""
+    import re
+
+    return set(re.findall(r"[a-z0-9]+", value.lower()))
+
+
+def _sort_entities(entities: list[GraphEntity]) -> list[GraphEntity]:
+    return sorted(entities, key=lambda e: (len(_tokenize(e.canonical_name)), e.canonical_name))
 
 
 def _to_entity_result(entity: GraphEntity) -> GraphEntityResult:

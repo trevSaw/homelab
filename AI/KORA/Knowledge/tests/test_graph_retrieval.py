@@ -144,3 +144,105 @@ def test_graph_context_assembly_includes_provenance():
     assert context.status == "ok"
     assert context.knowledge_sources
     assert "Graph relationships" in context.text or context.graph_relationships
+
+
+# --- Deterministic entity resolution (Phase 14.5 defect correction) ---
+
+
+def _name_store():
+    store = InMemoryGraphStore()
+    for name in ["KORA", "Memory", "Knowledge", "Chroma", "Graphify", "Architecture"]:
+        store.upsert_entity(
+            GraphEntity(
+                entity_id=entity_id(name.lower(), "document"),
+                entity_type="document",
+                canonical_name=name,
+                source_knowledge_id=f"k-{name.lower()}",
+                source_version="v1",
+                source_content_hash="h",
+                source_ref=f"/docs/{name.lower()}.md",
+            )
+        )
+    return store
+
+
+def test_relationship_query_resolves_kora_and_knowledge():
+    store = _name_store()
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("how does KORA relate to Knowledge"))
+    names = {e.canonical_name for e in result.entities}
+    assert "KORA" in names
+    assert "Knowledge" in names
+
+
+def test_relationship_query_resolves_chroma_and_graphify():
+    store = _name_store()
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("what is the relationship between Chroma and Graphify"))
+    names = {e.canonical_name for e in result.entities}
+    assert "Chroma" in names
+    assert "Graphify" in names
+
+
+def test_relationship_query_resolves_memory_and_knowledge():
+    store = _name_store()
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("how are Memory and Knowledge connected"))
+    names = {e.canonical_name for e in result.entities}
+    assert "Memory" in names
+    assert "Knowledge" in names
+
+
+def test_exact_canonical_lookup():
+    store = _name_store()
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("KORA"))
+    assert [e.canonical_name for e in result.entities] == ["KORA"]
+
+
+def test_alias_lookup():
+    store = _name_store()
+    store.upsert_entity(
+        GraphEntity(
+            entity_id=entity_id("chromadb", "document"),
+            entity_type="document",
+            canonical_name="Chroma",
+            aliases=("chromadb",),
+            source_knowledge_id="k-chroma",
+            source_version="v1",
+            source_content_hash="h",
+            source_ref="/docs/chroma.md",
+        )
+    )
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("chromadb"))
+    assert result.entities
+    assert result.entities[0].canonical_name == "Chroma"
+
+
+def test_ambiguous_single_token_does_not_guess():
+    store = InMemoryGraphStore()
+    # Two entities share the token "service".
+    for name in ["Memory Service", "Knowledge Service"]:
+        store.upsert_entity(
+            GraphEntity(
+                entity_id=entity_id(name.lower().replace(" ", "-"), "document"),
+                entity_type="document",
+                canonical_name=name,
+                source_knowledge_id="k",
+                source_version="v1",
+                source_content_hash="h",
+                source_ref="/docs/x.md",
+            )
+        )
+    service = GraphRetrievalService(graph_store=store)
+    # "service" alone is ambiguous -> no guess.
+    result = asyncio.run(service.lookup_entity("service"))
+    assert result.entities == ()
+
+
+def test_unknown_entity_returns_empty():
+    store = _name_store()
+    service = GraphRetrievalService(graph_store=store)
+    result = asyncio.run(service.lookup_entity("totally-unknown-xyz"))
+    assert result.entities == ()

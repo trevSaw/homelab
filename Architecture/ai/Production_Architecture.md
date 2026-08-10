@@ -53,7 +53,7 @@ Translate completed Phase 13 architecture into a production implementation bluep
                                             └─────────────────┘
 ```
 
-Relationship Runtime (Graphify) remains **optional / deferred** until ADR-0007 changes.
+Relationship Runtime (Graphify) is an intentional component scheduled for Phase 14.4 (Knowledge Graph); it is not yet implemented (ADR-0007).
 
 Logical services may co-locate in Solo (one KORA process) or separate later; **boundaries stay logical even when co-located**.
 
@@ -191,7 +191,7 @@ Production architecture **must not** hard-wire Solo forever:
 - KORA remains the product identity  
 - Council remains replaceable across profiles  
 - Memory ≠ Knowledge; Knowledge ≠ Tools; Council ≠ Agents  
-- Graphify optional until adopted  
+- Graphify scheduled for Phase 14.4 (Knowledge Graph); not yet implemented  
 - Obsidian external only  
 - Context Intelligence always precedes retrieval  
 - Explainability and provenance preserved  

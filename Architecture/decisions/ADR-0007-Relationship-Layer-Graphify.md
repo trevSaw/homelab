@@ -3,9 +3,9 @@ title: ADR-0007 Relationship Layer — Graphify
 document_type: ADR
 service: kora
 owner: Homelab
-status: Defer
-version: 0.3.0
-last_reviewed: 2026-08-01
+status: Accepted for Future Implementation
+version: 0.4.0
+last_reviewed: 2026-08-06
 related_documents:
   - Architecture/ai/Knowledge.md
   - Architecture/ai/Knowledge_Runtime.md
@@ -13,6 +13,7 @@ related_documents:
   - Architecture/decisions/ADR-0006-Knowledge-Retrieval-ChromaDB.md
   - Architecture/ai/Technology_Evaluation_ADR_Template.md
   - Services/ServiceIndex.md
+  - Documentation/Phase14/Phase14_Roadmap.md
 ---
 
 # ADR-0007 — Relationship Layer (Graphify)
@@ -31,7 +32,7 @@ related_documents:
 
 ## Status
 
-**Defer** — Graphify is the intended relationship-layer candidate (codebase/docs → queryable knowledge graph). Adoption is deferred until a thin vertical slice exists and packaging fit as a durable KORA Relationship Knowledge runtime (vs assistant skill) is validated. Prior mis-identification as “Graphiti” is void.
+**Accepted for Future Implementation (Target: Phase 14.4 — Knowledge Graph)** — Graphify is an intentional architectural component. It is scheduled for Phase 14.4 and has **not** yet been implemented. It remains behind the implementation gate until that phase begins. Prior mis-identification as “Graphiti” is void.
 
 ## Context
 
@@ -59,7 +60,7 @@ Graphify builds structural/relationship graphs from local sources with explainab
 | Performance | **Likely adequate** for homelab corpus; AST path avoids embedding cost |
 | Community / Project Health | **Active / high visibility** (Graphify-Labs/graphify) |
 | Operational Complexity | **Lower than heavy graph-DB stacks**; still deferred for sequencing |
-| Decision | **Defer** |
+| Decision | **Accepted for Future Implementation (Phase 14.4)** |
 
 Evaluate checklist:
 
@@ -107,7 +108,7 @@ Graphify-Labs/graphify — high visibility; evaluate stewardship and release dis
 
 ## Operational Complexity
 
-Lower than Neo4j-class temporal graph stacks. Remaining complexity is packaging (skill vs service) and keeping graph fresh with repo changes. Primary defer reason: sequencing + runtime-fit validation, not inherent platform weight alone.
+Lower than Neo4j-class temporal graph stacks. Remaining complexity is packaging (skill vs service) and keeping graph fresh with repo changes. Primary scheduling reason: sequenced after the Knowledge Platform (Phase 14.3) plus runtime-fit validation, not inherent platform weight alone.
 
 ## Governance
 
@@ -118,24 +119,25 @@ Derived edges are Candidate Knowledge until validated. Graphify explanations hel
 | Alternative | Pros | Cons |
 | --- | --- | --- |
 | Manual markdown/link indexes | Simple | Weak query power |
-| Defer (chosen) | Thin slice first; validate runtime packaging | Delays rich relationship UX |
+| Schedule for Phase 14.4 (chosen) | Intentional component; thin slice first; validate runtime packaging | Delays rich relationship UX until Knowledge Platform lands |
 | Other graph platforms | Flexible | Heavier ops; not the intended candidate |
 | Adopt Graphify now | Best named fit for repo→graph | Premature; skill≠runtime unproven |
 
 ## Decision
 
-**Defer** Graphify adoption until after provisional Hermes façade + Chroma retrieval paths are demonstrated in a thin slice, and Graphify’s skill-vs-runtime packaging is validated for KORA.
+**Accepted for Future Implementation (Target: Phase 14.4 — Knowledge Graph).** Graphify adoption remains gated: it is not implemented in the current phase, and the architectural decision is unchanged. Implementation is scheduled for Phase 14.4 after the Knowledge Platform (ingestion, embeddings, ChromaDB retrieval) is in place, and after Graphify’s skill-vs-runtime packaging is validated for KORA.
 
-**Decision statement:** Graphify ([Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) is the preferred **relationship-layer candidate**. It is not provisionally adopted for implementation yet. Re-open this ADR when Knowledge retrieval ingestion exists and project-awareness UX is prioritized.
+**Decision statement:** Graphify ([Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) is the preferred **relationship-layer candidate**. It is an intentional architectural component scheduled for Phase 14.4 (Knowledge Graph). It has not yet been implemented and remains behind the implementation gate until that phase. Re-open this ADR before implementation when Knowledge Platform ingestion exists and project-awareness UX is prioritized.
 
 **Constraints / conditions:**
 
-1. Do not implement Graphify in Phase 13.8.
+1. Do not implement Graphify before Phase 14.4.
 2. Do not substitute Graphify for Memory Runtime (ADR-0005) or document SoT.
 3. Do not confuse Graphify with unrelated “Graphiti” / Zep products.
-4. When reopened, require provenance-to-source and non-authority constraints equal to ADR-0006.
+4. At Phase 14.4 implementation, require provenance-to-source and non-authority constraints equal to ADR-0006.
+5. Graphify and ChromaDB coexist: Graphify provides relationship modeling and visualization; ChromaDB provides vector indexing and retrieval. Both are infrastructure owned by the Knowledge Service, not peer services.
 
-**Rollback plan:** N/A (not adopted). If a future spike fails, fall back to manual relationship indexes + Chroma.
+**Rollback plan:** N/A (not implemented). If a Phase 14.4 spike fails, fall back to manual relationship indexes + Chroma.
 
 ## Consequences
 
@@ -145,4 +147,4 @@ Derived edges are Candidate Knowledge until validated. Graphify explanations hel
 
 ## Implementation Notes
 
-No install. `Services/ServiceIndex.md` already lists Graphify as researching. This ADR is authoritative for the Phase 13.8 relationship candidate identity.
+No install. `Services/ServiceIndex.md` already lists Graphify as researching. This ADR is authoritative for the Graphify candidate identity and its Phase 14.4 scheduling. Graphify is not implemented in the current phase.

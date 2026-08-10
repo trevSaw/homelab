@@ -1,4 +1,4 @@
 # Context (skeleton)
 
 Stage 1 Context Intelligence / Assembly logic lives inside `../Runtime/`.
-Dedicated Context Assembly Engine expansion is Phase 14.4.
+Context Intelligence hardening is planned within Phase 15 (Council & Intelligence).

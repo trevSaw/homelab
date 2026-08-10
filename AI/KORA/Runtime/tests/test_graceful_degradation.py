@@ -71,6 +71,24 @@ class ChatPathStoreIsolationTests(unittest.TestCase):
         self.assertIn("knowledge", preference["stores_skipped"])
         self.assertEqual(preference["budgets"]["knowledge"], 0)
 
+    def test_strategy_relationship_queries_knowledge_and_graph(self) -> None:
+        relationship = select_strategy({"label": "relationship", "confidence": "high", "rationale": "t"})
+        self.assertIs(relationship["query_knowledge"], True)
+        self.assertIs(relationship["query_graph"], True)
+        self.assertIn("knowledge", relationship["stores_queried"])
+        self.assertIn("graphify", relationship["stores_queried"])
+        self.assertIs(relationship["query_memory"], False)
+        self.assertIs(relationship["query_tools"], False)
+
+    def test_classifier_labels_relationship_queries(self) -> None:
+        self.assertEqual(classify("how does KORA relate to Knowledge")["label"], "relationship")
+        self.assertEqual(
+            classify("what is the relationship between Chroma and Graphify")["label"],
+            "relationship",
+        )
+        self.assertEqual(classify("what are the running models")["label"], "operational")
+        self.assertEqual(classify("hello there")["label"], "general")
+
     def test_execute_and_admin_requests_are_refused(self) -> None:
         client = TestClient(app)
         execute_response = client.post(

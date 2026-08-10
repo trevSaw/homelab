@@ -245,16 +245,16 @@ Either way, responsibilities and contracts remain.
 | Field | Value |
 | --- | --- |
 | **Purpose** | Relationship knowledge graph |
-| **Architectural responsibility** | Optional complement to Knowledge |
+| **Architectural responsibility** | Intentional complement to Knowledge (scheduled Phase 14.4) |
 | **Runtime Profile support** | Hybrid/later |
 | **Persistent data ownership** | Rebuildable graph; not SoT |
-| **Dependencies** | ADR-0007 adoption |
-| **Required interfaces** | None until adopted |
+| **Dependencies** | ADR-0007 (accepted for future implementation); Knowledge Platform (14.3) |
+| **Required interfaces** | None until implemented |
 | **Optional interfaces** | Graph query |
-| **Startup / Shutdown** | N/A until Stage 7 |
+| **Startup / Shutdown** | N/A until Phase 14.4 |
 | **Health expectations** | Off by default |
-| **Scaling expectations** | Deferred |
-| **Related ADRs** | ADR-0007 (Defer) |
+| **Scaling expectations** | Deferred until Phase 14.4 |
+| **Related ADRs** | ADR-0007 (Accepted for Future Implementation) |
 
 ---
 

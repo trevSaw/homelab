@@ -17,4 +17,4 @@ Phase 14.2A introduced an event‑driven Memory runtime with an in‑memory pr
 * Guarantees that no silent writes can occur, meeting the governance requirement of “no un‑approved persistence”.
 * Enables auditability: every durable write is linked to an `approval_intent` and `commit_succeeded` audit event.
 * Allows future backends (e.g., a different database) to replace Honcho without changing the KORA core.
-* Retrieval APIs can be added later (Phase 14.3) without retrofitting the approval contract.
+* Retrieval APIs can be added later (Phase 14.3 Knowledge Platform) without retrofitting the approval contract.

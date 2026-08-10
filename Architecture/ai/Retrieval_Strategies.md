@@ -19,7 +19,7 @@ Each strategy declares:
 | **Query Knowledge?** | yes / no / limited |
 | **Query Tools?** | yes / no / read-only |
 | **Query Agents?** | yes / no (rare in thin path) |
-| **Relationship graph?** | no (default; Graphify deferred) |
+| **Relationship graph?** | no (default; Graphify planned for Phase 14.4) |
 | **Priority order** | which store first |
 | **Expected provenance** | required labels |
 | **Expected confidence posture** | high/medium/low / ask |

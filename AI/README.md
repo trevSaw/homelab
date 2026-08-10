@@ -18,4 +18,4 @@ Compose SoT lives under `services/` (`kora`, `ollama`, `open-webui`, `hermes`) p
 User → Open WebUI → KORA Runtime → Local Ollama → Response
 ```
 
-Hermes remains a thin execution layer and is **not** the product identity. Memory, Knowledge, Tools, MCP, Council reasoning, and agents are deferred to later Phase 14 stages.
+Hermes remains a thin execution layer and is **not** the product identity. Memory, Knowledge, Tools, and MCP are delivered as services orchestrated by the KORA Runtime in later roadmap phases (14.3 Knowledge Platform, 14.4 Knowledge Graph, 14.5 Tool Platform). Council reasoning and agents are planned in Phase 15 (Council & Intelligence) and Phase 16 (Automation & Autonomous Workflows).
