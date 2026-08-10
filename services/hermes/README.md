@@ -25,6 +25,30 @@ Orchestration **substrate** only (ADR-0004). Hermes is not KORA.
 | Replacement | **Reworked in place** (same container/data); role narrowed |
 | Future | Distributed Council / agent transport (later phases) |
 
+## Phase 14 Hermes migration posture (branch `phase14-hermes-runtime`)
+
+The target architecture moves Hermes back onto the chat path as the generic
+runtime entry:
+
+```text
+Open WebUI → Hermes (api_server :8642) → KORA (intelligence) → Memory/Knowledge/Tools → Ollama
+```
+
+This is an **evaluation + incremental migration**, not a completed cutover.
+
+- **API server platform** is additive config, **default OFF**
+  (`API_SERVER_ENABLED=false`) so the current direct KORA path is preserved.
+- Enable at cutover via env: `API_SERVER_ENABLED=true`,
+  `API_SERVER_KEY=<high-entropy>`, `API_SERVER_MODEL_NAME=KORA`.
+- **Hermes → KORA delegation** is configured on the host in
+  `/mnt/monarch/appdata/hermes/config.yaml` under `delegation:` (not env):
+  `base_url: http://kora:8080/v1`, `api_mode: chat_completions`,
+  `api_key: <KORA_HERMES_TOKEN>`.
+- KORA identity, governance, Memory policy, Knowledge policy, and
+  explainability remain KORA-owned. Hermes provides routing, sessions, agent
+  loop, tool/MCP transport, and model plumbing only.
+- Design docs: `Documentation/Phase14/Phase14-Migration/`.
+
 ## Migration
 
 | Item | Decision |

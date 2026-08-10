@@ -20,6 +20,16 @@ services:
       # Stage 1: Hermes must not claim KORA identity.
       KORA_PRODUCT_NAME: KORA
       HERMES_ROLE: thin_execution_layer
+      # Phase 14 Hermes migration (branch phase14-hermes-runtime).
+      # OpenAI-compatible API server platform (Open WebUI entry point).
+      # Default OFF to preserve the current direct KORA path. Enable at cutover.
+      # Hermes refuses to start the API server without a non-empty API_SERVER_KEY.
+      API_SERVER_ENABLED: ${API_SERVER_ENABLED:-false}
+      API_SERVER_KEY: ${API_SERVER_KEY:-}
+      API_SERVER_HOST: ${API_SERVER_HOST:-0.0.0.0}
+      API_SERVER_PORT: ${API_SERVER_PORT:-8642}
+      API_SERVER_MODEL_NAME: ${API_SERVER_MODEL_NAME:-KORA}
+      API_SERVER_CORS_ORIGINS: ${API_SERVER_CORS_ORIGINS:-}
     volumes:
       - /mnt/monarch/appdata/hermes:/opt/data
     shm_size: 1g
