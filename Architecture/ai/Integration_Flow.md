@@ -45,7 +45,7 @@ Knowledge Runtime   ← Reference retrieval (ChromaDB candidate / ADR-0006)
 Tools               ← Live evidence (MCP later; optional in thin slice)
 ```
 
-**Relationship Knowledge (Graphify / ADR-0007)** is deferred and **out of the default thin-slice path**.
+**Relationship Knowledge (Graphify / ADR-0007)** is an intentional component scheduled for Phase 14.4 (Knowledge Graph). It remains **out of the default thin-slice path** and is not yet implemented.
 
 Reading tip: arrows mean “invokes / requests,” not “is replaced by.”
 
@@ -62,7 +62,7 @@ Reading tip: arrows mean “invokes / requests,” not “is replaced by.”
 | Council | Council docs | Deliberation contributions | Execution; tool authority |
 | Memory Runtime | Honcho spike (0005) | Continuity retrieval/governance | Knowledge authority |
 | Knowledge Runtime | ChromaDB (0006) | Semantic retrieval index | Document SoT / promotion |
-| Relationship Knowledge | Graphify (0007, deferred) | Structural relationships | SoT; Memory |
+| Relationship Knowledge | Graphify (0007, planned Phase 14.4) | Structural relationships | SoT; Memory |
 | Tools | MCP later | Live environment evidence | Decisions |
 
 ---
@@ -99,7 +99,7 @@ Reading tip: arrows mean “invokes / requests,” not “is replaced by.”
 | Council seats serialized as disposable agents | Council ≠ Agents |
 | Unapproved Execute/Administrative commands | Tools ≠ Decisions; prototype boundaries |
 | Durable Memory writes without Evaluate/Classify/confirmation | Prototype boundaries |
-| Graphify graph as blocking dependency | ADR-0007 Defer |
+| Graphify graph as blocking dependency | Graphify planned for Phase 14.4; not implemented |
 | UI chat DB as Knowledge SoT | Indexes/UI ≠ authority |
 | Hermes/Open WebUI branding as product identity | KORA ≡ Brainiac |
 
@@ -149,7 +149,7 @@ Open WebUI → Hermes → KORA → Council
                     Event Bus
                  ↙       ↓       ↘
  Memory Runtime (read) Knowledge  Tools (optional)
-                 Graphify remains omitted/deferred
+                  Graphify omitted from thin slice (scheduled Phase 14.4)
 ```
 
 Write paths (Memory durable store, Knowledge promotion, tool Execute) remain **out of default path**.
@@ -164,7 +164,7 @@ Write paths (Memory durable store, Knowledge promotion, tool Execute) remain **o
 | Hermes replaces KORA identity | ADR-0004 façade / branding rules |
 | Honcho dialectic auto-writes | ADR-0005 spike gates; no ungated durable writes |
 | Chroma treated as truth | ADR-0006 non-authority; repo SoT |
-| Graphify premature complexity | ADR-0007 Defer; omit from thin slice |
+| Graphify premature complexity | Graphify planned for Phase 14.4; omit from thin slice |
 | Agent/Council confusion | Selection + Agents.md boundaries |
 
 ---

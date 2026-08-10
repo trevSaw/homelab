@@ -41,7 +41,7 @@ Knowledge storage (future adapters: SQLite, vector DB, etc.)
 **Documentation updates**
 * Add ``Documentation/Phase14/Phase14.2C/README.md`` (this file) describing the foundation and boundaries.
 * Update road‑map entry for Phase 14.2C and ensure the sequence:
-  14.2A → 14.2B → 14.2C → 14.2D → 14.3.
+  14.2A → 14.2B → 14.2C → 14.2D → 14.3 (Knowledge Platform) → 14.4 (Knowledge Graph) → 14.5 (Tool Platform).
 * No changes to Phase 14.2B docs that would skip Phase 14.2D.
 
 **Boundary verification**

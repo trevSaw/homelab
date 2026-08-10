@@ -54,4 +54,4 @@ Provide a governed, durable Memory store that only persists proposals after an e
 
 **Next phase entry point**
 
-Phase 14.2C — Knowledge ingestion will extend the Memory foundation with ingestion pipelines. Subsequent work includes Phase 14.2D — Production validation before moving to Phase 14.3.
+Phase 14.2C — Knowledge ingestion will extend the Memory foundation with ingestion pipelines. Subsequent work includes Phase 14.2D — Production validation before moving to Phase 14.3 (Knowledge Platform).

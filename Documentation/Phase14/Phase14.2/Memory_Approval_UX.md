@@ -22,7 +22,7 @@ This document defines the workflow Honcho (or any Memory backend) must obey befo
 - Implementing Honcho write APIs  
 - Open WebUI built-in memory as KORA Memory  
 - Automatic preference learning without review  
-- Knowledge corpus ingestion (Phase 14.3)
+- Knowledge corpus ingestion (Phase 14.3 Knowledge Platform)
 
 ---
 

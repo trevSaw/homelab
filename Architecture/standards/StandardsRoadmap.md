@@ -852,7 +852,7 @@ Define production topology, logical service cards, staged rollout, and operation
 
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** 🟡 In Progress (14.1 and 14.2A complete)
+**Status:** 🟡 In Progress (14.1 through 14.2D complete)
 
 **Primary Goal:** Implement KORA production runtime in staged slices without rewriting Phase 13 architecture.
 
@@ -866,19 +866,19 @@ Implement Phase 13 architecture as production runtime (Docker Compose substrate)
 | --- | --- | --- |
 | 14.1 | Runtime Foundation (KORA + Hermes + Open WebUI + Ollama) | ✅ Complete (2026-08-01) |
 | 14.2A | Event Bus + Memory Runtime Foundation | ✅ Complete (2026-08-03) |
-| 14.2B | Approval integration + durable Memory adapter | Planned |
-| 14.3 | Knowledge Runtime (RAG) | Planned |
-| 14.4 | Context Assembly Engine | Planned |
-| 14.5 | Tool & MCP Runtime | Planned |
-| 14.6 | Council Integration | Planned |
-| 14.7 | Autonomous Workflows & Agent Orchestration | Planned |
+| 14.2B | Approval integration + durable Memory adapter | ✅ Complete |
+| 14.2C | Knowledge Ingestion Foundation | ✅ Complete |
+| 14.2D | Production Validation | ✅ Complete |
+| 14.3 | Knowledge Platform | Planned |
+| 14.4 | Knowledge Graph | Planned |
+| 14.5 | Tool Platform | Planned |
 
 ## Constraints
 
 - Solo Runtime is the initial production profile
 - KORA remains product identity; Hermes/Open WebUI/Ollama are substrates
 - Memory ≠ Knowledge; Council ≠ Agents; Tools ≠ Decisions
-- Graphify deferred; Obsidian external only
+- Graphify intentional (target Phase 14.4); Obsidian external only
 - Phase 12 baseline preserved unless explicitly changed
 
 ## Goal
@@ -887,11 +887,58 @@ Ship a governed KORA production path before broader homelab AI automation.
 
 ---
 
-# Phase 15 — AI Automation
+# Phase 15 — Council & Intelligence
 
 **Status:** 🟡 Planned
 
-Gradually automate homelab operations while preserving human governance. Begins after Phase 14 foundation (14.1–14.7) is stable.
+**Capability:** KORA can reason through the Council.
+
+Phase 15 establishes Council orchestration and reasoning. It is explicitly **hardware-agnostic**: the goal is the Council architecture, not large models or expensive parallel inference. Begins after the Phase 14 foundation (14.1–14.5) is stable.
+
+## Scope
+
+- Council member definitions and archetypes
+- Council orchestration and deliberation protocol
+- Context boundaries
+- Model/member configuration (configurable member count, model assignment, parallelism)
+- Sequential vs parallel execution configuration
+- Synthesis
+- Failure handling
+- Observability
+- Governance boundaries
+- Context Intelligence / assembly hardening
+
+## Hardware-awareness
+
+The Council is designed to operate with smaller local models, sequential inference, configurable member count/model assignment/parallelism, and future larger or heterogeneous models. The architecture must not assume every Council member runs a large model simultaneously. Multiple Council archetypes may initially share one local model with different role/system prompts. Hardware limits affect deployment configuration and model selection, not the fundamental Council architecture.
+
+---
+
+# Phase 16 — Automation & Autonomous Workflows
+
+**Status:** 🟡 Planned
+
+**Capability:** KORA can perform autonomous workflows.
+
+Gradually automate homelab operations while preserving human governance. Begins after the Phase 14 foundation (14.1–14.5) and Phase 15 Council are stable.
+
+## Scope
+
+- Autonomous planning
+- Workflow execution
+- Tool orchestration
+- Approval policies
+- Execution boundaries
+- Monitoring
+- Rollback / recovery
+- Self-healing proposals
+- Pull request generation
+- Automated audits
+- Long-running workflows
+
+## Governance
+
+Automation must remain governed. Council does not automatically grant permission to execute actions. Reasoning and execution remain separate capabilities.
 
 ## Automation Targets
 
@@ -949,7 +996,9 @@ Council · Memory · Orchestration · MCP · UX
         ↓
 KORA Production Runtime (Phase 14)
         ↓
-AI Automation (Phase 15+)
+Council & Intelligence (Phase 15)
+        ↓
+AI Automation & Autonomous Workflows (Phase 16+)
         ↓
 Continuous Improvement
 ```

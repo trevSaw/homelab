@@ -64,7 +64,7 @@ Context Intelligence **does not**:
 - Promote Memory → Knowledge or Tools → Knowledge
 - Execute Administrative/Execute tools
 - Rewrite architecture to fit a search vendor
-- Query Graphify on the default path (ADR-0007 Defer)
+- Query Graphify on the default path (Graphify planned for Phase 14.4; not implemented)
 
 ---
 
@@ -182,7 +182,7 @@ Defined fully across this file + `Retrieval_Strategies.md` + `Context_Ranking.md
 4. **Memory-first / Knowledge-first / Tool-first** situations by class
 5. **Conflict resolution** = surface + authority order, not silent pick
 6. **Confidence propagation** into assembly/explainability
-7. **Relationship-aware retrieval** conceptual (Graphify deferred)
+7. **Relationship-aware retrieval** conceptual (Graphify planned for Phase 14.4)
 8. **Unknown detection** and **missing-information handling**
 9. **Context pruning** after ranking
 10. **Authority ordering** and **freshness weighting**
