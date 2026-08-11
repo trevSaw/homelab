@@ -1,5 +1,5 @@
-# Open WebUI — Phase 14.1 UI surface for KORA (ADR-0008)
-# Chat path: Open WebUI → KORA → Ollama
+# Open WebUI — Phase 14 final UI surface for KORA (ADR-0008)
+# Chat path: Open WebUI → Hermes → KORA HEAD AGENT → Ollama
 services:
   open-webui:
     # Digest pin of previously running :main at Phase 14.1 (preserve working UI).
@@ -11,20 +11,18 @@ services:
       - .env
     environment:
       TZ: ${TZ:-Asia/Tokyo}
-      # Stage 1: route through KORA OpenAI-compatible façade (not direct Ollama).
+      # Phase 14 final: route through Hermes api_server (KORA head agent).
+      # The old standalone KORA Runtime is retired (see
+      # Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md).
       ENABLE_OLLAMA_API: ${ENABLE_OLLAMA_API:-false}
-      # Phase 14 Hermes migration (branch phase14-hermes-runtime):
-      # Cutover switch. Default stays on the direct KORA path. After the Hermes
-      # path is proven and approved, set OPENAI_API_BASE_URL=http://hermes:8642/v1
-      # and OPENAI_API_KEY=<API_SERVER_KEY>. Hermes then advertises model "KORA".
-      OPENAI_API_BASE_URL: ${OPENAI_API_BASE_URL:-http://kora:8080/v1}
+      OPENAI_API_BASE_URL: ${OPENAI_API_BASE_URL:-http://hermes:8642/v1}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-kora-local}
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
       WEBUI_NAME: ${WEBUI_NAME:-KORA}
-      DEFAULT_MODELS: ${DEFAULT_MODELS:-qwen3:8b}
+      DEFAULT_MODELS: ${DEFAULT_MODELS:-KORA}
       # Boundary: Open WebUI internal RAG/embeddings are UI-local only.
-      # They are NOT KORA Memory SoT and MUST NOT mount AI/KORA/{Memory,Knowledge}.
-      # See AI/OpenWebUI/Config/sot_boundaries.yaml and Phase 14.2 preflight docs.
+      # They are NOT KORA Memory SoT (Honcho) and MUST NOT mount Honcho volumes.
+      # See AI/OpenWebUI/Config/sot_boundaries.yaml.
     volumes:
       # UI application data only (chats, UI vector_db, uploads, caches).
       # Forbidden: AI/KORA/Memory, AI/KORA/Knowledge, Honcho volumes, /hive/ollama models.
@@ -43,7 +41,7 @@ services:
       - traefik.http.services.openwebui.loadbalancer.server.port=8080
       - com.homelab.service=open-webui
       - com.homelab.domain=ai
-      - com.homelab.phase=14.2-preflight
+      - com.homelab.phase=14-final
       - com.homelab.logging=central
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health >/dev/null || exit 1"]
