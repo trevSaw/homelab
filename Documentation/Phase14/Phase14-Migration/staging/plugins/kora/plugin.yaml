@@ -1,0 +1,25 @@
+# KORA structural governance plugin — staging prototype (Hermes v0.17.0)
+
+# KORA-owned intelligence/governance running as a first-class Hermes plugin.
+# Uses ONLY supported Hermes extension points: PluginContext.register_hook /
+# register_tool. No Hermes source is modified (no fork).
+name: kora
+version: 0.1.0
+description: >
+  KORA structural governance plugin (staging prototype). Performs KORA
+  classification, strategy selection, governance/refusal, tool authorization,
+  knowledge retrieval (real KORA Knowledge platform, in-memory vector store,
+  Ollama embeddings), memory policy (real KORA Memory Runtime, approval-gated),
+  and canonical out-of-band explainability records.
+kind: standalone
+provides_hooks:
+  - on_session_start
+  - pre_llm_call
+  - pre_tool_call
+  - transform_llm_output
+  - post_llm_call
+provides_tools:
+  - kora.knowledge_query
+  - kora.memory_status
+  - kora.memory_propose
+  - kora.wipe_volume

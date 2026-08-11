@@ -1,0 +1,57 @@
+# KORA-as-Agent staging prototype — ISOLATED, DISPOSABLE
+#
+# Canonical architecture being proven:
+#   Open WebUI client -> Hermes (runtime) -> KORA AGENT -> external services
+# KORA is the head agent hosted by Hermes. Services are real containers.
+#
+# Isolation: own project, own network, localhost-only ports, own ./data.
+# Production untouched. Production Ollama is used ONLY for read-only
+# inference/embeddings over ollama_ollama-net (no Ollama config change).
+
+name: kora-hermes-staging
+
+services:
+  hermes:
+    # Pinned Hermes Agent v0.17.0 (2026.6.19, upstream cf58f1a5), digest-pinned.
+    image: nousresearch/hermes-agent@sha256:a967ba5f662d2405041afd31ba37df9f9cdab43ef24fec8a564d59ab85bdeaa7
+    container_name: kora-staging-hermes
+    command: [gateway, run]
+    environment:
+      TZ: Asia/Tokyo
+      OLLAMA_BASE_URL: http://ollama:11434
+      API_SERVER_ENABLED: "true"
+      API_SERVER_KEY: staging-kora-key
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_PORT: "8642"
+      API_SERVER_MODEL_NAME: KORA
+      API_SERVER_CORS_ORIGINS: "*"
+      # KORA agent config: external services the agent orchestrates
+      KORA_STAGING_OLLAMA: http://ollama:11434
+      KORA_STAGING_CHROMA: http://chromadb:8000
+      KORA_STAGING_EMBED_MODEL: nomic-embed-text
+    volumes:
+      - ./data:/opt/data
+      - ./fixtures:/fixtures:ro
+    networks:
+      - staging-net
+      - ollama_ollama-net
+    ports:
+      - "127.0.0.1:28642:8642"
+
+  chromadb:
+    # REAL Chroma vector service (isolated staging instance).
+    image: chromadb/chroma:latest
+    container_name: kora-staging-chromadb
+    environment:
+      IS_PERSISTENT: "false"
+      ANONYMIZED_TELEMETRY: "false"
+    networks:
+      - staging-net
+    ports:
+      - "127.0.0.1:28644:8000"
+
+networks:
+  staging-net: {}
+  ollama_ollama-net:
+    external: true
+    name: ollama_ollama-net
