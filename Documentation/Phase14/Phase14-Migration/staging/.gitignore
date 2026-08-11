@@ -1,0 +1,3 @@
+# Disposable staging runtime data (Hermes config/DBs, explain records, etc.)
+# Recreated by bootstrap.sh; never commit.
+data/
