@@ -3,49 +3,23 @@ title: KORA Memory Runtime Logical Service
 document_type: README
 service: memory-runtime
 owner: KORA
-status: Foundation
+status: RETIRED
 version: 14.2A
-last_reviewed: 2026-08-03
+last_reviewed: 2026-08-11
 related_documents:
-  - Architecture/ai/Memory_Runtime.md
-  - Architecture/decisions/ADR-14.2A-001-Internal-Event-Bus.md
-  - Documentation/Phase14/Phase14.2A/Memory_Runtime_Architecture.md
-  - Validation/Phase14.2A/
+  - Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md
 ---
 
-# Memory Runtime
+# Memory Runtime (RETIRED)
 
-Event-driven, ephemeral Memory proposal lifecycle for KORA.
+> **RETIRED 2026-08-11.** The old standalone KORA Runtime — including its
+> in-process Memory Runtime and Approval Engine — is retired. KORA is now a
+> Hermes Agent and uses the **Hermes native Honcho memory provider**
+> (workspace `kora`, peer `user`). The historical implementation is preserved
+> in Git history and the production backup.
 
-## Phase 14.2A deployment
+## Historical (pre-retirement)
 
-Memory Runtime and Approval Engine are logical services co-located in the KORA
-process. They have no standalone containers or durable volumes. Runtime code is
-in:
-
-- `AI/KORA/Runtime/app/memory_runtime.py`
-- `AI/KORA/Runtime/app/memory_models.py`
-- `AI/KORA/Runtime/app/approval_engine.py`
-
-## Responsibilities
-
-- Subscribe to relevant general Event Bus topics.
-- Require explicit candidate data; perform no autonomous extraction.
-- Normalize and evaluate candidate eligibility.
-- Create and track ephemeral proposals.
-- Forward eligible proposals to Approval Engine.
-- Expose read-only proposal status through KORA.
-
-Approval Engine alone owns state transitions. Memory Runtime owns proposal
-lifecycle coordination. Honcho remains disconnected and owns only future
-durable persistence.
-
-## Internal interfaces
-
-- Memory Runtime: `create_proposal`, `list_pending`, `get_proposal`
-- Approval Engine: `approve`, `reject`, `expire`, `withdraw`
-
-## Prohibited in this phase
-
-No durable writes, Honcho calls, Open WebUI changes, approval UI, MCP ingestion,
-Graphify, ChromaDB, embeddings, vector search, event persistence, or replay.
+Event-driven, ephemeral Memory proposal lifecycle for KORA, co-located in the
+KORA process (`AI/KORA/Runtime/app/memory_runtime.py`). Approval Engine owned
+state transitions; Honcho was the future durable store.

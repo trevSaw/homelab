@@ -1,5 +1,11 @@
-# KORA Runtime — Phase 14.4 Knowledge Graph
-# Path: User → Open WebUI → KORA → Knowledge (Chroma + Graphify) → Ollama
+# ============================================================================
+# RETIRED 2026-08-11 — KORA Runtime (standalone) is no longer part of the
+# active architecture. KORA is now a Hermes Agent hosted inside Hermes.
+# See Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md.
+# This compose is PRESERVED for rollback only. Do NOT run it unless restoring
+# the old runtime. The build context (../../AI/KORA Runtime/Dockerfile) no
+# longer exists in the working tree (removed at retirement).
+# ============================================================================
 services:
   kora:
     build:

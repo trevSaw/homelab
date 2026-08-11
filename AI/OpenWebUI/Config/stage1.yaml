@@ -1,7 +1,9 @@
-# Open WebUI Stage 1 connection profile
+# Open WebUI connection profile — Phase 14 final
+# KORA Runtime retired. Open WebUI routes through the Hermes api_server,
+# which hosts the KORA head agent.
 
 backend: openai_compatible
-base_url: http://kora:8080/v1
+base_url: http://hermes:8642/v1
 presented_as: KORA
 enable_ollama_api: false
 bypass_kora: false

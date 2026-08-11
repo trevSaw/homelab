@@ -1,1 +1,0 @@
-# MCP transport/provider subpackage

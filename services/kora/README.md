@@ -3,21 +3,27 @@ title: KORA Runtime Service README
 document_type: README
 service: kora
 owner: Homelab
-status: Active
+status: RETIRED
 version: 14.2A
-last_reviewed: 2026-08-03
+last_reviewed: 2026-08-11
 related_documents:
-  - Architecture/ai/Production_Architecture.md
-  - Architecture/ai/Rollout_Strategy.md
-  - Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md
-  - Architecture/decisions/ADR-0008-User-Interface-OpenWebUI.md
-  - Architecture/decisions/ADR-14.2A-001-Internal-Event-Bus.md
-  - Validation/Phase14.2A/
+  - Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md
 ---
 
-# KORA Runtime (Solo + Phase 14.2A foundation)
+# KORA Runtime (RETIRED)
 
-## Overview
+> **RETIRED 2026-08-11.** The standalone KORA Runtime is no longer part of the
+> active architecture. KORA is now a **Hermes Agent** hosted inside Hermes.
+>
+> - Active chat path: `Open WebUI → Hermes (api_server :8642) → KORA → Ollama`
+> - Memory: Hermes native Honcho provider (workspace `kora`, peer `user`)
+> - The container `kora` has been removed from active deployment.
+> - This compose, the runtime image `homelab/kora-runtime:14.5.0`, and the data
+>   at `/mnt/monarch/appdata/kora` are **preserved for rollback/recovery**.
+> - Do NOT `docker compose up` this project unless explicitly restoring the old
+>   runtime.
+
+## Historical (pre-retirement)
 
 KORA Solo conductor façade. OpenAI-compatible API on port 8080 (internal).
 
@@ -25,43 +31,8 @@ KORA Solo conductor façade. OpenAI-compatible API on port 8080 (internal).
 Open WebUI → http://kora:8080/v1 → Ollama
 ```
 
-## Architecture
-
 - Product identity: **KORA** (Brainiac)
-- Hermes is thin/optional and not on the primary Stage 1 chat path
 - Event Bus / Memory proposals: in-process, ephemeral logical services
-- Memory retrieval / durable writes / Knowledge / Tools: disabled
-
-## Required external resources
-
-| Resource | Requirement |
-| --- | --- |
-| Docker network `ollama_ollama-net` | External; shared with Ollama / Hermes / Honcho |
-| Docker network `proxy` | External (reserved; Traefik disabled on KORA in Stage 1) |
-| Bind path `/mnt/monarch/appdata/kora` | Runtime data directory |
-| Healthy `ollama` container | Inference backend |
-
-## Deployment
-
-```bash
-sudo mkdir -p /mnt/monarch/appdata/kora
-cd /home/fatherfrank/projects/homelab/services/kora
-cp -n .env.example .env
-docker compose -f compose.yaml config >/dev/null
-docker compose -f compose.yaml up -d --build
-```
-
-Startup order: **ollama → kora → (hermes optional) → open-webui**.
-
-## Health
-
-```bash
-docker exec kora python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/health').read().decode())"
-```
-
-## Exceptions
-
-| Item | Exception |
-| --- | --- |
-| Cross-project depends_on | Omitted — Ollama is a separate compose project; order is operational |
-| Traefik | Disabled — UI ingress remains on Open WebUI only |
+- Requires external networks `ollama_ollama-net` + `proxy`, bind path
+  `/mnt/monarch/appdata/kora`, healthy `ollama`
+- Traefik disabled in Stage 1 (UI ingress remained on Open WebUI only)

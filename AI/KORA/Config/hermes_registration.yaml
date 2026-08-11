@@ -1,31 +1,30 @@
-# Hermes registration — Phase 14.1
-# ADR-0004: Hermes is orchestration substrate only — not KORA identity.
+# Hermes registration — Phase 14 final
+# KORA is a Hermes Agent. Hermes is the generic runtime; KORA is the head agent.
 
 substrate: hermes
-status: thin_optional_solo
+status: active_head_agent
 adr: ADR-0004
 
-role: thin_execution_layer
-is_kora: false
-replaces_council: false
-owns_product_identity: false
+role: kora_head_agent
+is_kora: true
+replaces_council: true
+owns_product_identity: true
 
-solo_stage_1:
-  primary_chat_path_includes_hermes: false
-  reason: >
-    Stage 1 Solo production path is User → Open WebUI → KORA → Ollama.
-    Hermes remains deployed and registered for later Distributed/agent stages
-    and must not capture orchestration or identity responsibilities.
+final_architecture:
+  primary_chat_path: Open WebUI -> Hermes -> KORA -> Ollama
+  memory: Honcho (Hermes native honcho provider; workspace "kora", peer "user")
+  knowledge: Chroma (kora-chromadb)
+  relationships: Graphify
+  inference: Ollama
+  tools: MCP
 
 interfaces:
-  required_later:
-    - invoke_kora_conductor
-  forbidden_now:
-    - claim_kora_identity
-    - durable_memory_authority
-    - knowledge_sot
-    - ungated_execute
+  required:
+    - hermes_api_server            # Open WebUI entry (port 8642, model "KORA")
+    - honcho_provider              # native memory provider
+  retired:
+    - kora_runtime_api_server      # old standalone runtime (retired)
 
 health:
   expect_reachable: true
-  expect_on_primary_chat_path: false
+  expect_on_primary_chat_path: true
