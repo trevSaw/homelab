@@ -35,7 +35,7 @@ Open WebUI → Hermes (api_server :8642, model "KORA") → KORA HEAD AGENT
 | Runtime | Hermes v0.17.0 (api_server platform) |
 | KORA | Hermes Agent — plugin at `/opt/data/plugins/kora` |
 | Primary chat path | **Yes** — Open WebUI → Hermes → KORA → Ollama |
-| Model | Controlled by Hermes `config.yaml model.default` (currently `qwen3:8b`) |
+| Model | Controlled by Hermes `config.yaml model.default` (currently `gpt-oss:20b-cloud`; was `qwen3:8b` before Phase 16 switch) |
 | Memory | Hermes native honcho provider (workspace `kora`, peer `user`) |
 | KORA identity | Presented as **KORA** (API_SERVER_MODEL_NAME=KORA) |
 
@@ -76,17 +76,18 @@ mcp_servers:
 - ✅ MCP server configured, discovered, and the tool registered
   (`hermes mcp list` shows `graphify` enabled, 1 tool selected; api_server
   toolset `graphify` is enabled for KORA).
-- ✅ KORA recognizes and invokes the tool — the model emits
-  `mcp_graphify_graph_stats` with correct arguments.
-- ⚠️ **Execution/synthesis not yet achieved:** the current model (`qwen3:8b`)
-  emits the MCP tool invocation as **text JSON** (a `{"tool_call": ...}` block)
-  rather than a structured OpenAI `tool_calls` message in the Hermes api_server
-  context, so Hermes's agent loop does not execute the tool and the result is
-  not incorporated into KORA's response. Direct Ollama tests confirm `qwen3:8b`
-  CAN emit structured `tool_calls`, so this is a model-output-format behavior
-  under the full Hermes system prompt — consistent with the known
-  `qwen3:8b` inference limitations (see Phase 15 status). No KORA code change
-  was made.
+- ✅ **Structured MCP tool calling verified** with KORA on `gpt-oss:20b-cloud`:
+  KORA emitted a genuine structured `tool_calls` message for
+  `mcp_graphify_graph_stats`, Hermes executed it, Graphify returned real data
+  (19 nodes, 28 edges, 0 communities), and KORA incorporated the result into
+  its response ("The graph has 19 nodes, 28 edges and 0 communities").
+- ⚠️ Note: when the model passes the optional `project_path` argument (e.g.
+  `"/opt/data"`), Graphify resolves `<project_path>/graphify-out/graph.json`
+  and errors; instructing the model to omit it (use the server default) returns
+  real data. This is a model argument-filling behavior, not an MCP defect.
+- Historical note: `qwen3:8b` (previous KORA model) emitted MCP tool
+  invocations as **text JSON** instead of structured `tool_calls`, so execution
+  did not occur; `gpt-oss:20b-cloud` resolves this (see Phase 16 model switch).
 
 ## Migration
 
