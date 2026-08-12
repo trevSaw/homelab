@@ -60,6 +60,12 @@ Currently configured (read-only, whitelisted):
 
 ```yaml
 mcp_servers:
+  context7:
+    url: https://mcp.context7.com/mcp
+    tools:
+      include:
+        - resolve-library-id
+        - query-docs
   graphify:
     url: http://graphify:8080/mcp
     tools:
@@ -73,11 +79,14 @@ mcp_servers:
         - graph_stats
 ```
 
-- Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
-- Enabled tools: 7 safe read-only graph/relationship tools (listed above).
-- Disabled: PR/repository tools (`list_prs`, `get_pr_impact`, `triage_prs`) —
-  repository-operational, not enabled in the initial set (see
-  `Documentation/Phase16/README.md` for the tool governance policy).
+- **Graphify** (`http://graphify:8080/mcp`, Streamable HTTP, local): 7 safe
+  read-only graph/relationship tools. Disabled: PR/repository tools
+  (`list_prs`, `get_pr_impact`, `triage_prs`).
+- **Context7** (`https://mcp.context7.com/mcp`, remote Streamable HTTP):
+  2 read-only tools for targeted current library/API documentation
+  (`resolve-library-id`, `query-docs`). Requires outbound internet; free API
+  key optional (`headers: Authorization: Bearer <key>`).
+- Tool governance policy: see `Documentation/Phase16/README.md`.
 
 - Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
 - Exposed tool: `mcp_graphify_graph_stats` (read-only graph summary stats).
