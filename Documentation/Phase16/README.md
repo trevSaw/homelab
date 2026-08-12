@@ -157,6 +157,84 @@ Open WebUI → Hermes v0.17.0 → KORA HEAD AGENT
 ### Future MCP expansion guidance
 
 - Add tools only via `mcp_servers.<name>.tools.include` (Hermes-native).
-- New servers must be explicitly allowlisted and reachable on `ollama_ollama-net`.
+- New servers must be explicitly allowlisted and reachable on `ollama_ollama-net`
+  (or the configured network / outbound internet for remote servers).
 - Re-verify each new tool's structured-call execution on the active model.
+
+---
+
+## Part 3 — MCP tool expansion: Context7 (context / token efficiency)
+
+### Candidate investigation
+
+| Candidate | Verdict | Reason |
+| --- | --- | --- |
+| **Context7** (`upstash/context7`) | ✅ **Accepted** | Official MCP server; remote Streamable HTTP endpoint `https://mcp.context7.com/mcp`; 2 read-only tools (`resolve-library-id`, `query-docs`); targeted live-doc retrieval; works without a key (rate-limited; free API key optional). Requires outbound internet only. |
+| **Chisel** | ❌ Rejected | No genuine, verifiable MCP server matching the described code-context use case; candidate ambiguity + required filesystem access could not be safely restricted under existing Docker governance. |
+| **CodeCortex** | ❌ Rejected | The upstream project (`AnandPilania/CodeCortex`) is a **static code-quality analyzer CLI + web dashboard** (LOC/complexity/dead-code metrics), **not an MCP server**; it provides no semantic/targeted context retrieval and would require custom wrapping (forbidden). |
+
+Per Phase 16 policy, a smaller MCP stack is preferred over forced infrastructure.
+
+### Context7 configuration (Hermes-native)
+
+```yaml
+mcp_servers:
+  context7:
+    url: https://mcp.context7.com/mcp
+    tools:
+      include:
+        - resolve-library-id
+        - query-docs
+```
+
+- Transport: Streamable HTTP (remote, Context7's managed service).
+- Runs: remote service; no local container added. Hermes is the MCP client.
+- API key: optional (free key from context7.com adds higher rate limits); add via
+  `headers: Authorization: Bearer <key>` if obtained.
+- Tools enabled: `resolve-library-id` (library lookup), `query-docs` (targeted
+  current documentation retrieval). Both read-only.
+- Purpose: retrieve **targeted, current** library/API documentation (Docker,
+  Hermes, MCP, Python libs, etc.) instead of dumping full docs into context.
+- Redundancy: **not** redundant with Chroma/Graphify/Honcho — Context7 is live
+  external library documentation; Chroma remains our own-knowledge platform.
+
+### Token / context efficiency (verified qualitatively)
+
+- `query-docs` returns **relevant documentation snippets for a specific query**,
+  not full documentation corpora — targeted retrieval avoids dumping large raw
+  content into KORA's context.
+- `resolve-library-id` returns a small ranked library match (id, name, summary),
+  keeping context tiny.
+- Both tools return compact text results that KORA incorporates directly.
+- (Quantitative token measurement deferred — see limitations.)
+
+### Verification status
+
+- ✅ Hermes discovers `context7` (2 tools selected, enabled) — verified via
+      `hermes mcp list`.
+- ✅ KORA emits structured `mcp_context7_resolve_library_id` + `mcp_context7_query_docs`
+      calls (genuine `tool_calls`).
+- ✅ Hermes executes both; Context7 returns real documentation (Docker Compose
+      healthcheck docs, `/docker/compose`).
+- ✅ KORA incorporates the result ("The /docker/compose docs contain an example
+      of a healthcheck in a compose service...").
+
+### Token / context efficiency (observed)
+
+- `query-docs` returned **targeted healthcheck documentation snippets** for the
+  query, not the full Docker Compose corpus — KORA's answer was built from the
+  retrieved snippet without dumping large raw content into context.
+- `resolve-library-id` returned a small ranked library match, keeping that step
+  minimal.
+- No formal token benchmark was run (per scope); the qualitative targeted-vs-full
+  retrieval behavior is confirmed.
+
+### Known limitations (Context7)
+
+- Requires outbound internet to `mcp.context7.com`; rate limits apply without an
+  API key.
+- Context7 indexes community-contributed library docs; accuracy/coverage vary by
+  library (see Context7's own disclaimer).
+- Remote service — not fully self-hosted (backend is Context7's managed API).
+
 
