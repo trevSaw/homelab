@@ -49,6 +49,45 @@ Open WebUI → Hermes (api_server :8642, model "KORA") → KORA HEAD AGENT
   retirement of the standalone KORA Runtime.
 - Design/migration docs: `Documentation/Phase14/Phase14-Migration/`.
 
+## MCP (native)
+
+Hermes natively supports MCP servers via `mcp_servers` in `config.yaml`
+(stdio or Streamable HTTP `url`). Enabled servers' tools are auto-exposed to
+agents (default `include_default_mcp_servers`), registered under toolset
+`mcp-<server>` with names `mcp_<server>_<tool>`.
+
+Currently configured (read-only, whitelisted):
+
+```yaml
+mcp_servers:
+  graphify:
+    url: http://graphify:8080/mcp
+    tools:
+      include:
+        - graph_stats
+```
+
+- Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
+- Exposed tool: `mcp_graphify_graph_stats` (read-only graph summary stats).
+- No other MCP tools are exposed.
+
+### MCP verification status
+
+- ✅ MCP server configured, discovered, and the tool registered
+  (`hermes mcp list` shows `graphify` enabled, 1 tool selected; api_server
+  toolset `graphify` is enabled for KORA).
+- ✅ KORA recognizes and invokes the tool — the model emits
+  `mcp_graphify_graph_stats` with correct arguments.
+- ⚠️ **Execution/synthesis not yet achieved:** the current model (`qwen3:8b`)
+  emits the MCP tool invocation as **text JSON** (a `{"tool_call": ...}` block)
+  rather than a structured OpenAI `tool_calls` message in the Hermes api_server
+  context, so Hermes's agent loop does not execute the tool and the result is
+  not incorporated into KORA's response. Direct Ollama tests confirm `qwen3:8b`
+  CAN emit structured `tool_calls`, so this is a model-output-format behavior
+  under the full Hermes system prompt — consistent with the known
+  `qwen3:8b` inference limitations (see Phase 15 status). No KORA code change
+  was made.
+
 ## Migration
 
 | Item | Decision |
