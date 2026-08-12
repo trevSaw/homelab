@@ -38,6 +38,9 @@ services:
       PYTHONPATH: /opt/data/honcho-libs
     volumes:
       - /mnt/monarch/appdata/hermes:/opt/data
+      # Phase 15 Council: canonical member content (read-only, single source of
+      # truth = Architecture/ai/Council/). KORA reads members at /opt/data/council.
+      - /home/fatherfrank/projects/homelab/Architecture/ai/Council:/opt/data/council:ro
     shm_size: 1g
     networks:
       - proxy

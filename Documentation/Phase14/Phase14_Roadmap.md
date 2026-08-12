@@ -1,6 +1,6 @@
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** ✅ Complete — final architecture delivered (Hermes-hosted KORA; standalone KORA Runtime retired 2026-08-11)
+**Status:** ✅ Phase 14 complete; **🟡 Phase 15 started** (Council foundation on `phase15-council` branch)
 
 **Prerequisite:** Phase 13 complete (architecture through 13.15)  
 
@@ -53,7 +53,7 @@ Commits: `9ee4b59` (retirement), `367c783` (pre-retirement checkpoint).
 | 14.3 | Knowledge Platform | ✅ Complete (2026-08-09) |
 | 14.4 | Knowledge Graph | ✅ Complete (2026-08-09) |
 | 14.5 | Tool Platform | ✅ Complete (2026-08-09) |
-| 15 | Council & Intelligence | ⏳ Planned |
+| 15 | Council & Intelligence | 🟡 Started (foundation, 2026-08-12) |
 | 16 | Automation & Autonomous Workflows | ⏳ Planned |
 
 ---
@@ -413,6 +413,13 @@ Graphify is an intentional architectural component. Its purpose is NOT to replac
 ## Phase 15 — Council & Intelligence
 
 **Capability:** **KORA can reason through the Council.**
+
+**Status:** 🟡 Started (foundation, 2026-08-12). The smallest correct foundation is
+implemented on branch `phase15-council`: KORA remains the head agent; Council members
+are Hermes-native subagents invoked via `delegate_task` (delegation toolset enabled for
+KORA); canonical member content (`Architecture/ai/Council/`) is mounted read-only and
+loaded via the `kora.council_member` tool. No new containers/runtime/framework.
+See `Documentation/Phase15/README.md`.
 
 **Purpose:** Establish Council orchestration and reasoning. Phase 15 is explicitly **hardware-agnostic**: the goal is the Council architecture, NOT large models or expensive parallel inference.
 
