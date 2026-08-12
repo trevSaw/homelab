@@ -15,17 +15,24 @@ related_documents:
 
 UI-only surface for KORA (ADR-0008). Not the product brain.
 
-## Stage 1 path
+## Final path (Phase 14 closeout)
 
 ```text
 https://chat.fatherfankscloud.uk
         ↓
    open-webui
         ↓  OPENAI_API_BASE_URL
-      kora:8080/v1
+   hermes:8642/v1   (model "KORA", hosted by Hermes api_server)
         ↓
-      ollama
+   KORA HEAD AGENT → Ollama / Honcho / Chroma / Graphify / MCP
 ```
+
+Model access (native Open WebUI controls):
+
+- Trevor (admin): **KORA** + Ollama models `qwen3:8b`, `gpt-oss:20b-cloud`
+- Tracy (user): Ollama models `qwen3:8b`, `gpt-oss:20b-cloud` only (**no KORA**)
+- Ollama connection: `http://ollama:11434/v1`, `model_ids` filtered to
+  `qwen3:8b`, `gpt-oss:20b-cloud`
 
 ## Migration
 
@@ -35,7 +42,7 @@ https://chat.fatherfankscloud.uk
 | New SoT | `services/open-webui/compose.yaml` |
 | Data | **Preserved** `/mnt/monarch/appdata/open-webui` |
 | Traefik host | Unchanged `chat.fatherfankscloud.uk` |
-| Backend | Migrated from direct Ollama → KORA OpenAI façade |
+| Backend | Migrated: direct Ollama → KORA Runtime (retired) → Hermes (`hermes:8642/v1`) |
 
 ## Deployment
 

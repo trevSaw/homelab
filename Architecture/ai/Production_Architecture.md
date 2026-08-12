@@ -1,8 +1,24 @@
 # KORA Production Architecture
 
-**Status:** Canonical production-implementation architecture (Phase 13.15)  
-**Platform:** KORA / Brainiac (`KORA.md`)  
+**Status:** Canonical production-implementation architecture (Phase 13.15)
+**Platform:** KORA / Brainiac (`KORA.md`)
 **Rule:** This is a deployment **blueprint**, not a deployment. Phase 14 implements it (e.g. as Docker Compose). Phase 13.15 does not create compose, networks, volumes, ports, or secrets. **Phase 14.1** delivered Solo Stage 1: `Open WebUI → KORA → Ollama` (`AI/`, `services/kora`).
+
+> **Final architecture (Phase 14 closeout, 2026-08-12).** The content below is the
+> historical Phase 13.15 blueprint. The **active** deployment now follows the
+> Phase 14 final architecture, where **KORA is a Hermes Agent** and the old
+> standalone KORA Runtime (with co-located Memory/Knowledge/Tool runtimes) is
+> **retired**:
+>
+> ```text
+> Open WebUI → Hermes → KORA HEAD AGENT → Honcho (memory) / Chroma (knowledge)
+>                                          / Graphify (relationships) / Ollama (inference) / MCP (tools)
+> ```
+>
+> KORA has no standalone container or orchestration runtime. Hermes is the runtime;
+> KORA is the head intelligence/governance agent hosted inside it. Memory is the
+> Hermes native Honcho provider (workspace `kora`, peer `user`). See
+> `Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md`.
 
 Companions: `Deployment_Topology.md`, `Production_Service_Topology.md`, `Rollout_Strategy.md`, `Operational_Readiness.md`, `Runtime_Profiles.md`, `Runtime_Contracts.md`
 
