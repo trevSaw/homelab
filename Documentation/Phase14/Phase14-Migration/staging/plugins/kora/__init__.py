@@ -40,6 +40,24 @@ EMBED_MODEL = os.environ.get("KORA_STAGING_EMBED_MODEL", "nomic-embed-text")
 EXPLAIN_DIR = Path(os.environ.get("HERMES_HOME", "/opt/data")) / "kora-explain"
 EXPLAIN_PATH = EXPLAIN_DIR / "records.jsonl"
 
+# Phase 15 Council — KORA is the head agent; members are canonical content in
+# Architecture/ai/Council/Members/, mounted read-only at $HERMES_HOME/council.
+# KORA invokes members using Hermes' NATIVE delegate_task (subagent) tool.
+COUNCIL_MEMBERS = ["NOVA", "IRIS", "TALIA", "SOLA", "LUMA", "ALUMA", "NOMA"]
+COUNCIL_DIR = Path(os.environ.get("HERMES_HOME", "/opt/data")) / "council" / "Members"
+
+COUNCIL_DIRECTIVE = (
+    "You are the HEAD of the KORA Council. Members: "
+    + ", ".join(COUNCIL_MEMBERS)
+    + ". To let ONE member speak: (1) kora.council_member('<NAME>') to load its "
+    "canonical identity/personality/role; (2) delegate_task(goal='You are "
+    "<NAME>, <member role>. Answer as <NAME>: <user request>', context=<member "
+    "content>); (3) synthesize that member's result into your answer. Invoke "
+    "ONLY the member(s) the request asks for or that the topic warrants; a "
+    "direct request to one member must NOT summon the whole Council. You retain "
+    "final response authority and KORA identity."
+)
+
 from . import kora_classify as kc  # noqa: E402
 from . import kora_explain as xp  # noqa: E402
 
@@ -154,6 +172,47 @@ def handler_wipe_volume(args, **kw):
 
 
 # ---------------------------------------------------------------------------
+# Phase 15 Council — KORA loads canonical member content; invocation is via
+# Hermes' native delegate_task subagent tool (no custom runtime).
+# ---------------------------------------------------------------------------
+
+def handler_council_list(args, **kw):
+    """KORA lists the canonical Council members (Phase 15)."""
+    return json.dumps(
+        {"service": "council", "head": "KORA", "members": COUNCIL_MEMBERS},
+        sort_keys=True,
+    )
+
+
+def handler_council_member(args, **kw):
+    """KORA loads a Council member's canonical identity/personality/role.
+
+    Reads the canonical member file from the read-only Council mount
+    ($HERMES_HOME/council/Members/<NAME>.md → Architecture/ai/Council/).
+    """
+    name = str((args or {}).get("name", "")).strip().upper()
+    if name not in COUNCIL_MEMBERS:
+        return json.dumps(
+            {"service": "council", "status": "error",
+             "error": f"Unknown Council member '{name}'. Known: {COUNCIL_MEMBERS}"},
+            sort_keys=True,
+        )
+    member_file = COUNCIL_DIR / f"{name}.md"
+    try:
+        content = member_file.read_text(encoding="utf-8")
+    except Exception as exc:  # noqa: BLE001
+        return json.dumps(
+            {"service": "council", "status": "error",
+             "error": f"cannot read {member_file}: {exc}"},
+            sort_keys=True,
+        )
+    return json.dumps(
+        {"service": "council", "member": name, "canonical": content},
+        sort_keys=True,
+    )
+
+
+# ---------------------------------------------------------------------------
 # KORA hooks (structural intelligence + governance + composition + records)
 # ---------------------------------------------------------------------------
 
@@ -188,8 +247,9 @@ def pre_llm_call(**kw) -> str:
         "services_used": rec["services_used"],
         "governance": "allowed",
         "produced_by": "kora-agent-plugin",
+        "council": {"head": "KORA", "members": COUNCIL_MEMBERS, "invoke": "delegate_task"},
     }
-    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True)
+    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True) + "\n\n" + COUNCIL_DIRECTIVE
 
 
 def pre_tool_call(**kw):
@@ -270,6 +330,15 @@ def register(ctx) -> None:
                       {"name": "kora.wipe_volume", "description": "Governance probe tool (must be denied).",
                        "parameters": {"type": "object", "properties": {"target": {"type": "string"}}, "required": ["target"]}},
                       handler_wipe_volume, description="Governance probe.")
+
+    ctx.register_tool("kora.council_list", "kora",
+                      {"name": "kora.council_list", "description": "KORA lists the canonical Council members.",
+                       "parameters": {"type": "object", "properties": {}}},
+                      handler_council_list, description="List Council members.")
+    ctx.register_tool("kora.council_member", "kora",
+                      {"name": "kora.council_member", "description": "KORA loads a Council member's canonical identity/personality/role (Phase 15).",
+                       "parameters": {"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]}},
+                      handler_council_member, description="Load a Council member.")
 
     # KORA seeds one knowledge document into the real Chroma service.
     import threading
