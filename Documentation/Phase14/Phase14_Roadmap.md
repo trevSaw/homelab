@@ -1,6 +1,6 @@
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** ✅ Phase 14 complete; **🟡 Phase 15 FOUNDATION COMPLETE — PAUSED** (checkpoint on `phase15-council` branch)
+**Status:** ✅ Phase 14 complete · 🟡 Phase 15 FOUNDATION COMPLETE — PAUSED · ✅ Phase 16 (MCP / Tools Platform) complete · ⏳ Phase 17 NEXT (not started)
 
 **Prerequisite:** Phase 13 complete (architecture through 13.15)  
 
@@ -54,7 +54,8 @@ Commits: `9ee4b59` (retirement), `367c783` (pre-retirement checkpoint).
 | 14.4 | Knowledge Graph | ✅ Complete (2026-08-09) |
 | 14.5 | Tool Platform | ✅ Complete (2026-08-09) |
 | 15 | Council & Intelligence | 🟡 Foundation complete — paused (2026-08-12) |
-| 16 | Automation & Autonomous Workflows | ⏳ Planned |
+| 16 | MCP / Tools Platform | ✅ Complete (2026-08-12) |
+| 17 | ChatGPT History Import & Personal Knowledge Migration | ⏳ Next (not started) |
 
 ---
 
@@ -492,11 +493,40 @@ The architecture should remain portable to stronger future hardware.
 
 ---
 
-## Phase 16 — Automation & Autonomous Workflows
+## Phase 16 — MCP / Tools Platform
+
+**Capability:** **KORA uses Hermes-native MCP for governed tools.**
+
+**Status:** ✅ Complete (2026-08-12)
+
+**Purpose:** Establish Hermes-native MCP as KORA's tool mechanism with explicit
+allowlisting; prove reliable structured tool execution on the active model.
+
+**Completed:**
+
+- Hermes-native MCP (`mcp_servers`) operational; Graphify (`http://graphify:8080/mcp`,
+  Streamable HTTP) is the MCP server; toolset `graphify` auto-exposed to KORA.
+- Enabled (explicit `tools.include` allowlist, read-only):
+  `query_graph`, `get_node`, `get_neighbors`, `get_community`, `god_nodes`,
+  `shortest_path`, `graph_stats`.
+- Disabled: PR/repository tools (`list_prs`, `get_pr_impact`, `triage_prs`).
+- Model `gpt-oss:20b-cloud` verified to emit genuine structured `tool_calls`;
+  `graph_stats` and `query_graph` executed end-to-end with real Graphify data
+  incorporated into KORA's response.
+- Tool governance policy documented in `Documentation/Phase16/README.md`
+  (read-only vs write vs admin vs PR; explicit allowlisting required).
+- No custom MCP runtime/parser/proxy; no new containers.
+
+**Deferred:** The prior "Automation & Autonomous Workflows" content (autonomous
+planning, workflow execution, PR generation, etc.) remains forward-looking
+design and is not scheduled as Phase 16/17; it is preserved below for reference.
+
+**Deferred (preserved) — Automation & Autonomous Workflows:**
 
 **Capability:** **KORA can perform autonomous workflows.**
 
-**Purpose:** Enable governed autonomous workflows. Phase 16 comes AFTER the Knowledge (14.3), Graph (14.4), Tool (14.5), and Council (Phase 15) foundations.
+**Purpose:** Enable governed autonomous workflows after Knowledge (14.3), Graph
+(14.4), Tool (14.5/16), and Council (Phase 15) foundations.
 
 **Planned capabilities may include:**
 
@@ -512,7 +542,9 @@ The architecture should remain portable to stronger future hardware.
 - Automated audits
 - Long-running workflows
 
-**Governance:** Automation must remain governed. Council does not automatically grant permission to execute actions. **Reasoning and execution remain separate capabilities.**
+**Governance:** Automation must remain governed. Council does not automatically
+grant permission to execute actions. **Reasoning and execution remain separate
+capabilities.**
 
 **Acceptance (planned):**
 
@@ -520,6 +552,27 @@ The architecture should remain portable to stronger future hardware.
 - Tools ≠ Decisions still holds
 - Human approval for Administrative/Execute class actions
 - Rollback disables workflows without collapsing KORA identity
+
+---
+
+## Phase 17 — ChatGPT History Import & Personal Knowledge Migration
+
+**Status:** ⏳ **Next — NOT started** (identified as the next phase)
+
+**Capability:** **Import and organize the user's ChatGPT history into the local
+KORA ecosystem.**
+
+**Suggested scope (roadmap-level only; not designed or implemented):**
+
+"Import and organize the user's ChatGPT history into the local KORA ecosystem
+while preserving original conversation history and appropriately separating
+personal memory, useful knowledge, and relationship/entity information across
+the canonical Honcho, Chroma, and Graphify services."
+
+- Preserve original conversation history.
+- Route content to the canonical services (personal memory → Honcho; knowledge →
+  Chroma; relationships/entities → Graphify).
+- Implementation details intentionally not decided yet.
 
 ---
 
@@ -565,6 +618,7 @@ Phase 14 is complete when:
 
 ## Next after Phase 14
 
-- **Phase 15 — Council & Intelligence**: simulated Council fidelity and Context Intelligence hardening.
-- **Phase 16 — Automation & Autonomous Workflows**: governed agent workflows.
+- **Phase 15 — Council & Intelligence**: foundation complete — **paused** (resume only on explicit request).
+- **Phase 16 — MCP / Tools Platform**: ✅ **complete** (Hermes-native MCP + governed Graphify read-only tools).
+- **Phase 17 — ChatGPT History Import & Personal Knowledge Migration**: ⏳ **next** (not started).
 - Longer-term **AI Automation** (governance assistant workflows across the homelab) remains a subsequent program phase—not a substitute for finishing the roadmap.

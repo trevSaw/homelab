@@ -64,8 +64,20 @@ mcp_servers:
     url: http://graphify:8080/mcp
     tools:
       include:
+        - query_graph
+        - get_node
+        - get_neighbors
+        - get_community
+        - god_nodes
+        - shortest_path
         - graph_stats
 ```
+
+- Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
+- Enabled tools: 7 safe read-only graph/relationship tools (listed above).
+- Disabled: PR/repository tools (`list_prs`, `get_pr_impact`, `triage_prs`) —
+  repository-operational, not enabled in the initial set (see
+  `Documentation/Phase16/README.md` for the tool governance policy).
 
 - Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
 - Exposed tool: `mcp_graphify_graph_stats` (read-only graph summary stats).
