@@ -1,6 +1,6 @@
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** 🟡 In progress (14.1 through 14.2D validation complete)
+**Status:** ✅ Complete — final architecture delivered (Hermes-hosted KORA; standalone KORA Runtime retired 2026-08-11)
 
 **Prerequisite:** Phase 13 complete (architecture through 13.15)  
 
@@ -11,6 +11,32 @@
 **Master roadmap entry:** `Architecture/standards/StandardsRoadmap.md`  
 **Architecture blueprint:** `Architecture/ai/Production_Architecture.md`  
 **Rollout companion:** `Architecture/ai/Rollout_Strategy.md`
+
+---
+
+## Phase 14 closeout — final architecture (Hermes/KORA migration)
+
+**Status:** ✅ Complete (2026-08-11)
+
+Phase 14 ended with a migration from the standalone KORA Runtime to KORA-as-Hermes-Agent.
+
+| Decision | Detail |
+| --- | --- |
+| Hermes | v0.17.0 — the generic agent/runtime platform |
+| KORA | A real **Hermes Agent** (head intelligence/governance agent hosted inside Hermes); no standalone container, no custom orchestration runtime, no Hermes fork |
+| Runtime | Hermes api_server (`:8642`, model `KORA`) is the Open WebUI entry |
+| Memory | **Honcho** (canonical, workspace `kora`, peer `user`, `pinUserPeer: true`) via the Hermes native honcho provider |
+| Knowledge | **Chroma** external container (`kora-chromadb`) |
+| Relationships | **Graphify** external container |
+| Inference | **Ollama** (`http://ollama:11434/v1`) |
+| Tools/MCP | Via Hermes tool runtime |
+| KORA chat model | Controlled by Hermes `config.yaml model.default` (currently `qwen3:8b`) |
+| Honcho models | Independently configured in Honcho's env (`DIALECTIC_*`, `DREAM_*`) — decoupled from KORA's chat model |
+| User isolation | KORA visible to Trevor only; Tracy (partner) restricted to permitted Ollama models via Open WebUI model access control |
+| Open WebUI | Cannot select KORA's underlying Hermes model per request (Hermes v0.17.0 api_server uses `model.default`) |
+
+Retirement record: `Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md`.
+Commits: `9ee4b59` (retirement), `367c783` (pre-retirement checkpoint).
 
 ---
 
@@ -140,6 +166,11 @@ Do not create additional numbered phases for embeddings, RAG, vector databases, 
 
 **Status:** ✅ Complete (2026-08-01)
 
+> **Superseded note (closeout).** This phase's "KORA Runtime (Solo conductor façade)" was
+> the original integration. The **final architecture** replaces the standalone runtime
+> with **KORA-as-Hermes-Agent**; `services/kora` is retired. KORA integration itself is
+> retained and is now hosted inside Hermes.
+
 **Includes:**
 
 - Ollama (local inference; models preserved at `/hive/ollama`)
@@ -165,6 +196,12 @@ Do not create additional numbered phases for embeddings, RAG, vector databases, 
 ## Phase 14.2 — Foundation
 
 **Capability:** **KORA can safely store knowledge.** (Complete)
+
+> **Superseded note (closeout).** The custom Memory Runtime / Event Bus / Approval Engine
+> described below (14.2A–14.2D) were **implemented, evaluated, and retired** in the final
+> architecture. **Honcho is now the canonical memory backend**, integrated via the
+> **Hermes native honcho provider** — no separate KORA Memory Service is required. The
+> historical implementation remains in Git history and the Phase 14 backup.
 
 **Objective:** Enable governed continuity Memory (Honcho candidate per ADR-0005) and the Knowledge ingestion foundation. This phase established:
 
@@ -263,6 +300,11 @@ Do not create additional numbered phases for embeddings, RAG, vector databases, 
 
 **Status:** ✅ Implemented and validated (2026-08-09)
 
+> **Superseded note (closeout).** The Knowledge Platform's in-runtime Python implementation
+> was retired with the standalone runtime. In the final architecture, Knowledge is an
+> **external service** — **Chroma** (`kora-chromadb`) — that the KORA Hermes Agent accesses
+> as an external service.
+
 **Purpose:** Transform Knowledge from passive storage into a production knowledge platform.
 
 The Knowledge Service owns document ingestion, indexing, retrieval, and knowledge enrichment. ChromaDB provides vector indexing and retrieval; these are infrastructure components owned by the Knowledge Service, not peer services.
@@ -309,6 +351,10 @@ The Knowledge Service owns document ingestion, indexing, retrieval, and knowledg
 
 **Status:** ✅ Implemented and validated (2026-08-09)
 
+> **Superseded note (closeout).** Graphify remains an **external relationship/graph
+> service** that the KORA Hermes Agent accesses as an external service. The retired runtime
+> was the in-process graph exporter; the Graphify container is unchanged.
+
 **Purpose:** Add graph-based understanding to complement vector retrieval.
 
 Graphify is an intentional architectural component. Its purpose is NOT to replace vector search; it provides relationship modeling, traversal, and visualization. ChromaDB provides semantic/vector retrieval; Graphify provides relationship modeling, traversal, and visualization. Graphify does NOT become the authoritative Knowledge source. The Knowledge Service remains the architectural owner of the capability.
@@ -338,6 +384,11 @@ Graphify is an intentional architectural component. Its purpose is NOT to replac
 **Capability:** **KORA can interact with the world.**
 
 **Status:** ✅ Implemented and validated (2026-08-09)
+
+> **Superseded note (closeout).** The in-runtime Tool Platform Python was retired with the
+> standalone runtime. In the final architecture, **Hermes provides the runtime/tool
+> execution**; MCP/tool capability is external to KORA and delivered through Hermes' tool
+> runtime.
 
 **Purpose:** Introduce runtime interaction with live systems.
 

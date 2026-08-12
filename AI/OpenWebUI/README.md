@@ -2,13 +2,17 @@
 
 Open WebUI is interaction surface only. Branding and backend routing must present **KORA**.
 
-## Stage 1 wiring
+## Final wiring (Phase 14 closeout)
 
 ```text
-Open WebUI  --OpenAI API-->  KORA Runtime  -->  Ollama
+Open WebUI  --OpenAI API-->  Hermes api_server (hermes:8642/v1, model "KORA")
+                                  ↓
+                          KORA HEAD AGENT --> Ollama / Honcho / Chroma / Graphify / MCP
 ```
 
-Direct Open WebUI → Ollama is the legacy path and must not remain the production default after cutover.
+The standalone KORA Runtime is retired; KORA is a Hermes Agent. Open WebUI also
+exposes permitted Ollama models (`qwen3:8b`, `gpt-oss:20b-cloud`) via the
+OpenAI-compatible Ollama connection (`http://ollama:11434/v1`).
 
 Compose SoT: `services/open-webui/`
 

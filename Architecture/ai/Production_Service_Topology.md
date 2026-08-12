@@ -4,6 +4,13 @@
 **Platform:** KORA / Brainiac (`KORA.md`)  
 **Rule:** These logical services become Docker Compose services in Phase 14. This phase defines **what**, not compose **how**.
 
+> **Final architecture (Phase 14 closeout, 2026-08-12).** The service cards below are
+> the historical Phase 13.15 logical topology. In the **active** deployment the
+> standalone KORA Runtime and its co-located Memory/Knowledge/Tool runtimes are
+> **retired**: KORA is a **Hermes Agent** (no standalone container), Memory is the
+> Hermes native Honcho provider, and Chroma/Graphify are external containers.
+> See `Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md`.
+
 ---
 
 ## How to Read Service Cards

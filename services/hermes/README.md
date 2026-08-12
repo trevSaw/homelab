@@ -5,49 +5,49 @@ service: hermes
 owner: Homelab
 status: Active
 version: 14.1.0
-last_reviewed: 2026-08-01
+last_reviewed: 2026-08-11
 related_documents:
   - Architecture/decisions/ADR-0004-KORA-Orchestration-Hermes.md
   - AI/Hermes/README.md
   - AI/KORA/Config/hermes_registration.yaml
+  - Documentation/Phase14/Phase14-Migration/10-kora-runtime-retirement.md
 ---
 
-# Hermes (Thin Execution Layer)
+# Hermes (KORA runtime platform)
 
-Orchestration **substrate** only (ADR-0004). Hermes is not KORA.
+Hermes is the **generic agent/runtime platform**. KORA is a **Hermes Agent**
+(head intelligence/governance agent) hosted inside it. There is **no standalone
+KORA Runtime**; the old standalone runtime was retired 2026-08-11.
 
-## Phase 14.1 posture
-
-| Concern | Stage 1 decision |
-| --- | --- |
-| Primary chat path | **No** — Open WebUI → KORA → Ollama |
-| Identity | Must not claim KORA / Brainiac |
-| Replacement | **Reworked in place** (same container/data); role narrowed |
-| Future | Distributed Council / agent transport (later phases) |
-
-## Phase 14 Hermes migration posture (branch `phase14-hermes-runtime`)
-
-The target architecture moves Hermes back onto the chat path as the generic
-runtime entry:
+## Final architecture (Phase 14 closeout)
 
 ```text
-Open WebUI → Hermes (api_server :8642) → KORA (intelligence) → Memory/Knowledge/Tools → Ollama
+Open WebUI → Hermes (api_server :8642, model "KORA") → KORA HEAD AGENT
+                                                       ├── Honcho (native provider)
+                                                       ├── Chroma
+                                                       ├── Graphify
+                                                       ├── Ollama (model.default)
+                                                       └── MCP / Tools (Hermes tool runtime)
 ```
 
-This is an **evaluation + incremental migration**, not a completed cutover.
+| Concern | Final decision |
+| --- | --- |
+| Runtime | Hermes v0.17.0 (api_server platform) |
+| KORA | Hermes Agent — plugin at `/opt/data/plugins/kora` |
+| Primary chat path | **Yes** — Open WebUI → Hermes → KORA → Ollama |
+| Model | Controlled by Hermes `config.yaml model.default` (currently `qwen3:8b`) |
+| Memory | Hermes native honcho provider (workspace `kora`, peer `user`) |
+| KORA identity | Presented as **KORA** (API_SERVER_MODEL_NAME=KORA) |
 
-- **API server platform** is additive config, **default OFF**
-  (`API_SERVER_ENABLED=false`) so the current direct KORA path is preserved.
-- Enable at cutover via env: `API_SERVER_ENABLED=true`,
-  `API_SERVER_KEY=<high-entropy>`, `API_SERVER_MODEL_NAME=KORA`.
-- **Hermes → KORA delegation** is configured on the host in
-  `/mnt/monarch/appdata/hermes/config.yaml` under `delegation:` (not env):
-  `base_url: http://kora:8080/v1`, `api_mode: chat_completions`,
-  `api_key: <KORA_HERMES_TOKEN>`.
+## Notes
+
 - KORA identity, governance, Memory policy, Knowledge policy, and
-  explainability remain KORA-owned. Hermes provides routing, sessions, agent
-  loop, tool/MCP transport, and model plumbing only.
-- Design docs: `Documentation/Phase14/Phase14-Migration/`.
+  explainability are KORA-owned; Hermes provides routing, sessions, agent
+  loop, tool/MCP transport, and model plumbing.
+- Historical Phase 14.1 "thin execution layer" posture and the delegation
+  design (`delegation: base_url: http://kora:8080/v1`) are superseded by the
+  retirement of the standalone KORA Runtime.
+- Design/migration docs: `Documentation/Phase14/Phase14-Migration/`.
 
 ## Migration
 
@@ -56,12 +56,11 @@ This is an **evaluation + incremental migration**, not a completed cutover.
 | Prior SoT | `/mnt/monarch/appdata/hermes/compose.yml` |
 | Compose SoT now | `services/hermes/compose.yaml` (**live ownership migrated 2026-08-01**) |
 | Data | **Preserved** `/mnt/monarch/appdata/hermes` |
-| Action | Align live project to repo SoT; thin-layer role retained |
 | Legacy appdata compose | Disabled; see appdata `README.COMPOSE_OWNERSHIP.md` |
 
 ## Exceptions
 
 | Item | Exception |
 | --- | --- |
-| Image pin | Upstream still tracked as `:latest` until a stable digest audit |
-| Healthcheck | Best-effort against dashboard port; may need adjustment if image entrypoint differs |
+| Image pin | Pinned to Hermes Agent v0.17.0 digest (see compose) |
+| Healthcheck | Best-effort against api_server `/health` (`:8642`) |

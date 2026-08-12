@@ -105,30 +105,43 @@ Verified: `POST /api/chat/completions` (model `KORA`) returns `KORA ... [KORA]{g
 
 ## 10. Partner isolation
 
-- **Tracy (partner, role `user`) sees `[]` models** — KORA (an external connection model not granted to her) is filtered by Open WebUI's model access control for non-admin users. KORA is **unavailable** to the partner.
-- **Trevor (primary, admin)** sees model KORA and can chat.
-- No custom authorization code was added — Open WebUI's existing permissions provide this directly. Partner account untouched.
+- **Tracy (partner, role `user`)** has **no KORA access** — KORA is an external connection
+  model not granted to her and is filtered by Open WebUI's model access control for
+  non-admin users. Verified: requesting model `KORA` as Tracy returns `400 Model not found`.
+- **Tracy** has access to the permitted Ollama models **`qwen3:8b`** and **`gpt-oss:20b-cloud`**
+  via the OpenAI-compatible Ollama connection (`model_ids` filter) + model access grants.
+- **Trevor (primary, admin)** sees model KORA and the two permitted Ollama models; he can chat.
+- No custom authorization code was added — Open WebUI's native connection + model access
+  controls provide this directly. Partner account untouched.
 
 ## 11. Tests performed
 
 | # | Test | Result |
 |---|---|---|
-| 1 | KORA appears in Open WebUI as model "KORA" | ✅ (Trevor; Tracy sees none) |
-| 2 | Open WebUI → Hermes → KORA → Ollama chat | ✅ `KORA OPENWEBUI OK` |
+| 1 | KORA appears in Open WebUI as model "KORA" (Trevor) | ✅ |
+| 2 | Open WebUI → Hermes → KORA → Ollama chat | ✅ `OK` + `[KORA]{governance}` |
 | 3 | Harmless memory write (tea-over-coffee preference) → peer `user` | ✅ |
 | 4 | Memory retrieval (list + semantic query) | ✅ |
-| 5 | Restart hermes → KORA works + Honcho memory persists (18 msgs, conclusions intact) | ✅ |
-| 6 | Partner isolation: Tracy has zero models | ✅ |
-| 7 | Old runtime: container removed, Open WebUI points at hermes:8642 | ✅ |
+| 5 | Restart hermes → KORA works + Honcho memory persists | ✅ |
+| 6 | Trevor → qwen3:8b and gpt-oss:20b-cloud respond | ✅ |
+| 7 | Tracy → qwen3:8b and gpt-oss:20b-cloud respond | ✅ |
+| 8 | Partner isolation: Tracy cannot use KORA (400 "Model not found") | ✅ |
+| 9 | Old runtime: container removed, Open WebUI points at hermes:8642 | ✅ |
 
 ## 12. Production health
 
-All remaining services healthy (`open-webui`, `hermes`, `graphify`, `ollama`, `traefik`, honcho suite). Note: Honcho dialectic `.chat()` remains slow because `qwen3:8b` is CPU-bound in Ollama — a separate model/runtime decision, out of scope here. A honcho-ai SDK `create` also persisted a duplicate test conclusion (honcho-api v3.0.10 create quirk observed; harmless test data).
+All remaining services healthy (`open-webui`, `hermes`, `graphify`, `ollama`, `traefik`,
+honcho suite). Note: Honcho dialectic `.chat()` remains slow because `qwen3:8b` is CPU-bound
+in Ollama — a separate model/runtime decision, out of scope here. A honcho-ai SDK `create`
+persisted a duplicate test conclusion (honcho-api v3.0.10 create quirk observed; harmless
+test data).
 
 ## 13. Git commits
 
 - `367c783` — checkpoint pre-retirement (live Hermes compose state).
-- Retirement changes (this task) committed as `docs/...` after this report.
+- `9ee4b59` — KORA Runtime retirement (retirement changes committed).
+- `9ca2767` — Honcho connectivity fix (dialectic/dream via Ollama; embedding dim 768).
+- Closeout docs (this phase): committed as `docs/...` after this report.
 
 ## 14. Rollback procedure
 
