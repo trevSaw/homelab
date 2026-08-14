@@ -55,6 +55,7 @@ Commits: `9ee4b59` (retirement), `367c783` (pre-retirement checkpoint).
 | 14.5 | Tool Platform | ✅ Complete (2026-08-09) |
 | 15 | Council & Intelligence | 🟡 Foundation complete — paused (2026-08-12) |
 | 16 | MCP / Tools Platform | ✅ Complete (2026-08-12) |
+| 16.x | MCP Tool Expansion | ✅ Complete (2026-08-13) — jDocMunch installed; others deferred/rejected |
 | 17 | ChatGPT History Import & Personal Knowledge Migration | ⏳ Next (not started) |
 
 ---

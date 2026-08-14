@@ -41,6 +41,9 @@ services:
       # Phase 15 Council: canonical member content (read-only, single source of
       # truth = Architecture/ai/Council/). KORA reads members at /opt/data/council.
       - /home/fatherfrank/projects/homelab/Architecture/ai/Council:/opt/data/council:ro
+      # Phase 16.x: jDocMunch local documentation corpus (read-only, KORA's own
+      # knowledge base = homelab Documentation/). Index stored under /opt/data.
+      - /home/fatherfrank/projects/homelab/Documentation:/opt/data/homelab-docs:ro
     shm_size: 1g
     networks:
       - proxy

@@ -237,4 +237,82 @@ mcp_servers:
   library (see Context7's own disclaimer).
 - Remote service — not fully self-hosted (backend is Context7's managed API).
 
+---
+
+## Part 4 — Phase 16.x MCP expansion (candidate evaluation)
+
+**Status:** ✅ Complete (2026-08-13) — candidates evaluated and **jDocMunch
+installed + verified** (implementation pass). Docker/Proxmox rejected; the
+remaining candidates deferred with documented prerequisites. Per Phase 16
+policy, a smaller MCP stack is preferred over forced infrastructure; only
+jDocMunch offered a clear, safe, immediate-value integration.
+
+### Candidate decisions
+
+| Candidate | Verdict | Reason |
+| --- | --- | --- |
+| **jCodeMunch** (`jgravelle/jcodemunch-mcp`) | ⏸ **Deferred** | Genuine MCP server, read-only, excellent token efficiency (symbol-level retrieval, 27.9× vs grep-and-read), non-root Dockerfile, personal-use license OK. But it requires **building a code index** for a corpus. The homelab repo is documentation/ops-centric with only small helper scripts (no meaningful code corpus), and a broad repo mount would expose `.env`/secret files. Deferred pending a safe, meaningful code corpus (see "How to revisit"). |
+| **jDocMunch** (`jgravelle/jdocmunch-mcp`) | ✅ **Installed + verified** | Genuine, read-only, section-level doc retrieval (strong token efficiency), free for personal use. Installed as a Hermes-native **stdio** MCP server (`uvx jdocmunch-mcp`) with the homelab `Documentation/` tree mounted read-only at `/opt/data/homelab-docs`. Index persists under `/opt/data` (HOME override). Allowlisted retrieval tools: `index_local`, `search_sections`, `get_section`, `get_sections`, `get_section_excerpt`, `get_toc`, `get_toc_tree`. Context7 remains for external/current docs; jDocMunch serves **local** Brainiac docs. |
+| **jDataMunch** (`jgravelle/jdatamunch-mcp`) | ⏸ **Deferred** | Genuine, read-only, server-side aggregation (≈25,000× token reduction on large CSVs). No tabular corpus exists in the homelab; stdio-only, no official image. Deferred. |
+| **GitHub MCP** (`github/github-mcp-server`) | ⏸ **Deferred** | Official, MIT, supports `--read-only` + toolset filtering, no host access — clean. But it **requires a GitHub credential** (fine-grained PAT or OAuth) which is not available, and there is no active GitHub use case. Deferred until a user-supplied read-only PAT + use case exist. |
+| **Docker MCP** (official `docker/mcp-gateway` / catalog) | ❌ **Rejected** | Requires Docker daemon/socket control and launches/manages arbitrary server containers — directly violates our container governance ("no docker socket beyond what is required"). |
+| **Proxmox MCP** (`GethosTheWalrus/proxmox-mcp-server`) | ❌ **Rejected** | Specified upstream repo does not exist (404); no Proxmox infrastructure exists in this homelab (Docker-based). |
+| **Filesystem MCP** (official `modelcontextprotocol/servers`) | ⏸ **Deferred** | Official, MIT, constrainable to a single read-only mount. But it is a **blunt primitive** (raw file dumps, no retrieval/token efficiency) and KORA's doc-retrieval needs are already served by Context7 (live) + jDocMunch (local). Deferred. |
+
+### What remains unchanged
+
+- **Installed + verified:** `context7` (`resolve-library-id`, `query-docs`),
+  `graphify` (7 read-only tools), and **new** `jdocmunch` (7 read-only tools).
+- No KORA code, no custom MCP infra, no new containers (jDocMunch runs as a
+  stdio subprocess inside Hermes), no new credentials.
+
+### jDocMunch — implementation
+
+- **Upstream:** `jgravelle/jdocmunch-mcp` (PyPI `jdocmunch-mcp` v1.133.0),
+  dual-use license (free for personal/non-commercial use).
+- **Transport:** Hermes-native **stdio** (`command: uvx`, `args: [jdocmunch-mcp]`),
+  running as a subprocess inside the Hermes container. `HOME=/opt/data` so the
+  index and uv cache persist on the appdata volume.
+- **Corpus:** homelab `Documentation/` mounted **read-only** at
+  `/opt/data/homelab-docs` (KORA's own knowledge base). Index is built by KORA
+  via `index_local` and stored under `/opt/data` — the source corpus is never
+  modified.
+- **Allowlisted tools:** `index_local`, `search_sections`, `get_section`,
+  `get_sections`, `get_section_excerpt`, `get_toc`, `get_toc_tree` (read-only
+  retrieval + local indexing).
+- **Disabled (not exposed):** the other ~57 jDocMunch tools (health/coverage,
+  OpenAPI spec tools, delete-safety checks) — not in the allowlist.
+- **Security:** read-only corpus mount; no network egress (lexical BM25 offline;
+  savings counter disabled via `JDOCMUNCH_SHARE_SAVINGS=0`); no filesystem
+  access outside the mounted corpus + its own index dir.
+- **Purpose/relationship:** jDocMunch = **local** Brainiac documentation;
+  Context7 = **external/current** library docs. Complementary, not duplicative.
+- **Verification:** ✅ Hermes discovers `jdocmunch` (7 tools, enabled). Index built
+  via the CLI (`jdocmunch-mcp index-local --path /opt/data/homelab-docs`) and
+  persisted under `/opt/data`. End-to-end KORA verification passed: KORA emitted
+  structured `mcp_jdocmunch_search_sections` (repo `local/homelab-docs`) then
+  `mcp_jdocmunch_get_section`, Hermes executed both, and KORA reported the real
+  retrieved section ("Phase 16 — MCP / Tools Platform" from the local docs).
+  Note: `index_local`/`search_sections`/`get_section` require the `path`/`repo`/
+  `section_id` arguments — the model must supply them (passing them explicitly
+  in the prompt yields correct tool calls).
+
+### How to revisit (future)
+
+- **jCodeMunch:** provide a safe, meaningful code corpus (a real codebase dir
+  with no `.env`/secrets), mount it read-only, then add a stdio `mcp_servers`
+  entry (`command: uvx, args: [jcodemunch-mcp]`) with a read-only retrieval
+  allowlist (`search_symbols`, `get_symbol_source`, `get_file_outline`,
+  `find_importers`, `get_blast_radius`). Verify a structured tool call.
+- **jDataMunch:** provide a real tabular corpus (CSV/JSONL), mount read-only,
+  stdio entry + read-only allowlist (`describe_dataset`, `sample_rows`,
+  `get_rows`, `aggregate`).
+- **GitHub MCP:** supply a fine-grained read-only PAT (kept out of git, e.g. in
+  Hermes `~/.hermes/.env` / volume env), run the official image with
+  `--read-only`, allowlist `repos`, `issues` (read), `pull_requests` (read),
+  `search_*`.
+- **Filesystem MCP:** only if a concrete read-only file-access need arises that
+  jDocMunch/Context7 cannot cover.
+
+
 

@@ -60,6 +60,21 @@ Currently configured (read-only, whitelisted):
 
 ```yaml
 mcp_servers:
+  jdocmunch:
+    command: uvx
+    args: [jdocmunch-mcp]
+    env:
+      HOME: /opt/data
+      JDOCMUNCH_SHARE_SAVINGS: "0"
+    tools:
+      include:
+        - index_local
+        - search_sections
+        - get_section
+        - get_sections
+        - get_section_excerpt
+        - get_toc
+        - get_toc_tree
   context7:
     url: https://mcp.context7.com/mcp
     tools:
@@ -79,14 +94,31 @@ mcp_servers:
         - graph_stats
 ```
 
-- **Graphify** (`http://graphify:8080/mcp`, Streamable HTTP, local): 7 safe
-  read-only graph/relationship tools. Disabled: PR/repository tools
-  (`list_prs`, `get_pr_impact`, `triage_prs`).
+- **Graphify** (`http://graphify:8080/mcp`, Streamable HTTP, local): **7** safe
+  read-only graph/relationship tools (query_graph, get_node, get_neighbors,
+  get_community, god_nodes, shortest_path, graph_stats) — NOT just graph_stats.
+  Disabled: PR/repository tools (`list_prs`, `get_pr_impact`, `triage_prs`).
 - **Context7** (`https://mcp.context7.com/mcp`, remote Streamable HTTP):
   2 read-only tools for targeted current library/API documentation
   (`resolve-library-id`, `query-docs`). Requires outbound internet; free API
   key optional (`headers: Authorization: Bearer <key>`).
+- **jDocMunch** (stdio subprocess via `uvx jdocmunch-mcp`, local):
+  7 read-only tools for **local** homelab documentation retrieval
+  (`index_local`, `search_sections`, `get_section`, `get_sections`,
+  `get_section_excerpt`, `get_toc`, `get_toc_tree`). Corpus = homelab
+  `Documentation/` mounted read-only at `/opt/data/homelab-docs`; index
+  persisted under `/opt/data`. Free for personal (non-commercial) use.
 - Tool governance policy: see `Documentation/Phase16/README.md`.
+
+### Phase 16.x expansion (2026-08-13)
+
+Evaluated jCodeMunch, jDocMunch, jDataMunch, GitHub MCP, Docker MCP, Proxmox
+MCP, Filesystem MCP. **Installed:** jDocMunch (local docs retrieval — see
+above). **Deferred:** jCodeMunch (no meaningful code corpus; broad mount would
+expose secrets), jDataMunch (no data corpus), GitHub (no PAT), Filesystem (no
+need). **Rejected:** Docker MCP (docker-socket control), Proxmox (no Proxmox;
+upstream 404). Context7 + Graphify + jDocMunch are the MCP servers. Full
+decision matrix in `Documentation/Phase16/README.md` (Part 4).
 
 - Server: Graphify (`http://graphify:8080/mcp`, Streamable HTTP).
 - Exposed tool: `mcp_graphify_graph_stats` (read-only graph summary stats).
