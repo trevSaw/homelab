@@ -336,17 +336,18 @@ Open WebUI → Hermes → KORA HEAD AGENT → Ollama / Chroma / Honcho / Graphif
 - **Current Status:** Current.
 
 ### Decision: KORA inference model
-- **Decision (per Trev's profile):** "KORA currently uses Qwen 3 8B through
-  Ollama."
-- **⚠️ CONFLICT / STALE vs current production:** the **current production**
-  KORA model (Phase 16, 2026-08-12) is **`gpt-oss:20b-cloud`** (Hermes
-  `model.default`), switched from `qwen3:8b` because qwen3:8b did not emit
-  structured MCP tool calls reliably in the full Hermes context and is
-  CPU-bound. Trev's profile was written before/independent of that switch.
-  **Recorded as: model selection is a Hermes runtime config; the latest
-  explicit decision (gpt-oss:20b-cloud) is authoritative pending Trev's
-  confirmation.**
-- **Current Status:** Historical statement in profile; production differs.
+- **Decision:** The authoritative current production KORA model is
+  **`gpt-oss:20b-cloud`** (set via Hermes `model.default`).
+- **Date/Phase:** Phase 16 (2026-08-12).
+- **Reason:** Qwen 3 8B (`qwen3:8b`) did not reliably produce the structured MCP
+  tool calls required by KORA's current tool architecture, and its local
+  inference performance was CPU-bound.
+- **Current Status:** **Current / authoritative.** The model choice is a current
+  architectural/runtime decision until explicitly changed. `gpt-oss:20b-cloud`
+  must not be described as historical.
+- **Supersedes:** `qwen3:8b` as the KORA model. Do **not** describe Qwen 3 8B as
+  the current KORA model; its information is preserved in the historical/
+  superseded section (§16).
 - **Notes:** Honcho dialectic/dream models are independently configured and
   decoupled from KORA's chat model.
 
@@ -616,7 +617,8 @@ easier, not to create another system he has to manage.**
 
 ---
 
-*End of KORA Personal Knowledge Archive. Conflicts flagged inline (see the KORA
-inference model decision). Sections are categorized per Phase 17 (durable
-preferences, goals, project knowledge, decisions, historical architecture,
-current environment, behavioral instructions).*
+*End of KORA Personal Knowledge Archive. The KORA production model is
+`gpt-oss:20b-cloud` (authoritative); `qwen3:8b` is historical/superseded.
+Sections are categorized per Phase 17 (durable preferences, goals, project
+knowledge, decisions, historical architecture, current environment, behavioral
+instructions).*
