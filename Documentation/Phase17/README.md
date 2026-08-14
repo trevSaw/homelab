@@ -27,17 +27,30 @@ KORA should know about the user and their history.
 ## Scope of this kickoff
 
 - ✅ Roadmap updated (Phase 17 reframed).
-- ✅ Canonical `Personal_Knowledge_Archive.md` created.
+- ✅ Canonical `Personal_Knowledge_Archive.md` created + populated (foundational
+  user profile incorporated; authoritative KORA model `gpt-oss:20b-cloud`).
 - ✅ `ChatGPT_History/` placeholder archive structure created.
-- ⏳ Personal Knowledge material input (user-supplied) — pending.
+- ✅ **Targeted Historical Enrichment Policy** documented (full ChatGPT history
+  migration is **not** planned; historical enrichment is a policy, as-needed).
 - ⏳ Ingestion pipeline to Chroma / Honcho / Graphify — **later, separately
   approved**; not implemented now.
+
+## Phase 17 status
+
+- Foundational user profile / archive / preferences / behavioral guidance /
+  project context / architectural decisions — **Complete**
+- Historical/superseded architecture — **Documented**
+- Full ChatGPT history migration — **Not planned**
+- Automatic historical memory migration — **Not planned**
+- Targeted historical enrichment — **Optional / as-needed** (see policy)
+- KORA validation — **Next**
 
 ## Key documents
 
 | Document | Purpose |
 | --- | --- |
-| `Personal_Knowledge_Archive.md` | Canonical curated archive (about me, preferences, technical environment, projects, decisions, history, relationships). |
+| `Personal_Knowledge_Archive.md` | Canonical curated archive (about me, preferences, technical environment, projects, decisions, history, relationships, behavioral instructions). |
+| `Targeted_Historical_Enrichment_Policy.md` | KORA policy for historical enrichment — targeted/as-needed, never full-history migration. |
 | `ChatGPT_History/README.md` | Historical source archive structure (placeholders). |
 
 ## Constraints (preserved)
