@@ -58,6 +58,31 @@ COUNCIL_DIRECTIVE = (
     "final response authority and KORA identity."
 )
 
+# Phase 17 — canonical personal-knowledge retrieval behavior. Establishes the
+# source hierarchy for questions about Trev's identity, preferences, projects,
+# goals, and architectural decisions. Does NOT duplicate the profile content.
+PROFILE_RETRIEVAL_DIRECTIVE = (
+    "CANONICAL KNOWLEDGE PRIORITY: For questions about the user's identity, "
+    "durable preferences, major projects, long-term goals, or architectural "
+    "decisions, retrieve the canonical profile FIRST rather than relying only on "
+    "derived memory. Call mcp_jdocmunch_search_sections with EXACT arguments: "
+    "{\"query\": <a term that appears in the canonical profile's section titles, "
+    "e.g. 'About Me', 'Trev', 'Preferences', 'Major Projects', 'Technical "
+    "Environment', 'KORA inference model', 'Future Plans', 'Architecture'>, "
+    "\"repo\": \"local/homelab-docs\", \"max_results\": 3}. Prefer results whose "
+    "doc_path is Phase17/Personal_Knowledge_Archive.md; if the top results are "
+    "not from that file, retry once with a different profile term. Then call "
+    "mcp_jdocmunch_get_section with {\"section_id\": <top result's section_id>, "
+    "\"repo\": \"local/homelab-docs\"}. Both arguments are REQUIRED — never omit "
+    "them. Use Context7/Graphify as relevant. Source hierarchy: (1) current "
+    "explicit canonical knowledge and decisions, (2) other authoritative project "
+    "knowledge, (3) Honcho-derived conversational memory (supplementary only), "
+    "(4) model inference. Current explicit decisions take precedence; "
+    "historical/superseded information must not override current; if a "
+    "meaningful conflict remains, acknowledge it rather than inventing "
+    "certainty. Do not treat derived memory as the authoritative user profile."
+)
+
 from . import kora_classify as kc  # noqa: E402
 from . import kora_explain as xp  # noqa: E402
 
@@ -249,7 +274,7 @@ def pre_llm_call(**kw) -> str:
         "produced_by": "kora-agent-plugin",
         "council": {"head": "KORA", "members": COUNCIL_MEMBERS, "invoke": "delegate_task"},
     }
-    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True) + "\n\n" + COUNCIL_DIRECTIVE
+    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True) + "\n\n" + COUNCIL_DIRECTIVE + "\n\n" + PROFILE_RETRIEVAL_DIRECTIVE
 
 
 def pre_tool_call(**kw):
