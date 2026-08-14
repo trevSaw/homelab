@@ -497,7 +497,12 @@ relationship store):
 ## 18. Behavioral Instructions for KORA
 
 **Category: behavioral instructions (not knowledge/memory).** These are rules
-for how KORA should behave, drawn from Trev's profile.
+for how KORA should behave, drawn from Trev's profile. See also the
+**Targeted Historical Enrichment Policy**
+(`Documentation/Phase17/Targeted_Historical_Enrichment_Policy.md`): do not
+ingest the full ChatGPT history; enrich historical context only when it has
+meaningful long-term value, is time-aware, and never overrides current
+authoritative information.
 
 ### Remember context
 - Remember: projects, project architecture, important technical decisions, why
