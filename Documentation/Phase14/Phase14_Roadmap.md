@@ -1,6 +1,6 @@
 # Phase 14 — KORA Production Runtime Implementation
 
-**Status:** ✅ Phase 14 complete · 🟡 Phase 15 FOUNDATION COMPLETE — PAUSED · ✅ Phase 16 (MCP / Tools Platform) complete · ⏳ Phase 17 NEXT (not started)
+**Status:** ✅ Phase 14 complete · 🟡 Phase 15 FOUNDATION COMPLETE — PAUSED · ✅ Phase 16 (MCP / Tools Platform) complete · 🟡 Phase 17 (Personal Knowledge Migration) STARTED (curation phase; not complete)
 
 **Prerequisite:** Phase 13 complete (architecture through 13.15)  
 
@@ -56,7 +56,7 @@ Commits: `9ee4b59` (retirement), `367c783` (pre-retirement checkpoint).
 | 15 | Council & Intelligence | 🟡 Foundation complete — paused (2026-08-12) |
 | 16 | MCP / Tools Platform | ✅ Complete (2026-08-12) |
 | 16.x | MCP Tool Expansion | ✅ Complete (2026-08-13) — jDocMunch installed; others deferred/rejected |
-| 17 | ChatGPT History Import & Personal Knowledge Migration | ⏳ Next (not started) |
+| 17 | ChatGPT History → KORA Personal Knowledge Migration | 🟡 Started — curation phase (2026-08-13) |
 
 ---
 
@@ -556,24 +556,40 @@ capabilities.**
 
 ---
 
-## Phase 17 — ChatGPT History Import & Personal Knowledge Migration
+## Phase 17 — ChatGPT History → KORA Personal Knowledge Migration
 
-**Status:** ⏳ **Next — NOT started** (identified as the next phase)
+**Status:** 🟡 **Started — curation phase** (2026-08-13)
 
-**Capability:** **Import and organize the user's ChatGPT history into the local
-KORA ecosystem.**
+**Capability:** **Create a curated, canonical Personal Knowledge Archive from the
+user's ChatGPT history and existing project knowledge — not a raw conversation
+import.**
 
-**Suggested scope (roadmap-level only; not designed or implemented):**
+**Scope (revised):**
 
-"Import and organize the user's ChatGPT history into the local KORA ecosystem
-while preserving original conversation history and appropriately separating
-personal memory, useful knowledge, and relationship/entity information across
-the canonical Honcho, Chroma, and Graphify services."
+- Raw ChatGPT conversations remain **historical source material** (archived
+  under `ChatGPT_History/`), not automatically converted wholesale into Honcho.
+- The curated **Personal Knowledge Archive** becomes the primary
+  human-readable representation of what KORA should know about the user and
+  their history (identity, preferences, projects, decisions, technical
+  environment, plans, goals, lessons learned, relationships, superseded
+  decisions).
+- A later ingestion step will route archive content to the canonical services:
+  searchable corpus → Chroma; selected durable personal memory → Honcho;
+  relationship/entity information → Graphify. KORA remains the intelligence
+  layer deciding relevance.
+- Implementation details of ingestion intentionally not decided yet.
 
-- Preserve original conversation history.
-- Route content to the canonical services (personal memory → Honcho; knowledge →
-  Chroma; relationships/entities → Graphify).
-- Implementation details intentionally not decided yet.
+**Key documents:**
+
+- `Documentation/Phase17/Personal_Knowledge_Archive.md` — canonical curated
+  archive.
+- `Documentation/Phase17/ChatGPT_History/` — historical source archive
+  (placeholders).
+- `Documentation/Phase17/README.md` — phase status and purpose.
+
+**Preserved constraints:** Phase 15 (Council) remains paused and untouched;
+Phase 16 (MCP/Tools) complete; no new runtime/service/importer created during
+this curation phase.
 
 ---
 
@@ -621,5 +637,5 @@ Phase 14 is complete when:
 
 - **Phase 15 — Council & Intelligence**: foundation complete — **paused** (resume only on explicit request).
 - **Phase 16 — MCP / Tools Platform**: ✅ **complete** (Hermes-native MCP + governed Graphify read-only tools).
-- **Phase 17 — ChatGPT History Import & Personal Knowledge Migration**: ⏳ **next** (not started).
+- **Phase 17 — ChatGPT History → KORA Personal Knowledge Migration**: 🟡 **started** (curation phase — Personal Knowledge Archive; not complete).
 - Longer-term **AI Automation** (governance assistant workflows across the homelab) remains a subsequent program phase—not a substitute for finishing the roadmap.
