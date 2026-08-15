@@ -44,6 +44,10 @@ services:
       # Phase 16.x: jDocMunch local documentation corpus (read-only, KORA's own
       # knowledge base = homelab Documentation/). Index stored under /opt/data.
       - /home/fatherfrank/projects/homelab/Documentation:/opt/data/homelab-docs:ro
+      # Phase 17.x: KORA OpenCode-style workspace — canonical homelab repo (rw,
+      # the deployment/service source of truth) and governance standards (ro).
+      - /home/fatherfrank/projects/homelab:/opt/data/homelab-repo:rw
+      - /home/fatherfrank/projects/homelab/Architecture/standards:/opt/data/homelab-governance:ro
     shm_size: 1g
     networks:
       - proxy

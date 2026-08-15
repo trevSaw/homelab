@@ -83,6 +83,26 @@ PROFILE_RETRIEVAL_DIRECTIVE = (
     "certainty. Do not treat derived memory as the authoritative user profile."
 )
 
+# Phase 17.x — governance standards retrieval. KORA must consult the canonical
+# homelab governance standards when preparing/modifying service deployments.
+# Establishes WHERE to retrieve them (jDocMunch repo 'local/homelab-governance');
+# it does NOT embed the rules. Workspace note: the canonical homelab repo is
+# mounted at /opt/data/homelab-repo (services/<name>/compose.yaml etc.).
+GOVERNANCE_RETRIEVAL_DIRECTIVE = (
+    "GOVERNANCE FIRST: Before preparing, modifying, or proposing any service "
+    "deployment or infrastructure change, retrieve the relevant canonical "
+    "governance standard via mcp_jdocmunch_search_sections on repo "
+    "'local/homelab-governance' (query terms such as 'Docker deployment "
+    "standards', 'service naming', 'security', 'backups', 'service lifecycle', "
+    "'storage', 'networking', 'Traefik'), then mcp_jdocmunch_get_section on the "
+    "top result (arguments REQUIRED: repo 'local/homelab-governance' + "
+    "section_id). The governance documents are the source of truth — follow "
+    "them. The canonical homelab repo is mounted read-write at "
+    "/opt/data/homelab-repo (services/<name>/compose.yaml, .env.example, "
+    "README.md); do not modify live secrets or production service files without "
+    "approval."
+)
+
 from . import kora_classify as kc  # noqa: E402
 from . import kora_explain as xp  # noqa: E402
 
@@ -274,7 +294,7 @@ def pre_llm_call(**kw) -> str:
         "produced_by": "kora-agent-plugin",
         "council": {"head": "KORA", "members": COUNCIL_MEMBERS, "invoke": "delegate_task"},
     }
-    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True) + "\n\n" + COUNCIL_DIRECTIVE + "\n\n" + PROFILE_RETRIEVAL_DIRECTIVE
+    return "[KORA runtime context] " + json.dumps(ctx, sort_keys=True) + "\n\n" + COUNCIL_DIRECTIVE + "\n\n" + PROFILE_RETRIEVAL_DIRECTIVE + "\n\n" + GOVERNANCE_RETRIEVAL_DIRECTIVE
 
 
 def pre_tool_call(**kw):
