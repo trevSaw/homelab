@@ -44,10 +44,16 @@ services:
       # Phase 16.x: jDocMunch local documentation corpus (read-only, KORA's own
       # knowledge base = homelab Documentation/). Index stored under /opt/data.
       - /home/fatherfrank/projects/homelab/Documentation:/opt/data/homelab-docs:ro
-      # Phase 17.x: KORA OpenCode-style workspace — canonical homelab repo (rw,
-      # the deployment/service source of truth) and governance standards (ro).
-      - /home/fatherfrank/projects/homelab:/opt/data/homelab-repo:rw
+      # Phase 17.x: governance standards (read-only).
+      # NOTE (Phase 18.1 .env remediation): the canonical homelab repo is NOT
+      # bind-mounted (it contains gitignored .env secrets). KORA's repo surface
+      # is the clean shallow workspace clone at /opt/data/homelab-workspace
+      # (hermes-owned, excludes .env and secret-bearing history).
       - /home/fatherfrank/projects/homelab/Architecture/standards:/opt/data/homelab-governance:ro
+      # Phase 18.1: read-only Docker state snapshots (host-generated; NO
+      # docker.sock is exposed to any container). Refresh: run the host script
+      # /home/fatherfrank/projects/docker-state/snapshot.sh (cron or manual).
+      - /home/fatherfrank/projects/docker-state:/opt/data/docker-state:ro
     shm_size: 1g
     networks:
       - proxy
