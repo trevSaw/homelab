@@ -60,6 +60,21 @@ See `Documentation/Phase19/Phase19_Validation.md` — all PASS.
 Next steps: Tailscale admin-console split-DNS + router DHCP change (user action) after
 upstream/blocklist confirmation.
 
+## Preparation documents (all complete)
+
+- `Phase19_Tailscale_Action.md` — Tailscale split-DNS user action (100.102.139.115 / fatherfankscloud.uk)
+- `Phase19_Cutover_Procedure.md` — Phase 8 cutover + rollback procedure
+- `Phase19_PostCutover_Monitoring.md` — Phase 9 full PASS/FAIL checklist
+- `Phase19_PiHole_Retirement_Plan.md` — Phase 10 retirement criteria + procedure
+- `Phase19_Known_Exceptions.md` — placeholder for post-cutover client findings
+
+## Task state
+
+- [ ] Tailscale split-DNS route — USER ACTION (admin console)
+- [ ] Phase 8: Cutover — USER ACTION / approval required (router DHCP)
+- [ ] Phase 9: Post-cutover monitoring — prepared; completes after cutover
+- [ ] Phase 10: Pi-hole retirement — plan complete; actual retirement later
+
 ## Rollback
 
 Pi-hole (192.168.50.213) untouched and still the LAN DNS server. To roll back Technitium:
