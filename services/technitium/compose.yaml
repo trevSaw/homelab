@@ -1,0 +1,47 @@
+# Technitium DNS Server — homelab primary DNS (Phase 19)
+# Replaces Pi-hole as the LAN/Tailscale recursive + authoritative DNS server.
+# WAN/public exposure is intentionally NOT enabled (see Documentation/Phase19).
+services:
+  technitium:
+    image: technitium/dns-server:15.4.0
+    container_name: technitium
+    hostname: technitium
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DNS_SERVER_DOMAIN: ${DNS_SERVER_DOMAIN:-dns.mocha}
+      DNS_SERVER_ADMIN_PASSWORD: ${DNS_SERVER_ADMIN_PASSWORD}
+      DNS_SERVER_RECURSION: AllowOnlyForPrivateNetworks
+      DNS_SERVER_ENABLE_BLOCKING: "true"
+      DNS_SERVER_BLOCK_LIST_URLS: ${DNS_SERVER_BLOCK_LIST_URLS:-}
+      DNS_SERVER_FORWARDERS: ${DNS_SERVER_FORWARDERS:-}
+      DNS_SERVER_FORWARDER_PROTOCOL: ${DNS_SERVER_FORWARDER_PROTOCOL:-Udp}
+      DNS_SERVER_LOG_USING_LOCAL_TIME: "true"
+    ports:
+      # DNS service — bound to LAN + Tailscale IPs only (not 0.0.0.0, avoids
+      # libvirt 192.168.122.1:53 conflict and public exposure).
+      - "192.168.50.44:53:53/udp"
+      - "192.168.50.44:53:53/tcp"
+      - "100.102.139.115:53:53/udp"
+      - "100.102.139.115:53:53/tcp"
+      # Web console — LAN/Tailscale only. NO public exposure.
+      - "192.168.50.44:5380:5380/tcp"
+      - "100.102.139.115:5380:5380/tcp"
+    volumes:
+      - /mnt/monarch/appdata/technitium/config:/etc/dns
+      - /mnt/monarch/appdata/technitium/logs:/var/log/technitium/dns
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 3 bash -c 'echo > /dev/tcp/127.0.0.1/5380' && echo ok || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
