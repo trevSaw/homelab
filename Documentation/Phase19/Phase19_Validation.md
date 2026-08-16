@@ -65,8 +65,10 @@ Wildcard cert `*.fatherfankscloud.uk` + apex SAN confirmed via `openssl s_client
 | example.com | resolves | resolves ✓ |
 | mozilla.org | resolves | resolves ✓ |
 
-Block lists: StevenBlack hosts (98,949), urlhaus.abuse.ch (348), Disconnect tracking (34), Disconnect ad (2,700).
-**Dead list removed:** `mirror1.malwaredomains.com/justdomains` returned 404 → replaced with urlhaus.abuse.ch (live).
+Block lists: **hagezi Pro** (`adblock/pro.txt`, 214,895) + **StevenBlack hosts** (98,949) ≈ 313k domains.
+**Dead list removed:** hagezi `hosts/pro.txt` returned 404 (path does not exist in hagezi repo);
+replaced with `adblock/pro.txt` — the same Pro list in AdBlock format, which Technitium parses natively.
+**Allowlist:** `hairvivi.com` (+`www`) added to the Allowed Zone — resolves normally (not blocked).
 
 ## 5. Failure / resilience behavior
 

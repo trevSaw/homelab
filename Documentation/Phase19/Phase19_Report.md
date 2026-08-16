@@ -18,7 +18,7 @@ architecture with LAN/Tailscale split addressing. Public/WAN exposure remains di
 | Split Horizon | `mocha.fatherfankscloud.uk` APP record (`SplitHorizon.SimpleAddress`): LAN→`192.168.50.44`, TS→`100.102.139.115` |
 | Records | 18 service CNAMEs → mocha (14 migrated + 5 added − `echo` held for review) |
 | PTRs | 5 migrated (match Pi-hole) |
-| Blocking | 4 lists (~102k domains), `0.0.0.0` responses match Pi-hole behavior |
+| Blocking | hagezi Pro + StevenBlack (~313k domains) + hairvivi.com allowlist; `0.0.0.0` responses |
 | Traefik | all hostnames resolve + route via Traefik; wildcard cert valid |
 | Security | recursion `AllowOnlyForPrivateNetworks`; DNS+web LAN/TS-bound; no public exposure |
 | Tailscale | server ready on `100.102.139.115`; split-DNS route = admin-console action |
@@ -47,8 +47,10 @@ architecture with LAN/Tailscale split addressing. Public/WAN exposure remains di
 
 ## Blocklists migrated
 
-StevenBlack hosts, urlhaus (replaced dead malwaredomains), Disconnect tracking + ad.
-Pi-hole's exact lists not readable (auth-locked) — documented defaults; parity confirmed.
+- **hagezi Pro** (`adblock/pro.txt`, 214,895 domains) + **StevenBlack hosts** (98,949) ≈ 313k domains.
+- `hosts/pro.txt` (user-provided) was a dead 404 path — `adblock/pro.txt` is the same Pro list in a supported format.
+- Allowlist: `hairvivi.com` + `www` → Allowed Zone.
+- Pi-hole's exact lists confirmed by user; parity verified.
 
 ## Validation
 
@@ -83,7 +85,7 @@ Pi-hole (192.168.50.213) untouched and still the LAN DNS server. To roll back Te
 ## Remaining issues
 
 1. Pi-hole exact upstream forwarders — confirm before cutover (temporary: 1.1.1.1/8.8.8.8).
-2. Pi-hole blocklist/allowlist/regex — verify parity post-cutover.
+2. hagezi Pro list is aggressive — verify no false positives post-cutover (Pi-hole allowlists beyond hairvivi.com may need re-creating).
 3. Tailscale split-DNS route — admin console action.
 4. `echo.fatherfankscloud.uk` — decide keep/drop.
 
