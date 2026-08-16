@@ -52,6 +52,14 @@ The `mocha` host record is an APP record using `SplitHorizon.SimpleAddress`:
 - Tailscale clients → `100.102.139.115`
 - Service hostnames are plain CNAMEs → `mocha.fatherfankscloud.uk`
 
+## Blocklists / allowlists
+
+- Block list URLs (confirmed 2026-08-16): hagezi **Pro** (`adblock/pro.txt`, AdBlock
+  format — Technitium parses `||domain^`) + StevenBlack hosts (~314k domains).
+  hagezi `hosts/pro.txt` is a dead path (404); `adblock/pro.txt` is the same Pro list.
+- Allowlist: `hairvivi.com` (and `www.hairvivi.com`) added to the **Allowed Zone** in
+  the web console (Settings/DNS → Allowed Zones or via API `/api/allowed/add`).
+
 ## Backup & restore
 
 - Config: copy `/mnt/monarch/appdata/technitium/config`
@@ -65,9 +73,9 @@ Bump image tag in `compose.yaml` + `Versions.md`, `docker compose up -d`.
 
 ## Known limitations / exceptions
 
-- Blocklist URLs + final upstream forwarders require Pi-hole admin access to
-  confirm; temporary documented values are used for validation.
+- Upstream forwarders currently `1.1.1.1`/`8.8.8.8` (temporary) — confirm Pi-hole's actual upstreams.
 - `echo.fatherfankscloud.uk` record intentionally not created (no running container).
+- hagezi Pro list is aggressive (blocks ads/affiliate/tracking/malware); watch for false positives after cutover.
 
 ## Troubleshooting
 

@@ -34,9 +34,9 @@ Actual retirement happens only after stabilization and explicit approval.
 | Local records (14) | CNAMEs → `mocha` + host APP record | ✅ |
 | Missing records (traefik, bazarr, honcho, prowlarr, radarr) | added | ✅ |
 | PTRs (5) | reverse zone | ✅ |
-| Blocking behavior | block lists + AnyAddress | ✅ (lists are documented defaults, not Pi-hole's exact URLs) |
+| Blocking behavior | block lists + AnyAddress | ✅ (user-confirmed hagezi Pro + StevenBlack + hairvivi allowlist) |
 | Forwarding upstream | forwarders 1.1.1.1/8.8.8.8 + DNSSEC | ⚠️ temporary; confirm Pi-hole's actual upstreams |
-| Allowlists | — | ❌ **not exported** (auth-locked) — verify via false-positive scan |
+| Allowlists | hairvivi.com in Allowed Zone | ✅ user-provided; other Pi-hole allowlists not exported (auth-locked) |
 | Denylists / regex | — | ❌ **not exported** (auth-locked) — verify blocking parity |
 
 ## 4. What was NOT migrated / cannot be migrated
