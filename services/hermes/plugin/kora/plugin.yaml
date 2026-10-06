@@ -1,0 +1,48 @@
+# KORA structural governance plugin — staging prototype (Hermes v0.17.0)
+
+# KORA-owned intelligence/governance running as a first-class Hermes plugin.
+# Uses ONLY supported Hermes extension points: PluginContext.register_hook /
+# register_tool. No Hermes source is modified (no fork).
+name: kora
+version: 0.4.1
+description: >
+  KORA structural governance plugin. Performs KORA classification, strategy
+  selection, governance/refusal, tool authorization, knowledge retrieval (real
+  KORA Knowledge platform, in-memory vector store, Ollama embeddings), memory
+  policy (real KORA Memory Runtime, approval-gated), canonical out-of-band
+  explainability records, live read-only qBittorrent inspection (Phase 2),
+  controlled live Docker administration (Phase 3, via the narrow docker-admin
+  helper - no Docker socket in Hermes), external web research via the
+  self-hosted SearXNG instance using Hermes' native `web` toolset (Phase 5),
+  and a mandatory research evidence/provenance protocol (Phase 5.1) that
+  prevents model inference from being presented as verified upstream/homelab
+  fact.
+kind: standalone
+provides_hooks:
+  - on_session_start
+  - pre_llm_call
+  - pre_tool_call
+  - transform_llm_output
+  - post_llm_call
+provides_tools:
+  - kora.knowledge_query
+  - kora.memory_status
+  - kora.memory_propose
+  - kora.wipe_volume
+  - kora.council_list
+  - kora.council_member
+  - kora.qbit_torrents
+  - kora.qbit_transfer_info
+  - kora.qbit_app_version
+  - kora.qbit_categories
+  - kora.qbit_tags
+  - kora.docker_list
+  - kora.docker_inspect
+  - kora.docker_logs
+  - kora.docker_health
+  - kora.docker_image
+  - kora.docker_networks
+  - kora.docker_volumes
+  - kora.docker_restart
+  - kora.docker_compose_validate
+  - kora.docker_compose_up
