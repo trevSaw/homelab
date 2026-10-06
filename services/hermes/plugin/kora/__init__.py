@@ -101,10 +101,9 @@ PROFILE_RETRIEVAL_DIRECTIVE = (
     "KNOWLEDGE PRIORITY (user identity, preferences, projects, goals, architecture): retrieve the "
     "CANONICAL profile FIRST from the read-only corpus /opt/data/homelab-docs (source "
     "Documentation/Phase17/Personal_Knowledge_Archive.md) via file tools "
-    "(read_file/search_files). If mcp_jdocmunch_* tools are exposed you may use "
-    "mcp_jdocmunch_search_sections with repo 'local/homelab-docs' and a section-title term, then "
-    "mcp_jdocmunch_get_section on the top section_id. Never claim jdocmunch/Context7/Graphify are "
-    "available if they are not in your toolset. Hierarchy: (1) current canonical "
+    "(read_file/search_files). If mcp_jdocmunch_* are exposed, search repo 'local/homelab-docs' "
+    "then get the top section. Never claim jdocmunch/Context7/Graphify are available if they are "
+    "not in your toolset. Hierarchy: (1) current canonical "
     "knowledge/decisions > (2) other authoritative project knowledge > (3) Honcho conversational "
     "memory (supplementary) > (4) model inference. Current beats historical; if a real conflict "
     "remains, say so; never treat derived memory as the authoritative profile."
@@ -112,17 +111,18 @@ PROFILE_RETRIEVAL_DIRECTIVE = (
 
 # Phase 17.x — governance standards retrieval. KORA must consult the canonical
 # homelab governance standards when preparing/modifying service deployments.
-# Establishes WHERE to retrieve them. Workspace note: the canonical homelab repo
-# is NOT mounted in this container; the sanitized workspace is
-# /opt/data/homelab-workspace and /opt/data/homelab-repo is an empty placeholder.
+# Phase 6: the canonical homelab repo IS mounted read/write at
+# /home/fatherfrank/projects/homelab; the old /opt/data/homelab-workspace clone
+# is deprecated and /opt/data/homelab-repo remains an empty placeholder.
 GOVERNANCE_RETRIEVAL_DIRECTIVE = (
     "GOVERNANCE FIRST: before preparing, modifying, or proposing any service deployment or infra "
     "change, retrieve the canonical standard from the read-only /opt/data/homelab-governance "
     "(search_files/read_file); if mcp_jdocmunch_* are exposed you may search repo "
     "'local/homelab-governance' and get the top section. Standards are the source of truth \u2014 "
-    "follow them. The canonical repo is NOT mounted; the sanitized workspace is "
-    "/opt/data/homelab-workspace (no secrets); /opt/data/homelab-repo is an EMPTY placeholder \u2014 "
-    "do not use it. Do not modify live secrets/production without approval."
+    "follow them. The canonical repo is mounted read-only EXCEPT the writable documentation "
+    "dirs Documentation/, Architecture/decisions/, Validation/ and Services/ (under "
+    "/home/fatherfrank/projects/homelab); /opt/data/homelab-workspace is DEPRECATED (never "
+    "authoritative). Do not modify live secrets/production without approval."
 )
 
 
@@ -135,20 +135,21 @@ DELEGATION_DIRECTIVE = (
     "ENGINEERING DELEGATION (MUST for heavy work): for investigating, debugging, implementing, "
     "configuring, or validating real homelab infra/code, delegate the heavy work via "
     "delegate_task(goal=..., context=...). The child runs on the OpenCode Go model with the same "
-    "Hermes tools (terminal, process, files, git, exposed MCPs) in the sanitized workspace "
-    "/opt/data/homelab-workspace (no secrets). Use the default local model for conversation, "
+    "Hermes tools (terminal, process, files, git, exposed MCPs) in /opt/data/homelab-workspace "
+    "and the writable documentation dirs under /home/fatherfrank/projects/homelab. Use the default local model "
+    "for conversation, "
     "explanations, writing, and simple facts \u2014 do not delegate those. Never reference or request "
-    "provider credentials or model identifiers. Canonical-repo changes go through the "
-    "approval/apply gate (scripts/kora-apply.sh) \u2014 never bypass it. Report exactly what the child "
-    "returned; do not invent a result."
+    "provider credentials or model identifiers. Canonical-repo DOCUMENTATION changes may be "
+    "committed locally; production deployment stays behind the approval boundary (never deploy "
+    "without approval). Report exactly what the child returned; do not invent a result."
 )
 
 # Phase 1 — live-state reasoning semantics + evidence sources (remediation of
 # the qBittorrent-style failure). Rules:
 #   * Failure to inspect is NOT evidence of absence.
-#   * Container/service questions consult /opt/data/docker-state/* first.
-#   * Security posture is UNCHANGED (no docker.sock, no host mount, no
-#     credentials added). This phase changes reasoning, not privileges.
+#   * Container/service questions consult live docker tools, then the snapshot.
+#   * No docker.sock and no credentials. (Phase 6 additionally bind-mounts the
+#     canonical repo read/write for documentation; see services/hermes.)
 LIVE_STATE_DIRECTIVE = (
     "LIVE-STATE REASONING (MANDATORY): A. FAILURE TO INSPECT IS NOT EVIDENCE OF ABSENCE: docker "
     "CLI/ps failure, a missing socket/tool, search errors, inaccessible paths, HTTP 401/403, and "
@@ -156,12 +157,13 @@ LIVE_STATE_DIRECTIVE = (
     "inspect X' into 'X does not exist'. B. CLASSIFY EVIDENCE as exactly: (1) confirmed present, "
     "(2) confirmed absent, (3) unable to inspect, (4) stale/indirect, (5) conflicting; preserve "
     "the uncertainty for (3)-(5). C. CONTAINERS/SERVICES: use live kora.docker_* first; if "
-    "unavailable fall back to the host-generated read-only snapshot /opt/data/docker-state "
-    "(ps/inspect/networks.txt) \u2014 useful, read-only, possibly STALE, not live access; state only "
-    "what the evidence establishes; if live state is required but unavailable, say so. D. REPO "
-    "REALITY: the canonical repo is NOT mounted; the sanitized workspace is "
-    "/opt/data/homelab-workspace (no secrets); /opt/data/homelab-repo is an EMPTY placeholder \u2014 "
-    "do not use it. E. APPLICATION STATE (e.g. torrents): use kora.qbit_* live; if unavailable "
+    "unavailable fall back to the read-only snapshot /opt/data/docker-state; state only what "
+    "the evidence establishes; if live state is required but unavailable, say so. D. REPO "
+    "REALITY: only the documentation dirs (Documentation, Architecture/decisions, Validation, "
+    "Services) under /home/fatherfrank/projects/homelab are mounted (rw); the rest of the "
+    "canonical repo is NOT mounted and NO server-side Obsidian vault exists; /opt/data/"
+    "homelab-workspace is DEPRECATED. E. APPLICATION STATE (e.g. torrents): use "
+    "kora.qbit_* live; if unavailable "
     "report 'cannot determine' \u2014 never 'zero'/'absent', and never infer app state from container "
     "state."
 )
@@ -173,7 +175,7 @@ QBIT_DIRECTIVE = (
     "kora.qbit_torrents "
     "(filter=all|downloading|seeding|completed|paused|active|inactive|stalled|stalled_uploading|stalled_downloading|errored), "
     "kora.qbit_transfer_info, kora.qbit_app_version, kora.qbit_categories, kora.qbit_tags. (1) "
-    "Prefer the live API over /opt/data/docker-state for torrent questions. (2) NEVER infer "
+    "Prefer the live API over the snapshot. (2) NEVER infer "
     "torrent state from container state, and NEVER infer absence from an API failure. (3) On "
     "status 'error' (auth-failed, credentials-not-configured, connection-failed, api-error) "
     "report that live torrent state could not be retrieved. (4) Do not query qBittorrent via "
@@ -189,8 +191,8 @@ QBIT_DIRECTIVE = (
 DOCKER_ADMIN_DIRECTIVE = (
     "LIVE DOCKER ADMINISTRATION (Phase 3): use the narrow docker-admin tools. READ: "
     "kora.docker_list, kora.docker_inspect, kora.docker_logs, kora.docker_health, "
-    "kora.docker_image, kora.docker_networks, kora.docker_volumes (prefer these live over the "
-    "stale snapshot). WRITE (narrow, explicit): kora.docker_restart (one container), "
+    "kora.docker_image, kora.docker_networks, kora.docker_volumes. WRITE (narrow, explicit): "
+    "kora.docker_restart (one container), "
     "kora.docker_compose_validate, kora.docker_compose_up (recreate/deploy a canonical project; "
     "requires confirm=true). RULES: (1) read-only except restart and compose validate/up \u2014 NO "
     "delete/remove/prune/exec/build/pull or arbitrary docker; never claim or attempt them. (2) "
@@ -218,10 +220,9 @@ RESEARCH_DIRECTIVE = (
     "blogs/mirrors/aggregators; cite the source you actually relied on. (4) NO SNIPPET-ONLY "
     "CLAIMS: if you could not reach the primary source, say so and label the claim UNVERIFIED; "
     "never invent a version/command/path/URL or present a snippet as if you read the page. (5) "
-    "The SearXNG GitHub engine is the dependable discovery path; direct fetch of the upstream "
-    "repo is the source of truth. (6) BOUNDARIES: web_search is read-only discovery; no Docker "
-    "socket, no new runtime, no Task Bridge. (7) web_extract is unavailable (SearXNG is "
-    "search-only): read a URL with terminal curl, or delegate repository analysis."
+    "BOUNDARIES: web_search is read-only discovery; no Docker socket, no new runtime, no Task "
+    "Bridge. (6) web_extract is unavailable (SearXNG search-only): read a URL via terminal curl "
+    "or delegate repository analysis."
 )
 
 # Phase 5.1 — mandatory research evidence & provenance protocol. Addresses the
@@ -249,7 +250,9 @@ RESEARCH_EVIDENCE_CONTRACT = (
     "section ONLY if you read it from the primary upstream source or observed it live "
     "(tools/repo) IN THIS TASK; otherwise it MUST go under UNRESOLVED QUESTIONS. Classify each "
     "material claim as CONFIRMED_UPSTREAM, HOMELAB_FACT, PROPOSED_DECISION, MODEL_INFERENCE, "
-    "CONFLICTING, or UNRESOLVED (only the first two may appear in FACTS sections). Never state as "
+    "CONFLICTING, or UNRESOLVED (only the first two may appear in FACTS sections); label each "
+    "HOMELAB_FACT source: CANONICAL_REPO_FACT, OBSIDIAN_VAULT_FACT, DOCUMENTATION_FACT, "
+    "LIVE_DOCKER_FACT - never present one as another. Never state as "
     "fact any version, image tag/digest, path, hostname, DNS record, port, volume, env var, "
     "health endpoint, network, or integration you did not verify. Model knowledge/memory is NEVER "
     "a fact. If sources conflict, STOP and mark CONFLICTING/UNRESOLVED; never invent a value to "
@@ -881,7 +884,55 @@ def post_llm_call(**kw):
 # Registration
 # ---------------------------------------------------------------------------
 
+# Phase 6 security remediation — KORA-owned credentials that Hermes' built-in
+# terminal scrub does not know about (they are not in the provider/messaging
+# registries). Register a never-selected terminal-environment provider whose
+# only purpose is to contribute ``strip_env_keys``: the registry's
+# ``plugin_strip_env_keys()`` unions these across all providers, so these names
+# are removed from every agent-spawned subprocess env (terminal / execute_code)
+# and can no longer be read by a model-authored command. The plugin process
+# itself still sees them in os.environ, so tooling keeps working.
+_KORA_TERMINAL_STRIP_KEYS = (
+    "KORA_QBIT_USER",
+    "KORA_QBIT_PASS",
+    "KORA_DOCKER_ADMIN_TOKEN",
+    "HERMES_DASHBOARD_BASIC_AUTH_PASSWORD",
+)
+
+try:  # fail-soft: never break plugin load if the Hermes API differs
+    from agent.terminal_env_provider import TerminalEnvironmentProvider as _TerminalEnvProvider
+except Exception:  # noqa: BLE001
+    _TerminalEnvProvider = object  # type: ignore[assignment,misc]
+
+
+class _KoraEnvScrubProvider(_TerminalEnvProvider):  # type: ignore[misc,valid-type]
+    """Not a runnable backend (is_available=False, never selected): contributes
+    ``strip_env_keys`` only. ``terminal.backend`` stays ``local``."""
+
+    @property
+    def name(self) -> str:
+        return "kora-strip"
+
+    @property
+    def display_name(self) -> str:
+        return "KORA credential scrub (internal)"
+
+    @property
+    def strip_env_keys(self):
+        return frozenset(_KORA_TERMINAL_STRIP_KEYS)
+
+    def is_available(self) -> bool:
+        return False
+
+    def create_environment(self, **kwargs):  # pragma: no cover - never called
+        raise NotImplementedError("kora-strip is a credential-scrub marker, not a backend")
+
+
 def register(ctx) -> None:
+    try:
+        ctx.register_terminal_environment_provider(_KoraEnvScrubProvider())
+    except Exception as exc:  # noqa: BLE001
+        log.warning("KORA terminal env-scrub provider registration failed: %s", exc)
     ctx.register_hook("on_session_start", on_session_start)
     ctx.register_hook("pre_llm_call", pre_llm_call)
     ctx.register_hook("pre_tool_call", pre_tool_call)
