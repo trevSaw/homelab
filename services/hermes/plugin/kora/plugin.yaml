@@ -4,7 +4,7 @@
 # Uses ONLY supported Hermes extension points: PluginContext.register_hook /
 # register_tool. No Hermes source is modified (no fork).
 name: kora
-version: 0.4.1
+version: 0.5.1
 description: >
   KORA structural governance plugin. Performs KORA classification, strategy
   selection, governance/refusal, tool authorization, knowledge retrieval (real
@@ -16,7 +16,8 @@ description: >
   self-hosted SearXNG instance using Hermes' native `web` toolset (Phase 5),
   and a mandatory research evidence/provenance protocol (Phase 5.1) that
   prevents model inference from being presented as verified upstream/homelab
-  fact.
+  fact. Phase 6 adds controlled read/write access to the canonical homelab
+  repository (and the Obsidian vault within it) at /home/fatherfrank/projects/homelab.
 kind: standalone
 provides_hooks:
   - on_session_start

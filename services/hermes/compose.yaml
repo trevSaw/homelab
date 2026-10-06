@@ -2,11 +2,15 @@
 # KORA is the head agent hosted inside Hermes. Hermes is the generic runtime.
 services:
   hermes:
-    # Pinned Hermes Agent v0.17.0 (2026.6.19, upstream cf58f1a5).
-    image: nousresearch/hermes-agent@sha256:a967ba5f662d2405041afd31ba37df9f9cdab43ef24fec8a564d59ab85bdeaa7
+    # Pinned Hermes Agent v0.21.4 (2026.9.21, upstream d337b736).
+    # Upgrade note (Phase 22): >= v0.21.1 is required for OpenCode Go
+    # (x-opencode-session header, PR #101864).
+    image: nousresearch/hermes-agent@sha256:6bece0644e29a347e5ae17db43c36938c86f171c6f5e0cef18aa2075d331f3a3
     container_name: hermes
     hostname: hermes
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:8642:8642"
     command:
       - gateway
       - run
@@ -32,10 +36,44 @@ services:
       KORA_STAGING_OLLAMA: http://ollama:11434
       KORA_STAGING_CHROMA: http://kora-chromadb:8000
       KORA_STAGING_EMBED_MODEL: nomic-embed-text
+      # Phase 5: internal-only SearXNG instance (services/searxng) on the AI
+      # network. Hermes' native `web` toolset uses this as its web_search
+      # backend (web.search_backend=searxng in config.yaml). Non-secret URL.
+      SEARXNG_URL: ${SEARXNG_URL:-http://searxng:8080}
       # Native Honcho memory provider dependency (honcho-ai) is installed on the
       # persistent /opt/data volume (/opt/data/honcho-libs); expose it here.
       # The image's /opt/hermes venv is intentionally immutable.
       PYTHONPATH: /opt/data/honcho-libs
+      # Phase 2: read-only live qBittorrent inspection credentials (values in
+      # services/hermes/.env, gitignored). KORA_QBIT_BASE_URL is optional; by
+      # default the plugin resolves the host published WebUI port (:8080) via
+      # the container's default gateway (no networking change).
+      KORA_QBIT_USER: ${KORA_QBIT_USER:-}
+      KORA_QBIT_PASS: ${KORA_QBIT_PASS:-}
+      KORA_QBIT_BASE_URL: ${KORA_QBIT_BASE_URL:-}
+      # Phase 3: narrow Docker administration helper (no docker.sock here).
+      # KORA reaches it over the internal `kora-admin` network; the bearer token
+      # is read from the file /opt/data/docker-admin.token (never committed).
+      KORA_DOCKER_ADMIN_URL: ${KORA_DOCKER_ADMIN_URL:-http://docker-admin:8765}
+      KORA_DOCKER_ADMIN_TOKEN: ${KORA_DOCKER_ADMIN_TOKEN:-}
+      # Phase 4: Discord is configured entirely through env_file (.env) — the
+      # native Hermes Discord platform enables when DISCORD_BOT_TOKEN is
+      # present. The bot token is NEVER declared here (secret stays in the
+      # gitignored .env). Authorization (DISCORD_ALLOWED_USERS /
+      # DISCORD_ALLOWED_CHANNELS) and behavior (DISCORD_REQUIRE_MENTION) are
+      # also .env-driven; see .env.example and services/hermes/README.md.
+      # Phase 4.1: use the bulk command-sync policy. The default "safe" policy
+      # temporarily sets discord.py's http.max_ratelimit_timeout=30 during the
+      # initial slash-command reconcile, and discord.py caches that per route
+      # bucket at creation time — which can make auto-thread creation raise
+      # pre-emptively ("Too many requests. Retry in Ns") for the rest of the
+      # bucket window. "bulk" syncs in one request and skips the mutation.
+      DISCORD_COMMAND_SYNC_POLICY: ${DISCORD_COMMAND_SYNC_POLICY:-bulk}
+      # Phase 6 (documentation access), NARROWED: the file/patch tools may write
+      # ONLY these documentation directories (colon-separated allowlist).
+      # /opt/data remains the primary home volume. The rest of the canonical
+      # repo is intentionally NOT writable.
+      HERMES_WRITE_SAFE_ROOT: ${HERMES_WRITE_SAFE_ROOT:-/opt/data:/home/fatherfrank/projects/homelab/Documentation:/home/fatherfrank/projects/homelab/Architecture/decisions:/home/fatherfrank/projects/homelab/Validation:/home/fatherfrank/projects/homelab/Services}
     volumes:
       - /mnt/monarch/appdata/hermes:/opt/data
       # Phase 15 Council: canonical member content (read-only, single source of
@@ -45,19 +83,32 @@ services:
       # knowledge base = homelab Documentation/). Index stored under /opt/data.
       - /home/fatherfrank/projects/homelab/Documentation:/opt/data/homelab-docs:ro
       # Phase 17.x: governance standards (read-only).
-      # NOTE (Phase 18.1 .env remediation): the canonical homelab repo is NOT
-      # bind-mounted (it contains gitignored .env secrets). KORA's repo surface
-      # is the clean shallow workspace clone at /opt/data/homelab-workspace
-      # (hermes-owned, excludes .env and secret-bearing history).
+      # Phase 6: the canonical homelab repo is now bind-mounted READ/WRITE at
+      # its host path (see below). The Phase 18.1 workspace clone
+      # (/opt/data/homelab-workspace) is DEPRECATED — never authoritative.
       - /home/fatherfrank/projects/homelab/Architecture/standards:/opt/data/homelab-governance:ro
       # Phase 18.1: read-only Docker state snapshots (host-generated; NO
       # docker.sock is exposed to any container). Refresh: run the host script
       # /home/fatherfrank/projects/docker-state/snapshot.sh (cron or manual).
       - /home/fatherfrank/projects/docker-state:/opt/data/docker-state:ro
+      # Phase 6 (documentation access), NARROWED: only these documentation
+      # directories are mounted READ/WRITE at their host paths. The rest of the
+      # canonical repo is NOT mounted (inaccessible to the agent), so private
+      # session transcripts, compose/config, service secrets, and .git are not
+      # exposed. Secret files stay mode 600 owner fatherfrank (uid 1000) with NO
+      # agent ACL. The Obsidian vault is intentionally NOT mounted: there is no
+      # server-side vault (CouchDB LiveSync is authoritative) — see ADR-0016.
+      # Docker administration remains via the docker-admin boundary (no socket).
+      - /home/fatherfrank/projects/homelab/Documentation:/home/fatherfrank/projects/homelab/Documentation
+      - /home/fatherfrank/projects/homelab/Architecture/decisions:/home/fatherfrank/projects/homelab/Architecture/decisions
+      - /home/fatherfrank/projects/homelab/Validation:/home/fatherfrank/projects/homelab/Validation
+      - /home/fatherfrank/projects/homelab/Services:/home/fatherfrank/projects/homelab/Services
     shm_size: 1g
     networks:
       - proxy
       - ollama-net
+      # Phase 3: internal network shared only with the docker-admin helper.
+      - kora-admin
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
@@ -93,3 +144,6 @@ networks:
   ollama-net:
     external: true
     name: ollama_ollama-net
+  kora-admin:
+    external: true
+    name: kora-admin

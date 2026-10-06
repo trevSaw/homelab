@@ -41,7 +41,7 @@ Open WebUI → Hermes (api_server :8642, model "KORA") → KORA HEAD AGENT
 | KORA | Hermes Agent — plugin at `/opt/data/plugins/kora` |
 | Primary chat path | **Yes** — Open WebUI → Hermes → KORA → Ollama (`gpt-oss:20b-cloud`) |
 | Heavy coding model | Hermes delegation → OpenCode Go (`deepseek-v4-flash`); key `OPENCODE_GO_API_KEY` in `services/hermes/.env` |
-| Workspace | Sanitized git repo `/opt/data/homelab-workspace` (no `.env`); canonical repo never mounted; apply via `scripts/kora-apply.sh` |
+| Workspace | Canonical **documentation** dirs mounted rw (Phase 6: `Documentation/`, `Architecture/decisions/`, `Validation/`, `Services/`); legacy clone `/opt/data/homelab-workspace` deprecated |
 | Memory | Hermes native honcho provider (workspace `kora`, peer `user`) |
 | KORA identity | Presented as **KORA** (API_SERVER_MODEL_NAME=KORA) |
 
@@ -439,6 +439,33 @@ Ns") even though Discord never rejected the request. Fix: use the bulk policy
 (`DISCORD_COMMAND_SYNC_POLICY=bulk`, the compose default), which syncs in one
 request without touching `max_ratelimit_timeout`. See
 `Documentation/Phase4/Discord_Transport.md` §12.
+
+## Canonical documentation access (Phase 6)
+
+Hermes/KORA maintains the homelab **documentation** directly in the canonical
+repository — with a **narrow** scope and no secret exposure:
+
+- **RW mounts (only these, at host paths):** `Documentation/`,
+  `Architecture/decisions/`, `Validation/`, `Services/`.
+- **Write allowlist:** `HERMES_WRITE_SAFE_ROOT=/opt/data:<the four paths>`.
+- **Not mounted (inaccessible):** the rest of the canonical repo (`services/`,
+  `AI/`, `Assets/`, `Indexes/`, root session transcripts, `.git`, config). The
+  Obsidian vault is not mounted.
+- **Write grant:** host ACL `u:10000:rwX` on the four doc paths only (owner
+  applied). `group_add` is ineffective (s6 drops to gid 10000 only); running as
+  uid 1000 would read `600` `.env`.
+- **Secret protection:** `.env*` are mode `600` owner fatherfrank with no agent
+  ACL (plus Hermes' read deny-list); the WireGuard `.zip` is `600`. The KORA
+  plugin registers a `kora-strip` terminal-env provider so `KORA_QBIT_USER/PASS`,
+  `KORA_DOCKER_ADMIN_TOKEN` and `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` are
+  stripped from every agent subprocess.
+- **Vault:** deferred — no server-side vault exists; CouchDB LiveSync is the
+  authoritative backend and is untouched.
+- **Docker:** no socket in Hermes; administration still via `docker-admin`.
+- **Deprecated:** `/opt/data/homelab-workspace` (kept, non-authoritative).
+
+See `Architecture/decisions/ADR-0016-KORA-Canonical-Repo-RW-Access.md` and
+`Documentation/Phase6/KORA_Documentation_Access.md`.
 
 ## Migration
 

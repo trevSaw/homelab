@@ -18,6 +18,49 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 | [ADR‑0007 – Relationship Layer (Graphify)](./ADR-0007-Relationship-Layer-Graphify.md) | Graphify | Relationship Knowledge | Accepted for Future Implementation (Phase 14.4) |
 | [ADR‑0008 – User Interface (Open WebUI)](./ADR-0008-User-Interface-OpenWebUI.md) | Open WebUI | User Interface | Provisional Adopt |
 
+### Book & audiobook management (Phase 20)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0009 – Book & Audiobook Management (Chaptarr)](./ADR-0009-Books-Audiobooks-Management-Chaptarr.md) | Chaptarr + Audiobookshelf replacing retired Readarr | Draft (pending ARB sign-off) |
+
+### KORA execution worker (Phase 20)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0010 – KORA Execution Worker (OpenCode Task Bridge)](./ADR-0010-KORA-Execution-Worker-OpenCode-Task-Bridge.md) | Async OpenCode execution for KORA with governed boundaries + approval | Superseded by ADR-0011 (Phase 22) |
+
+### Hermes + OpenCode Go (Phase 22)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0011 – Hermes as Agent Harness + OpenCode Go Model Provider](./ADR-0011-KORA-Heavy-Coding-Hermes-Delegation-OpenCode-Go.md) | Hermes delegation for heavy coding; Task Bridge retired | Accepted (Phase 22) |
+
+### KORA controlled administration (Phase 3)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0012 – KORA Controlled Docker Administration](./ADR-0012-KORA-Controlled-Docker-Administration.md) | Narrow `docker-admin` helper for live inspection + controlled restart/deploy; no socket in Hermes | Accepted (Phase 3) |
+
+### KORA transports (Phase 4)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0013 – Discord Native Transport](./ADR-0013-Discord-Native-Transport.md) | Discord as a native Hermes platform (transport only); no custom bridge; KORA authoritative | Accepted (Phase 4) |
+
+### KORA research services (Phase 5)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0014 – SearXNG Internal Research Service](./ADR-0014-SearXNG-Internal-Research-Service.md) | Internal-only metasearch backend for KORA/Hermes; reuses `ollama_ollama-net`; no public exposure | Accepted (Phase 5) |
+| [ADR‑0015 – KORA External Web Research via SearXNG](./ADR-0015-KORA-Web-Research-SearXNG.md) | Native Hermes `web` toolset + bundled SearXNG provider; KORA research policy; no custom bridge; `web` on both transports | Accepted (Phase 5) |
+
+### KORA documentation access (Phase 6)
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0016 – KORA Canonical Repository Read/Write Access](./ADR-0016-KORA-Canonical-Repo-RW-Access.md) | RW bind mount of the canonical repo + vault; secrets protected via 600/ACL; no Docker socket; docker-admin unchanged | Accepted (Phase 6) |
+
 ### KORA implementation architecture (Phase 14)
 
 | ADR | Scope | Decision |
