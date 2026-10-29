@@ -1,0 +1,78 @@
+# Task Bridge — OpenCode execution worker bridge (Phase 20, KORA delegation)
+#
+# KORA (Hermes) delegates engineering tasks to OpenCode running in this
+# container. The bridge exposes a REST API and a Streamable HTTP MCP endpoint
+# (both internal-only on the proxy network, token-authenticated). OpenCode runs
+# detached as the non-root worker (uid 1000) against the canonical homelab repo
+# mounted at /workspace. No docker.sock is exposed; Docker state is read from
+# host-generated read-only snapshots (/home/fatherfrank/projects/docker-state).
+services:
+  taskbridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: homelab/taskbridge:1.0.0
+    container_name: taskbridge
+    hostname: taskbridge
+    restart: unless-stopped
+    user: "1000:1000"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      # Auth for the REST + MCP endpoints (Hermes sends this as a Bearer token).
+      TASKBRIDGE_API_TOKEN: ${TASKBRIDGE_API_TOKEN}
+      OPENCODE_CONFIG: /opt/taskbridge/etc/opencode.jsonc
+      TASKBRIDGE_REPO: /workspace
+      TASKBRIDGE_DATA: /opt/taskbridge/data
+      # Worker model: gpt-oss:20b-cloud directly via Ollama (same model KORA
+      # uses). The worker bypasses the Hermes api_server conversational layer
+      # to avoid OpenAI-message-format incompatibilities with agent tool
+      # progress events; KORA remains the orchestrator via the bridge MCP.
+      TASKBRIDGE_MODEL: ${TASKBRIDGE_MODEL:-ollama/gpt-oss:20b-cloud}
+      TASKBRIDGE_TASK_TIMEOUT: ${TASKBRIDGE_TASK_TIMEOUT:-3600}
+      TASKBRIDGE_MAX_CONCURRENT: ${TASKBRIDGE_MAX_CONCURRENT:-1}
+      TASKBRIDGE_DISCORD_WEBHOOK: ${TASKBRIDGE_DISCORD_WEBHOOK:-}
+      TASKBRIDGE_NTFY_URL: ${TASKBRIDGE_NTFY_URL:-}
+    volumes:
+      # Canonical homelab repository — the worker's execution surface. Owned by
+      # uid 1000 (same as the container worker user). No .env exposure beyond
+      # what is already on the host; workers are instructed never to read .env.
+      - /home/fatherfrank/projects/homelab:/workspace:rw
+      # Read-only Docker state snapshots (host-generated; NO docker.sock in
+      # any container). Refresh: /home/fatherfrank/projects/docker-state/snapshot.sh
+      - /home/fatherfrank/projects/docker-state:/opt/taskbridge/docker-state:ro
+      # Persistent task store, logs, git worktrees, OpenCode session data.
+      - /mnt/monarch/appdata/taskbridge:/opt/taskbridge/data
+    networks:
+      - proxy
+      - ollama-net
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=taskbridge
+      - com.homelab.domain=ai
+      - com.homelab.phase=20
+      - com.homelab.role=kora-execution-worker
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8643/api/v1/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+
+networks:
+  proxy:
+    external: true
+  ollama-net:
+    external: true
+    name: ollama_ollama-net

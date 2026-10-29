@@ -4,7 +4,7 @@
 # Uses ONLY supported Hermes extension points: PluginContext.register_hook /
 # register_tool. No Hermes source is modified (no fork).
 name: kora
-version: 0.5.1
+version: 0.5.2
 description: >
   KORA structural governance plugin. Performs KORA classification, strategy
   selection, governance/refusal, tool authorization, knowledge retrieval (real

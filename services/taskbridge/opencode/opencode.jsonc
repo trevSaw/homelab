@@ -1,0 +1,172 @@
+{
+  // OpenCode worker config for the KORA Task Bridge.
+  // Installed at /opt/taskbridge/etc/opencode.jsonc inside the bridge image and
+  // selected via OPENCODE_CONFIG. The bridge runs `opencode run --agent <profile>`
+  // so each execution boundary maps to a dedicated worker agent below.
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+        "baseURL": "http://ollama:11434/v1",
+        "apiKey": "ollama"
+      },
+      "models": {
+        "gpt-oss:20b-cloud": {
+          "name": "gpt-oss:20b-cloud"
+        }
+      }
+    }
+  },
+  "model": "ollama/gpt-oss:20b-cloud",
+  "autoupdate": false,
+  "instructions": ["/opt/taskbridge/etc/rules/KORA-WORKER.md"],
+  "agent": {
+    "kora-readonly": {
+      "description": "Read-only KORA task worker. Inspects repo, git, Docker state snapshots, logs, and performs web research. Never modifies files or running services.",
+      "mode": "primary",
+      "model": "ollama/gpt-oss:20b-cloud",
+      "prompt": "{file:/opt/taskbridge/etc/prompts/worker-readonly.md}",
+      "permission": {
+        "edit": "deny",
+        "write": "deny",
+        "patch": "deny",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "bash": {
+          "*": "allow",
+          "git add *": "deny",
+          "git commit *": "deny",
+          "git push *": "deny",
+          "git pull *": "deny",
+          "git fetch *": "allow",
+          "git checkout *": "deny",
+          "git reset *": "deny",
+          "git clean *": "deny",
+          "git stash *": "deny",
+          "git rm *": "deny",
+          "git mv *": "deny",
+          "git merge *": "deny",
+          "git rebase *": "deny",
+          "git tag *": "deny",
+          "git branch -d*": "deny",
+          "git branch -D*": "deny",
+          "docker start *": "deny",
+          "docker stop *": "deny",
+          "docker restart *": "deny",
+          "docker rm *": "deny",
+          "docker rmi *": "deny",
+          "docker pull *": "deny",
+          "docker push *": "deny",
+          "docker build *": "deny",
+          "docker run *": "deny",
+          "docker exec *": "deny",
+          "docker compose up *": "deny",
+          "docker compose down *": "deny",
+          "docker compose build *": "deny",
+          "docker compose pull *": "deny",
+          "docker compose restart *": "deny",
+          "docker compose stop *": "deny",
+          "docker compose start *": "deny",
+          "docker network create *": "deny",
+          "docker network rm *": "deny",
+          "docker volume create *": "deny",
+          "docker volume rm *": "deny",
+          "rm -rf *": "deny",
+          "rm -r *": "deny",
+          "mv *": "deny",
+          "cp -r *": "ask",
+          "mkdir *": "ask",
+          "touch *": "ask",
+          "curl -X POST*": "ask",
+          "curl -X PUT*": "ask",
+          "curl -X DELETE*": "ask",
+          "sudo *": "deny"
+        }
+      }
+    },
+    "kora-testwrite": {
+      "description": "KORA TEST_WRITE worker. Runs in an isolated git worktree. May edit files and validate Compose, but must NOT touch the canonical repo working tree or production services.",
+      "mode": "primary",
+      "model": "ollama/gpt-oss:20b-cloud",
+      "prompt": "{file:/opt/taskbridge/etc/prompts/worker-testwrite.md}",
+      "permission": {
+        "edit": "allow",
+        "write": "allow",
+        "patch": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "bash": {
+          "*": "allow",
+          "git push *": "deny",
+          "git pull *": "deny",
+          "git checkout *": "deny",
+          "git reset --hard*": "deny",
+          "git clean -f*": "deny",
+          "git stash *": "deny",
+          "git merge *": "deny",
+          "git rebase *": "deny",
+          "docker start *": "deny",
+          "docker stop *": "deny",
+          "docker restart *": "deny",
+          "docker rm *": "deny",
+          "docker rmi *": "deny",
+          "docker pull *": "deny",
+          "docker push *": "deny",
+          "docker exec *": "deny",
+          "docker compose up -d*": "deny",
+          "docker compose down*": "deny",
+          "docker compose restart *": "deny",
+          "docker compose stop *": "deny",
+          "docker compose start *": "deny",
+          "docker network create *": "deny",
+          "docker network rm *": "deny",
+          "docker volume create *": "deny",
+          "docker volume rm *": "deny",
+          "rm -rf *": "deny",
+          "sudo *": "deny"
+        }
+      }
+    },
+    "kora-write": {
+      "description": "KORA PRODUCTION_WRITE worker. May modify the canonical homelab repository, validate and apply Compose changes. Approval-gated by the bridge (never runs without explicit approval).",
+      "mode": "primary",
+      "model": "ollama/gpt-oss:20b-cloud",
+      "prompt": "{file:/opt/taskbridge/etc/prompts/worker-write.md}",
+      "permission": {
+        "edit": "allow",
+        "write": "allow",
+        "patch": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "list": "allow",
+        "bash": {
+          "*": "allow",
+          "git push *": "deny",
+          "git pull *": "deny",
+          "git clean -f*": "deny",
+          "git reset --hard*": "deny",
+          "git stash drop *": "deny",
+          "git branch -D *": "deny",
+          "docker push *": "deny",
+          "docker pull *": "deny",
+          "docker rmi *": "deny",
+          "docker exec *": "ask",
+          "sudo *": "deny"
+        }
+      }
+    }
+  }
+}
