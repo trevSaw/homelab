@@ -1,0 +1,63 @@
+# SearXNG settings — internal-only research service for KORA/Hermes.
+#
+# Secret-free and safe to commit: `server.secret_key` is a placeholder that is
+# overridden at runtime by the SEARXNG_SECRET environment variable (injected
+# from the gitignored services/searxng/.env). JSON output is enabled so KORA
+# tooling can query the instance programmatically.
+use_default_settings: true
+
+general:
+  instance_name: "SearXNG (homelab internal)"
+  # Internal instance only — never a public/searx.space instance.
+  enable_metrics: false
+
+server:
+  # Placeholder; overwritten by ${SEARXNG_SECRET}.
+  secret_key: "ultrasecretkey"
+  # No public abuse surface: internal network only, no published ports.
+  limiter: false
+  public_instance: false
+
+search:
+  safe_search: 0
+  # html is for humans, json is for KORA/Hermes tool access.
+  formats:
+    - html
+    - json
+
+# Engine selection (Phase 5 research integration).
+#
+# This host's egress IP is blocked / handed anti-bot junk by most general
+# engines, which made default general searches return zero (or irrelevant)
+# results. Two things fix this for KORA's use case:
+#   1. `github` — official GitHub search API (works from here, no key). This is
+#      the primary source for software/repository discovery ("prefer
+#      official/upstream sources"). It is re-categorised into `general` so the
+#      Hermes `web_search` tool (which queries the default general category)
+#      sees it.
+#   2. `bing` — best-effort general coverage; results are frequently irrelevant
+#      from this IP, so they must never be treated as authoritative.
+# Blocked/dead engines are disabled to avoid noise and latency.
+# Overrides merge by name (use_default_settings: true); `disabled: true` off.
+engines:
+  - name: github
+    disabled: false
+    categories: [general, it, repos]
+  - name: bing
+    disabled: false
+  - name: mojeek
+    disabled: true
+  - name: yahoo
+    disabled: true
+  - name: qwant
+    disabled: true
+  - name: presearch
+    disabled: true
+  - name: google
+    disabled: true
+  - name: duckduckgo
+    disabled: true
+  - name: brave
+    disabled: true
+  - name: startpage
+    disabled: true

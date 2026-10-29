@@ -1,0 +1,83 @@
+# SearXNG — internal-only metasearch research service for KORA/Hermes.
+#
+# Not publicly exposed: no published ports, no Traefik route
+# (traefik.enable=false). Reachable only over the existing external AI service
+# network (`ollama_ollama-net`) by the internal AI containers, principally
+# Hermes (KORA's runtime). JSON output is enabled for programmatic/tool use.
+#
+# The image runs as its own default user/entrypoint (see README Exceptions):
+# the entrypoint performs first-boot ownership + CA handling and then executes
+# the server. All capabilities are dropped except those the entrypoint needs.
+services:
+  searxng:
+    # Pinned, not :latest. 2026.5.31-7159b8aed is the tag already proven on this
+    # host (odysseus stack) and is known to boot clean; 2026.6.2 crashes on boot
+    # (`KeyError: 'default_doi_resolver'`). Bump only after validating boot.
+    image: searxng/searxng:2026.5.31-7159b8aed
+    container_name: searxng
+    hostname: searxng
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      # Secret is NEVER stored in this file or the repo; injected from the
+      # gitignored .env. It overrides server.secret_key in config/settings.yml.
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+      # Internal base URL only — the instance is never reachable publicly.
+      SEARXNG_BASE_URL: ${SEARXNG_BASE_URL:-http://searxng:8080/}
+    volumes:
+      # Committed, secret-free settings (JSON output enabled). The whole
+      # directory is mounted (not the single file) because the image declares
+      # VOLUME /etc/searxng; a file-bind into a volume path is not supported and
+      # would create an anonymous volume. Read-only: config needs no writes.
+      #
+      # ABSOLUTE host paths are mandatory: this stack is deployed through
+      # docker-admin, whose docker/compose runs against the canonical repo
+      # mounted at /repo *inside the helper*. The Docker daemon resolves bind
+      # sources on the host, so a relative source would create a stray host
+      # /repo/... directory instead of using the repo file. (See docker-admin
+      # README — "Deploy path constraint".)
+      - /home/fatherfrank/projects/homelab/services/searxng/config:/etc/searxng:ro
+      # Runtime cache/state (engine ban state, favicons) on SSD.
+      - /mnt/monarch/appdata/searxng:/var/cache/searxng
+    networks:
+      - ollama-net
+    # The official image's entrypoint chowns the bind-mounted cache and (as
+    # root) refreshes the CA store, then execs the server. Root + a minimal cap
+    # set is a documented exception (see README §Exceptions).
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=searxng
+      - com.homelab.domain=ai
+      - com.homelab.role=internal-research
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5).read(1)\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+
+networks:
+  ollama-net:
+    external: true
+    name: ollama_ollama-net

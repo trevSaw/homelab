@@ -1,0 +1,58 @@
+# CouchDB — Obsidian Self-hosted LiveSync backend (sync.fatherfankscloud.uk)
+# Infrastructure service. Obsidian clients reach it ONLY via Traefik HTTPS.
+# KORA/Hermes/MCP have no access to this database (see README.md).
+# CORS is handled natively by CouchDB (config/10-livesync.ini), NOT Traefik.
+services:
+  couchdb:
+    image: couchdb:3.5.2.1
+    container_name: couchdb
+    hostname: couchdb
+    restart: unless-stopped
+    # Non-root; PUID/PGID 1000 (homelab convention, LiveSync reference config).
+    user: "1000:1000"
+    env_file:
+      - .env
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - /mnt/monarch/appdata/couchdb/data:/opt/couchdb/data
+      - /mnt/monarch/appdata/couchdb/etc:/opt/couchdb/etc/local.d
+      - ./config/10-livesync.ini:/opt/couchdb/etc/local.d/10-livesync.ini:ro
+    ports:
+      # Loopback-only: provisioning/admin (Fauxton via SSH tunnel). NOT on LAN.
+      - "127.0.0.1:5984:5984"
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.couchdb.rule=Host(`sync.fatherfankscloud.uk`)
+      - traefik.http.routers.couchdb.entrypoints=websecure
+      - traefik.http.routers.couchdb.tls=true
+      - traefik.http.routers.couchdb.tls.certresolver=le
+      - traefik.http.services.couchdb.loadbalancer.server.port=5984
+      - com.homelab.service=couchdb
+      - com.homelab.domain=productivity
+      - com.homelab.phase=deploy
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 3 bash -c 'echo > /dev/tcp/127.0.0.1/5984' && echo ok || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+networks:
+  proxy:
+    external: true
