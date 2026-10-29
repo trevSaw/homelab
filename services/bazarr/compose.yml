@@ -25,7 +25,8 @@ services:
       - traefik.http.routers.bazarr.tls.certresolver=le
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:6767/ || exit 1"]
+      # Basic auth enabled -> healthcheck via API key (no shared password in repo)
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null \"http://127.0.0.1:6767/api/system/status?apikey=$(grep -m1 '^apikey' /config/config/config.ini | cut -d= -f2 | tr -d ' ')\" || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5

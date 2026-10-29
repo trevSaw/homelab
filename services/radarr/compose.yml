@@ -1,6 +1,6 @@
 services:
   radarr:
-    image: ghcr.io/hotio/radarr:release-5.22.4.9896
+    image: ghcr.io/hotio/radarr:release-6.3.0.10514
     container_name: radarr
     hostname: radarr
     restart: unless-stopped
