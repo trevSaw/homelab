@@ -18,7 +18,8 @@
    - `Validation/` (audit reports, benchmarks, compliance)
    - `.github/workflows/` – CI pipelines (future).
 4. **Cross‑References** – Use `[[Document Title]]` markdown links for intra‑repo navigation.
-5. **Future Navigation Enhancements** – Automated index regeneration, AI‑driven semantic search, and Hermes/Honcho integration will keep navigation up‑to‑date.
+5. **Obsidian Vault** – The personal homelab knowledge vault lives at `/mnt/monarch/obsidian-vault/` (external to this repo). Its design and governance are defined in `Documentation/ObsidianHomelabArchitecture.md`; non-canonical work-vault reference material is in `Documentation/references/`.
+6. **Future Navigation Enhancements** – Automated index regeneration, AI‑driven semantic search, and Hermes/Honcho integration will keep navigation up‑to‑date.
 
 ---  
 *This file serves as the entry point for contributors to locate repository artefacts efficiently.*

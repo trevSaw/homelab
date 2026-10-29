@@ -21,6 +21,11 @@ Centralised list of all documentation artefacts (runbooks, guides, troubleshooti
 | Docker Troubleshooting | Common Docker issues and remediation steps | `Documentation/troubleshooting/Docker.md` |
 | Network Troubleshooting | Diagnostic steps for network connectivity problems | `Documentation/troubleshooting/Network.md` |
 
+## Incidents
+| Document | Description | Location |
+|---|---|---|
+| 2026-10-07 Host Reboot & Wings/AMP Service Loop | Postmortem of unclean host resets, Pterodactyl Wings/AMP crash loop, DNS outage, APT cleanup, and rasdaemon hardware monitoring | `Documentation/incidents/2026-10-07-host-reboot-and-service-loop.md` |
+
 ## Architecture Documentation
 | Document | Description | Location |
 |---|---|---|
