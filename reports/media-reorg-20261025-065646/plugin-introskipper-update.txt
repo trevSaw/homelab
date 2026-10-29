@@ -1,0 +1,4 @@
+segments_to_update|6826
+segments_updated|6826
+analyzed_to_update|20008
+analyzed_updated|20008

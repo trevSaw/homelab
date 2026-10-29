@@ -1,0 +1,117 @@
+/hive/jellyfin/tv/Anime_Series/Castlevania|/hive/jellyfin/tv/TV/Castlevania|anime->tv
+/hive/jellyfin/tv/Anime_Series/My Adventures with Superman|/hive/jellyfin/tv/TV/My Adventures with Superman|anime->tv
+/hive/jellyfin/tv/Cartoons/The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You|/hive/jellyfin/tv/Anime_Series/The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You|cartoons->anime
+/hive/jellyfin/tv/Cartoons/Adventure Time|/hive/jellyfin/tv/TV/Adventure Time|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Arcane|/hive/jellyfin/tv/TV/Arcane|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Avatar - Seven Havens|/hive/jellyfin/tv/TV/Avatar - Seven Havens|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Avatar - The Last Airbender|/hive/jellyfin/tv/TV/Avatar - The Last Airbender|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Batman Beyond|/hive/jellyfin/tv/TV/Batman Beyond|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Batman - Caped Crusader|/hive/jellyfin/tv/TV/Batman - Caped Crusader|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Blood of Zeus|/hive/jellyfin/tv/TV/Blood of Zeus|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Bob's Burgers|/hive/jellyfin/tv/TV/Bob's Burgers|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Courage the Cowardly Dog|/hive/jellyfin/tv/TV/Courage the Cowardly Dog|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Family Guy|/hive/jellyfin/tv/TV/Family Guy|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Final Space|/hive/jellyfin/tv/TV/Final Space|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Invincible (2021)|/hive/jellyfin/tv/TV/Invincible (2021)|cartoons->tv
+/hive/jellyfin/tv/Cartoons/King of the Hill|/hive/jellyfin/tv/TV/King of the Hill|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Knights of Guinevere|/hive/jellyfin/tv/TV/Knights of Guinevere|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Over the Garden Wall|/hive/jellyfin/tv/TV/Over the Garden Wall|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Pokémon - Origins|/hive/jellyfin/tv/TV/Pokémon - Origins|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Star Wars - Maul – Shadow Lord|/hive/jellyfin/tv/TV/Star Wars - Maul – Shadow Lord|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Star Wars - The Clone Wars|/hive/jellyfin/tv/TV/Star Wars - The Clone Wars|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Steven Universe|/hive/jellyfin/tv/TV/Steven Universe|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Steven Universe Future|/hive/jellyfin/tv/TV/Steven Universe Future|cartoons->tv
+/hive/jellyfin/tv/Cartoons/The Boondocks|/hive/jellyfin/tv/TV/The Boondocks|cartoons->tv
+/hive/jellyfin/tv/Cartoons/The Midnight Gospel|/hive/jellyfin/tv/TV/The Midnight Gospel|cartoons->tv
+/hive/jellyfin/tv/Cartoons/Trollhunters - Tales of Arcadia|/hive/jellyfin/tv/TV/Trollhunters - Tales of Arcadia|cartoons->tv
+/hive/jellyfin/tv/Cartoons/X-Men '97|/hive/jellyfin/tv/TV/X-Men '97|cartoons->tv
+/hive/jellyfin/tv/Drama_Series/9-1-1|/hive/jellyfin/tv/TV/9-1-1|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/9-1-1 - Lone Star|/hive/jellyfin/tv/TV/9-1-1 - Lone Star|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/9-1-1 - Nashville|/hive/jellyfin/tv/TV/9-1-1 - Nashville|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Abbott Elementary|/hive/jellyfin/tv/TV/Abbott Elementary|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Adults (2025)|/hive/jellyfin/tv/TV/Adults (2025)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/A Knight of the Seven Kingdoms|/hive/jellyfin/tv/TV/A Knight of the Seven Kingdoms|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Alien - Earth|/hive/jellyfin/tv/TV/Alien - Earth|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Bridgerton|/hive/jellyfin/tv/TV/Bridgerton|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Chernobyl|/hive/jellyfin/tv/TV/Chernobyl|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Daredevil - Born Again|/hive/jellyfin/tv/TV/Daredevil - Born Again|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Dear Mama|/hive/jellyfin/tv/TV/Dear Mama|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Derry Girls|/hive/jellyfin/tv/TV/Derry Girls|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Emily in Paris|/hive/jellyfin/tv/TV/Emily in Paris|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Euphoria (US)|/hive/jellyfin/tv/TV/Euphoria (US)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Foundation (2021)|/hive/jellyfin/tv/TV/Foundation (2021)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Friendly Rivalry|/hive/jellyfin/tv/TV/Friendly Rivalry|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Gossip Girl|/hive/jellyfin/tv/TV/Gossip Girl|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Half Man|/hive/jellyfin/tv/TV/Half Man|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Heartstopper|/hive/jellyfin/tv/TV/Heartstopper|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Heated Rivalry|/hive/jellyfin/tv/TV/Heated Rivalry|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/His & Hers (2026)|/hive/jellyfin/tv/TV/His & Hers (2026)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/His Man|/hive/jellyfin/tv/TV/His Man|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Interview with the Vampire|/hive/jellyfin/tv/TV/Interview with the Vampire|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Invasion (2021)|/hive/jellyfin/tv/TV/Invasion (2021)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/IT - Welcome to Derry|/hive/jellyfin/tv/TV/IT - Welcome to Derry|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/KinnPorsche|/hive/jellyfin/tv/TV/KinnPorsche|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Love in the Air|/hive/jellyfin/tv/TV/Love in the Air|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/ONE PIECE (2023)|/hive/jellyfin/tv/TV/ONE PIECE (2023)|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Outlander|/hive/jellyfin/tv/TV/Outlander|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Peacemaker|/hive/jellyfin/tv/TV/Peacemaker|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Queen Charlotte - A Bridgerton Story|/hive/jellyfin/tv/TV/Queen Charlotte - A Bridgerton Story|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Say Nothing|/hive/jellyfin/tv/TV/Say Nothing|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Secret Diary of a Call Girl|/hive/jellyfin/tv/TV/Secret Diary of a Call Girl|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Sex and the City|/hive/jellyfin/tv/TV/Sex and the City|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Sherlock|/hive/jellyfin/tv/TV/Sherlock|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Silicon Valley|/hive/jellyfin/tv/TV/Silicon Valley|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Stranger Things|/hive/jellyfin/tv/TV/Stranger Things|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/ted|/hive/jellyfin/tv/TV/ted|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Ted Lasso|/hive/jellyfin/tv/TV/Ted Lasso|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Teen Wolf|/hive/jellyfin/tv/TV/Teen Wolf|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Bear|/hive/jellyfin/tv/TV/The Bear|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Bernie Mac Show|/hive/jellyfin/tv/TV/The Bernie Mac Show|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Expanse|/hive/jellyfin/tv/TV/The Expanse|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Falcon and The Winter Soldier|/hive/jellyfin/tv/TV/The Falcon and The Winter Soldier|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Handmaid's Tale|/hive/jellyfin/tv/TV/The Handmaid's Tale|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Last of Us|/hive/jellyfin/tv/TV/The Last of Us|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Pitt|/hive/jellyfin/tv/TV/The Pitt|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Rookie|/hive/jellyfin/tv/TV/The Rookie|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/The Walking Dead - Daryl Dixon|/hive/jellyfin/tv/TV/The Walking Dead - Daryl Dixon|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/UnPrisoned|/hive/jellyfin/tv/TV/UnPrisoned|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/VisionQuest|/hive/jellyfin/tv/TV/VisionQuest|Drama_Series->tv
+/hive/jellyfin/tv/Drama_Series/Young Royals|/hive/jellyfin/tv/TV/Young Royals|Drama_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/Andor|/hive/jellyfin/tv/TV/Andor|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/Fallout|/hive/jellyfin/tv/TV/Fallout|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/From|/hive/jellyfin/tv/TV/From|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/House of the Dragon|/hive/jellyfin/tv/TV/House of the Dragon|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/Percy Jackson and the Olympians|/hive/jellyfin/tv/TV/Percy Jackson and the Olympians|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/The Acolyte|/hive/jellyfin/tv/TV/The Acolyte|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/The Mandalorian|/hive/jellyfin/tv/TV/The Mandalorian|Fantasy_Series->tv
+/hive/jellyfin/tv/Fantasy_Series/The Witcher|/hive/jellyfin/tv/TV/The Witcher|Fantasy_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/All of Us Are Dead|/hive/jellyfin/tv/TV/All of Us Are Dead|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/A Man Who Defies the World of BL|/hive/jellyfin/tv/TV/A Man Who Defies the World of BL|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Anna (2022)|/hive/jellyfin/tv/TV/Anna (2022)|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Bloodhounds (2023)|/hive/jellyfin/tv/TV/Bloodhounds (2023)|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Crash Landing on You|/hive/jellyfin/tv/TV/Crash Landing on You|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Extraordinary Attorney Woo|/hive/jellyfin/tv/TV/Extraordinary Attorney Woo|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Good Partner (2024)|/hive/jellyfin/tv/TV/Good Partner (2024)|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/High School Return Of A Gangster|/hive/jellyfin/tv/TV/High School Return Of A Gangster|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Law and the City|/hive/jellyfin/tv/TV/Law and the City|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Little Women (2022)|/hive/jellyfin/tv/TV/Little Women (2022)|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Squid Game|/hive/jellyfin/tv/TV/Squid Game|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/The Glory|/hive/jellyfin/tv/TV/The Glory|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/The Trauma Code - Heroes on Call|/hive/jellyfin/tv/TV/The Trauma Code - Heroes on Call|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Thirty-Nine|/hive/jellyfin/tv/TV/Thirty-Nine|Kdrama_Series->tv
+/hive/jellyfin/tv/Kdrama_Series/Weak Hero Class 1|/hive/jellyfin/tv/TV/Weak Hero Class 1|Kdrama_Series->tv
+/hive/jellyfin/tv/Reality/America's Sweethearts - Dallas Cowboys Cheerleaders|/hive/jellyfin/tv/TV/America's Sweethearts - Dallas Cowboys Cheerleaders|Reality->tv
+/hive/jellyfin/tv/Reality/Badly in Love|/hive/jellyfin/tv/TV/Badly in Love|Reality->tv
+/hive/jellyfin/tv/Reality/Barbecue Showdown|/hive/jellyfin/tv/TV/Barbecue Showdown|Reality->tv
+/hive/jellyfin/tv/Reality/Culinary Class Wars|/hive/jellyfin/tv/TV/Culinary Class Wars|Reality->tv
+/hive/jellyfin/tv/Reality/Dallas Cowboys Cheerleaders - Making the Team|/hive/jellyfin/tv/TV/Dallas Cowboys Cheerleaders - Making the Team|Reality->tv
+/hive/jellyfin/tv/Reality/Forged in Fire|/hive/jellyfin/tv/TV/Forged in Fire|Reality->tv
+/hive/jellyfin/tv/Reality/Hurricane Katrina - Race Against Time|/hive/jellyfin/tv/TV/Hurricane Katrina - Race Against Time|Reality->tv
+/hive/jellyfin/tv/Reality/Love Island USA|/hive/jellyfin/tv/TV/Love Island USA|Reality->tv
+/hive/jellyfin/tv/Reality/Owning Manhattan|/hive/jellyfin/tv/TV/Owning Manhattan|Reality->tv
+/hive/jellyfin/tv/Reality/Project Runway|/hive/jellyfin/tv/TV/Project Runway|Reality->tv
+/hive/jellyfin/tv/Reality/Selling Sunset|/hive/jellyfin/tv/TV/Selling Sunset|Reality->tv
+/hive/jellyfin/tv/Reality/The Echoes of Survivors - Inside Korea's Tragedies|/hive/jellyfin/tv/TV/The Echoes of Survivors - Inside Korea's Tragedies|Reality->tv
+/hive/jellyfin/tv/Reality/The Great British Bake Off|/hive/jellyfin/tv/TV/The Great British Bake Off|Reality->tv
+/hive/jellyfin/tv/Reality/The Summer I Turned Pretty|/hive/jellyfin/tv/TV/The Summer I Turned Pretty|Reality->tv
+/hive/jellyfin/tv/Reality/Trust Me - The False Prophet|/hive/jellyfin/tv/TV/Trust Me - The False Prophet|Reality->tv

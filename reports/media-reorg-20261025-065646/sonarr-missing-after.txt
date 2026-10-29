@@ -1,0 +1,15 @@
+/hive/jellyfin/tv/Anime_Series/Mobile Suit Gundam Thunderbolt
+/hive/jellyfin/tv/Anime_Series/Resident Evil - Infinite Darkness
+/hive/jellyfin/tv/Anime_Series/The Disastrous Life of Saiki K
+/hive/jellyfin/tv/Anime_Series/The Eminence in Shadow
+/hive/jellyfin/tv/TV/Ahsoka
+/hive/jellyfin/tv/TV/American Greed
+/hive/jellyfin/tv/TV/Love Sea
+/hive/jellyfin/tv/TV/MasterChef Korea
+/hive/jellyfin/tv/TV/Number One on the Call Sheet
+/hive/jellyfin/tv/TV/Physical (Asia)
+/hive/jellyfin/tv/TV/Skam
+/hive/jellyfin/tv/TV/Star Wars - The Bad Batch
+/hive/jellyfin/tv/TV/The Backpacker Chef
+/hive/jellyfin/tv/TV/The Pharmacist
+/hive/jellyfin/tv/TV/The Proud Family

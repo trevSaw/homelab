@@ -1,0 +1,19 @@
+=== Jellyfin baseline 2026-10-25T06:56:57+00:00 ===
+BaseItems_total|29800
+UserData_total|20612
+UserData_played|19277
+items_Anime_Series|3046
+items_Cartoons|2706
+items_Drama_Series|1792
+items_Fantasy_Series|197
+items_Kdrama_Series|258
+items_Reality|1681
+=== Sonarr baseline 2026-10-25T06:56:57+00:00 ===
+series_total|172
+rootfolders|8
+series_Anime_Series|54
+series_Cartoons|24
+series_Drama_Series|51
+series_Fantasy_Series|8
+series_Kdrama_Series|15
+series_Reality|20
