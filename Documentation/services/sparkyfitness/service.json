@@ -1,0 +1,14 @@
+{
+  "name": "sparkyfitness",
+  "category": "Productivity",
+  "priority": "P4-P5",
+  "migration_wave": "N/A",
+  "dependencies": "PostgreSQL 18, Traefik (proxy network)",
+  "risks": "Internal DNS record pending in Pi-hole; default signup enabled",
+  "documentation_status": "present",
+  "adr_references": [],
+  "evidence": {
+    "phase": "deploy-2026-08-15",
+    "import": true
+  }
+}

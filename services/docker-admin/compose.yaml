@@ -1,0 +1,93 @@
+# ============================================================================
+# docker-admin — Phase 3 controlled homelab administration boundary.
+#
+# This is the only container on the KORA/Hermes administration path that
+# receives /var/run/docker.sock. Hermes/KORA never receive the socket; KORA
+# reaches Docker only through the whitelisted, token-authenticated HTTP API on
+# the internal `kora-admin` network (see app.py for the exact operation
+# surface). Unrelated services (portainer/traefik/beszel-agent/authentik-worker)
+# already mount the socket for their own purposes; Phase 3 does not change them.
+#
+# Security posture:
+#   * socket mounted here only (never in hermes, taskbridge, or any other svc)
+#   * no published ports, no Docker TCP, no Traefik route
+#   * runs as uid 1000 (repo owner; reads /repo 0600 .env for Compose) with
+#     group_add for the socket gid, a read-only rootfs, all capabilities
+#     dropped, and no-new-privileges
+#   * only read operations are automatic; lifecycle writes require explicit
+#     confirmation and cannot target the control plane (hermes/docker-admin)
+#   * every fixed argv is built in app.py; there is no generic Docker proxy
+# ============================================================================
+services:
+  docker-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: homelab/docker-admin:1.0.0
+    container_name: docker-admin
+    hostname: docker-admin
+    restart: unless-stopped
+    # Runs as the repo owner (uid 1000) so the read-only /repo mount's
+    # mode-0600 .env files are readable for Compose variable substitution.
+    # NOT root; socket access is granted via supplementary group 999.
+    user: "1000:1000"
+    # Host docker group gid (getent group docker). Grants access to the
+    # root:docker 0660 socket without running the process as root.
+    group_add:
+      - "999"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Tokyo}
+      DOCKER_ADMIN_PORT: "8765"
+      DOCKER_ADMIN_REPO: /repo
+      DOCKER_ADMIN_DOCKER: /usr/local/bin/docker
+      # Writable (tmpfs) CLI config dir on the read-only rootfs.
+      DOCKER_CONFIG: /tmp/.docker
+    volumes:
+      # The only Docker socket mount in the homelab.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Canonical repository (source of truth) read-only for Compose
+      # validation/deploy. Contains gitignored .env files; the HTTP API never
+      # returns file contents or resolved Compose output.
+      - /home/fatherfrank/projects/homelab:/repo:ro
+      # Reuse the host Docker CLI + compose plugin (read-only binaries).
+      - /usr/bin/docker:/usr/local/bin/docker:ro
+      - /usr/libexec/docker/cli-plugins:/usr/local/lib/docker/cli-plugins:ro
+    networks:
+      - kora-admin
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - traefik.enable=false
+      - com.homelab.service=docker-admin
+      - com.homelab.domain=ai
+      - com.homelab.phase=3
+      - com.homelab.role=kora-admin-boundary
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/healthz', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+
+networks:
+  kora-admin:
+    name: kora-admin
+    driver: bridge
+    internal: true

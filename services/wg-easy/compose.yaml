@@ -1,0 +1,56 @@
+# wg-easy — WireGuard VPN + web admin UI (Phase: diagnostic / alternative VPN to Tailscale)
+# EXCEPTION: requires NET_ADMIN/NET_RAW/SYS_MODULE caps + net.ipv4.ip_forward (VPN server,
+# see DockerStandard.md approved-exceptions section and README.md).
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:14
+    container_name: wg-easy
+    hostname: wg-easy
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      WG_HOST: ${WG_HOST}
+      PASSWORD_HASH: ${PASSWORD_HASH}
+      WG_PORT: "51820"
+      WG_DEFAULT_DNS: ${WG_DEFAULT_DNS:-192.168.50.44}
+      WG_ALLOWED_IPS: ${WG_ALLOWED_IPS:-0.0.0.0/0, ::/0}
+      TZ: ${TZ:-Asia/Tokyo}
+    ports:
+      # EXCEPTION: VPN listen port must be reachable from WAN so the router can
+      # forward UDP 51820 -> 192.168.50.44 (WireGuard handshake). See README.md.
+      - "51820:51820/udp"
+      # Web admin UI — LAN/Tailscale only, NOT public (same convention as Technitium).
+      - "192.168.50.44:51821:51821/tcp"
+      - "100.102.139.115:51821:51821/tcp"
+    volumes:
+      - /mnt/monarch/appdata/wg-easy:/etc/wireguard
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - proxy
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 3 bash -c 'echo > /dev/tcp/127.0.0.1/51821' && echo ok || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,124 @@
+# SparkyFitness — self-hosted fitness/health tracker
+# Adapted from upstream docker/docker-compose.prod.yml (release v1.6.2) to
+# homelab standards: pinned images, appdata storage, proxy-only ingress via
+# Traefik, internal + proxy networks, healthchecks, resource limits.
+# Upstream: https://github.com/CodeWithCJ/SparkyFitness
+services:
+  db:
+    image: postgres:18.3-alpine
+    container_name: sparkyfitness-db
+    hostname: sparkyfitness-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${SPARKY_FITNESS_DB_NAME}
+      POSTGRES_USER: ${SPARKY_FITNESS_DB_USER}
+      POSTGRES_PASSWORD: ${SPARKY_FITNESS_DB_PASSWORD}
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      - /mnt/monarch/appdata/sparkyfitness/postgresql:/var/lib/postgresql
+    networks:
+      - sparkyfitness
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SPARKY_FITNESS_DB_USER} -d ${SPARKY_FITNESS_DB_NAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  server:
+    image: codewithcj/sparkyfitness_server:v1.6.2
+    container_name: sparkyfitness-server
+    hostname: sparkyfitness-server
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      SPARKY_FITNESS_DB_HOST: sparkyfitness-db
+      SPARKY_FITNESS_DB_PORT: 5432
+      TZ: ${TZ:-Asia/Tokyo}
+    volumes:
+      - /mnt/monarch/appdata/sparkyfitness/backup:/app/SparkyFitnessServer/backup
+      - /mnt/monarch/appdata/sparkyfitness/uploads:/app/SparkyFitnessServer/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sparkyfitness
+      - ollama-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3010/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+
+  frontend:
+    image: codewithcj/sparkyfitness:v1.6.2
+    container_name: sparkyfitness-frontend
+    hostname: sparkyfitness-frontend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server
+      SPARKY_FITNESS_SERVER_PORT: 3010
+      TZ: ${TZ:-Asia/Tokyo}
+    depends_on:
+      server:
+        condition: service_healthy
+    networks:
+      - sparkyfitness
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.sparkyfitness.rule=Host(`sparkyfitness.fatherfankscloud.uk`)
+      - traefik.http.routers.sparkyfitness.entrypoints=websecure
+      - traefik.http.routers.sparkyfitness.tls=true
+      - traefik.http.routers.sparkyfitness.tls.certresolver=le
+      - traefik.http.services.sparkyfitness.loadbalancer.server.port=80
+      - com.homelab.service=sparkyfitness
+      - com.homelab.domain=productivity
+      - com.homelab.phase=deploy
+      - com.homelab.logging=central
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+networks:
+  proxy:
+    external: true
+  sparkyfitness:
+    name: sparkyfitness
+    driver: bridge
+  ollama-net:
+    external: true
+    name: ollama_ollama-net
