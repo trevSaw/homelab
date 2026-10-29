@@ -1,11 +1,15 @@
-# Sonarr (Phase 12.2B)
+# Sonarr (Phase 21)
 
-Migrated from native systemd/mono (`/var/lib/sonarr`) to Docker.
+TV series manager.
 
 - Config: `/mnt/monarch/appdata/sonarr`
 - TV libraries: `/hive/jellyfin/tv` (unchanged)
 - Downloads: `/hive/downloads` (unchanged)
-- WebUI: `http://mocha:8989` (host network)
+- Image: `lscr.io/linuxserver/sonarr:version-4.0.19.2979` (upgraded from v3)
+- Networks: `proxy` + `hotio_default` (moved off `host` network)
+- Traefik: `sonarr.fatherfankscloud.uk`
+- Host `:8989` transitional
+- Download clients: `qbittorrent` host (NZBGet shares qBittorrent netns), matching Radarr
 
 ```bash
 cd services/sonarr

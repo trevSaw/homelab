@@ -46,3 +46,4 @@ Do **not** `compose down` the legacy project without first confirming dependents
 | GPU reservation | NVIDIA device reservation required for local acceleration |
 | `CUDA_VISIBLE_DEVICES=-1` | Legacy tuning retained; GPU still reserved via deploy.resources |
 | Image pin | Prefer pinned tag in `Versions.md`; `latest` was legacy |
+| `OLLAMA_CONTEXT_LENGTH=16384` | Raised 2026-08-16 per SparkyFitness AI docs (was 2048); benefits SparkyFitness chatbot and KORA/Hermes at cost of more RAM per loaded model |

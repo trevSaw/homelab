@@ -12,6 +12,7 @@ services:
       PUID: ${PUID}
       PGID: ${PGID}
       TZ: ${TZ}
+      HOMEPAGE_ALLOWED_HOSTS: home.${DEFAULT_DOMAIN}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
