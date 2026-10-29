@@ -1,0 +1,8 @@
+1.2T	/hive/jellyfin/tv/Anime_Series
+1.3T	/hive/jellyfin/tv/Cartoons
+512	/hive/jellyfin/tv/Drama_series
+4.6T	/hive/jellyfin/tv/Drama_Series
+505G	/hive/jellyfin/tv/Fantasy_Series
+498G	/hive/jellyfin/tv/Kdrama_Series
+1.1T	/hive/jellyfin/tv/Reality
+1.2T	/hive/jellyfin/movie

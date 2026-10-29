@@ -1,0 +1,19 @@
+Media reorg completion - 2026-10-25
+
+Jellyfin UserData restore
+- Pre-restore: 20150 rows, 18854 played
+- Restored: 956 rows (852 played) mapped old paths -> new paths
+- Post-restore: 21106 rows, 19706 played
+- Integrity: ok; foreign key violations: 0
+- Virtual/missing episodes not recoverable: 263 UserData rows / 180 virtual items (240 played), no files/current items; exported to userdata-virtual-unrecoverable.csv
+
+Plugin data remap
+- Intro Skipper v2: 6826 segment rows + 20008 analyzed rows updated
+- SkipMe.db: 3727 segment rows updated
+- Playback Reporting: 302 activity rows updated
+- 12 duplicate 100 Girlfriends episodes already had current rows and were left unchanged
+- Backups: /hive/backups/media-reorg-20261025-065941/plugins/
+
+Notes
+- Jellyfin remains on 12.1.0; Intro Skipper 12.0.6.0 reports NotSupported and logs missing 12.2.0.0 assemblies. This is a plugin/server version mismatch, not caused by the data remap.
+- Intro Skipper DB remap is in place for when a compatible plugin build is available.

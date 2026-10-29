@@ -1,0 +1,25 @@
+=== post-migration 2026-10-25T07:01:53+00:00 ===
+BaseItems|29797
+UserData|20612
+Played|19277
+--- items by TopParent ---
+TV_top|6674
+Anime_top|3002
+--- direct show children ---
+TV_children|116
+Anime_children|50
+--- old prefixes / parents remaining ---
+old_paths|0
+old_top|0
+old_parent|0
+--- TV / Anime roots ---
+BBA8996A-1889-B53D-5A15-6F0D5A59E3FF|Anime_Series|/data/tvshows/Anime_Series|F27CAA37-E514-2225-CCED-ED48F6553502|BBA8996A-1889-B53D-5A15-6F0D5A59E3FF
+FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF|TV|/data/tvshows/TV|F27CAA37-E514-2225-CCED-ED48F6553502|FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF
+--- exceptions ---
+The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You|MediaBrowser.Controller.Entities.TV.Series|/data/tvshows/Anime_Series/The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You|BBA8996A-1889-B53D-5A15-6F0D5A59E3FF|BBA8996A-1889-B53D-5A15-6F0D5A59E3FF
+Season 2|MediaBrowser.Controller.Entities.TV.Season|/data/tvshows/Anime_Series/The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You/Season 2|42AD9DBD-2F31-6985-4FD7-3BDBA686F3E6|BBA8996A-1889-B53D-5A15-6F0D5A59E3FF
+Season 3|MediaBrowser.Controller.Entities.TV.Season|/data/tvshows/Anime_Series/The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You/Season 3|42AD9DBD-2F31-6985-4FD7-3BDBA686F3E6|BBA8996A-1889-B53D-5A15-6F0D5A59E3FF
+Castlevania|MediaBrowser.Controller.Entities.TV.Series|/data/tvshows/TV/Castlevania|FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF|FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF
+My Adventures with Superman|MediaBrowser.Controller.Entities.TV.Series|/data/tvshows/TV/My Adventures with Superman|FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF|FBCDBB73-0CE4-1F2C-C64B-08D2773FB2EF
+--- integrity ---
+ok

@@ -1,0 +1,8 @@
+timestamp=2026-10-25T07:48:13+00:00
+integrity=ok
+userdata_rows  played_rows  played_items
+-------------  -----------  ------------
+20150          18854        3326        
+baseitems  episodes
+---------  --------
+28291      6753    

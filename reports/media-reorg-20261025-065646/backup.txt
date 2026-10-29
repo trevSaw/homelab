@@ -1,0 +1,6 @@
+Backup: /hive/backups/media-reorg-20261025-065941
+Created: 2026-10-25T07:00:08+00:00
+2.0K	/hive/backups/media-reorg-20261025-065941/configs
+20K	/hive/backups/media-reorg-20261025-065941/jellyfin
+1.0K	/hive/backups/media-reorg-20261025-065941/jellyseerr
+1.5K	/hive/backups/media-reorg-20261025-065941/sonarr
