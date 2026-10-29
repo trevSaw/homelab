@@ -38,7 +38,7 @@ mocha.fatherfankscloud.uk  (host record, Split Horizon APP)
 
 | Var | Value |
 |---|---|
-| `DNS_SERVER_DOMAIN` | `dns.mocha` (server's own domain; does not auto-create zones) |
+| `DNS_SERVER_DOMAIN` | `dns.mocha` (server's own domain; used as the default apex NS/SOA for newly created primary zones; does not auto-create zones) |
 | `DNS_SERVER_ADMIN_PASSWORD` | generated strong random password (stored in `.env`, never git) |
 | `DNS_SERVER_RECURSION` | `AllowOnlyForPrivateNetworks` — allows RFC1918 + CGNAT `100.64.0.0/10` (verified in `NetUtilities.cs`), denies public |
 | `DNS_SERVER_ENABLE_BLOCKING` | `true` |
@@ -49,6 +49,12 @@ mocha.fatherfankscloud.uk  (host record, Split Horizon APP)
 ## 4. Zones & records (reproducible via API script)
 
 ### Primary zone: `fatherfankscloud.uk`
+
+The zone is an **internal split-horizon authority**. Its apex NS and SOA default to
+`dns.mocha` from `DNS_SERVER_DOMAIN`; this is internal authority metadata, not the
+public delegation. Cloudflare remains authoritative for public DNS, and internal and
+public NS records are intentionally different. Do not change the local apex NS to
+Cloudflare.
 
 **Host record (APP, Split Horizon `SplitHorizon.SimpleAddress`):**
 
@@ -76,6 +82,16 @@ Matching verified in `SimpleAddress.cs`: CIDR keys match most-specific first; `p
 | `96` | `P110M` |
 | `73` | `Trevs-iPhone` |
 | `119` | `MacBookPro` |
+
+### ACME DNS-01 validation
+
+Traefik's `le` resolver validates certificates through Cloudflare's public DNS-01
+delegation. Its container must therefore use public resolvers for ACME propagation
+checks (`dns: [1.1.1.1, 8.8.8.8]` in `services/traefik/compose.yaml`). If it uses the
+Technitium split-horizon resolver, Lego follows the local apex NS to `dns.mocha`, which
+does not resolve, and renewal fails even though Cloudflare holds the
+`_acme-challenge` TXT record. Verified 2026-10-19: all Traefik certificates renewed and
+validated with public DNS.
 
 ## 5. Blocklists (Phase 5)
 

@@ -4,7 +4,7 @@
 # Uses the Technitium HTTP API to recreate zones, records, apps, and settings.
 set -euo pipefail
 
-TECH_DIR="$(cd "$(dirname "$0")/.." && pwd)/services/technitium"
+TECH_DIR="$(cd "$(dirname "$0")/../.." && pwd)/services/technitium"
 cd "$TECH_DIR"
 source .env
 
@@ -60,16 +60,24 @@ main() {
   log "settings applied"
 
   # --- zones ---
+  # Technitium auto-populates the primary zone's apex NS/SOA from
+  # DNS_SERVER_DOMAIN (dns.mocha). This is internal split-horizon authority
+  # metadata, not the public Cloudflare delegation. Do not change the local
+  # apex NS to Cloudflare; see services/technitium/README.md.
   create_zone "fatherfankscloud.uk" "Primary"
   create_zone "192.168.50.0/24" "Primary"   # -> 50.168.192.in-addr.arpa
 
   # --- host APP record (Split Horizon) ---
-  local sh_data='{"private":["192.168.50.44"],"100.64.0.0/10":["100.102.139.115"]}'
+  # 192.168.176.1/32 = docker bridge gateway. Docker's userland proxy (docker-proxy)
+  # rewrites the source IP of queries arriving via the Tailscale listener
+  # (100.102.139.115:53) to this address, so Tailscale clients would otherwise match
+  # "private" and receive the LAN answer. See services/technitium/README.md.
+  local sh_data='{"private":["192.168.50.44"],"100.64.0.0/10":["100.102.139.115"],"192.168.176.1/32":["100.102.139.115"]}'
   local sh_enc; sh_enc=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$sh_data")
   add_record "mocha.fatherfankscloud.uk" "fatherfankscloud.uk" "APP" "appName=Split%20Horizon&classPath=SplitHorizon.SimpleAddress&recordData=$sh_enc&overwrite=true"
 
   # --- service CNAMEs -> mocha ---
-  for svc in sso code hermes homeassistant home jellyfin jellyseerr kav nx chat sparkyfitness calib calibre traefik bazarr honcho prowlarr radarr; do
+  for svc in sso code hermes homeassistant home jellyfin jellyseerr kav nx chat sparkyfitness calib calibre traefik bazarr honcho prowlarr radarr sync chaptarr audiobooks; do
     add_record "$svc.fatherfankscloud.uk" "fatherfankscloud.uk" "CNAME" "cname=mocha.fatherfankscloud.uk&overwrite=true"
   done
 

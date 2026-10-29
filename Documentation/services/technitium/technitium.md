@@ -28,6 +28,9 @@ No public exposure. Explicit-IP binding avoids libvirt `192.168.122.1:53` confli
 
 ## DNS Architecture
 - Primary zone: `fatherfankscloud.uk` (LAN/Tailscale only; public zone stays at Cloudflare with dead `0.0.0.9` wildcard)
+- Authority split: Technitium is authoritative only for the internal split-horizon view; Cloudflare remains authoritative for public DNS
+- Apex NS/SOA: `dns.mocha` (from `DNS_SERVER_DOMAIN`) is internal authority metadata, not a public delegation. Internal and public NS records are intentionally different; do not change the local apex NS to Cloudflare
+- ACME: Traefik's `le` DNS-01 propagation checks use public DNS via `dns: [1.1.1.1, 8.8.8.8]` in `services/traefik/compose.yaml`, not this split-horizon view
 - Host record: `mocha.fatherfankscloud.uk` = APP record `SplitHorizon.SimpleAddress`
   - LAN clients → `192.168.50.44`
   - Tailscale clients → `100.102.139.115`
@@ -81,6 +84,7 @@ ADRs:
 - None identified.
 
 ## Known Issues
+- ACME DNS-01 renewal depends on Traefik using public DNS. Without `dns: [1.1.1.1, 8.8.8.8]`, Lego follows the local apex NS `dns.mocha` (unresolvable) and renewal fails. Verified resolved 2026-10-19 with the Traefik public-DNS override; do not remove the override or point the local apex NS at Cloudflare.
 - `echo.fatherfankscloud.uk` intentionally not created (no running container; EchoOS compose in `needing-to-be-deleted`).
 - `honcho`/`calib`/`calibre` return 404 at root path — Traefik routing is correct; backends serve on subpaths.
 - Tailscale split-DNS route for `fatherfankscloud.uk` must be added in the Tailscale admin console (restricted nameserver → `100.102.139.115`).
