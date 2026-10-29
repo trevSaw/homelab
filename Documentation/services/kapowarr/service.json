@@ -1,0 +1,15 @@
+{
+  "name": "kapowarr",
+  "category": "Media",
+  "priority": "P4-P5",
+  "migration_wave": "unassigned",
+  "dependencies": "qbittorrent, kavita",
+  "risks": "Beta software; comic metadata matching and download search are actively developed",
+  "documentation_status": "present",
+  "lifecycle": "Prepared / awaiting approval",
+  "adr_references": ["ADR-0017-Kapowarr-Comic-Management"],
+  "evidence": {
+    "phase": "unassigned",
+    "import": false
+  }
+}

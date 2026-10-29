@@ -4,9 +4,11 @@
   "priority": "P4-P5",
   "migration_wave": "Wave 6",
   "dependencies": "",
-  "risks": "Imported from CasaOS/external compose; cutover pending",
+  "risks": "Retired upstream June 2025 (metadata servers dead). Container stopped; do not start.",
   "documentation_status": "present",
-  "adr_references": [],
+  "lifecycle": "Deprecated",
+  "replaced_by": "chaptarr",
+  "adr_references": ["ADR-0009-Books-Audiobooks-Management-Chaptarr"],
   "evidence": {
     "phase": "10.75",
     "import": true

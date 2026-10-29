@@ -1,0 +1,15 @@
+{
+  "name": "audiobookshelf",
+  "category": "Media",
+  "priority": "P4-P5",
+  "migration_wave": "Phase 20",
+  "dependencies": "chaptarr",
+  "risks": "Config must remain on local SSD (SQLite)",
+  "documentation_status": "present",
+  "lifecycle": "Draft/Review",
+  "adr_references": ["ADR-0009-Books-Audiobooks-Management-Chaptarr"],
+  "evidence": {
+    "phase": "20",
+    "import": false
+  }
+}
