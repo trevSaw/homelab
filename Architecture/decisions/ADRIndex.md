@@ -61,6 +61,13 @@ This index lists all Architecture Decision Records (ADRs) stored in the reposito
 | --- | --- | --- |
 | [ADR‑0016 – KORA Canonical Repository Read/Write Access](./ADR-0016-KORA-Canonical-Repo-RW-Access.md) | RW bind mount of the canonical repo + vault; secrets protected via 600/ACL; no Docker socket; docker-admin unchanged | Accepted (Phase 6) |
 
+### Media acquisition & libraries
+
+| ADR | Scope | Decision |
+| --- | --- | --- |
+| [ADR‑0017 – Comic Book Management (Kapowarr)](./ADR-0017-Kapowarr-Comic-Management.md) | Kapowarr comic manager writing into the Kavita comics root | Draft (pending ARB sign-off) |
+| [ADR‑0018 – Uchiyomi → Kavita Shared Library](./ADR-0018-Uchiyomi-Kavita-Shared-Library.md) | Read-only bind mount of Uchiyomi media into Kavita; Uchiyomi sole writer; mobile offline reading | Accepted (2026-10-08) |
+
 ### KORA implementation architecture (Phase 14)
 
 | ADR | Scope | Decision |

@@ -8,6 +8,7 @@
 | calibre-web | Productivity | P4‑P5 | present | ./calibre-web/calibre-web.md |
 | code-server | Development | P4‑P5 | present | ./code-server/code-server.md |
 | CosmoOS | Infrastructure | P4‑P5 | present | ./CosmoOS/CosmoOS.md |
+| couchdb | Infrastructure / Databases | P3 | present | ./couchdb/couchdb.md |
 | EchoOS | Utilities | P0 | present | ./EchoOS/EchoOS.md |
 | echoos | Utilities | P0 | present | ./echoos/echoos.md |
 | hermes | Messaging / Communication | P4‑P5 | present | ./hermes/hermes.md |
@@ -27,11 +28,18 @@
 | jellyseerr | Media | P4‑P5 | present | ./jellyseerr/jellyseerr.md |
 | bazarr | Media | P4‑P5 | present | ./bazarr/bazarr.md |
 | actual | Productivity | P4‑P5 | present | ./actual/actual.md |
+| audiobookshelf | Media | P4‑P5 | present | ./audiobookshelf/audiobookshelf.md |
 | lazylibrarian | Media | P4‑P5 | present | ./lazylibrarian/lazylibrarian.md |
 | crafty | Games | P4‑P5 | present | ./crafty/crafty.md |
 | mariadb | Databases | P4‑P5 | present | ./mariadb/mariadb.md |
 | uptime-kuma | Monitoring | P4‑P5 | present | ./uptime-kuma/uptime-kuma.md |
 | byparr | Utilities | P4‑P5 | present | ./byparr/byparr.md |
-| readarr | Media | P4‑P5 | present | ./readarr/readarr.md |
+| readarr | Media | P4‑P5 | present (Deprecated) | ./readarr/readarr.md |
+| chaptarr | Media | P4‑P5 | present | ./chaptarr/chaptarr.md |
 | kavita | Media | P4‑P5 | present | ./kavita/kavita.md |
 | nextcloud | Productivity | P4‑P5 | present | ./nextcloud/nextcloud.md |
+| sparkyfitness | Productivity | P4‑P5 | present | ./sparkyfitness/sparkyfitness.md |
+| technitium | Infrastructure / DNS | P1 | present | ./technitium/technitium.md |
+| taskbridge | AI | P2 | deprecated (pending removal) | ./taskbridge/taskbridge.md |
+| docker-admin | AI / Administration Boundary | P3 | present | ./docker-admin/docker-admin.md |
+| searxng | AI / Search | P3 | present | ./searxng/searxng.md |
