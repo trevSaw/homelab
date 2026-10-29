@@ -15,6 +15,12 @@ Thumbs.db
 *.bak
 *.swp
 
+# Local agent session transcripts (not repo content)
+session-*.md
+
+# WireGuard configuration archives (contain private keys)
+services/Hotio/*.zip
+
 # Phase 10.5 migration runtime artefacts (keep directory placeholders)
 Validation/Phase10.5/logs/*
 !Validation/Phase10.5/logs/.gitkeep
