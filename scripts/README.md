@@ -26,6 +26,34 @@ scripts/
 
 See `scripts/audit/README.md` for energy-audit details.
 
+## VPN watchdog (qbittorrent / nzbget)
+
+`scripts/maintenance/vpn-watchdog.sh` detects a dead Mullvad WireGuard tunnel
+(stale handshake / no egress) and self-heals:
+
+1. Auto-refreshes the relay public key in `wg0.conf` if Mullvad rotated it
+   (Mullvad renumbers + rekeys relays; hostname only covers IP changes).
+2. Restarts `qbittorrent` (re-resolves the hostname endpoint).
+3. Restarts `nzbget` (re-attaches to qbittorrent's shared netns).
+
+Runs every 5 minutes via fatherfrank's user crontab. Logs:
+`~/.local/log/vpn-watchdog.log`. Manual run:
+
+```bash
+./scripts/maintenance/vpn-watchdog.sh
+```
+
+### n8n + Discord monitoring
+
+`scripts/maintenance/vpn-watchdog-report.sh` emits actionable watchdog events
+(recovery / key-rotation fix / unresolved failure) not yet reported, tracking
+progress via `~/.local/log/vpn-watchdog-report.state`.
+
+The n8n workflow **VPN Watchdog Monitor** (active, every 5 min) runs that script
+via the existing `SSH Password account` credential, then posts any output to a
+Discord webhook. Tested end-to-end (execution history: `n8n/database.sqlite` →
+`execution_entity`).
+
 ## Migration framework (Phase 10.5)
 
 ```bash
