@@ -4,6 +4,12 @@ services:
     container_name: traefik
     hostname: traefik
     restart: unless-stopped
+    # ACME DNS-01 propagation checks must query the public Cloudflare
+    # nameservers, not the split-horizon Technitium zone (which advertises the
+    # non-public NS `dns.mocha`). Container names still resolve via Docker DNS.
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     env_file:
       - .env
     environment:

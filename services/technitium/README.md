@@ -45,12 +45,43 @@ only LAN + Tailscale IPs also guarantees DNS cannot become a public open resolve
 The `mocha` host record is an APP record using `SplitHorizon.SimpleAddress`:
 
 ```json
-{"private":["192.168.50.44"],"100.64.0.0/10":["100.102.139.115"]}
+{"private":["192.168.50.44"],"100.64.0.0/10":["100.102.139.115"],"192.168.176.1/32":["100.102.139.115"]}
 ```
 
 - LAN clients → `192.168.50.44`
 - Tailscale clients → `100.102.139.115`
+- `192.168.176.1/32` (docker bridge gateway) → `100.102.139.115`
+  - Docker's userland proxy (`docker-proxy`) rewrites the source IP of queries that
+    arrive via the Tailscale listener (`100.102.139.115:53`) to the docker bridge
+    gateway. Without this rule, Tailscale clients (e.g., iOS) would match the
+    `private` rule and receive the LAN answer, which is unreachable off-LAN.
 - Service hostnames are plain CNAMEs → `mocha.fatherfankscloud.uk`
+
+## Authority and ACME
+
+Technitium is authoritative only for the **internal split-horizon view**;
+Cloudflare remains authoritative for public DNS. The public zone intentionally keeps
+the dead `*.fatherfankscloud.uk → 0.0.0.9` wildcard and is not delegated to Technitium.
+
+Because `DNS_SERVER_DOMAIN=dns.mocha`, Technitium auto-populates the primary zone's
+apex NS and SOA with `dns.mocha`. This is **internal authority metadata, not the public
+delegation**: `dns.mocha` is not a resolvable public name, and internal/public NS
+records are intentionally different. Do not change the local apex NS to Cloudflare.
+
+Traefik's `le` DNS-01 resolver must run propagation checks against the public
+Cloudflare delegation, not the internal split-horizon zone.
+`services/traefik/compose.yaml` therefore sets:
+
+```yaml
+dns:
+  - 1.1.1.1
+  - 8.8.8.8
+```
+
+Without that override, Lego follows the local apex NS to `dns.mocha`, fails to resolve
+it, and certificate renewal fails even though Cloudflare holds the `_acme-challenge`
+TXT record. Verified 2026-10-19: all four Traefik certificates renewed and validated
+after the public-DNS override was applied.
 
 ## Blocklists / allowlists
 
