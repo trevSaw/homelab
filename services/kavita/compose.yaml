@@ -1,7 +1,8 @@
 name: kavita
 services:
   kavita:
-    image: jvmilazz0/kavita:latest
+    # Upstream `latest` (Kavita v0.8.9.1) pinned by manifest digest per repo convention.
+    image: jvmilazz0/kavita@sha256:1f2acae7466d022f037ea09f7989eb7c487f916b881174c7a6de33dbfa8acb39
     container_name: kavita
     restart: unless-stopped
     environment:
@@ -13,6 +14,12 @@ services:
       - /hive/library/Kavita/Comics:/comics
       - /hive/library/Kavita/Manga:/manga
       - /hive/library/Kavita/fanfic:/fanfic
+      # Uchiyomi media root, read-only. Uchiyomi is the sole writer (uid/gid 1000);
+      # Kavita only indexes/serves. Contains only Uchiyomi-owned media:
+      #   downloads/ = chapters Uchiyomi has acquired
+      #   library/   = Uchiyomi's promoted CBZ library
+      # Never contains Uchiyomi's Postgres/config/cache (those live on /mnt/monarch).
+      - /hive/comics/uchiyomi:/uchiyomi:ro
     networks:
       - proxy
     labels:

@@ -1,0 +1,45 @@
+name: audiobookshelf
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf@sha256:3528a93b6442ffe54bd46771bbbab7c97084e1101071586d9dc2254f30bb4358
+    container_name: audiobookshelf
+    hostname: audiobookshelf
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      - TZ=Etc/UTC
+    volumes:
+      - /mnt/monarch/appdata/audiobookshelf/config:/config
+      - /mnt/monarch/appdata/audiobookshelf/metadata:/metadata
+      - /hive/library/Audiobooks:/audiobooks
+    networks:
+      - proxy
+    ports:
+      # TRANSITIONAL: keep until Traefik hostname is confirmed in daily use
+      - "13378:80"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.audiobookshelf.rule=Host(`audiobooks.fatherfankscloud.uk`)
+      - traefik.http.routers.audiobookshelf.entrypoints=websecure
+      - traefik.http.routers.audiobookshelf.tls=true
+      - traefik.http.routers.audiobookshelf.tls.certresolver=le
+      - traefik.http.services.audiobookshelf.loadbalancer.server.port=80
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  proxy:
+    external: true

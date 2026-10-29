@@ -1,0 +1,46 @@
+name: kapowarr
+services:
+  kapowarr:
+    image: mrcas/kapowarr:v1.3.2
+    container_name: kapowarr
+    hostname: kapowarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /mnt/monarch/appdata/kapowarr:/app/db
+      - /hive/downloads/completed/kapowarr:/app/temp_downloads
+      - /hive/library/Kavita/Comics:/comics
+    networks:
+      - proxy
+      - hotio
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.kapowarr.rule=Host(`kapowarr.fatherfankscloud.uk`)
+      - traefik.http.routers.kapowarr.entrypoints=websecure
+      - traefik.http.routers.kapowarr.tls=true
+      - traefik.http.routers.kapowarr.tls.certresolver=le
+      - traefik.http.services.kapowarr.loadbalancer.server.port=5656
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5656/api/public')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+networks:
+  proxy:
+    external: true
+  hotio:
+    external: true
+    name: hotio_default

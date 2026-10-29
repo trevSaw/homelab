@@ -1,0 +1,163 @@
+name: uchiyomi
+
+# Uchiyomi — self-hosted manga/manhwa/webtoon acquisition + reader (Phase: standalone).
+#
+# Upstream install manifest: https://github.com/AngeloSha/uchiyomi/blob/main/deploy/docker-compose.yml
+# This deployment follows homelab conventions (digest-pinned images, appdata on
+# /mnt/monarch/appdata, media on /hive, Traefik on the external `proxy` network).
+#
+# Acquisition model: Uchiyomi uses its OWN bundled downloader. It does NOT use
+# Prowlarr, Jackett, NZBGet, qBittorrent, NZBgeek or any *arr download client.
+# Sources come from bundled MangaDex + generic engines (add-by-URL) + optional
+# Mihon/Tachiyomi extensions via the bundled Suwayomi engine.
+#
+# No Kavita integration in this phase: /library is a dedicated, initially-empty
+# library; nothing is shared with /hive/library/Kavita.
+
+services:
+  uchiyomi:
+    # Upstream publishes only `latest` (no version tags), so the v0.55.6 build is
+    # pinned by digest per Versions.md convention. Update by resolving the new
+    # digest and bumping it here.
+    image: ghcr.io/angelosha/uchiyomi@sha256:a3b5ccc3d6ffd9b6544c968df7cb286bf79889db458ad12b4b6e3086a67128ea
+    container_name: uchiyomi
+    hostname: uchiyomi
+    restart: unless-stopped
+    # The app finishes the chapter it is writing on SIGTERM (up to 20 s), then the
+    # embedded Postgres checkpoints and stops. Docker's default 10 s is too short.
+    stop_grace_period: 40s
+    environment:
+      # Run as the shared media identity so Uchiyomi can rename/delete files in the
+      # library and write its download folder. Unset would run uid 10002 read-only.
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Etc/UTC}
+      NODE_ENV: production
+      PORT: "3000"
+      # LIBRARY_BACKEND=owned (bring-your-own CBZ library); no DATABASE_URL means the
+      # embedded Postgres in /data is used. JWT/VAPID secrets are generated on first
+      # boot and persisted to /config — no secrets belong in this file.
+      LIBRARY_BACKEND: owned
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-https://uchiyomi.fatherfankscloud.uk}
+      FLARESOLVERR_URL: http://uchiyomi-flaresolverr:8191
+      SOURCES_DIR: /sources
+      CUSTOM_SITES_FILE: /config/sites.json
+      # Mihon/Tachiyomi extension engine (Suwayomi). The app never downloads through
+      # it; it only borrows its source catalogue. Uchiyomi still owns the library.
+      SUWAYOMI_URL: http://uchiyomi-suwayomi:4567
+      EXTENSION_ENGINE: "1"
+      SUWAYOMI_MAX_SOURCES: ${SUWAYOMI_MAX_SOURCES:-25}
+      SUWAYOMI_PAGE_CONCURRENCY: ${SUWAYOMI_PAGE_CONCURRENCY:-4}
+      BACKUP_KEEP: ${BACKUP_KEEP:-14}
+    volumes:
+      # Dedicated standalone library — deliberately NOT /hive/library/Kavita.
+      - /hive/comics/uchiyomi/library:/library
+      # Chapters Uchiyomi downloads land here (side-by-side with, never inside, /library).
+      - /hive/comics/uchiyomi/downloads:/library-dl
+      # Optional built source pack (empty for now; upstream expects the mount).
+      - /hive/comics/uchiyomi/sources:/sources:ro
+      # Embedded Postgres + app state.
+      - /mnt/monarch/appdata/uchiyomi/data:/data
+      - /mnt/monarch/appdata/uchiyomi/config:/config
+      - /mnt/monarch/appdata/uchiyomi/cache:/cache
+      - /mnt/monarch/appdata/uchiyomi/backups:/backups
+    networks:
+      - proxy
+      - uchiyomi_internal
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.uchiyomi.rule=Host(`uchiyomi.fatherfankscloud.uk`)
+      - traefik.http.routers.uchiyomi.entrypoints=websecure
+      - traefik.http.routers.uchiyomi.tls=true
+      - traefik.http.routers.uchiyomi.tls.certresolver=le
+      - traefik.http.services.uchiyomi.loadbalancer.server.port=3000
+    healthcheck:
+      # /livez, not /healthz: a database blip must not mark the whole app unhealthy.
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/livez >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+  # Cloudflare solver (headless Chrome). Most manga aggregators sit behind Cloudflare.
+  uchiyomi-flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
+    container_name: uchiyomi-flaresolverr
+    hostname: uchiyomi-flaresolverr
+    restart: unless-stopped
+    # Chrome needs more than Docker's default 64 MB /dev/shm or chromedriver dies mid-challenge.
+    shm_size: 1gb
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      LOG_LEVEL: warning
+    networks:
+      - uchiyomi_internal
+    expose:
+      - "8191"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8191/ | grep -q 'FlareSolverr is ready' || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+  # Mihon/Tachiyomi extension engine. A JVM; Uchiyomi reads its catalogue only.
+  uchiyomi-suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:v2.3.2243@sha256:e59f212ccf91b26de8676a063a2db90256c148c6261535c7c477d47a43d9751b
+    container_name: uchiyomi-suwayomi
+    hostname: uchiyomi-suwayomi
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      # Cap the JVM heap; without it a JVM sizes heap from host RAM (a quarter of 62 GB).
+      JAVA_TOOL_OPTIONS: "-Xmx768m -XX:+UseSerialGC"
+      # Uchiyomi owns the library and does the downloading; the engine must never write to it.
+      AUTO_DOWNLOAD_CHAPTERS: "false"
+      DOWNLOAD_AS_CBZ: "true"
+      FLARESOLVERR_ENABLED: "true"
+      FLARESOLVERR_URL: http://uchiyomi-flaresolverr:8191
+    volumes:
+      - /mnt/monarch/appdata/uchiyomi/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    networks:
+      - uchiyomi_internal
+    expose:
+      - "4567"
+    healthcheck:
+      # Image has bash but no curl/wget/nc, so bash opens the socket itself.
+      # 401 counts as alive (the engine is up, auth is just switched on).
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/4567; printf 'GET /api/v1/settings/about HTTP/1.0\\r\\n\\r\\n' >&3; head -1 <&3 | grep -qE ' (200|401) '"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1536m
+
+networks:
+  proxy:
+    external: true
+  uchiyomi_internal:
+    name: uchiyomi_internal

@@ -3,7 +3,7 @@
 ## Overview
 - Purpose: Book manager (Readarr develop)
 - Category: Media
-- Current lifecycle state: Imported (Phase 10.75) — still running from prior orchestrator until cutover
+- Current lifecycle state: **Deprecated** — retired upstream (June 2025); metadata servers dead. Container stopped. Replaced by `services/chaptarr` (ADR-0009).
 - Importance level: Operational
 
 ## Repository Location
@@ -18,7 +18,7 @@
 
 ## Operational Notes
 - Phase 10.75 imported compose into the repository without changing bind mounts or storage locations.
-- Future Phase 11 may migrate config to `/mnt/monarch/appdata` using `scripts/migration/services.conf`.
+- **Do not start** this container. Readarr is retired upstream; use Chaptarr (`services/chaptarr`). No DB migration exists between Readarr and Chaptarr — point Chaptarr at the library folders and let it re-match.
 
 ## Known Issues
 - See `Validation/Phase10.75/readarr/Diff.md` for live-vs-CasaOS differences captured at import.

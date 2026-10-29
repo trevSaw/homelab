@@ -1,0 +1,52 @@
+name: chaptarr
+services:
+  chaptarr:
+    image: chaptarr/chaptarr:0.9.958
+    container_name: chaptarr
+    hostname: chaptarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - /mnt/monarch/appdata/chaptarr:/config
+      - /hive/downloads/completed:/downloads
+      - /hive/library/Kavita/Books:/ebooks
+      - /hive/library/Audiobooks:/audiobooks
+    networks:
+      - proxy
+      - hotio
+    ports:
+      # TRANSITIONAL: keep until Traefik hostname is confirmed in daily use
+      - "8789:8789"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.chaptarr.rule=Host(`chaptarr.fatherfankscloud.uk`)
+      - traefik.http.routers.chaptarr.entrypoints=websecure
+      - traefik.http.routers.chaptarr.tls=true
+      - traefik.http.routers.chaptarr.tls.certresolver=le
+      - traefik.http.services.chaptarr.loadbalancer.server.port=8789
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8789/ping || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  proxy:
+    external: true
+  hotio:
+    external: true
+    name: hotio_default
